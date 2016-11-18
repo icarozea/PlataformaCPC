@@ -1,0 +1,67 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14/06/2016, 12:15:24 AM
+    Author     : HARLIN
+*/
+
+#cajaAsignaciones{   
+    /*position:fixed;*/
+    /*border: #006699 double medium;*/
+    margin: 9% 10% 15% 20%;
+    background: #fff;
+    /*margin: 0 auto;*/
+    width: 58%;
+    height: 70%;
+    align-content: center;
+    padding: 10px;
+    
+}
+
+#cajaAsignaciones h2{    
+    background-color: #fff;
+    border-bottom: #006699 dotted 2px;
+    position:relative;
+    padding: 1%;    
+    overflow: hidden;
+    margin-top: 5%;
+    width: 90%;
+    font-size: 18px;
+}
+
+#cajaAsignaciones h5{    
+
+    font-size: 13px;
+}
+
+.cajaAsignacion{    
+    border: #006699 inset 5px;
+    margin-top: 15px;
+    font-size: 12px; 
+/*    position: relative;
+    overflow: visible;
+    clear: both;*/
+    
+}
+
+.tablaAsignacion{     
+    clear: both;
+    width: 100%;
+    /*float: right;*/
+       
+    overflow-y: scroll;
+}
+
+#paraAsignar{
+    float: left;
+}
+
+#asignados{
+    position: fixed;        
+    float: right;
+    padding: 2px;
+    margin-left: 30%;
+}

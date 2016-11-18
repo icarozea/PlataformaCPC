@@ -1,0 +1,571 @@
+/*
+    Document   : Actualizar Citas
+    Created on : 14/06/2016, 11:35:27 PM
+    Author     : Jhon Jairo chaparro
+
+
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+     font-family: sans-serif;
+    font-size: 14px;
+    font-weight: lighter;
+    font-style: initial;
+    
+    border: 1px solid #ffffff;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #006699;
+    color: white;
+     font-family: sans-serif;
+    font-size: 14px;
+    font-weight: lighter;
+    font-style: initial;
+    color: white;
+    border: 1;
+}
+*/
+.tablaprincipal
+{padding-top: 11%}
+
+.tablavisualizacion
+{    padding-left: 29%;
+    margin-top: -23%;}
+/*
+
+table#table tr:nth-child(even) {
+    border-collapse: collapse;
+    width: 100%;
+}
+table#table tr:nth-child(odd) {
+    background-color:#f2f2f2;
+    font-family: sans-serif;
+    font-size: 1px;
+    font-weight: lighter;
+    font-style: initial;
+     padding: 5px;
+}
+table#table th    {
+    background-color: #f2f2f2;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: lighter;
+    font-style: initial;
+    color: white;
+    border: 1;
+    border: 1px solid black;
+    
+}*/
+
+
+
+
+.container2{
+    text-align: center;
+    font-size: 20px;
+    border-radius: 2%;
+    background-color: #fff;
+    margin-top:28%;
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #709CF7;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 5px;
+    width: 65%;
+    height: inherit;
+    position: absolute;
+    left: 15.5%;
+}
+.container1{
+    text-align: center;
+    font-size: 20px;
+    border-radius: 2%;
+    background-color: #fff;
+    margin-top: 1%;
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #709CF7;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 5px;
+    width: 30%;
+    height: inherit;
+    position: absolute;
+    left: 32.5%;
+    top: 20%;
+}
+.form_div {
+    margin:0.3em 2%;
+    float: left;
+}
+select {
+    font-size: 15px;
+    font-family: verdana,Helvetica;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 5px;
+    width:100%;  /*ancho*/
+    height: 26px;  /*alto de la caja*/
+    margin: 2.5px;   /* posicion de la caja*/
+    border: 2px solid  rgb(139, 148, 156); /* color del borde*/
+    border-radius: 5px; /*propiedad de crear un borde redondo*/
+    background-color: #f1f1f1; /*color de fondo*/
+}
+select:focus {
+    border: 2px solid rgb(16, 129, 236);
+    border-radius: 5px;
+}
+.form_div1{
+    margin: 7.3em;
+    float: left;
+    height: 113px;
+    width: 150px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.div_label {
+    width: 90%;
+    float: left;
+}
+.form_div2{
+    width: 284px;;
+    height: 72px;
+    margin-top: -18%;
+
+    margin-right: -1%;
+    float: right;
+}
+.botonC{
+    font-size:12px;
+    font-family:verdana,Helvetica;
+    font-weight:bold;
+    color:white;
+    background:#F32D2D;
+    border-radius:5px;
+    border:0px;
+    width:125px;
+    height:30px;
+    border-radius: 5px;
+    margin: 5px;
+
+}
+
+.botonR{
+    font-size: 12px;
+    font-family: verdana,Helvetica;
+    font-weight: bold;
+    color: white;
+    background: rgb(16, 129, 236); /* color del interior de la caja*/
+    border-radius: -5px;
+    border: 0px;
+    width:125px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+}
+.botonR:focus{
+    border: 2px solid rgb(25, 29, 33);
+    border-radius: 5px;
+    /*background-color:#D0D9EC;lightblue;*/
+}
+
+
+
+input{
+    width:94%;
+}
+
+.inputda{
+    width:94%;
+}
+.form_divimagen{
+    margin: 7.3em;
+    float: left;
+    height: 0px;
+    /* width: 216px; */
+    margin-top: 17px;
+    margin-left: 6%;
+    margin-bottom: 0px;
+}
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28/04/2016, 12:51:46 PM
+    Author     : Ingenieria de Software
+*/
+
+body{
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;   
+    background-image: url("../../..//fondo.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+#titleForm{
+    margin-top: 10%;
+    padding: 0px;
+    font-size: 24px;
+    background: #006699;
+    width: 100%;
+    color: #fff;
+}
+
+#agrupar{
+    width:30%;
+    height:40%;
+    margin: 0 auto;    
+    border: 2px solid #084B8A;
+    margin-top: 10%;
+    border-radius: 2%;
+}
+
+.caja{
+    display: inline-block;
+    width:30%;
+    height:40%;
+    margin: 0 auto;    
+    border: 2px solid #084B8A;
+    margin-top: 10%;
+    padding: 2% 10% 2% 10%;
+    font-size: 20px;
+    border-radius: 2%;
+    background-color: #fff;
+}
+
+
+.tablaPequeÃ±a{
+    margin-top: 10%;
+    font-size: 80%;
+}
+
+.cajaformulario{
+    display: inline-block;
+    width:30%;
+    height:40%;
+    margin: 0 auto;    
+    border: 2px solid #084B8A;
+    margin-top: 1%;
+    padding: 2% 15% 2% 15%;
+    font-size: 20px;
+    border-radius: 2%;
+    background-color: #fff;
+}
+
+.caja img{
+    width: 100px;
+    height: 100px;
+    line-height:normal;
+    font-size:11px;
+    display:inline-block;
+    margin:10px auto;    
+    color:white;
+    font-style:italic;
+    padding:5px;
+    text-align:center;
+}
+
+.caja img:hover{
+    background-color: #cc3300;
+}
+
+.alerta{
+    color:#cc3300;
+    font-size: 12px;
+    position: static;
+    
+}
+
+#nombreUsuario{
+    background: #fff;
+    font-style:italic;
+    width: 100%;
+}
+
+.inputText{
+    color: #cccccc;
+    margin-top: 2%;
+}
+footer{
+    width: 100%; 
+    height: 50px; 
+/*    background: #006699; */
+/*    color: #fff;*/
+    color: #006699;
+    text-align: center;
+    border-top: 2px;
+    position: absolute;
+    bottom: 0;    
+}
+
+header{
+    width: 100%;
+    height: 10%;    
+    display: inline;
+    margin-top: 60px;
+}
+
+input, select{
+    margin-bottom: 1%;
+    margin-top: 1%;
+    border-radius: 5px;
+}
+
+input.text{    
+    margin: 2%;
+    width: 200px;
+    height: 20px;
+    text-decoration: background;
+}
+
+input.radio{
+    margin: 5%;
+}
+
+#menu{
+    background: #006699;;
+    color:#000000;
+    /*    padding: 5px 5px;*/
+    height: 5%;
+    width: 100%;
+    text-align: right;
+    position: fixed;
+}
+
+
+#menu ul{
+    margin-right: 20%;
+    margin-bottom: 10%;
+}
+
+#menu li{
+    display: inline-block;
+    list-style: none;
+    padding: 15px;        
+    font: bold 14px verdana, sans-serif;
+    background-color:#ffffff;
+    border-left-color:#006699; 
+    border: #006699 groove 3px;
+    font-size: 18px;
+    color: #006699;
+    width: 100px;   
+    text-align: center;
+}
+
+#menu li:hover{
+    background-color:#cc3300;
+    color: #ffffff;
+}
+/*
+.tabla{
+    top: 20%;
+}
+
+table{
+    align-content: center;
+    margin: 0 auto;
+    width: 90%;
+}
+
+
+table td#centro{
+    width: 50%;
+}
+
+table td#derecho{
+    width: 25%;
+}
+
+table td#izquierdo{
+    width: 25%;
+    background: #000000;
+    color: white;
+}
+
+#tablaFormulario{    
+    text-align: left;
+    width: auto;
+    background:#ccccff;
+    margin-top: 5%;
+    padding: 2% 5% 2% 5%;
+    border-radius: 2%;
+}
+*/
+
+#eps{
+    width: 100%;
+}
+
+#aside{
+    position: fixed;
+    display: block;
+    float: left;
+    margin-top: 13%;
+    margin-left: 4%;
+    background-color: #455ff1;
+    /*background: linear-gradient(left #084B8A, #032f2e3, #2fa43d);*/
+    padding: 2%;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5%;
+    text-align: left;
+    overflow:hidden;
+
+}
+
+#aside h1{
+    color: #fff;
+    font-size: 13px;
+    display: block;
+}
+
+#aside ul li:link{
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+#aside a{
+    text-decoration: none;
+    color: yellow;
+}
+#aside a:hover{
+    text-decoration: none;
+    color: #fff;
+    background: #cc3300;
+}
+
+
+#formularioIngreso{
+    border: #006699 double 2px;
+    width: 30%;
+    margin: auto;
+    margin-top: 5%; 
+    text-align: left;
+    padding: 1%;
+    background-color: #fff;
+    
+}
+
+h3{
+    width: 100%;
+    text-align: center;
+    background: #006699;
+    color: #fff;    
+}
+
+.btnEPS{
+    border-radius: 100%;
+    background-color: #006699;
+    color:#fff;
+    width: 30px;
+}
+
+#datosIniciales{
+    width: 100%;    
+    margin: 0 auto;
+    padding: 0% 5% 0% 5%;
+    font-size: 18px;
+    text-align: justify;
+
+}
+
+#formularioSesion{
+    background: #000000;
+    /*width: 100%;*/
+}
+
+
+#contenido{
+    margin: 0 auto;
+    margin-top: 5%;
+    background: #ffffff;
+    width: 70%;
+}
+
+.numero{
+    width: 100px;
+}
+
+.nombre{
+    width: 400px;
+}
+
+#reporte{
+    width: 100%;    
+    margin: 0 auto;
+    padding: 0% 5% 0% 5%;
+    text-align: left;
+}
+
+#objetivo{
+    width: 90%;
+    height: 40px;
+    line-height: 4;
+    text-height: auto;
+}
+
+#descripcion{
+    width: 90%;
+    height: 80px;
+    line-height: 4;
+    text-height: auto;
+}
+
+.campoTexto{
+    width: 90%;
+    height: 80px;
+    line-height: 4;
+    text-height: auto;
+}
+
+#firmas{
+    display: inline-block;
+    width: 100%;
+    text-align: justify;
+}
+
+.formulario{
+    margin-left: -24%;
+    margin-top: 2%;
+    width: 150%;
+    text-align: left;
+}
+
+.formulario tr{
+    height: 140%;
+    background-color:#084B8A;
+}
+
+.formulario td{
+    background-color: #fff;
+
+}
+
+.botones{
+    font-size: 12px;
+    font-family: verdana,Helvetica;
+    font-weight: bold;
+    color: white;
+    background: rgb(16, 129, 236); /* color del interior de la caja*/
+    border-radius: -5px;
+    border: 0px;
+    width:111px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+}
