@@ -1,18 +1,22 @@
 package com.plataforma.cpc.to;
 
 public class PersonaTo {
-	private Integer idPersona;
-	private String primerNombre;
-	private String segundoNombre;
-	private String primerApellido;
-	private String segundoApellido;
-	private String numeroDocumento;
-	private String direccion;
-	private Integer telefono;
-	private UsuarioTo usuario;
-	private TipoDocumentoTo tipoDocumento;
-	private EpsTo eps;
-	private PerfilTo perfil;
+	
+	private 	Integer 		idPersona;
+	private 	String 			primerNombre;
+	private 	String 			segundoNombre;
+	private 	String 			primerApellido;
+	private 	String 			segundoApellido;
+	private 	String 			numeroDocumento;
+	private 	String 			direccion;
+	private 	Integer 		telefono;
+	private 	String 			correo;
+	private 	UsuarioTo 		usuario;
+	private 	TipoDocumentoTo tipoDocumento;
+	private 	EpsTo 			eps;
+	private 	PerfilTo 		perfil;
+	private		String			password;
+	
 	public Integer getIdPersona() {
 		return idPersona;
 	}
@@ -85,16 +89,25 @@ public class PersonaTo {
 	public void setPerfil(PerfilTo perfil) {
 		this.perfil = perfil;
 	}
+	public String getCorreo() {
+		return correo;
+	}
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	@Override
 	public String toString() {
 		return "PersonaTo [idPersona=" + idPersona + ", primerNombre=" + primerNombre + ", segundoNombre="
 				+ segundoNombre + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido
 				+ ", numeroDocumento=" + numeroDocumento + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", usuario=" + usuario + ", tipoDocumento=" + tipoDocumento + ", eps=" + eps + ", perfil=" + perfil
-				+ "]";
+				+ ", correo=" + correo + ", usuario=" + usuario + ", tipoDocumento=" + tipoDocumento + ", eps=" + eps + ", perfil=" + perfil
+				+ ", password=" + password + "]";
 	}
-	
-	
-	
-	
 }

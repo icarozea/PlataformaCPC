@@ -6,27 +6,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
 public class DaoEPS extends ConexionOracle {
 	
-	public Connection connection;
+	public Conexion conexionActual;
 
     public ArrayList<EpsTo> consultarEPSs(EpsTo eps){
     	
-    	PreparedStatement ps=null;
     	ResultSet rs =null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	ArrayList<EpsTo> listaEps = new ArrayList<EpsTo>();
     	
     	String sql = "SELECT ID_EPS, NOMBRE_EPS FROM CPC_EPS ";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			rs = ps.executeQuery();
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
 				EpsTo epsTo = new EpsTo();
@@ -34,15 +33,13 @@ public class DaoEPS extends ConexionOracle {
 				epsTo.setNombreEPS(rs.getString("NOMBRE_EPS")); 
 				listaEps.add(epsTo);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
+				conexionActual.cerrar();
 				rs.close();
-				ps.close();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -51,32 +48,29 @@ public class DaoEPS extends ConexionOracle {
     
     public EpsTo consultaEps(EpsTo eps){
 
-    	PreparedStatement ps=null;
     	ResultSet rs =null;
+    	conexionActual = new ConexionOracle();
     	EpsTo epsTo = new EpsTo();
-    	ConexionOracle conexionOracle = new ConexionOracle();
+   
     	String sql = "SELECT ID_EPS, NOMBRE_EPS FROM CPC_EPS WHERE ID_EPS = ? ";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);		
-			ps.setInt(1, eps.getIdEPS());
-			rs = ps.executeQuery();
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, eps.getIdEPS()); 
+			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
 				epsTo.setIdEPS(rs.getInt("ID_EPS"));
 				epsTo.setNombreEPS(rs.getString("NOMBRE_EPS")); 
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
+				conexionActual.cerrar();
 				rs.close();
-				ps.close();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -86,27 +80,23 @@ public class DaoEPS extends ConexionOracle {
     public boolean crearEPS(EpsTo eps){
     	
     	boolean retorno;
-    	PreparedStatement ps=null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	String sql = "INSERT INTO CPC_EPS (ID_EPS, NOMBRE_EPS) VALUES (EPS_SEQ.NEXTVAL,?)";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			ps.setString(1, eps.getNombreEPS());
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, eps.getNombreEPS()); 
 		
-			ps.executeUpdate();
+			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
-				ps.close();
-			} catch (SQLException e) {
+				conexionActual.cerrar();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -116,28 +106,24 @@ public class DaoEPS extends ConexionOracle {
     public boolean actualizarEPS(EpsTo eps){
     	
     	boolean retorno;
-    	PreparedStatement ps=null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	String sql = "UPDATE CPC_EPS SET NOMBRE_EPS = ? WHERE ID_EPS = ?";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			ps.setString(1, eps.getNombreEPS());
-			ps.setInt(2, eps.getIdEPS());
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, eps.getNombreEPS()); 
+			conexionActual.agregarAtributo(2, eps.getIdEPS());
 			
-			ps.executeUpdate();
+			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
-				ps.close();
-			} catch (SQLException e) {
+				conexionActual.cerrar();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -147,27 +133,23 @@ public class DaoEPS extends ConexionOracle {
     public boolean eliminarEPS(EpsTo eps){
     	
     	boolean retorno;
-    	PreparedStatement ps=null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	String sql = "DELETE FROM CPC_EPS WHERE ID_EPS = ?";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			ps.setInt(1, eps.getIdEPS());
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, eps.getIdEPS()); 
 			
-			ps.executeUpdate();
+			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
-				ps.close();
-			} catch (SQLException e) {
+				conexionActual.cerrar();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	

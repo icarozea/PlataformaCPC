@@ -33,5 +33,4 @@ public class EpsBean {
 		DaoEPS daoEPS = new DaoEPS();
 		return daoEPS.eliminarEPS(eps);
 	}
-
 }

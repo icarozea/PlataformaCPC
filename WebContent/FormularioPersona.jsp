@@ -20,7 +20,7 @@
         <%@include file="./menuPersona.jsp" %>
         <div id="formularioIngreso">
             <h3 id="titleForm">Nueva Persona</h3>
-            <form align="center" id="formCreatePracticante" action="./ServletPersona" method="POST">
+            <form align="center" id="formCreatePersona" name="formCreatePersona" value="formCreatePersona" action="./ServletPersona" method="POST">
                 <input type="hidden" name="operacion" />
                 <table id="tablaFormulario">
                     <tr>
@@ -64,10 +64,45 @@
                         <td>Teléfono: </td>
                         <td><input type="text" id="telefono" name="telefono" placeholder="Teléfono" required=""></td>
                     </tr>
+                    <tr>
+                        <td>Correo Electrónico: </td>
+                        <td><input type="text" id="correo" name="correo" placeholder="Correo Electrónico" required=""></td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña: </td>
+                        <td><input type="password" id="password" name="password"  required=""></td>
+                    </tr>
+                    <tr>
+                        <td>Confirmar Contraseña: </td>
+                        <td><input type="password" id="password2" name="password2"  required=""></td>
+                    </tr>
+                    <tr>
+                        <td>Defina un perfil: </td>
+                    </tr>
+                    <tr>
+                    	<td>&nbsp</td>
+                        <td>Administrador</td>
+                        <td><input type="radio" id="perfil" name="perfil" value="admin" required=""></td>
+                    </tr>
+                    <tr>
+                    	<td>&nbsp</td>
+                        <td>Supervisor</td>
+                        <td><input type="radio" id="perfil" name="perfil" value="supervisor" required=""></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td>Practicante</td>
+                        <td><input type="radio" id="perfil" name="perfil" value="practicante" required=""></td>
+                    </tr>
+                    <tr>
+                    	<td>&nbsp</td>
+                        <td>Paciente</td>
+                        <td><input type="radio" id="perfil" name="perfil" value="paciente" required=""></td>
+                    </tr>
                 </table>
                 <br>
-                <a href="GestiondeUsuarios.jsp"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a>
                 <input type="button" onclick="checkTodo()" id="btnAceptar" value="Aceptar" class="botones">
+                <a href="inicioPersonas.jsp"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a>
             </form>
         </div>
         

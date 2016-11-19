@@ -1,9 +1,11 @@
 package com.plataforma.cpc.to;
 
 public class PerfilTo {
+	
 	private Integer idPerfil;
 	private String nombrePerfil;
 	private String permiso;
+	
 	public Integer getIdPerfil() {
 		return idPerfil;
 	}
@@ -26,7 +28,4 @@ public class PerfilTo {
 	public String toString() {
 		return "PerfilTo [idPerfil=" + idPerfil + ", nombrePerfil=" + nombrePerfil + ", permiso=" + permiso + "]";
 	}
-	
-	
-
 }

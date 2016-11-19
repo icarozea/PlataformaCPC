@@ -1,6 +1,7 @@
 package com.plataforma.cpc.to;
 
 public class EpsTo {
+	
 	private Integer idEPS;
 	private String nombreEPS;
 	
@@ -20,7 +21,4 @@ public class EpsTo {
 	public String toString() {
 		return "EpsTo [idEPS=" + idEPS + ", nombreEPS=" + nombreEPS + "]";
 	}
-	
-	
-
 }
