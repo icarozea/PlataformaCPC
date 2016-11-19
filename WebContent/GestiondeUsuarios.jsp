@@ -13,11 +13,11 @@
                 <div id="gestionContenido">
                     <table>
                         <tr>
-                            <td><a href="agregarusuarios.jsp"><img src="resources/agregarusuario.png"/></a></td>
+                            <td><a href="FormularioPersona.jsp"><img src="resources/agregarusuario.png"/></a></td>
                             <td><a href="verUsuarios.jsp"><img src="resources/asignar.png"/></a></td>
                         </tr>
                         <tr>
-                            <td><a href="agregarusuarios.jsp">Crear Usuario</a></td>
+                            <td><a href="FormularioPersona.jsp">Crear Usuario</a></td>
                             <td><a href="verUsuarios.jsp">Ver Usuarios</a></td>
                         </tr>
                     </table>                 

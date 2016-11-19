@@ -1,11 +1,10 @@
 package com.plataforma.cpc.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.UsuarioTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
@@ -13,25 +12,23 @@ import com.plataforma.cpc.utils.ConexionOracle;
  *
  * @author Ovidio Zea
  */
-public class DaoUsuario extends ConexionOracle {
+public class DaoUsuario {
     
     
-    public Connection connection;
+    public Conexion conexionActual;
 
     public ArrayList<UsuarioTo> consultarUsuarios(UsuarioTo usuario){
     	
-    	PreparedStatement ps=null;
     	ResultSet rs =null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	ArrayList<UsuarioTo> usuarios = new ArrayList<UsuarioTo>();
     	
     	String sql = "SELECT ID_USUARIO, NOM_USUARIO, CONTRASENA, CORREO FROM CPC_USUARIO ";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			rs = ps.executeQuery();
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
 				UsuarioTo usuarioTo = new UsuarioTo();
@@ -41,15 +38,14 @@ public class DaoUsuario extends ConexionOracle {
 				usuarioTo.setCorreo(rs.getString("CORREO"));
 				usuarios.add(usuarioTo);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
+				conexionActual.cerrar();
 				rs.close();
-				ps.close();
-			} catch (SQLException e) {
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -58,20 +54,18 @@ public class DaoUsuario extends ConexionOracle {
     
     public UsuarioTo consultarUsuario(UsuarioTo usuario){
 
-    	PreparedStatement ps=null;
     	ResultSet rs =null;
     	UsuarioTo usuarioTo = new UsuarioTo();
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	String sql = "SELECT ID_USUARIO, NOM_USUARIO, CONTRASENA, CORREO FROM CPC_USUARIO ";
     		sql+= "WHERE UPPER(NOM_USUARIO) = UPPER(?) AND CONTRASENA = ? ";
     	System.out.println("Consulta: "+sql);
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);		
-			ps.setString(1, usuario.getNombreUsuario());
-			ps.setString(2, usuario.getContrasena());
-			rs = ps.executeQuery();
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1,usuario.getNombreUsuario());	
+			conexionActual.agregarAtributo(2,usuario.getContrasena());
+			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
 				usuarioTo.setIdUsuario(rs.getInt("ID_USUARIO"));
@@ -79,15 +73,13 @@ public class DaoUsuario extends ConexionOracle {
 				usuarioTo.setContrasena(rs.getString("CONTRASENA"));
 				usuarioTo.setCorreo(rs.getString("CORREO"));
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
+				conexionActual.cerrar();
 				rs.close();
-				ps.close();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -97,29 +89,25 @@ public class DaoUsuario extends ConexionOracle {
     public boolean crearUsuario(UsuarioTo usuario){
     	
     	boolean retorno;
-    	PreparedStatement ps=null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	String sql = "INSERT INTO CPC_USUARIO (ID_USUARIO, NOM_USUARIO, CONTRASENA, CORREO) VALUES (USUARIO_SEQ.NEXTVAL, ?, ?, ?)";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			ps.setString(1, usuario.getNombreUsuario());
-			ps.setString(2, usuario.getContrasena());
-			ps.setString(3, usuario.getCorreo());
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1,usuario.getNombreUsuario());	
+			conexionActual.agregarAtributo(2,usuario.getContrasena());
+			conexionActual.agregarAtributo(3,usuario.getCorreo());
+			conexionActual.ejecutarSentencia();
 			
-			ps.executeUpdate();
 			retorno = Boolean.TRUE;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
-				ps.close();
-			} catch (SQLException e) {
+				conexionActual.cerrar();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -129,30 +117,25 @@ public class DaoUsuario extends ConexionOracle {
     public boolean actualizarUsuario(UsuarioTo usuario){
     	
     	boolean retorno;
-    	PreparedStatement ps=null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	String sql = "UPDATE CPC_USUARIO SET NOM_USUARIO = ? , CONTRASENA = ?, CORREO = ? WHERE ID_USUARIO = ?";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			ps.setString(1, usuario.getNombreUsuario());
-			ps.setString(2, usuario.getContrasena());
-			ps.setString(3, usuario.getCorreo());
-			ps.setInt(4, usuario.getIdUsuario());
-			
-			ps.executeUpdate();
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1,usuario.getNombreUsuario());	
+			conexionActual.agregarAtributo(2,usuario.getContrasena());	
+			conexionActual.agregarAtributo(3,usuario.getCorreo());
+			conexionActual.agregarAtributo(4,usuario.getIdUsuario());
+			conexionActual.ejecutarSentencia();
 			retorno = Boolean.TRUE;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
-				ps.close();
-			} catch (SQLException e) {
+				conexionActual.cerrar();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
@@ -162,27 +145,22 @@ public class DaoUsuario extends ConexionOracle {
     public boolean eliminarUsuario(UsuarioTo usuario){
     	
     	boolean retorno;
-    	PreparedStatement ps=null;
-    	ConexionOracle conexionOracle = new ConexionOracle();
+    	conexionActual = new ConexionOracle();
     	String sql = "DELETE FROM CPC_USUARIO WHERE ID_USUARIO = ?";
     	 	
 		try {
-			conexionOracle.conectar();
-	    	this.connection = conexionOracle.getConexionOracle();
-			ps = this.connection.prepareStatement(sql);
-			ps.setInt(1, usuario.getIdUsuario());
-			
-			ps.executeUpdate();
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1,usuario.getIdUsuario());
+			conexionActual.ejecutarSentencia();
 			retorno = Boolean.TRUE;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
 		}finally{
 			try {
-				conexionOracle.cerrar();
-				this.connection.close();
-				ps.close();
-			} catch (SQLException e) {
+				conexionActual.cerrar();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	

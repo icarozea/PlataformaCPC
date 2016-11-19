@@ -10,7 +10,7 @@ import com.plataforma.cpc.to.UsuarioTo;
 
 public class PersonaBean {
 	
-	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, Integer idUsuario, Integer idPerfil ){
+	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, String correo, Integer idPerfil, String password ){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setPrimerNombre(nombre1);
@@ -25,14 +25,12 @@ public class PersonaBean {
 		persona.setNumeroDocumento(numeroDocumento);
 		persona.setDireccion(direccion);
 		persona.setTelefono(telefono);
-		
-		UsuarioTo usuarioTo = new UsuarioTo();
-		usuarioTo.setIdUsuario(idUsuario);
-		persona.setUsuario(usuarioTo);
+		persona.setCorreo(correo);
 		
 		PerfilTo perfilTo = new PerfilTo();
 		perfilTo.setIdPerfil(idPerfil);
 		persona.setPerfil(perfilTo);
+		persona.setPassword(password);
 
 		DaoPersona daoPersona = new DaoPersona();
 
@@ -71,7 +69,7 @@ public class PersonaBean {
 		return daoPersona.consultarPersona(persona);
 	}
 	
-	public boolean modificarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, Integer idUsuario, Integer idPerfil ){
+	public boolean modificarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, String correo, Integer idPerfil, String password ){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setPrimerNombre(nombre1);
@@ -86,14 +84,12 @@ public class PersonaBean {
 		persona.setNumeroDocumento(numeroDocumento);
 		persona.setDireccion(direccion);
 		persona.setTelefono(telefono);
-		
-		UsuarioTo usuarioTo = new UsuarioTo();
-		usuarioTo.setIdUsuario(idUsuario);
-		persona.setUsuario(usuarioTo);
+		persona.setCorreo(correo);
 		
 		PerfilTo perfilTo = new PerfilTo();
 		perfilTo.setIdPerfil(idPerfil);
 		persona.setPerfil(perfilTo);
+		persona.setPassword(password);
 
 		DaoPersona daoPersona = new DaoPersona();
 

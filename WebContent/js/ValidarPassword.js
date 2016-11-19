@@ -137,11 +137,17 @@ function validarNombreCompleto(nom1,nom2,ape1,ape2) {
         alert('El primer apellido no es un apellido valido');
         return false;
     }
+    if(validarTexto(ape2)){
+    }else{
+        alert('El segundo apellido no es un apellido valido');
+        return false;
+    }
     return true;
 }
 
 function checkTodo(){
-    var nomForm = document.getElementById('formName').value;
+	var nomForm = document.getElementById('formCreatePersona');
+	console.log(document.getElementById('formCreatePersona'));
     var nom1 = document.getElementById('nombre1').value;
     var nom2 = document.getElementById('nombre2').value;
     var ape1 = document.getElementById('apellido1').value;
@@ -153,14 +159,10 @@ function checkTodo(){
             
             if (validarNombreCompleto(nom1,nom2,ape1,ape2)){
                 
-                if(validarNumero()){
-          
-                    document.forms[nomForm].submit();
+                if(validarNumero()){     	
+                    nomForm.submit();
                 }
             }
         }
     }
-    
-    
 }
-
