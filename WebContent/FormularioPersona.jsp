@@ -10,6 +10,7 @@
     <head>
         <link rel="stylesheet" href="estilo.css"></link>
         <script type="text/javascript" src="js/ValidarPassword.js"></script>
+        <script type="text/javascript" src="js/mostrarEPS.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Agregar Persona</title>
     </head>
@@ -22,7 +23,7 @@
             <h3 id="titleForm">Nueva Persona</h3>
             <form align="center" id="formCreatePersona" name="formCreatePersona" value="formCreatePersona" action="./ServletPersona" method="POST">
                 <input type="hidden" name="operacion" />
-                <table id="tablaFormulario">
+                <table id="tablaFormulario" class="tablaPrincipal">
                     <tr>
                         <td>Primer Nombre: </td>
                         <td><input type="text" id="nombre1" name="nombre1" placeholder="Primer Nombre" required></td>
@@ -44,13 +45,7 @@
                     	<td><select id ="tipoDocumento" name="tipoDocumento">
                     	<c:forTokens items="Zara,nuha,roshy" delims="," var="name">
 						   <option value="${name}">${name}</option>
-						</c:forTokens>
-						<!-- <option value="0" selected>(please select:)</option>
-						<option value="100M Run">100M Run</option>
-						<option value="200M Run">200M Run</option>
-						<option value="400M Run">400M Run</option>
-						<option value="800M Run">800M Run</option>-->
-						</select></td>
+						</c:forTokens></select></td>
                     </tr>
                     <tr>                        
                         <td>Numero Documento: </td>
@@ -82,22 +77,29 @@
                     <tr>
                     	<td>&nbsp</td>
                         <td>Administrador</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="admin" required=""></td>
+                        <td><input type="radio" id="perfil" name="perfil" value="admin" required="" onclick="ocultarEPS()"></td>
                     </tr>
                     <tr>
                     	<td>&nbsp</td>
                         <td>Supervisor</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="supervisor" required=""></td>
+                        <td><input type="radio" id="perfil" name="perfil" value="supervisor" required="" onclick="ocultarEPS()"></td>
                     </tr>
                     <tr>
                         <td>&nbsp</td>
                         <td>Practicante</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="practicante" required=""></td>
+                        <td><input type="radio" id="perfil" name="perfil" value="practicante" required="" onclick="ocultarEPS()"></td>
                     </tr>
                     <tr>
                     	<td>&nbsp</td>
                         <td>Paciente</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="paciente" required=""></td>
+                        <td><input type="radio" id="perfil" name="perfil" value="paciente" required="" onclick="mostrarEPS()"></td>
+                    </tr>
+                    <tr>
+                        <td><p id="txtEps" style="display:none;">EPS</p></td>
+                        <td><select id ="eps" name="eps" style="display:none;">
+                        <c:forTokens items="No aplica,Colsanitas,Compensar,Nueva EPS" delims="," var="name">
+						   <option value="${name}">${name}</option>
+						</c:forTokens></select></td>
                     </tr>
                 </table>
                 <br>

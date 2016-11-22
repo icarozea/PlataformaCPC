@@ -175,22 +175,23 @@ input.radio{
     top: 20%;
 }
 
-table{
+
+.tablaPrincipal{
     align-content: center;
     margin: 0 auto;
     width: 90%;
 }
 
 
-table td#centro{
+.tablaPrincipal td#centro{
     width: 50%;
 }
 
-table td#derecho{
+.tablaPrincipal td#derecho{
     width: 25%;
 }
 
-table td#izquierdo{
+.tablaPrincipal td#izquierdo{
     width: 25%;
     background: #000000;
     color: white;
