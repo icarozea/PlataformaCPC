@@ -49,7 +49,7 @@ public class DaoUtilidades {
     	conexionActual = new ConexionOracle();
     	ArrayList<PerfilTo> perfiles = new ArrayList<PerfilTo>();
     	
-    	String sql = "SELECT ID_PERFIL, NOMBRE_PERFIL, PERMISO FROM CPC_PERFIL ";
+    	String sql = "SELECT ID_PERFIL, NOMBRE_PERFIL, PERMISO FROM PERFIL ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -87,7 +87,7 @@ public class DaoUtilidades {
     	conexionActual = new ConexionOracle();
     	ArrayList<TipoDocumentoTo> listaDocumentos = new ArrayList<TipoDocumentoTo>();
     	
-    	String sql = "SELECT ID_DOCUMENTO, SIGLA, NOMBRE_DOCUMENTO FROM CPC_TIPO_DOCUMENTO ";
+    	String sql = "SELECT ID_DOCUMENTO, SIGLA, NOMBRE_DOCUMENTO FROM TIPO_DOCUMENTO ";
     	 	
 		try {
 			conexionActual.conectar();

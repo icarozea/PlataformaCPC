@@ -3,18 +3,21 @@
     Created on : 07/11/2016
     Author     : Ovidio Zea
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="estilo.css"></link>
+
         <script type="text/javascript" src="js/ValidarPassword.js"></script>
         <script type="text/javascript" src="js/mostrarEPS.js"></script>
+        <script type="text/javascript" src="js/util.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Agregar Persona</title>
     </head>
-    <body>      
+
+    <body onload="cargueInicial()">      
         <!--MENU SUPERIOR--> 
          <%@include file="./menuNavegacion.jsp" %>
         <!--MEMU LATERAL--> 
@@ -22,7 +25,8 @@
         <div id="formularioIngreso">
             <h3 id="titleForm">Nueva Persona</h3>
             <form align="center" id="formCreatePersona" name="formCreatePersona" value="formCreatePersona" action="./ServletPersona" method="POST">
-                <input type="hidden" name="operacion" />
+                <input type="hidden" name="operacion"  id="operacion"/>
+
                 <table id="tablaFormulario" class="tablaPrincipal">
                     <tr>
                         <td>Primer Nombre: </td>
@@ -42,10 +46,14 @@
                     </tr>
                     <tr>
                     	<td>Tipo Documento: </td>
-                    	<td><select id ="tipoDocumento" name="tipoDocumento">
-                    	<c:forTokens items="Zara,nuha,roshy" delims="," var="name">
-						   <option value="${name}">${name}</option>
-						</c:forTokens></select></td>
+                    	<td>
+                    		<select id ="tipoDocumento" name="tipoDocumento">
+                    				<option value="-1"> Seleccione </option>                 		
+                    			<c:forEach items="${listaDocumentos}"  var="documento">
+						   			<option value="${documento.sigla}">${documento.nombreDocumento}</option>
+								</c:forEach>
+							</select>
+						</td>
                     </tr>
                     <tr>                        
                         <td>Numero Documento: </td>
@@ -71,36 +79,28 @@
                         <td>Confirmar Contraseña: </td>
                         <td><input type="password" id="password2" name="password2"  required=""></td>
                     </tr>
-                    <tr>
-                        <td>Defina un perfil: </td>
+					<tr>
+                    	<td>Perfil: </td>
+                    	<td>
+                    		<select id ="perfil" name="perfil" onchange="mostrarEPS(this.value)">
+                    			<option value="-1"> Seleccione </option>                 		
+                    			<c:forEach items="${listaPerfiles}"  var="perfilPersona">
+						   			<option value="${perfilPersona.idPerfil}">${perfilPersona.nombrePerfil}</option>
+								</c:forEach>
+							</select>
+						</td>
                     </tr>
-                    <tr>
-                    	<td>&nbsp</td>
-                        <td>Administrador</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="admin" required="" onclick="ocultarEPS()"></td>
-                    </tr>
-                    <tr>
-                    	<td>&nbsp</td>
-                        <td>Supervisor</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="supervisor" required="" onclick="ocultarEPS()"></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp</td>
-                        <td>Practicante</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="practicante" required="" onclick="ocultarEPS()"></td>
-                    </tr>
-                    <tr>
-                    	<td>&nbsp</td>
-                        <td>Paciente</td>
-                        <td><input type="radio" id="perfil" name="perfil" value="paciente" required="" onclick="mostrarEPS()"></td>
-                    </tr>
-                    <tr>
-                        <td><p id="txtEps" style="display:none;">EPS</p></td>
-                        <td><select id ="eps" name="eps" style="display:none;">
-                        <c:forTokens items="No aplica,Colsanitas,Compensar,Nueva EPS" delims="," var="name">
-						   <option value="${name}">${name}</option>
-						</c:forTokens></select></td>
-                    </tr>
+	                    <tr>
+	                    	<td id="seccionEPS" style="display:none;">EPS: </td>
+	                    	<td>
+	                    		<select id ="eps" name="eps" style="display:none;">
+	                    				<option value="-1"> Seleccione </option>                 		
+	                    			<c:forEach items="${listaEPS}"  var="varEPS">
+							   			<option value="${varEPS.idEPS}">${varEPS.nombreEPS}</option>
+									</c:forEach>
+								</select>
+							</td>
+	                    </tr>
                 </table>
                 <br>
                 <input type="button" onclick="checkTodo()" id="btnAceptar" value="Aceptar" class="botones">

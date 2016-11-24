@@ -26,7 +26,7 @@ public class DaoCitas extends ConexionOracle{
     	conexionActual = new ConexionOracle();
     	ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
     	int numeroParametros = 0;
-    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE FROM CPC_CITA WHERE 1=1 ";
+    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE FROM CITA WHERE 1=1 ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -79,7 +79,7 @@ public class DaoCitas extends ConexionOracle{
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	CitaTo citaTo = new CitaTo();
-    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE FROM CPC_CITA WHERE ID_CITA = ? ";
+    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE FROM CITA WHERE ID_CITA = ? ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -118,7 +118,7 @@ public class DaoCitas extends ConexionOracle{
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO CPC_CITA (ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE) ";
+    	String sql = "INSERT INTO CITA (ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE) ";
     			sql+= "VALUES (CITA_SEQ.NEXTVAL,?,TO_DATE(SYSDATE,'DD/MM/RR'), TO_TIMESTAMP(?,'DD/MM/RR HH12:MI:SS AM'),?,?)";
     	 	
 		try {
@@ -148,7 +148,7 @@ public class DaoCitas extends ConexionOracle{
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE CPC_CITA SET SALON = ?, FECHA_SOLICITUD = TO_DATE(SYSDATE,'DD/MM/RR'),";
+    	String sql = "UPDATE CITA SET SALON = ?, FECHA_SOLICITUD = TO_DATE(SYSDATE,'DD/MM/RR'),";
     	sql+="FECHA_CITA = TO_TIMESTAMP(?,'DD/MM/RR HH12:MI:SS AM'),ID_PER_PRACTICANTE = ?, ID_PER_PACIENTE = ? WHERE ID_CITA = ? ";
     	 	
 		try {
@@ -179,7 +179,7 @@ public class DaoCitas extends ConexionOracle{
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "DELETE FROM CPC_CITA WHERE ID_CITA = ?";
+    	String sql = "DELETE FROM CITA WHERE ID_CITA = ?";
     	 	
 		try {
 			conexionActual.conectar();
