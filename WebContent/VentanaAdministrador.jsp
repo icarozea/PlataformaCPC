@@ -12,7 +12,7 @@
         <div id="gestioncitas" class="caja">
             <h1>INICIO</h1>
             <div id="gestionContenido">
-                <table>
+                <table class="tablaPrincipal">
                     <tr>
                     	<td><a href="inicioPersonas.jsp"><img src="resources/boy-4.png"/></a></td>
                         <td><a href="GestiondeUsuarios.jsp"><img src="resources/empresario.png"/></a></td>                     

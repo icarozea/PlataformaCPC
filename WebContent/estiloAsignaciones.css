@@ -1,67 +1,71 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 14/06/2016, 12:15:24 AM
-    Author     : HARLIN
-*/
-
-#cajaAsignaciones{   
-    /*position:fixed;*/
-    /*border: #006699 double medium;*/
-    margin: 9% 10% 15% 20%;
-    background: #fff;
-    /*margin: 0 auto;*/
-    width: 58%;
-    height: 70%;
-    align-content: center;
-    padding: 10px;
-    
-}
-
-#cajaAsignaciones h2{    
+.cajaTablas{
+    display: inline-block;
+    width:100%;
+    margin: 0 auto;    
+    border: 2px solid #084B8A;
+    margin-top: 10%;
+    border-radius: 2%;
     background-color: #fff;
-    border-bottom: #006699 dotted 2px;
-    position:relative;
-    padding: 1%;    
-    overflow: hidden;
-    margin-top: 5%;
-    width: 90%;
-    font-size: 18px;
 }
 
-#cajaAsignaciones h5{    
+.cajaVentanaAsignacion{   
+    margin-top: 10%;
+	margin-left: 25%;
+	margin-right: 10%;
+    font-size: 20px;
+    background-color: #fff;
+}
 
-    font-size: 13px;
+.cajaVentanaAsignacion p{
+	font-size: 36px;
+	text-align: center;
+}
+
+.cajaVentanaAsignacion table{
+	width: 100%;
+}
+
+.cajaVentanaAsignacion td{
+	width: 50%;
+	padding: 2%;
+	vertical-align: top;
 }
 
 .cajaAsignacion{    
     border: #006699 inset 5px;
-    margin-top: 15px;
+    margin: 1% 10% 15% 20%;
     font-size: 12px; 
-/*    position: relative;
-    overflow: visible;
-    clear: both;*/
+	padding: 10px;
+    align-content: center;
     
 }
 
+.cajaBusqueda{    
+    margin-top: 15%;
+	margin-left: 20%; 	
+    align-content: center;  
+}
+
 .tablaAsignacion{     
-    clear: both;
-    width: 100%;
-    /*float: right;*/
-       
+    table-layout:fixed;
+    text-align: left;
+	width: 100%;
     overflow-y: scroll;
 }
 
-#paraAsignar{
-    float: left;
+.tdNombre{
+	width: 80%;
 }
 
-#asignados{
-    position: fixed;        
-    float: right;
-    padding: 2px;
-    margin-left: 30%;
+.tdBoton{
+	width: 10%;
+	align-content: center;
+}
+
+.btnAsignar{
+    background-image: url("resources/asignar2.png");
+}
+
+.btnVer{
+     background-image: url("resources/binoculares.png");
 }

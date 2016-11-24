@@ -20,7 +20,7 @@ public class DaoEPS extends ConexionOracle {
     	conexionActual = new ConexionOracle();
     	ArrayList<EpsTo> listaEps = new ArrayList<EpsTo>();
     	
-    	String sql = "SELECT ID_EPS, NOMBRE_EPS FROM CPC_EPS ";
+    	String sql = "SELECT ID_EPS, NOMBRE_EPS FROM EPS ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -52,7 +52,7 @@ public class DaoEPS extends ConexionOracle {
     	conexionActual = new ConexionOracle();
     	EpsTo epsTo = new EpsTo();
    
-    	String sql = "SELECT ID_EPS, NOMBRE_EPS FROM CPC_EPS WHERE ID_EPS = ? ";
+    	String sql = "SELECT ID_EPS, NOMBRE_EPS FROM EPS WHERE ID_EPS = ? ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -81,7 +81,7 @@ public class DaoEPS extends ConexionOracle {
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO CPC_EPS (ID_EPS, NOMBRE_EPS) VALUES (EPS_SEQ.NEXTVAL,?)";
+    	String sql = "INSERT INTO EPS (ID_EPS, NOMBRE_EPS) VALUES (EPS_SEQ.NEXTVAL,?)";
     	 	
 		try {
 			conexionActual.conectar();
@@ -107,7 +107,7 @@ public class DaoEPS extends ConexionOracle {
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE CPC_EPS SET NOMBRE_EPS = ? WHERE ID_EPS = ?";
+    	String sql = "UPDATE EPS SET NOMBRE_EPS = ? WHERE ID_EPS = ?";
     	 	
 		try {
 			conexionActual.conectar();
@@ -134,7 +134,7 @@ public class DaoEPS extends ConexionOracle {
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "DELETE FROM CPC_EPS WHERE ID_EPS = ?";
+    	String sql = "DELETE FROM EPS WHERE ID_EPS = ?";
     	 	
 		try {
 			conexionActual.conectar();

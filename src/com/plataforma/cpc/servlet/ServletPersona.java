@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.plataforma.cpc.dao.DaoUtilidades;
+import com.plataforma.cpc.modelo.EpsBean;
 import com.plataforma.cpc.modelo.PersonaBean;
+import com.plataforma.cpc.modelo.UtilBean;
+import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 
@@ -19,23 +23,32 @@ import com.plataforma.cpc.to.TipoDocumentoTo;
  */
 @WebServlet(name="ServletPersona", urlPatterns = {"/ServletPersona"})
 public class ServletPersona extends HttpServlet {
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		System.out.println("do Get");
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("do Post");
-		
+	
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+
+		
+		String operacion = request.getParameter("operacion");
+		System.out.println("Operacion: "+operacion);
+		switch (operacion) {
+		
+		case "cargueIncial":
+			cargueInicial(request,response);
+			break;
+		case "guardarPersona":
+			guardarPersona(request,response);
+			break;
+		default:
+			System.out.println("Opción no existe");
+			break;
+		
+		}
+	}
+	
+	private void guardarPersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
 		
 		PersonaBean personaBean = new PersonaBean();
-		
 		try{
 			DaoUtilidades daoUtilidades = new DaoUtilidades();
 			
@@ -82,5 +95,55 @@ public class ServletPersona extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			dispatcher.forward(request, response);
 		}
+		
+	}
+
+	private void cargueInicial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UtilBean util = new UtilBean();
+		EpsBean  epsBean = new EpsBean();
+		ArrayList<PerfilTo> perfiles = new ArrayList<PerfilTo>();
+		ArrayList<TipoDocumentoTo> listaDocumentos = new ArrayList<TipoDocumentoTo>();
+		ArrayList<EpsTo> epss = new ArrayList<EpsTo>();
+		try {
+			perfiles = util.consultarPerfil();
+			
+			if (perfiles != null && perfiles.size() > 0){
+				request.setAttribute("listaPerfiles", perfiles);
+			}
+			
+			listaDocumentos = util.consultarTipoDocumento();
+			if (listaDocumentos != null && listaDocumentos.size() > 0){
+				request.setAttribute("listaDocumentos", listaDocumentos);
+			}
+			EpsTo epsTo = new EpsTo();
+			epss = epsBean.consultarEPS(epsTo);
+			if (epss != null && epss.size() > 0){
+				request.setAttribute("listaEPS", epss);
+			}
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioPersona.jsp");
+			dispatcher.forward(request, response);
+			
+		} catch (Exception e) {
+			System.out.println("Error de formulario: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
 	}
 }

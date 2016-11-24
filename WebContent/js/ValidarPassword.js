@@ -148,6 +148,7 @@ function validarNombreCompleto(nom1,nom2,ape1,ape2) {
 function checkTodo(){
 	var nomForm = document.getElementById('formCreatePersona');
 	console.log(document.getElementById('formCreatePersona'));
+	document.getElementById('operacion').value = "guardarPersona";
     var nom1 = document.getElementById('nombre1').value;
     var nom2 = document.getElementById('nombre2').value;
     var ape1 = document.getElementById('apellido1').value;
