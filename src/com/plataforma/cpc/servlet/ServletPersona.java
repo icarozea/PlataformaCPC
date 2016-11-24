@@ -60,7 +60,7 @@ public class ServletPersona extends HttpServlet {
 			Integer tipoDoc;
 			String sigla = request.getParameter("tipoDocumento");
 			TipoDocumentoTo tipoDocumentoTo = daoUtilidades.buscarTipoDocumento(sigla);
-			if(tipoDocumentoTo != null)
+			if(!sigla.equals("-1") || tipoDocumentoTo != null)
 				tipoDoc = tipoDocumentoTo.getIdTipoDocumento();
 			else
 				throw new Exception("El tipo de documento no es valido o no se encontró");
@@ -70,18 +70,32 @@ public class ServletPersona extends HttpServlet {
 			Integer tel = Integer.parseInt(request.getParameter("telefono"));
 			String correo = request.getParameter("correo");
 
-			Integer idPerfil;
-			String nomPerfil = request.getParameter("perfil");
-			PerfilTo perfilTo = daoUtilidades.buscarPerfil(nomPerfil);
-			if(perfilTo != null)
+			Integer idPerfil = Integer.parseInt(request.getParameter("perfil"));
+			PerfilTo perfilTo = daoUtilidades.buscarPerfil(idPerfil);
+			if(idPerfil > 0 || perfilTo != null)
 				idPerfil = perfilTo.getIdPerfil();
-			else
+			else{
+				System.out.println("Texto: " + idPerfil + " Busqueda: " + perfilTo);
 				throw new Exception("El perfil seleccionado no es valido o no se encontró");
+			}
 			
 			String password = request.getParameter("password");
 			
+			Integer eps;
+			Integer idEPS = Integer.parseInt(request.getParameter("eps"));
+			if(idEPS < 0)
+				eps = 1;
+			else{
+				EpsTo epsTo = daoUtilidades.buscarEps(idEPS);
+				if(epsTo != null)
+					eps = epsTo.getIdEPS();
+				else
+					throw new Exception("La EPS no es válida o no se encontró");
+			}
 			
-			if(personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, correo, idPerfil, password)){
+			if(personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, correo, idPerfil, password, eps)){
+				request.setAttribute("respuesta", "1");
+				request.setAttribute("error", "");
 				dispatcher.forward(request, response);
 			}
 			else{

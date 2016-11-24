@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.plataforma.cpc.interfaces.Conexion;
+import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 import com.plataforma.cpc.to.UsuarioTo;
@@ -24,6 +25,7 @@ public class DaoUtilidades {
 	public 	Conexion 					conexionActual;
 	private ArrayList<PerfilTo> 		perfiles;
 	private ArrayList<TipoDocumentoTo> 	documentos;
+	private ArrayList<EpsTo> 			eps;
 	
 	//-------------------------------------------------------------------------------------------------------
 	// Constructor
@@ -32,6 +34,7 @@ public class DaoUtilidades {
 	public DaoUtilidades() throws Exception{
 		perfiles = consultarPerfiles(new PerfilTo());
 		documentos = consultarTipoDocumentos(new TipoDocumentoTo());
+		eps = consultarEPS(new EpsTo());
 	}
 	
 	//-------------------------------------------------------------------------------------------------------
@@ -115,13 +118,50 @@ public class DaoUtilidades {
     }
     
     /**
+	 * Consulta todas las eps presentes en el sistema y retorna un arreglo con la información de cada una
+	 * @param tipoDocumento Objeto tipo EpsTo para modelar la información de las distintas Eps
+	 * @return ArrayList de objetos tipo EpsTo con toda la información en Base de Datos
+	 */
+    public ArrayList<EpsTo> consultarEPS(EpsTo eps) throws Exception{
+    	
+    	ResultSet rs =null;
+    	conexionActual = new ConexionOracle();
+    	ArrayList<EpsTo> listaEps = new ArrayList<EpsTo>();
+    	
+    	String sql = "SELECT ID_EPS, NOMBRE_EPS FROM EPS ";
+    	 	
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				EpsTo epsTo = new EpsTo();
+				epsTo.setIdEPS(rs.getInt("ID_EPS"));
+				epsTo.setNombreEPS("NOMBRE_EPS"); 
+				listaEps.add(epsTo);
+			}
+		} catch (SQLException e) {
+			throw new Exception("Error al tratar de cargar las eps");
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (SQLException e) {
+				throw new Exception("Error en la conexión con la base de datos");
+			}
+		}	
+    	return listaEps;
+    }
+    
+    /**
      * Busca un perfil especifico dado su nombre y retorna su informacion en un objeto tipo PerfilTo
      * @param nombre Nombre del perfil tal como aparece en la BD
      * @return Objeto tipo PerfilTo
      */
-    public PerfilTo buscarPerfil(String nombre){
+    public PerfilTo buscarPerfil(int id){
     	for(int i = 0; i < perfiles.size(); i++){
-    		if(perfiles.get(i).getNombrePerfil().equals(nombre))
+    		if(perfiles.get(i).getIdPerfil() == id)
     			return perfiles.get(i);
     	}
     	return null;
@@ -140,8 +180,17 @@ public class DaoUtilidades {
     	return null;
     }
     
-    private void cerrarConexionActual() throws Exception{
-
+    /**
+     * Busca una eps específica dado su id y retorna su informacion en un objeto tipo EpsTo
+     * @param id Id de la eps tal como aparece en la BD
+     * @return Objeto tipo EpsTo
+     */
+    public EpsTo buscarEps(int id){
+    	for(int i = 0; i < eps.size(); i++){
+    		if(eps.get(i).getIdEPS() == id)
+    			return eps.get(i);
+    	}
+    	return null;
     }
     
 //    public static void main(String args[]) {

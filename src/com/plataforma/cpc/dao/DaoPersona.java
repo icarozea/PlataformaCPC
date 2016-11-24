@@ -97,7 +97,7 @@ public class DaoPersona {
     	conexionActual = new ConexionOracle();
     	ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
     	
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,USUARIO_ID_USUARIO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL FROM PERSONA WHERE PERFIL_ID_PERFIL = ? ";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL FROM PERSONA WHERE PERFIL_ID_PERFIL = ? ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -107,7 +107,7 @@ public class DaoPersona {
 			
 			while (rs.next()){
 				PersonaTo personaTo = new PersonaTo();	
-				UsuarioTo usuarioTo = new UsuarioTo();
+				//UsuarioTo usuarioTo = new UsuarioTo();
 				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
@@ -122,8 +122,8 @@ public class DaoPersona {
 				personaTo.setTelefono(rs.getInt("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
 				
-				usuarioTo.setIdUsuario(rs.getInt("USUARIO_ID_USUARIO"));
-				personaTo.setUsuario(usuarioTo);
+				//usuarioTo.setIdUsuario(rs.getInt("USUARIO_ID_USUARIO"));
+				//personaTo.setUsuario(usuarioTo);
 				tipoDocumentoTo.setIdTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
 				personaTo.setTipoDocumento(tipoDocumentoTo);
 				epsTo.setIdEPS(rs.getInt("EPS_ID_EPS"));
@@ -199,10 +199,10 @@ public class DaoPersona {
     
     public boolean crearPersona(PersonaTo persona){
     	
-    	boolean retorno;
+    	boolean retorno = Boolean.FALSE;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,USUARIO_ID_USUARIO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL)"
-    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?)";
+    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL)"
+    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?)";
     	 	
 		try {
 			conexionActual.conectar();
@@ -215,10 +215,9 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(6,persona.getDireccion());
 			conexionActual.agregarAtributo(7, persona.getTelefono());
 			conexionActual.agregarAtributo(8, persona.getCorreo());
-			conexionActual.agregarAtributo(9, persona.getUsuario().getIdUsuario());
-			conexionActual.agregarAtributo(10, persona.getTipoDocumento().getIdTipoDocumento());
-			conexionActual.agregarAtributo(11, persona.getEps().getIdEPS());
-			conexionActual.agregarAtributo(12, persona.getPerfil().getIdPerfil());
+			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
+			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
+			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
 			
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
@@ -237,7 +236,7 @@ public class DaoPersona {
     
     public boolean actualizarPersona(PersonaTo persona){
     	
-    	boolean retorno;
+    	boolean retorno =  Boolean.FALSE;
     	conexionActual = new ConexionOracle();
     	String sql = "UPDATE PERSONA SET PRIMER_NOMBRE = ?, SEGUNDO_NOMBRE = ?, PRIMER_APELLIDO = ?, SEGUNDO_APELLIDO = ?,NUMERO_DOCUMENTO = ?,DIRECCION = ?,TELEFONO = ?,CORREO = ?,USUARIO_ID_USUARIO = ?,TIPO_DOCUMENTO_ID_DOCUMENTO = ?, EPS_ID_EPS = ?, PERFIL_ID_PERFIL = ? WHERE ID_PERSONA = ?";
     	 	
@@ -266,8 +265,11 @@ public class DaoPersona {
 		}finally{
 			try {
 				conexionActual.cerrar();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
+				retorno = Boolean.FALSE;
+				return retorno;
 			}
 		}	
     	return retorno;
