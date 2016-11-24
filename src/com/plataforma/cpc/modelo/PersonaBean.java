@@ -59,6 +59,16 @@ public class PersonaBean {
 		return daoPersona.consultarPersonasPerfil(persona);
 	}
 	
+	public ArrayList<PersonaTo> consultarSupervisores(){
+		
+		return null;
+	}
+	
+	public ArrayList<PersonaTo> consultarAdministradores(){
+		
+		return null;
+	}
+	
 	public ArrayList<PersonaTo> consultarPersonasFiltro(PersonaTo persona){	
 		DaoPersona daoPersona = new DaoPersona();
 		return daoPersona.consultarPersonasPerfil(persona);

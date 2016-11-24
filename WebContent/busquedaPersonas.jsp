@@ -4,6 +4,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="estiloAsignaciones.css"></link>
+        <script type="text/javascript" src="js/mostrarValorActual.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ver Personas</title>
     </head>
@@ -19,22 +20,26 @@
                     	<td>
                         	<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
                             	<c:forTokens items="Practicante,Supervisor,Paciente, Administrador" delims="," var="name">
-				                	<option value="${name}">${name}</option>
+				                	<c:choose>
+				                		<c:when test="${requestScope.valor == name}">
+				                			<option value="${name}" selected>${name}</option>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<option value="${name}">${name}</option>
+				                		</c:otherwise>
+									</c:choose>
 				            	</c:forTokens></select>
                     	</td></tr>
             	</table></form></div>  
         <div id="marcoTabla" class="cajaAsignacion">
             <table class="tablaAsignacion">
-                <tr>
-                    <td class="tdNombre"><h2>Pedro Paredes Puentes</h2></td>
+                <c:forEach items="${requestScope.listaPersonas}" var="persona">
+                	<tr>
+                    <td class="tdNombre"><h2>${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</h2></td>
                     <td class="tdBoton"><input type="button" id="btnVer" class="btnVer"></td>
-                    <td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar"></td>
-                </tr>
-                <tr>
-                    <td class="tdNombre"><h2>Juan Jose Jaramillo Jimenez</h2></td>
-                    <td class="tdBoton"><input type="button" id="btnVer" class="btnVer"></td>
-                    <td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar"></td>
-                </tr>
+                    <td class="tdBoton"><a href="asignaciones.jsp"><input type="button" id="btnAsignar" class="btnAsignar"></a></td>
+                </tr> 
+                </c:forEach>
             </table>   
        </div>
     </body>
