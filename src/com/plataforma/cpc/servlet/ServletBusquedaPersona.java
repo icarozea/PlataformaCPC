@@ -60,60 +60,60 @@ public class ServletBusquedaPersona extends HttpServlet {
 		PersonaBean persona = new PersonaBean();
 		ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
 
-		if(perfil.equals("Practicante")){
-			PersonaTo pedro = new PersonaTo();
-			pedro.setPrimerNombre("Pedro");
-			//pedro.setSegundoNombre("Pontificio");
-			pedro.setPrimerApellido("Puentes");
-			pedro.setSegundoApellido("Paredes");
-
-			PersonaTo juan = new PersonaTo();
-			juan.setPrimerNombre("Juan");
-			juan.setSegundoNombre("Jacinto");
-			juan.setPrimerApellido("Jimenez");
-			juan.setSegundoApellido("Juliao");
-
-			PersonaTo carlos = new PersonaTo();
-			carlos.setPrimerNombre("Carlos");
-			carlos.setSegundoNombre("Camilo");
-			carlos.setPrimerApellido("Casas");
-			carlos.setSegundoApellido("Cadenas");
-
-
-			resultados.add(pedro);
-			resultados.add(juan);
-			resultados.add(carlos);
-		}
-		else{
-			PersonaTo maria = new PersonaTo();
-			maria.setPrimerNombre("Maria");
-			maria.setPrimerApellido("Martinez");
-			maria.setSegundoApellido("Mendoza");
-
-			PersonaTo federico = new PersonaTo();
-			federico.setPrimerNombre("Federico");
-			federico.setSegundoNombre("Fabian");
-			federico.setPrimerApellido("Fernandez");
-			federico.setSegundoApellido("Folleto");
-			
-			resultados.add(maria);
-			resultados.add(federico);
-		}
-
-//		switch(perfil){
-//		case "Practicante":
-//			resultados = persona.consultarPracticantes();
-//			break;
-//		case "Supervisor":
-//			resultados = persona.consultarSupervisores();
-//			break;
-//		case "Paciente":
-//			resultados = persona.consultarPacientes();
-//			break;
-//		case "Administrador":
-//			resultados = persona.consultarAdministradores();
-//			break;	
+//		if(perfil.equals("Practicante")){
+//			PersonaTo pedro = new PersonaTo();
+//			pedro.setPrimerNombre("Pedro");
+//			//pedro.setSegundoNombre("Pontificio");
+//			pedro.setPrimerApellido("Puentes");
+//			pedro.setSegundoApellido("Paredes");
+//
+//			PersonaTo juan = new PersonaTo();
+//			juan.setPrimerNombre("Juan");
+//			juan.setSegundoNombre("Jacinto");
+//			juan.setPrimerApellido("Jimenez");
+//			juan.setSegundoApellido("Juliao");
+//
+//			PersonaTo carlos = new PersonaTo();
+//			carlos.setPrimerNombre("Carlos");
+//			carlos.setSegundoNombre("Camilo");
+//			carlos.setPrimerApellido("Casas");
+//			carlos.setSegundoApellido("Cadenas");
+//
+//
+//			resultados.add(pedro);
+//			resultados.add(juan);
+//			resultados.add(carlos);
 //		}
+//		else{
+//			PersonaTo maria = new PersonaTo();
+//			maria.setPrimerNombre("Maria");
+//			maria.setPrimerApellido("Martinez");
+//			maria.setSegundoApellido("Mendoza");
+//
+//			PersonaTo federico = new PersonaTo();
+//			federico.setPrimerNombre("Federico");
+//			federico.setSegundoNombre("Fabian");
+//			federico.setPrimerApellido("Fernandez");
+//			federico.setSegundoApellido("Folleto");
+//			
+//			resultados.add(maria);
+//			resultados.add(federico);
+//		}
+
+		switch(perfil){
+		case "Practicante":
+			resultados = persona.consultarPracticantes();
+			break;
+		case "Supervisor":
+			resultados = persona.consultarSupervisores();
+			break;
+		case "Paciente":
+			resultados = persona.consultarPacientes();
+			break;
+		case "Administrador":
+			resultados = persona.consultarAdministradores();
+			break;	
+		}
 		
 		return resultados;
 	}

@@ -19,7 +19,7 @@
                 	<tr><td><h2><b>Seleccionar</b></h2></td>
                     	<td>
                         	<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
-                            	<c:forTokens items="Practicante,Supervisor,Paciente, Administrador" delims="," var="name">
+                            	<c:forTokens items="Practicante,Supervisor,Paciente,Administrador" delims="," var="name">
 				                	<c:choose>
 				                		<c:when test="${requestScope.valor == name}">
 				                			<option value="${name}" selected>${name}</option>
