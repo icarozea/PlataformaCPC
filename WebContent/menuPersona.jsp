@@ -20,8 +20,8 @@
             </ul>
             <h1>PERSONA</h1>
             <ul>
-                <li><a href="FormularioPersona.jsp">Agregar Persona</a></li>
-                <li><a href="./ServletPersona?operacion=verPersonas">Ver Personas</a></li>
+                <li><a href="./ServletPersona?operacion=cargueIncial">Agregar Persona</a></li>
+                <li><a href="./ServletPersona?operacion=listarPersonas">Ver Personas</a></li>
             </ul>
         </div>
      

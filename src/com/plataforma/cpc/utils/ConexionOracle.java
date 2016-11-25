@@ -65,6 +65,11 @@ public class ConexionOracle implements Conexion {
 	public void agregarAtributo(int numAtributo, Date atributo) throws Exception{
 		sentenciaActual.setDate(numAtributo, atributo);
 	}
+	
+	@Override
+	public void agregarAtributo(int numAtributo, Long atributo) throws SQLException {
+		sentenciaActual.setLong(numAtributo, atributo);	
+	}
 
 	public ResultSet ejecutarSentencia() throws Exception {
 		if(sentenciaActual != null){
@@ -107,4 +112,6 @@ public class ConexionOracle implements Conexion {
             Logger.getLogger(ConexionOracle.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+
 }

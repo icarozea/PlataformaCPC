@@ -11,7 +11,7 @@ import com.plataforma.cpc.to.UsuarioTo;
 
 public class PersonaBean {
 	
-	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, String correo, Integer idPerfil, String password, Integer eps){
+	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password, Integer eps){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setPrimerNombre(nombre1);
@@ -96,7 +96,7 @@ public class PersonaBean {
 		return daoPersona.consultarPersona(persona);
 	}
 	
-	public boolean modificarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, String correo, Integer idPerfil, String password ){
+	public boolean modificarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password ){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setPrimerNombre(nombre1);
