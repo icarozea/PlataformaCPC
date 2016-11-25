@@ -3,6 +3,7 @@ package com.plataforma.cpc.modelo;
 import java.util.ArrayList;
 
 import com.plataforma.cpc.dao.DaoPersona;
+import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
@@ -10,7 +11,7 @@ import com.plataforma.cpc.to.UsuarioTo;
 
 public class PersonaBean {
 	
-	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, String correo, Integer idPerfil, String password ){
+	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Integer telefono, String correo, Integer idPerfil, String password, Integer eps){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setPrimerNombre(nombre1);
@@ -31,6 +32,10 @@ public class PersonaBean {
 		perfilTo.setIdPerfil(idPerfil);
 		persona.setPerfil(perfilTo);
 		persona.setPassword(password);
+		
+		EpsTo epsTo = new EpsTo();
+		epsTo.setIdEPS(eps);
+		persona.setEps(epsTo);
 
 		DaoPersona daoPersona = new DaoPersona();
 
@@ -41,7 +46,7 @@ public class PersonaBean {
 		
 		PersonaTo persona = new PersonaTo();
 		PerfilTo perfil = new PerfilTo();
-		perfil.setIdPerfil(2);//2 es el numero que indica que la persona es un practicante
+		perfil.setIdPerfil(3);
 		persona.setPerfil(perfil);
 		
 		DaoPersona daoPersona = new DaoPersona();
@@ -52,7 +57,7 @@ public class PersonaBean {
 		
 		PersonaTo persona = new PersonaTo();
 		PerfilTo perfil = new PerfilTo();
-		perfil.setIdPerfil(3);//2 es el numero que indica que la persona es un practicante
+		perfil.setIdPerfil(4);
 		persona.setPerfil(perfil);
 		
 		DaoPersona daoPersona = new DaoPersona();
@@ -61,12 +66,24 @@ public class PersonaBean {
 	
 	public ArrayList<PersonaTo> consultarSupervisores(){
 		
-		return null;
+		PersonaTo persona = new PersonaTo();
+		PerfilTo perfil = new PerfilTo();
+		perfil.setIdPerfil(2);
+		persona.setPerfil(perfil);
+		
+		DaoPersona daoPersona = new DaoPersona();
+		return daoPersona.consultarPersonasPerfil(persona);
 	}
 	
 	public ArrayList<PersonaTo> consultarAdministradores(){
 		
-		return null;
+		PersonaTo persona = new PersonaTo();
+		PerfilTo perfil = new PerfilTo();
+		perfil.setIdPerfil(1);
+		persona.setPerfil(perfil);
+		
+		DaoPersona daoPersona = new DaoPersona();
+		return daoPersona.consultarPersonasPerfil(persona);
 	}
 	
 	public ArrayList<PersonaTo> consultarPersonasFiltro(PersonaTo persona){	
