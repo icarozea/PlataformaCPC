@@ -46,7 +46,7 @@ public class PersonaBean {
 		
 		PersonaTo persona = new PersonaTo();
 		PerfilTo perfil = new PerfilTo();
-		perfil.setIdPerfil(3);//2 es el numero que indica que la persona es un practicante
+		perfil.setIdPerfil(3);
 		persona.setPerfil(perfil);
 		
 		DaoPersona daoPersona = new DaoPersona();
@@ -57,7 +57,7 @@ public class PersonaBean {
 		
 		PersonaTo persona = new PersonaTo();
 		PerfilTo perfil = new PerfilTo();
-		perfil.setIdPerfil(3);//2 es el numero que indica que la persona es un practicante
+		perfil.setIdPerfil(4);
 		persona.setPerfil(perfil);
 		
 		DaoPersona daoPersona = new DaoPersona();
@@ -66,12 +66,24 @@ public class PersonaBean {
 	
 	public ArrayList<PersonaTo> consultarSupervisores(){
 		
-		return null;
+		PersonaTo persona = new PersonaTo();
+		PerfilTo perfil = new PerfilTo();
+		perfil.setIdPerfil(2);
+		persona.setPerfil(perfil);
+		
+		DaoPersona daoPersona = new DaoPersona();
+		return daoPersona.consultarPersonasPerfil(persona);
 	}
 	
 	public ArrayList<PersonaTo> consultarAdministradores(){
 		
-		return null;
+		PersonaTo persona = new PersonaTo();
+		PerfilTo perfil = new PerfilTo();
+		perfil.setIdPerfil(1);
+		persona.setPerfil(perfil);
+		
+		DaoPersona daoPersona = new DaoPersona();
+		return daoPersona.consultarPersonasPerfil(persona);
 	}
 	
 	public ArrayList<PersonaTo> consultarPersonasFiltro(PersonaTo persona){	
