@@ -91,12 +91,17 @@ public class PersonaBean {
 		return daoPersona.consultarPersonasPerfil(persona);
 	}
 	
+	public ArrayList<PersonaTo> consultarAsignados(Integer idSuperior){
+		DaoPersona daoPersona = new DaoPersona();
+		return daoPersona.consultarAsignados(idSuperior);
+	}
+	
 	public PersonaTo consultarPersona(PersonaTo persona){
 		DaoPersona daoPersona = new DaoPersona();
 		return daoPersona.consultarPersona(persona);
 	}
 	
-	public boolean modificarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password ){
+	public boolean modificarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password, Integer idSuperior ){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setPrimerNombre(nombre1);
@@ -117,9 +122,15 @@ public class PersonaBean {
 		perfilTo.setIdPerfil(idPerfil);
 		persona.setPerfil(perfilTo);
 		persona.setPassword(password);
+		persona.setSuperior(idSuperior);
 
 		DaoPersona daoPersona = new DaoPersona();
 
+		return daoPersona.actualizarPersona(persona);
+	}
+	
+	public boolean modificarPersona(PersonaTo persona){
+		DaoPersona daoPersona = new DaoPersona();
 		return daoPersona.actualizarPersona(persona);
 	}
 	
@@ -127,5 +138,7 @@ public class PersonaBean {
 		DaoPersona daoPersona = new DaoPersona();
 		return daoPersona.eliminarPersona(persona);
 	}
+	
+
 
 }

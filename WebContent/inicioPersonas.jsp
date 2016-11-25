@@ -20,7 +20,7 @@
                     </tr>
                     <tr>             	
                         <td>Crear</td>
-                        <td>Asignar</td>
+                        <td>Buscar</td>
                         <td>EPS</td>                                                  
                     </tr>
                 </table>

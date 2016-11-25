@@ -1,5 +1,4 @@
-function manejarAsignacion(operacion,idAsignado, actualId, pNom, sNom, pApe, sApe, rol){
-	document.data.operacion.value = operacion;
+function asignarPersona(idAsignado, actualId, pNom, sNom, pApe, sApe, rol){
 	document.data.asignado.value = idAsignado;
 	document.data.id.value = actualId;
 	document.data.pNom.value = pNom;

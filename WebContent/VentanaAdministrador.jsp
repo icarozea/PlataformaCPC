@@ -20,8 +20,8 @@
                     </tr>
                     <tr>
                         <td>Personas</td>
-                        <td>Usuarios</td>
-                        <td>Citas</td>                       
+                        <td>Citas</td>
+                        <td>Reportes</td>                       
                     </tr>
                 </table>
             </div>
