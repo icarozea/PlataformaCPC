@@ -24,9 +24,9 @@
             String error = "";
             String respuesta = (String)request.getAttribute("respuesta");
             if(respuesta.equals("1"))
-            	mensaje = "Se agregó la nueva persona de forma exitosa";
+            	mensaje = "Se elimino la persona de forma exitosa";
             else{
-            	mensaje = "No fue posible agregar la nueva persona";
+            	mensaje = "No fue posible eliminar la nueva persona";
             	error = (String)request.getAttribute("error");
             }%>
             

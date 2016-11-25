@@ -3,6 +3,7 @@ package com.plataforma.cpc.interfaces;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Interfaz que define una conexión genérica a la base de datos
@@ -55,6 +56,9 @@ public interface Conexion {
 	 */
 	public void agregarAtributo(int numAtributo, Date atributo) throws Exception;
 	
+	
+	public void agregarAtributo(int numAtributo, Long atributo) throws SQLException;
+	
 	/**
 	 * Define el contrato para ejecutar una sententica sql previamente preparada 
 	 * @return ResultSet con los resultados de la sentencia
@@ -73,4 +77,6 @@ public interface Conexion {
 	 * @throws Exception Si se genera un error en el proceso
 	 */
 	public void cerrar() throws Exception;
+
+	
 }

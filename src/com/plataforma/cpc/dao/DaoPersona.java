@@ -64,7 +64,7 @@ public class DaoPersona {
 				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
-				personaTo.setTelefono(rs.getInt("TELEFONO"));
+				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
 				
 				usuarioTo.setIdUsuario(rs.getInt("USUARIO_ID_USUARIO"));
@@ -119,7 +119,7 @@ public class DaoPersona {
 				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
-				personaTo.setTelefono(rs.getInt("TELEFONO"));
+				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
 				
 				//usuarioTo.setIdUsuario(rs.getInt("USUARIO_ID_USUARIO"));
@@ -172,7 +172,7 @@ public class DaoPersona {
 				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
-				personaTo.setTelefono(rs.getInt("TELEFONO"));
+				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
 				
 				usuarioTo.setIdUsuario(rs.getInt("USUARIO_ID_USUARIO"));

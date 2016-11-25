@@ -9,7 +9,7 @@ public class PersonaTo {
 	private 	String 			segundoApellido;
 	private 	String 			numeroDocumento;
 	private 	String 			direccion;
-	private 	Integer 		telefono;
+	private 	Long 			telefono;
 	private 	String 			correo;
 	private 	UsuarioTo 		usuario;
 	private 	TipoDocumentoTo tipoDocumento;
@@ -56,10 +56,10 @@ public class PersonaTo {
 	public String getDireccion() {
 		return direccion;
 	}
-	public Integer getTelefono() {
+	public Long getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(Integer telefono) {
+	public void setTelefono(Long telefono) {
 		this.telefono = telefono;
 	}
 	public void setDireccion(String direccion) {

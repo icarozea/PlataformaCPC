@@ -16,6 +16,7 @@ import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
+import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 
 /**
@@ -38,11 +39,98 @@ public class ServletPersona extends HttpServlet {
 		case "guardarPersona":
 			guardarPersona(request,response);
 			break;
+		case "listarPersonas":
+			listarPersonas(request,response);
+			break;
+		case "editarPersona":
+			editarPersonas(request,response);
+			break;
+		case "eliminarPersona":
+			eliminarPersonas(request,response);
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
 		
 		}
+	}
+	
+	private void eliminarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PersonaBean personaBean = new PersonaBean();
+		PersonaTo persona = new PersonaTo();
+		persona.setIdPersona(new Integer(request.getParameter("idPersona")));
+		
+		if(personaBean.elminarPersona(persona)){
+			request.setAttribute("respuesta", "1");
+			request.setAttribute("error", "");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaEliminarPersona.jsp");
+			dispatcher.forward(request, response);
+		}else{
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", "");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaEliminarPersona.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+	}
+	
+	private void editarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PersonaBean personaBean = new PersonaBean();
+		PersonaTo personaTo = new PersonaTo();
+		personaTo.setIdPersona(new Integer(request.getParameter("idPersona")));
+		
+		PersonaTo persona = new PersonaTo();
+		persona = personaBean.consultarPersona(personaTo);
+		System.out.println(persona);
+	}
+	
+	private void listarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{
+			UtilBean util = new UtilBean();
+			ArrayList<PerfilTo> perfiles = new ArrayList<PerfilTo>();
+			perfiles = util.consultarPerfil();
+						
+			if (perfiles != null && perfiles.size() > 0)
+				request.setAttribute("listaPerfiles", perfiles);
+			
+			String perfil = request.getParameter("perfil");
+
+			if(perfil == null)
+				perfil = "3";//Practicante
+
+			request.setAttribute("valor", perfil);
+			PersonaBean persona = new PersonaBean();
+			ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
+			
+			switch(perfil){
+			case "1":
+				resultados = persona.consultarAdministradores();
+				break;
+			case "2":
+				resultados = persona.consultarSupervisores();
+				break;
+			case "3":
+				resultados = persona.consultarPracticantes();
+				break;
+			case "4":
+				resultados = persona.consultarPacientes();
+				break;	
+			}
+
+			request.setAttribute("listaPersonas", resultados);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas.jsp");
+			dispatcher.forward(request, response);
+		}
+		catch(Exception e){
+			System.out.println("Error de Busqueda: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("valor", "Practicante");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas.jsp");
+			dispatcher.forward(request, response);
+		}
+		
 	}
 	
 	private void guardarPersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +155,7 @@ public class ServletPersona extends HttpServlet {
 
 			String numDoc = request.getParameter("numeroDocumento");
 			String dir = request.getParameter("direccion");
-			Integer tel = Integer.parseInt(request.getParameter("telefono"));
+			Long tel = new Long(request.getParameter("telefono"));
 			String correo = request.getParameter("correo");
 
 			Integer idPerfil = Integer.parseInt(request.getParameter("perfil"));
