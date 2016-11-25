@@ -13,7 +13,7 @@
          <!--MEMU LATERAL--> 
         <%@include file="./menuLateral.jsp" %>
         <div id="marcoGeneral" class="cajaVentanaAsignacion">
-            <p>Pedro Perez----------Cupos: 5</p>
+            <p>${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}----------Cupos: 5</p>
             <table>
                 <tr>
                     <td><div id="marcoAsignados" class="cajaTablas">
