@@ -15,6 +15,7 @@ public class PersonaTo {
 	private 	TipoDocumentoTo tipoDocumento;
 	private 	EpsTo 			eps;
 	private 	PerfilTo 		perfil;
+	private 	Integer 		superior;
 	private		String			password;
 	
 	public Integer getIdPersona() {
@@ -101,6 +102,12 @@ public class PersonaTo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public Integer getSuperior() {
+		return superior;
+	}
+	public void setSuperior(Integer superior) {
+		this.superior = superior;
+	}
 	
 	@Override
 	public String toString() {
@@ -108,6 +115,6 @@ public class PersonaTo {
 				+ segundoNombre + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido
 				+ ", numeroDocumento=" + numeroDocumento + ", direccion=" + direccion + ", telefono=" + telefono
 				+ ", correo=" + correo + ", usuario=" + usuario + ", tipoDocumento=" + tipoDocumento + ", eps=" + eps + ", perfil=" + perfil
-				+ ", password=" + password + "]";
+				+ ", superior=" + superior + ", password=" + password + "]";
 	}
 }
