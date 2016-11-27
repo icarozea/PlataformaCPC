@@ -208,6 +208,8 @@ public class DaoPersona {
     	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL FROM PERSONA WHERE ID_PERSONA = ?";
     	 	
 		try {
+			DaoUtilidades utils = new DaoUtilidades();
+			
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, persona.getIdPersona()); 		
@@ -227,11 +229,11 @@ public class DaoPersona {
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
-				tipoDocumentoTo.setIdTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
+				tipoDocumentoTo = utils.buscarTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
 				personaTo.setTipoDocumento(tipoDocumentoTo);
-				epsTo.setIdEPS(rs.getInt("EPS_ID_EPS"));
+				epsTo = utils.buscarEps((rs.getInt("EPS_ID_EPS")));
 				personaTo.setEps(epsTo);
-				perfilTo.setIdPerfil(rs.getInt("PERFIL_ID_PERFIL"));
+				perfilTo = utils.buscarPerfil((rs.getInt("PERFIL_ID_PERFIL")));
 				personaTo.setPerfil(perfilTo);
 			}
 		} catch (Exception e) {

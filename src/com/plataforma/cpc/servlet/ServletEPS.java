@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import com.plataforma.cpc.modelo.EpsBean;
@@ -28,6 +29,7 @@ public class ServletEPS extends HttpServlet {
 			epsBean = new EpsBean();
 			if (epsBean.ingresarEPS(request.getParameter("nombre"))) {
 				request.setAttribute("mensaje", 1);
+				request.setAttribute("listaEPS", buscarEPS());
 				RequestDispatcher dispatcher = request.getRequestDispatcher("verEps.jsp");
 				dispatcher.forward(request, response);
 			} else {
@@ -36,10 +38,7 @@ public class ServletEPS extends HttpServlet {
 			}
 			break;
 		case "verEPS":
-			epsBean = new EpsBean();
-			ArrayList<EpsTo> listaEps = new ArrayList<EpsTo>();
-			epsTo = new EpsTo();
-			listaEps = epsBean.consultarEPS(epsTo);
+			ArrayList<EpsTo> listaEps = buscarEPS();
 			if(listaEps.size()>0){
 				request.setAttribute("mensaje", 1);
 				request.setAttribute("listaEPS", listaEps);
@@ -88,7 +87,7 @@ public class ServletEPS extends HttpServlet {
 		case "btnEliminarEPS":
 			epsBean = new EpsBean();
 			epsTo = new EpsTo();
-			epsTo.setIdEPS(Integer.parseInt(request.getParameter("EpsId")));
+			epsTo.setIdEPS(Integer.parseInt(request.getParameter("idEPS")));
 			System.out.println("EpsId: "+epsTo.getIdEPS().intValue());
 			if(epsBean.elminaEPS(epsTo)){
 				request.setAttribute("mensaje", 1);
@@ -106,6 +105,13 @@ public class ServletEPS extends HttpServlet {
 
 		}
 
+	}
+	
+	public ArrayList<EpsTo> buscarEPS(){
+		EpsBean epsBean = new EpsBean();
+		ArrayList<EpsTo> listaEps = new ArrayList<EpsTo>();
+		EpsTo epsTo = new EpsTo();
+		return epsBean.consultarEPS(epsTo);
 	}
 
 	@Override

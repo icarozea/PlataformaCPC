@@ -36,7 +36,7 @@
                 <c:forEach items="${requestScope.listaPersonas}" var="persona">
                 	<tr>
                     <td class="tdNombre"><h2>${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</h2></td>
-                    <td class="tdBoton"><input type="button" id="btnVer" class="btnVer"></td>
+                    <td class="tdBoton"><a href="./ServletPersona?operacion=listarPersonas&id=${persona.idPersona}"><input type="button" id="btnVer" class="btnVer"></a></td>
                     <td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar"
                     	onclick="manejarAsignacion('consultar',-1,${persona.idPersona},'${persona.primerNombre}','${persona.segundoNombre}', '${persona.primerApellido}', '${persona.segundoApellido}', '${requestScope.valor}')"></td>
                 </tr> 
