@@ -3,7 +3,7 @@ body{
     align-content: center;
     text-align: center;
     margin: 0 auto;   
-    background-image: url("resources/fondo.jpg");
+    background-image: url("resources/fondo.png");
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100%;

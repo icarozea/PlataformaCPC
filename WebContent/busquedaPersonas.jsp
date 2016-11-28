@@ -37,8 +37,13 @@
                 	<tr>
                     <td class="tdNombre"><h2>${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</h2></td>
                     <td class="tdBoton"><a href="./ServletPersona?operacion=listarPersonas&id=${persona.idPersona}"><input type="button" id="btnVer" class="btnVer"></a></td>
-                    <td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar"
-                    	onclick="manejarAsignacion('consultar',-1,${persona.idPersona},'${persona.primerNombre}','${persona.segundoNombre}', '${persona.primerApellido}', '${persona.segundoApellido}', '${requestScope.valor}')"></td>
+                    <c:choose>
+				    <c:when test="${requestScope.valor == 'Practicante' || requestScope.valor == 'Supervisor'}">
+                    	<td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar"
+                    		onclick="manejarAsignacion('consultar',-1,${persona.idPersona},'${persona.primerNombre}','${persona.segundoNombre}', '${persona.primerApellido}', '${persona.segundoApellido}', '${requestScope.valor}')"></td>
+                    </c:when>
+                    <c:otherwise><td class="tdBoton"></td></c:otherwise>
+                    </c:choose>
                 </tr> 
                 </c:forEach>
             </table>   

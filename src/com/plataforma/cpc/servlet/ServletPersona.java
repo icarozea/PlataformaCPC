@@ -101,6 +101,7 @@ public class ServletPersona extends HttpServlet {
 		request.setAttribute("idPersona", persona.getIdPersona());
 		request.setAttribute("eps", persona.getEps().getNombreEPS());
 		request.setAttribute("pass", persona.getPassword());
+		System.out.println("Password: " + persona.getPassword());
 		request.setAttribute("sup", persona.getSuperior());
 		
 		cargueInicial(request,response);

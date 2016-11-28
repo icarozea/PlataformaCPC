@@ -183,10 +183,24 @@
 						</td>
                     </tr>
 	                    <tr>
-	                    	<td id="seccionEPS" style="display:none;">EPS: </td>
+	                    	<c:choose>
+                    		<c:when test="${requestScope.perfil == 'Paciente'}">
+	                    		<td id="seccionEPS">EPS: </td>
+	                    	</c:when>
+						   	<c:otherwise>
+						   		<td id="seccionEPS" style="display:none;">EPS: </td>
+						   	</c:otherwise>
+							</c:choose>
 	                    	<td>
-	                    		<select id ="eps" name="eps" style="display:none;">
-	                    				<option value="-1"> Seleccione </option>                 		
+	                    		<c:choose>
+                    			<c:when test="${requestScope.perfil == 'Paciente'}">
+	                    			<select id ="eps" name="eps">
+	                    		</c:when>
+						   		<c:otherwise>
+						   			<select id ="eps" name="eps" style="display:none;">
+						   		</c:otherwise>
+								</c:choose>
+	                    			<option value="-1"> Seleccione </option>                 		
 	                    			<c:forEach items="${listaEPS}"  var="varEPS">
 	                    				<c:choose>
                     					<c:when test="${requestScope.eps == varEPS.nombreEPS}">

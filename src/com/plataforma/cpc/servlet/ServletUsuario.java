@@ -19,13 +19,9 @@ public class ServletUsuario extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-
 		String operacion = request.getParameter("operacion");
-		System.out.println("Operacion: "+operacion);
 		switch (operacion) {
 		case "btnIngresar":
-			UsuarioBean usuarioBean = new UsuarioBean();
-			UsuarioTo usuario = new UsuarioTo();
 //			usuario = usuarioBean.validarUsuario(request.getParameter("txtname"), request.getParameter("password"));
 //			System.out.println(usuario.toString());
 //			if (usuario.getIdUsuario() != null) {
@@ -38,9 +34,16 @@ public class ServletUsuario extends HttpServlet {
 //				request.getRequestDispatcher("index.jsp").forward(request, response);
 //			}
 			
-			request.setAttribute("mensaje", 1);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
-			dispatcher.forward(request, response);
+			if(request.getParameter("user").equals("admin")){
+				request.setAttribute("mensaje", 1);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
+				dispatcher.forward(request, response);
+			}
+			else{
+				request.setAttribute("mensaje", 1);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaPracticante.jsp");
+				dispatcher.forward(request, response);
+			}
 			break;
 		default:
 			System.out.println("Opción no existe");

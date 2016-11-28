@@ -138,7 +138,7 @@ public class DaoUtilidades {
 			while (rs.next()){
 				EpsTo epsTo = new EpsTo();
 				epsTo.setIdEPS(rs.getInt("ID_EPS"));
-				epsTo.setNombreEPS("NOMBRE_EPS"); 
+				epsTo.setNombreEPS(rs.getString("NOMBRE_EPS")); 
 				listaEps.add(epsTo);
 			}
 		} catch (SQLException e) {
