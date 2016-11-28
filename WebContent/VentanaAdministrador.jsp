@@ -15,7 +15,7 @@
                 <table class="tablaPrincipal">
                     <tr>
                     	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>
-                        <td><a href="GestiondeUsuarios.jsp"><img src="resources/appointment.png"/></a></td>                     
+                        <td><a href="calendario.jsp"><img src="resources/appointment.png"/></a></td>                     
                         <td><a href="inicio_calendario.jsp"><img src="resources/reporte.png"/></a></td>                      
                     </tr>
                     <tr>
