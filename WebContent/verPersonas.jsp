@@ -75,9 +75,9 @@
 					<td>${persona.numeroDocumento}</td>
 					<td>${persona.direccion}</td>
 					<td>${persona.telefono}</td>
-					<td><input type="submit" name="editarPersona" id="editarPersona" value="editar" class="btnEditar"
+					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona"
 							 onclick="enviarFormulario(this.id,${persona.idPersona})"/></td>
-					<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="eliminar" class="btnEliminar"
+					<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminarPersona"
 						onclick="enviarFormulario(this.id,${persona.idPersona})"/>
 					</td>
 				</tr>

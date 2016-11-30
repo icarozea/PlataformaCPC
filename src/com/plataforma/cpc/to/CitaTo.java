@@ -9,7 +9,9 @@ public class CitaTo {
 	private Date fechaCita;
 	private PersonaTo practicante;
 	private PersonaTo paciente;
-	public Integer getIdCita() {
+	private String estado;
+	
+	public  Integer getIdCita() {
 		return idCita;
 	}
 	public void setIdCita(Integer idCita) {
@@ -45,10 +47,19 @@ public class CitaTo {
 	public void setPaciente(PersonaTo paciente) {
 		this.paciente = paciente;
 	}
+	
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	@Override
 	public String toString() {
 		return "CitaTo [idCita=" + idCita + ", salon=" + salon + ", fechaSolicitud=" + fechaSolicitud + ", fechaCita="
-				+ fechaCita + ", practicante=" + practicante + ", paciente=" + paciente + "]";
+				+ fechaCita + ", practicante=" + practicante + ", paciente=" + paciente + ", estado=" + estado + "]";
 	}
+	
+	
 	
 }
