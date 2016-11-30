@@ -1,17 +1,16 @@
 package com.plataforma.cpc.modelo;
 
-import com.plataforma.cpc.dao.DaoUsuario;
-import com.plataforma.cpc.to.UsuarioTo;
+import com.plataforma.cpc.dao.DaoPersona;
+import com.plataforma.cpc.to.PersonaTo;
+
 
 public class UsuarioBean {
 	
-	public UsuarioTo validarUsuario(String nombreUsuario, String contrasenia){
-		DaoUsuario daoUsuario = new DaoUsuario();
-		UsuarioTo usuarioTo = new UsuarioTo();
-		usuarioTo.setNombreUsuario(nombreUsuario);
-		usuarioTo.setContrasena(contrasenia);
-		System.out.println("Usuario ingresado: "+ usuarioTo.toString());
-		return daoUsuario.consultarUsuario(usuarioTo);
+	public PersonaTo validarUsuario(String nombreUsuario, String contrasenia){
+		DaoPersona daoPersona= new DaoPersona();
+		PersonaTo persona = new PersonaTo();
+		persona = daoPersona.consultarPersonaUsuario(nombreUsuario,contrasenia);
+		return persona;
 	}
 
 }

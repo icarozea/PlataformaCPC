@@ -250,6 +250,56 @@ public class DaoPersona {
     	return personaTo;
     }
     
+    public PersonaTo consultarPersonaUsuario (String numeroDocumento, String password){
+
+    	ResultSet rs =null;
+    	conexionActual = new ConexionOracle();
+    	PersonaTo personaTo = new PersonaTo();
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL FROM PERSONA WHERE NUMERO_DOCUMENTO = ? AND PASS = ?";
+    	 	
+		try {
+			DaoUtilidades utils = new DaoUtilidades();
+			
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, numeroDocumento);
+			conexionActual.agregarAtributo(2, password); 
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
+				EpsTo epsTo = new EpsTo();
+				PerfilTo perfilTo = new PerfilTo();
+				
+				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
+				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
+				personaTo.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
+				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
+				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
+				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
+				personaTo.setDireccion(rs.getString("DIRECCION"));
+				personaTo.setTelefono(rs.getLong("TELEFONO"));
+				personaTo.setCorreo(rs.getString("CORREO"));
+				tipoDocumentoTo = utils.buscarTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
+				personaTo.setTipoDocumento(tipoDocumentoTo);
+				epsTo = utils.buscarEps((rs.getInt("EPS_ID_EPS")));
+				personaTo.setEps(epsTo);
+				perfilTo = utils.buscarPerfil((rs.getInt("PERFIL_ID_PERFIL")));
+				personaTo.setPerfil(perfilTo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+    	return personaTo;
+    }
+    
     public boolean crearPersona(PersonaTo persona){
     	
     	boolean retorno = Boolean.FALSE;
