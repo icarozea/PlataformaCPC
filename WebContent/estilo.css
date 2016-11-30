@@ -142,7 +142,7 @@ input.radio{
     /*    padding: 5px 5px;*/
     height: 5%;
     width: 100%;
-    text-align: right;
+    text-align: center;
     position: fixed;
 }
 
@@ -412,7 +412,7 @@ h3{
         font-size: 1px;*/
 }
 
-.btnAsignar, .btnEditar, .btnEliminar, .btnHistorial, .btnVer, .btnNuevaSesion{
+.btnAsignar, .btnHistorial, .btnVer, .btnNuevaSesion{
     width: 35px;
     height: 35px;
     background-color: transparent;
@@ -423,14 +423,6 @@ h3{
 .btnAsignar{
     background-image: url("resources/asignar2.png");
 
-}
-
-.btnEditar{
-    background-image: url("resources/editar_usuario.png");
-}
-
-.btnEliminar{
-    background-image: url("resources/delete.png");
 }
 
 .btnHistorial{
@@ -473,4 +465,39 @@ h3{
 .cajaDeAsignados h5{
     text-align: center;
    
+}
+
+.btnEditar{
+	width: 35px;
+    height: 35px;
+    background-image: url("resources/edit.png");
+}
+
+.btnEliminar{
+	width: 35px;
+    height: 35px;
+    background-image: url("resources/delete.png");
+}
+
+.btnEditarPersona{
+	width: 35px;
+    height: 35px;
+    background-image: url("resources/personEdit.png");
+}
+
+.btnEliminarPersona{
+	width: 35px;
+    height: 35px;
+    background-image: url("resources/personDelete.png");
+}
+
+.btnVerCita{
+	width: 35px;
+    height: 35px;
+    background-image: url("resources/calendarView.png");
+}
+.btnCrearCita{
+	width: 35px;
+    height: 35px;
+    background-image: url("resources/calendarNew.png");
 }

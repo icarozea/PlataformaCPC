@@ -44,9 +44,9 @@
 			<tr>
 				<td><%=lista.get(i).getIdEPS()%></td>
 				<td><%=lista.get(i).getNombreEPS()%></td>
-				<td><input type="submit" name="btnEditarEPS" id="btnEditarEPS" value="editarEPS" class="btnEditar"
+				<td><input type="submit" name="btnEditarEPS" id="btnEditarEPS" value="" class="btnEditar"
 						 onclick="enviarFormulario(this.id,<%=lista.get(i).getIdEPS()%>)"/></td>
-				<td><input type="submit" name="btnEliminarEPS" id="btnEliminarEPS" value="eliminarEPS" class="btnEliminar"
+				<td><input type="submit" name="btnEliminarEPS" id="btnEliminarEPS" value="" class="btnEliminar"
 					onclick="enviarFormulario(this.id,<%=lista.get(i).getIdEPS()%>)"/>
 				</td>
 			</tr>

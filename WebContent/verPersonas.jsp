@@ -68,6 +68,20 @@
 				<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="eliminar" class="btnEliminar"
 						onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
 			</tr>
+			<c:forEach items="${requestScope.listaPersonas}" var="persona">
+				<tr>
+					<td>${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</td>
+					<td>${persona.tipoDocumento.idTipoDocumento}</td>
+					<td>${persona.numeroDocumento}</td>
+					<td>${persona.direccion}</td>
+					<td>${persona.telefono}</td>
+					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona"
+							 onclick="enviarFormulario(this.id,${persona.idPersona})"/></td>
+					<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminarPersona"
+						onclick="enviarFormulario(this.id,${persona.idPersona})"/>
+					</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</form>
 </body>
