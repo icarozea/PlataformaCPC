@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.plataforma.cpc.modelo.UsuarioBean;
+import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.UsuarioTo;
 
 @WebServlet(name = "ServletUsuario", urlPatterns = { "/ServletUsuario" })
@@ -20,27 +22,31 @@ public class ServletUsuario extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		String operacion = request.getParameter("operacion");
+		PersonaTo personaSesion = new PersonaTo();
+		UsuarioBean usuarioBean = new UsuarioBean();
+		HttpSession session = request.getSession(true);
 		switch (operacion) {
 		case "btnIngresar":
-//			usuario = usuarioBean.validarUsuario(request.getParameter("txtname"), request.getParameter("password"));
-//			System.out.println(usuario.toString());
-//			if (usuario.getIdUsuario() != null) {
-//				request.setAttribute("mensaje", 1);
-//				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
-//				dispatcher.forward(request, response);
-//			} else {
-//				request.setAttribute("mensaje", 2);
-//				System.out.println("usuario no existe");
-//				request.getRequestDispatcher("index.jsp").forward(request, response);
-//			}
+			personaSesion = usuarioBean.validarUsuario(request.getParameter("user"), request.getParameter("password"));
+			
+			if (personaSesion.getIdPersona()!= null) {
+				session.setAttribute("personaSession", personaSesion);
+				request.setAttribute("mensaje", "1");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				request.setAttribute("mensaje", "2");
+				System.out.println("usuario no existe");
+				request.getRequestDispatcher("index.jsp").forward(request, response);
+			}
 			
 			if(request.getParameter("user").equals("admin")){
-				request.setAttribute("mensaje", 1);
+				request.setAttribute("mensaje", "1");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
 				dispatcher.forward(request, response);
 			}
 			else{
-				request.setAttribute("mensaje", 1);
+				request.setAttribute("mensaje", "1");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaPracticante.jsp");
 				dispatcher.forward(request, response);
 			}
