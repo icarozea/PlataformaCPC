@@ -14,12 +14,14 @@
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>
-                    	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>                  
-                        <td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/agenda.png"/></a></td>                      
+                    	<td><a href="./ServletPersona?operacion=editarPersona&idPersona=30"><img src="resources/personas.png"/></a></td>
+                        <td><a href="GestiondeUsuarios.jsp"><img src="resources/appointment.png"/></a></td>                     
+                        <td><a href="inicio_calendario.jsp"><img src="resources/reporte.png"/></a></td>                      
                     </tr>
                     <tr>
-                        <td>Personas</td>
-                        <td>Citas</td>                       
+                        <td>Mi Perfil</td>
+                        <td>Citas</td>
+                        <td>Reportes</td>                       
                     </tr>
                 </table>
             </div>

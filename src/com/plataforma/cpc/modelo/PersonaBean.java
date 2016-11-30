@@ -101,9 +101,10 @@ public class PersonaBean {
 		return daoPersona.consultarPersona(persona);
 	}
 	
-	public boolean modificarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password, Integer idSuperior ){
+	public boolean modificarPersona(Integer id, String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password, Integer eps, Integer idSuperior ){
 		PersonaTo persona = new PersonaTo();
 		
+		persona.setIdPersona(id);
 		persona.setPrimerNombre(nombre1);
 		persona.setSegundoNombre(nombre2);
 		persona.setPrimerApellido(apellido1);
@@ -122,6 +123,9 @@ public class PersonaBean {
 		perfilTo.setIdPerfil(idPerfil);
 		persona.setPerfil(perfilTo);
 		persona.setPassword(password);
+		EpsTo epsTo = new EpsTo();
+		epsTo.setIdEPS(eps);
+		persona.setEps(epsTo);
 		persona.setSuperior(idSuperior);
 
 		DaoPersona daoPersona = new DaoPersona();

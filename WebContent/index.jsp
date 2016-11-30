@@ -13,8 +13,8 @@
             <img src="resources/logo2cpc.png">
                 <form id="FormUsuario" name="FormUsuario" action="./ServletUsuario" method="POST">
                     <input type="hidden" name="operacion" />
-                    <input type="text" name="txtname" id="txtName" value="User" placeholder="usuario" class="text"/><br/>                                  
-                    <input type="password" name="password" id="password" value="password" placeholder="contraseña" class="text"/><br/>
+                    <input type="text" name="user" id="user" placeholder="usuario" class="text"/><br/>                                  
+                    <input type="password" name="password" id="password" placeholder="contraseña" class="text"/><br/>
                     <input type="submit" name="btnIngresar" id="btnIngresar" value="Entrar" class="botones" onclick="{document.FormUsuario.operacion.value=this.id;document.FormUsuario.submit();}"/> 
                 </form>
                 <%if (request.getAttribute("mensaje") != null) {

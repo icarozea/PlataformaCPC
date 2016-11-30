@@ -145,10 +145,14 @@ function validarNombreCompleto(nom1,nom2,ape1,ape2) {
     return true;
 }
 
-function checkTodo(){
+function checkTodo(id){
 	var nomForm = document.getElementById('formCreatePersona');
-	console.log(document.getElementById('formCreatePersona'));
-	document.getElementById('operacion').value = "guardarPersona";
+	
+	if(id != null)
+		document.getElementById('operacion').value = "actualizarDatos";
+	else
+		document.getElementById('operacion').value = "guardarPersona";
+	
     var nom1 = document.getElementById('nombre1').value;
     var nom2 = document.getElementById('nombre2').value;
     var ape1 = document.getElementById('apellido1').value;

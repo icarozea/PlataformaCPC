@@ -17,7 +17,6 @@
 			<a href="VentanaAdministrador.jsp"><li>Inicio</li></a>
 			<a href="inicioPersonas.jsp"><li>Personas</li></a>
 			<a href="inicioCita.jsp"><li>Citas</li></a>
-			<li>Ayuda</li>
 		</ul>
 	</nav>
 	<br>

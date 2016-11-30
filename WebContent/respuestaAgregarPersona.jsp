@@ -32,7 +32,8 @@
             
             <h2><%= mensaje %></h2>
             <h4><%= error %></h4>
-            <a href="./ServletPersona?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Continuar" class="botones"></a>     
+            <a href="./ServletPersona?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Crear Otro" class="botones"></a>     
+       		<a href="./busquedaPersonas"><input type="button" id="btnVer" value="Ver Actuales" class="botones"></a>
        </div>
     </body>
 </html>

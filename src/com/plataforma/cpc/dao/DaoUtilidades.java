@@ -138,7 +138,7 @@ public class DaoUtilidades {
 			while (rs.next()){
 				EpsTo epsTo = new EpsTo();
 				epsTo.setIdEPS(rs.getInt("ID_EPS"));
-				epsTo.setNombreEPS("NOMBRE_EPS"); 
+				epsTo.setNombreEPS(rs.getString("NOMBRE_EPS")); 
 				listaEps.add(epsTo);
 			}
 		} catch (SQLException e) {
@@ -181,6 +181,19 @@ public class DaoUtilidades {
     }
     
     /**
+     * Busca un tipo de documento especifico dado su id de la base de datos y retorna su informacion en un objeto tipo TipoDocumentoTo
+     * @param sigla Sigla del documento tal como aparece en la BD
+     * @return Objeto tipo TipoDocumentoTo
+     */
+    public TipoDocumentoTo buscarTipoDocumento(int id){
+    	for(int i = 0; i < documentos.size(); i++){
+    		if(documentos.get(i).getIdTipoDocumento() == id)
+    			return documentos.get(i);
+    	}
+    	return null;
+    }
+    
+    /**
      * Busca una eps específica dado su id y retorna su informacion en un objeto tipo EpsTo
      * @param id Id de la eps tal como aparece en la BD
      * @return Objeto tipo EpsTo
@@ -192,44 +205,4 @@ public class DaoUtilidades {
     	}
     	return null;
     }
-    
-//    public static void main(String args[]) {
-//    	DaoUtilidades daoUtilidades = new DaoUtilidades();
-//    	
-//    	daoUtilidades.consultarDocumentos(daoUtilidades);
-//    	//daoUsuario.consultarDaoUsuario(daoUsuario);
-//    	//daoUsuario.crearDaoUsuario(daoUsuario);
-//    	//daoUsuario.modificarDaoUsuario(daoUsuario);
-//    	//daoUsuario.eliminarDaoUsuario(daoUsuario);
-//    }
-//    
-//    public void consultarDocumentos(DaoUtilidades daoUtilidades){
-//   	 
-//    	ArrayList<TipoDocumentoTo> listaDocumentos = new ArrayList<TipoDocumentoTo>();
-//    	TipoDocumentoTo tipoDocumento = new TipoDocumentoTo();
-//    	
-//    	listaDocumentos = daoUtilidades.consultarTipoDocumentos(tipoDocumento);
-//    	if (listaDocumentos.size()>0){
-//    		for (TipoDocumentoTo tipoDocumentoTo: listaDocumentos){
-//    			System.out.println(tipoDocumentoTo.toString()); 
-//    		}
-//    	}else {
-//    		System.out.println("No trae datos");
-//    	}
-//    }
-//    
-//    public void consultarPerfiles(DaoUtilidades daoUtilidades){
-//    	 
-//    	ArrayList<PerfilTo> perfiles = new ArrayList<PerfilTo>();
-//    	PerfilTo perfil = new PerfilTo();
-//    	
-//    	perfiles = daoUtilidades.consultarPerfiles(perfil);
-//    	if (perfiles.size()>0){
-//    		for (PerfilTo perfilTo: perfiles){
-//    			System.out.println(perfilTo.toString()); 
-//    		}
-//    	}else {
-//    		System.out.println("No trae datos");
-//    	}
-//    }
 }

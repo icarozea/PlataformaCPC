@@ -45,6 +45,9 @@ public class ServletPersona extends HttpServlet {
 		case "editarPersona":
 			editarPersonas(request,response);
 			break;
+		case "actualizarDatos":
+			actualizarDatos(request,response);
+			break;
 		case "eliminarPersona":
 			eliminarPersonas(request,response);
 			break;
@@ -76,50 +79,54 @@ public class ServletPersona extends HttpServlet {
 	}
 	
 	private void editarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		PersonaBean personaBean = new PersonaBean();
 		PersonaTo personaTo = new PersonaTo();
 		personaTo.setIdPersona(new Integer(request.getParameter("idPersona")));
 		
 		PersonaTo persona = new PersonaTo();
 		persona = personaBean.consultarPersona(personaTo);
-		System.out.println(persona);
+		
+		request.setAttribute("idPersona", persona.getIdPersona());
+		request.setAttribute("pNom", persona.getPrimerNombre());
+		request.setAttribute("sNom", persona.getSegundoNombre());
+		request.setAttribute("pApe", persona.getPrimerApellido());
+		request.setAttribute("sApe", persona.getSegundoApellido());
+		request.setAttribute("doc", persona.getTipoDocumento().getSigla());
+		request.setAttribute("num", persona.getNumeroDocumento());
+		request.setAttribute("dir", persona.getDireccion());
+		request.setAttribute("tel", persona.getTelefono());
+		request.setAttribute("mail", persona.getCorreo());
+		request.setAttribute("perfil", persona.getPerfil().getNombrePerfil());
+		request.setAttribute("idPersona", persona.getIdPersona());
+		request.setAttribute("eps", persona.getEps().getNombreEPS());
+		request.setAttribute("pass", persona.getPassword());
+		System.out.println("Password: " + persona.getPassword());
+		request.setAttribute("sup", persona.getSuperior());
+		
+		cargueInicial(request,response);
 	}
 	
 	private void listarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
-			UtilBean util = new UtilBean();
-			ArrayList<PerfilTo> perfiles = new ArrayList<PerfilTo>();
-			perfiles = util.consultarPerfil();
-						
-			if (perfiles != null && perfiles.size() > 0)
-				request.setAttribute("listaPerfiles", perfiles);
+			PersonaBean personaBean = new PersonaBean();
+			PersonaTo consulta = new PersonaTo();
+			consulta.setIdPersona(Integer.parseInt(request.getParameter("id")));
+			PersonaTo persona = personaBean.consultarPersona(consulta);
 			
-			String perfil = request.getParameter("perfil");
-
-			if(perfil == null)
-				perfil = "3";//Practicante
-
-			request.setAttribute("valor", perfil);
-			PersonaBean persona = new PersonaBean();
-			ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
+			request.setAttribute("pNom", persona.getPrimerNombre());
+			request.setAttribute("sNom", persona.getSegundoNombre());
+			request.setAttribute("pApe", persona.getPrimerApellido());
+			request.setAttribute("sApe", persona.getSegundoApellido());
+			request.setAttribute("doc", persona.getTipoDocumento().getSigla());
+			request.setAttribute("num", persona.getNumeroDocumento());
+			request.setAttribute("dir", persona.getDireccion());
+			request.setAttribute("tel", persona.getTelefono());
+			request.setAttribute("mail", persona.getCorreo());
+			request.setAttribute("perfil", persona.getPerfil().getNombrePerfil());
+			request.setAttribute("idPersona", persona.getIdPersona());
+			request.setAttribute("eps", persona.getEps().getNombreEPS());
 			
-			switch(perfil){
-			case "1":
-				resultados = persona.consultarAdministradores();
-				break;
-			case "2":
-				resultados = persona.consultarSupervisores();
-				break;
-			case "3":
-				resultados = persona.consultarPracticantes();
-				break;
-			case "4":
-				resultados = persona.consultarPacientes();
-				break;	
-			}
-
-			request.setAttribute("listaPersonas", resultados);
-
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas.jsp");
 			dispatcher.forward(request, response);
 		}
@@ -199,6 +206,76 @@ public class ServletPersona extends HttpServlet {
 		}
 		
 	}
+	
+	private void actualizarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+		
+		PersonaBean personaBean = new PersonaBean();
+		try{
+			DaoUtilidades daoUtilidades = new DaoUtilidades();
+			
+			Integer id = Integer.parseInt(request.getParameter("id"));
+			String nom1 = request.getParameter("nombre1");
+			String nom2 = request.getParameter("nombre2");
+			String ap1 = request.getParameter("apellido1");
+			String ap2 = request.getParameter("apellido2");
+
+			Integer tipoDoc;
+			String sigla = request.getParameter("tipoDocumento");
+			TipoDocumentoTo tipoDocumentoTo = daoUtilidades.buscarTipoDocumento(sigla);
+			if(!sigla.equals("-1") || tipoDocumentoTo != null)
+				tipoDoc = tipoDocumentoTo.getIdTipoDocumento();
+			else
+				throw new Exception("El tipo de documento no es valido o no se encontró");
+
+			String numDoc = request.getParameter("numeroDocumento");
+			String dir = request.getParameter("direccion");
+			Long tel = new Long(request.getParameter("telefono"));
+			String correo = request.getParameter("correo");
+
+			Integer idPerfil = Integer.parseInt(request.getParameter("perfil"));
+			PerfilTo perfilTo = daoUtilidades.buscarPerfil(idPerfil);
+			if(idPerfil > 0 || perfilTo != null)
+				idPerfil = perfilTo.getIdPerfil();
+			else{
+				System.out.println("Texto: " + idPerfil + " Busqueda: " + perfilTo);
+				throw new Exception("El perfil seleccionado no es valido o no se encontró");
+			}
+			
+			String password = request.getParameter("password");
+			
+			Integer eps;
+			Integer idEPS = Integer.parseInt(request.getParameter("eps"));
+			if(idEPS < 0)
+				eps = 1;
+			else{
+				EpsTo epsTo = daoUtilidades.buscarEps(idEPS);
+				if(epsTo != null)
+					eps = epsTo.getIdEPS();
+				else
+					throw new Exception("La EPS no es válida o no se encontró");
+			}
+			
+			String superior = request.getParameter("superior");
+			Integer idSuperior = superior.equals("") ? 0 : Integer.parseInt(superior); 
+			if(personaBean.modificarPersona(id, nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, correo, idPerfil, password, eps, idSuperior)){
+				request.setAttribute("respuesta", "1");
+				request.setAttribute("error", "");
+				dispatcher.forward(request, response);
+			}
+			else{
+				throw new Exception("Hubo un error al intentar guardar la información");
+			}
+		}
+		catch(Exception e){
+			System.out.println("Error de formulario: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			dispatcher.forward(request, response);
+		}
+	}
 
 	private void cargueInicial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilBean util = new UtilBean();
@@ -207,13 +284,13 @@ public class ServletPersona extends HttpServlet {
 		ArrayList<TipoDocumentoTo> listaDocumentos = new ArrayList<TipoDocumentoTo>();
 		ArrayList<EpsTo> epss = new ArrayList<EpsTo>();
 		try {
-			perfiles = util.consultarPerfil();
+			perfiles = util.consultarPerfiles();
 			
 			if (perfiles != null && perfiles.size() > 0){
 				request.setAttribute("listaPerfiles", perfiles);
 			}
 			
-			listaDocumentos = util.consultarTipoDocumento();
+			listaDocumentos = util.consultarTiposDocumento();
 			if (listaDocumentos != null && listaDocumentos.size() > 0){
 				request.setAttribute("listaDocumentos", listaDocumentos);
 			}

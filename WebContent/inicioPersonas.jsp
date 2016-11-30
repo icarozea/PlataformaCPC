@@ -14,9 +14,9 @@
                 <table class="tablaPrincipal">
                     <tr>                  	 
                     	<!-- <td><a href="FormularioPersona.jsp"><img src="resources/man.png"/></a></td>-->
-                    	<td><a href="./ServletPersona?operacion=cargueIncial"><img src="resources/man.png"/></a></td>
-                    	<td><a href="busquedaPersonas"><img src="resources/man.png"/></a></td>
-                    	<td><a href="FormularioEPS.jsp"><img src="resources/expediente.png"/></a></td> 
+                    	<td><a href="./ServletPersona?operacion=cargueIncial"><img src="resources/agregarPersona.png"/></a></td>
+                    	<td><a href="busquedaPersonas"><img src="resources/buscar.png"/></a></td>
+                    	<td><a href="FormularioEPS.jsp"><img src="resources/eps.png"/></a></td> 
                     </tr>
                     <tr>             	
                         <td>Crear</td>

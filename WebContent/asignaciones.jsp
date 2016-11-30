@@ -15,9 +15,11 @@
         <%@include file="./menuLateral.jsp" %>
         <div id="marcoGeneral" class="cajaVentanaAsignacion">
             <p>${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}----------Cupos: ${requestScope.cupos}</p>
+            <a href="busquedaPersonas"><input type="button" id="btnAsignar" value="Volver" class="botones"></a>
             <table>
                 <tr>
                     <td><div id="marcoAsignados" class="cajaTablas">
+                    	<h1>ASIGNADOS</h1>
                         <table><c:forEach items="${requestScope.asignados}" var="asignado">
                         	<tr>
                             	<td>${asignado.primerNombre} ${asignado.segundoNombre} ${asignado.primerApellido} ${asignado.segundoApellido}</td>
@@ -27,6 +29,7 @@
                         </c:forEach>
                         </table></div></td>
                     <td><div id="marcoCandidatos" class="cajaTablas">
+                    	<h1>CANDIDATOS</h1>
                         <table><c:forEach items="${requestScope.posibilidades}" var="posible">
                         	<tr>
                             	<td>${posible.primerNombre} ${posible.segundoNombre} ${posible.primerApellido} ${posible.segundoApellido}</td>
