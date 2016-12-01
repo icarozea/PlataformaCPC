@@ -32,23 +32,19 @@ public class ServletUsuario extends HttpServlet {
 			if (personaSesion.getIdPersona()!= null) {
 				session.setAttribute("personaSession", personaSesion);
 				request.setAttribute("mensaje", "1");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
-				dispatcher.forward(request, response);
+				if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
+					RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
+					dispatcher.forward(request, response);
+				}
+				else{
+					request.setAttribute("mensaje", "1");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaPracticante.jsp");
+					dispatcher.forward(request, response);
+				}
 			} else {
 				request.setAttribute("mensaje", "2");
 				System.out.println("usuario no existe");
 				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}
-			
-			if(request.getParameter("user").equals("admin")){
-				request.setAttribute("mensaje", "1");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
-				dispatcher.forward(request, response);
-			}
-			else{
-				request.setAttribute("mensaje", "1");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaPracticante.jsp");
-				dispatcher.forward(request, response);
 			}
 			break;
 		default:

@@ -11,6 +11,7 @@
          <%@include file="./menuNavegacion.jsp" %> 
         <div id="gestioncitas" class="caja">
             <h1>INICIO</h1>
+            <h2>Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>

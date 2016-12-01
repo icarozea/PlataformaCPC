@@ -12,21 +12,20 @@
          <%@include file="./menuNavegacion.jsp" %> 
         <div id="gestioncitas" class="caja">
             <h1>INICIO</h1>
+            <h2>Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>
-<<<<<<< HEAD
-                    	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>                  
-                        <td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/agenda.png"/></a></td>                      
-=======
-                    	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>
-                        <td><a href="calendario.jsp"><img src="resources/appointment.png"/></a></td>                     
-                        <td><a href="inicio_calendario.jsp"><img src="resources/reporte.png"/></a></td>                      
->>>>>>> Sebastian
+
+                    	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>                                       
+                        <td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/appointment.png"/></a></td>                     
+                        <td><a href="calendario.jsp"><img src="resources/reporte.png"/></a></td>                      
+
                     </tr>
                     <tr>
                         <td>Personas</td>
-                        <td>Citas</td>                       
+                        <td>Citas</td>
+                        <td>Reportes</td>                         
                     </tr>
                 </table>
             </div>

@@ -11,7 +11,7 @@ import com.plataforma.cpc.to.UsuarioTo;
 
 public class PersonaBean {
 	
-	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password, Integer eps){
+	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, Long otroTelefono, String correo, Integer idPerfil, String password, Integer eps, String jornada, Integer codigo){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setPrimerNombre(nombre1);
@@ -26,6 +26,7 @@ public class PersonaBean {
 		persona.setNumeroDocumento(numeroDocumento);
 		persona.setDireccion(direccion);
 		persona.setTelefono(telefono);
+		persona.setOtroTelefono(otroTelefono);
 		persona.setCorreo(correo);
 		
 		PerfilTo perfilTo = new PerfilTo();
@@ -36,6 +37,8 @@ public class PersonaBean {
 		EpsTo epsTo = new EpsTo();
 		epsTo.setIdEPS(eps);
 		persona.setEps(epsTo);
+		persona.setJornada(jornada);
+		persona.setCodigoEstudiante(codigo);
 
 		DaoPersona daoPersona = new DaoPersona();
 
@@ -101,7 +104,7 @@ public class PersonaBean {
 		return daoPersona.consultarPersona(persona);
 	}
 	
-	public boolean modificarPersona(Integer id, String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, String correo, Integer idPerfil, String password, Integer eps, Integer idSuperior ){
+	public boolean modificarPersona(Integer id, String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, Long otroTelefono, String correo, Integer idPerfil, String password, Integer eps, Integer idSuperior, String jornada, Integer codigo ){
 		PersonaTo persona = new PersonaTo();
 		
 		persona.setIdPersona(id);
@@ -117,6 +120,7 @@ public class PersonaBean {
 		persona.setNumeroDocumento(numeroDocumento);
 		persona.setDireccion(direccion);
 		persona.setTelefono(telefono);
+		persona.setOtroTelefono(otroTelefono);
 		persona.setCorreo(correo);
 		
 		PerfilTo perfilTo = new PerfilTo();
@@ -127,6 +131,8 @@ public class PersonaBean {
 		epsTo.setIdEPS(eps);
 		persona.setEps(epsTo);
 		persona.setSuperior(idSuperior);
+		persona.setCodigoEstudiante(codigo);
+		persona.setJornada(jornada);
 
 		DaoPersona daoPersona = new DaoPersona();
 
@@ -142,7 +148,4 @@ public class PersonaBean {
 		DaoPersona daoPersona = new DaoPersona();
 		return daoPersona.eliminarPersona(persona);
 	}
-	
-
-
 }

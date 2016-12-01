@@ -96,12 +96,14 @@ public class ServletPersona extends HttpServlet {
 		request.setAttribute("num", persona.getNumeroDocumento());
 		request.setAttribute("dir", persona.getDireccion());
 		request.setAttribute("tel", persona.getTelefono());
+		request.setAttribute("tel2", persona.getOtroTelefono());
 		request.setAttribute("mail", persona.getCorreo());
 		request.setAttribute("perfil", persona.getPerfil().getNombrePerfil());
 		request.setAttribute("idPersona", persona.getIdPersona());
 		request.setAttribute("eps", persona.getEps().getNombreEPS());
 		request.setAttribute("pass", persona.getPassword());
-		System.out.println("Password: " + persona.getPassword());
+		request.setAttribute("jornada", persona.getJornada());
+		request.setAttribute("cod", persona.getCodigoEstudiante());
 		request.setAttribute("sup", persona.getSuperior());
 		
 		cargueInicial(request,response);
@@ -122,10 +124,13 @@ public class ServletPersona extends HttpServlet {
 			request.setAttribute("num", persona.getNumeroDocumento());
 			request.setAttribute("dir", persona.getDireccion());
 			request.setAttribute("tel", persona.getTelefono());
+			request.setAttribute("tel2", persona.getOtroTelefono());
 			request.setAttribute("mail", persona.getCorreo());
 			request.setAttribute("perfil", persona.getPerfil().getNombrePerfil());
 			request.setAttribute("idPersona", persona.getIdPersona());
 			request.setAttribute("eps", persona.getEps().getNombreEPS());
+			request.setAttribute("jornada", persona.getJornada());
+			request.setAttribute("cod", persona.getCodigoEstudiante());
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas.jsp");
 			dispatcher.forward(request, response);
@@ -163,6 +168,8 @@ public class ServletPersona extends HttpServlet {
 			String numDoc = request.getParameter("numeroDocumento");
 			String dir = request.getParameter("direccion");
 			Long tel = new Long(request.getParameter("telefono"));
+			String otroTel = request.getParameter("telefono2");
+			Long tel2 = !otroTel.equals("")? new Long(otroTel) : 0;
 			String correo = request.getParameter("correo");
 
 			Integer idPerfil = Integer.parseInt(request.getParameter("perfil"));
@@ -175,6 +182,9 @@ public class ServletPersona extends HttpServlet {
 			}
 			
 			String password = request.getParameter("password");
+			String jornada = request.getParameter("jornada");
+			String cod = request.getParameter("codigo");
+			Integer codigo = !cod.equals("")? Integer.parseInt(cod) : 0;
 			
 			Integer eps;
 			Integer idEPS = Integer.parseInt(request.getParameter("eps"));
@@ -188,7 +198,8 @@ public class ServletPersona extends HttpServlet {
 					throw new Exception("La EPS no es válida o no se encontró");
 			}
 			
-			if(personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, correo, idPerfil, password, eps)){
+			
+			if(personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, jornada, codigo)){
 				request.setAttribute("respuesta", "1");
 				request.setAttribute("error", "");
 				dispatcher.forward(request, response);
@@ -232,6 +243,7 @@ public class ServletPersona extends HttpServlet {
 			String numDoc = request.getParameter("numeroDocumento");
 			String dir = request.getParameter("direccion");
 			Long tel = new Long(request.getParameter("telefono"));
+			Long tel2 = new Long(request.getParameter("telefono2"));
 			String correo = request.getParameter("correo");
 
 			Integer idPerfil = Integer.parseInt(request.getParameter("perfil"));
@@ -244,6 +256,8 @@ public class ServletPersona extends HttpServlet {
 			}
 			
 			String password = request.getParameter("password");
+			String jornada = request.getParameter("jornada");
+			Integer codigo = Integer.parseInt(request.getParameter("codigo"));
 			
 			Integer eps;
 			Integer idEPS = Integer.parseInt(request.getParameter("eps"));
@@ -259,7 +273,7 @@ public class ServletPersona extends HttpServlet {
 			
 			String superior = request.getParameter("superior");
 			Integer idSuperior = superior.equals("") ? 0 : Integer.parseInt(superior); 
-			if(personaBean.modificarPersona(id, nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, correo, idPerfil, password, eps, idSuperior)){
+			if(personaBean.modificarPersona(id, nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, idSuperior, jornada, codigo)){
 				request.setAttribute("respuesta", "1");
 				request.setAttribute("error", "");
 				dispatcher.forward(request, response);
