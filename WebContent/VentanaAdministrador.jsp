@@ -15,8 +15,14 @@
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>
+<<<<<<< HEAD
                     	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>                  
                         <td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/agenda.png"/></a></td>                      
+=======
+                    	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>
+                        <td><a href="calendario.jsp"><img src="resources/appointment.png"/></a></td>                     
+                        <td><a href="inicio_calendario.jsp"><img src="resources/reporte.png"/></a></td>                      
+>>>>>>> Sebastian
                     </tr>
                     <tr>
                         <td>Personas</td>
