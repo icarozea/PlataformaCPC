@@ -1,6 +1,8 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,13 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.plataforma.cpc.modelo.EpsBean;
+import com.plataforma.cpc.modelo.CitaBean;
 import com.plataforma.cpc.modelo.PersonaBean;
-import com.plataforma.cpc.modelo.UtilBean;
-import com.plataforma.cpc.to.EpsTo;
-import com.plataforma.cpc.to.PerfilTo;
+import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
-import com.plataforma.cpc.to.TipoDocumentoTo;
 
 @WebServlet(name="ServletCita", urlPatterns = {"/ServletCita"})
 public class ServletCita extends HttpServlet{
@@ -32,11 +31,11 @@ public class ServletCita extends HttpServlet{
 		case "cargueIncial":
 			cargueInicial(request,response);
 			break;
+		case "irCita":
+			irCita(request,response);
+			break;
 		case "crearCita":
 			crearCita(request,response);
-			break;
-		case "listarPersonas":
-			//listarPersonas(request,response);
 			break;
 		case "editarPersona":
 			//editarPersonas(request,response);
@@ -52,6 +51,39 @@ public class ServletCita extends HttpServlet{
 	}
 	
 	private void crearCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		CitaBean citaBean = new CitaBean();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+		CitaTo citaTo = new CitaTo();
+		PersonaTo practicante = new PersonaTo();
+		PersonaTo paciente = new PersonaTo();
+		
+		try {
+			practicante.setIdPersona(new Integer(request.getParameter("idPracticante")));
+			paciente.setIdPersona(new Integer(request.getParameter("idPaciente")));
+			citaTo.setPracticante(practicante);
+			citaTo.setPaciente(paciente);
+			citaTo.setSalon(request.getParameter("salon"));
+			
+			String stringFechaConHora = request.getParameter("fecha");
+			citaTo.setFechaCita(sdf.parse(stringFechaConHora));
+			citaBean.ingresarCita(citaTo);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verCitas.jsp");
+			dispatcher.forward(request, response);
+		
+		} catch (Exception e) {
+			System.out.println("Error de formulario: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			dispatcher.forward(request, response);
+		}
+		
+	}
+	
+	private void irCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PersonaBean personaBean = new PersonaBean();
 		PersonaTo personaFiltro = new PersonaTo();

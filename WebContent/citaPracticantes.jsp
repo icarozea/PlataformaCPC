@@ -50,7 +50,7 @@
 					<td>${persona.telefono}</td>
 					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnVerCita"
 							 onclick=""/></td>
-					<td><input type="submit" name="crearCita" id="crearCita" value="" class="btnCrearCita"
+					<td><input type="submit" name="crearCita" id="irCita" value="" class="btnCrearCita"
 						onclick="enviarFormulario(this.id,${persona.idPersona})"/>
 					</td>
 				</tr>
