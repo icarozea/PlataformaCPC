@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * Interfaz que define una conexión genérica a la base de datos
@@ -48,6 +49,8 @@ public interface Conexion {
 	 * @throws Exception Si no hay una sentencia previa
 	 */
 	public void agregarAtributo(int numAtributo, int atributo) throws Exception;
+	
+	public void agregarAtributo(int numAtributo, Timestamp atributo) throws Exception;
 	
 	/**
 	 * Define el contrato para añadir un atributo de tipo Date a una sentencia previamente preparada

@@ -2,6 +2,7 @@ package com.plataforma.cpc.dao;
 
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.plataforma.cpc.interfaces.Conexion;
@@ -118,16 +119,17 @@ public class DaoCitas extends ConexionOracle{
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO CITA (ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE) ";
-    			sql+= "VALUES (CITA_SEQ.NEXTVAL,?,TO_DATE(SYSDATE,'DD/MM/RR'), TO_TIMESTAMP(?,'DD/MM/RR HH12:MI:SS AM'),?,?)";
+    	String sql = "INSERT INTO CITA (ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE,ESTADO) ";
+    			sql+= "VALUES (CITA_SEQ.NEXTVAL,?,TO_DATE(SYSDATE,'DD/MM/RR'),?,?,?,'PENDIENTE')";
     	 	
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);	
-			conexionActual.agregarAtributo(1, cita.getSalon()); 
-			conexionActual.agregarAtributo(2, (Date) cita.getFechaCita()); 
+			conexionActual.agregarAtributo(1, cita.getSalon());
+			Timestamp timestamp = new Timestamp(cita.getFechaCita().getTime());
+			conexionActual.agregarAtributo(2, timestamp);
 			conexionActual.agregarAtributo(3, cita.getPracticante().getIdPersona()); 
-			conexionActual.agregarAtributo(4, cita.getPaciente().getIdPersona()); 
+			conexionActual.agregarAtributo(4, cita.getPaciente().getIdPersona());
 			
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
