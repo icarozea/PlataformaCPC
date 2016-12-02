@@ -51,7 +51,12 @@
 				<th>Dirección</th>
 				<th>Telefono</th>
 				<th>Correo</th>
-				<th>EPS</th>
+				<c:if test="${requestScope.perfil == 'Paciente'}">
+					<th>EPS</th>
+				</c:if>
+				<c:if test="${requestScope.perfil == 'Practicante'}">
+					<th>Código</th>
+				</c:if>
 				<th></th>
 				<th></th>
 			</tr>
@@ -62,7 +67,12 @@
 				<td>${requestScope.dir}</td>
 				<td>${requestScope.tel}</td>
 				<td>${requestScope.mail}</td>
-				<td>${requestScope.eps}</td>
+				<c:if test="${requestScope.perfil == 'Paciente'}">
+					<td>${requestScope.eps}</td>
+				</c:if>
+				<c:if test="${requestScope.perfil == 'Practicante'}">
+					<td>${requestScope.cod}</td>
+				</c:if>
 				<td><input type="submit" name="editarPersona" id="editarPersona" value="editar" class="btnEditar"
 							 onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
 				<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="eliminar" class="btnEliminar"

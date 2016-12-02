@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Personas</title>
         <link rel="stylesheet" href="estilo.css"></link>
     </head>
     <body>
@@ -16,12 +16,12 @@
                     	<!-- <td><a href="FormularioPersona.jsp"><img src="resources/man.png"/></a></td>-->
                     	<td><a href="./ServletPersona?operacion=cargueIncial"><img src="resources/agregarPersona.png"/></a></td>
                     	<td><a href="busquedaPersonas"><img src="resources/buscar.png"/></a></td>
-                    	<td><a href="FormularioEPS.jsp"><img src="resources/eps.png"/></a></td> 
+                    	<td><a href="InicioConfiguracion.jsp"><img src="resources/config.png"/></a></td>  
                     </tr>
                     <tr>             	
                         <td>Crear</td>
                         <td>Buscar</td>
-                        <td>EPS</td>                                                  
+                        <td>Configuración</td>                                                  
                     </tr>
                 </table>
             </div>
