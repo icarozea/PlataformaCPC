@@ -1,7 +1,8 @@
 package com.plataforma.cpc.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import com.plataforma.cpc.interfaces.Conexion;
@@ -26,18 +27,18 @@ public class DaoCitas extends ConexionOracle{
     	conexionActual = new ConexionOracle();
     	ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
     	int numeroParametros = 0;
-    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE FROM CITA WHERE 1=1 ";
+    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE FROM CITA WHERE 1=1 ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 	 		
 			if(cita.getPracticante()!= null){
-	 			sql+= "AND ID_PER_PRACTICANTE = ? ";
+	 			sql+= "AND ID_PRACTICANTE = ? ";
 	 			numeroParametros++;
 	 			conexionActual.agregarAtributo(numeroParametros, cita.getPracticante().getIdPersona()); 
 	 		}
 	 		if (cita.getPaciente() != null){
-	 			sql+= "AND ID_PER_PACIENTE = ? ";
+	 			sql+= "AND ID_PACIENTE = ? ";
 	 			numeroParametros++;
 	 			conexionActual.agregarAtributo(numeroParametros, cita.getPaciente().getIdPersona()); 
 	 		}
@@ -48,15 +49,15 @@ public class DaoCitas extends ConexionOracle{
 				CitaTo citaTo = new CitaTo();
 				citaTo.setIdCita(rs.getInt("ID_CITA"));
 				citaTo.setSalon(rs.getString("SALON"));
-				citaTo.setFechaSolicitud(rs.getDate("FECHA_SOLICITUD"));
-				citaTo.setFechaCita(rs.getDate("FECHA_CITA"));
+				citaTo.setFechaSolicitud(rs.getTimestamp("FECHA_SOLICITUD").toLocalDateTime());
+				citaTo.setFechaCita(rs.getTimestamp("FECHA_CITA").toLocalDateTime());
 				
 				PersonaTo practicante = new PersonaTo();
-				practicante.setIdPersona(rs.getInt("ID_PER_PRACTICANTE"));
+				practicante.setIdPersona(rs.getInt("ID_PRACTICANTE"));
 				citaTo.setPracticante(practicante);
 				
 				PersonaTo paciente = new PersonaTo();
-				paciente.setIdPersona(rs.getInt("ID_PER_PACIENTE"));
+				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));
 				citaTo.setPaciente(paciente);
 				
 				citas.add(citaTo);
@@ -79,7 +80,7 @@ public class DaoCitas extends ConexionOracle{
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	CitaTo citaTo = new CitaTo();
-    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE FROM CITA WHERE ID_CITA = ? ";
+    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE FROM CITA WHERE ID_CITA = ? ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -90,15 +91,15 @@ public class DaoCitas extends ConexionOracle{
 			while (rs.next()){
 				citaTo.setIdCita(rs.getInt("ID_CITA"));
 				citaTo.setSalon(rs.getString("SALON"));
-				citaTo.setFechaSolicitud(rs.getDate("FECHA_SOLICITUD"));
-				citaTo.setFechaCita(rs.getDate("FECHA_CITA"));
+				citaTo.setFechaSolicitud(rs.getTimestamp("FECHA_SOLICITUD").toLocalDateTime());
+				citaTo.setFechaCita(rs.getTimestamp("FECHA_CITA").toLocalDateTime());
 				
 				PersonaTo practicante = new PersonaTo();
-				practicante.setIdPersona(rs.getInt("ID_PER_PRACTICANTE"));
+				practicante.setIdPersona(rs.getInt("ID_PRACTICANTE"));
 				citaTo.setPracticante(practicante);
 				
 				PersonaTo paciente = new PersonaTo();
-				paciente.setIdPersona(rs.getInt("ID_PER_PACIENTE"));
+				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));
 				citaTo.setPaciente(paciente);
 			}
 		} catch (Exception e) {
@@ -118,14 +119,14 @@ public class DaoCitas extends ConexionOracle{
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO CITA (ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PER_PRACTICANTE,ID_PER_PACIENTE) ";
-    			sql+= "VALUES (CITA_SEQ.NEXTVAL,?,TO_DATE(SYSDATE,'DD/MM/RR'), TO_TIMESTAMP(?,'DD/MM/RR HH12:MI:SS AM'),?,?)";
+    	String sql = "INSERT INTO CITA (ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE) ";
+    			sql+= "VALUES (CITA_SEQ.NEXTVAL,?,TO_TIMESTAMP(SYSDATE,'DD/MM/RR HH24:MI:SS'), ?,?,?)";
     	 	
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);	
 			conexionActual.agregarAtributo(1, cita.getSalon()); 
-			conexionActual.agregarAtributo(2, (Date) cita.getFechaCita()); 
+			conexionActual.agregarAtributo(2, cita.getFechaCita()); 
 			conexionActual.agregarAtributo(3, cita.getPracticante().getIdPersona()); 
 			conexionActual.agregarAtributo(4, cita.getPaciente().getIdPersona()); 
 			
@@ -148,14 +149,14 @@ public class DaoCitas extends ConexionOracle{
     	
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE CITA SET SALON = ?, FECHA_SOLICITUD = TO_DATE(SYSDATE,'DD/MM/RR'),";
-    	sql+="FECHA_CITA = TO_TIMESTAMP(?,'DD/MM/RR HH12:MI:SS AM'),ID_PER_PRACTICANTE = ?, ID_PER_PACIENTE = ? WHERE ID_CITA = ? ";
+    	String sql = "UPDATE CITA SET SALON = ?, FECHA_SOLICITUD = TO_TIMESTAMP(SYSDATE,'DD/MM/RR HH24:MI:SS'),";
+    	sql+="FECHA_CITA = TO_TIMESTAMP(?,'DD/MM/RR HH24:MI:SS'),ID_PRACTICANTE = ?, ID_PACIENTE = ? WHERE ID_CITA = ? ";
     	 	
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, cita.getSalon()); 
-			conexionActual.agregarAtributo(2, (Date) cita.getFechaCita()); 
+			conexionActual.agregarAtributo(2, cita.getFechaCita()); 
 			conexionActual.agregarAtributo(3, cita.getPracticante().getIdPersona()); 
 			conexionActual.agregarAtributo(4, cita.getPaciente().getIdPersona()); 
 			conexionActual.agregarAtributo(5, cita.getIdCita()); 
@@ -199,81 +200,5 @@ public class DaoCitas extends ConexionOracle{
 			}
 		}	
     	return retorno;
-    }
-    
-    public static void main(String args[]) {
-    	DaoUsuario daoUsuario = new DaoUsuario();
-    	
-    	//daoUsuario.consultarDaoUsuarios(daoUsuario);
-    	//daoUsuario.consultarDaoUsuario(daoUsuario);
-    	//daoUsuario.crearDaoUsuario(daoUsuario);
-    	//daoUsuario.modificarDaoUsuario(daoUsuario);
-    	daoUsuario.eliminarDaoUsuario(daoUsuario);
-    }
-    public void eliminarDaoUsuario(DaoUsuario daoUsuario){
-     	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setIdUsuario(new Integer(3));
-   
-    	if (daoUsuario.eliminarUsuario(usuario)){
-    		System.out.println("Eliminado"); 
-    	}else {
-    		System.out.println("No eliminado");
-    	}
-    }
-    public void modificarDaoUsuario(DaoUsuario daoUsuario){
-      	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setIdUsuario(new Integer(4));
-    	usuario.setNombreUsuario("alberto");
-    	usuario.setContrasena("alberto123");
-    	usuario.setCorreo("alberto@gmail.com");
-   
-    	if (daoUsuario.actualizarUsuario(usuario)){
-    		System.out.println("Actualizado"); 
-    	}else {
-    		System.out.println("No actualizado");
-    	}
-    }
-    
-    public void crearDaoUsuario(DaoUsuario daoUsuario){
-   	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setNombreUsuario("vanessa");
-    	usuario.setContrasena("vanessa123");
-    	usuario.setCorreo("vanessa@gmail.com");
-   
-    	if (daoUsuario.crearUsuario(usuario)){
-    		System.out.println("Creado"); 
-    	}else {
-    		System.out.println("No creado");
-    	}
-    }
-    
-    public void consultarDaoUsuario(DaoUsuario daoUsuario){
-    	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setIdUsuario(new Integer(4));
-    	
-    	usuario = daoUsuario.consultarUsuario(usuario);
-    	if (usuario != null){
-    		System.out.println(usuario.toString()); 
-    	}else {
-    		System.out.println("No trae datos");
-    	}
-    }
-    public void consultarDaoUsuarios(DaoUsuario daoUsuario){
- 
-    	ArrayList<UsuarioTo> usuarios = new ArrayList<UsuarioTo>();
-    	UsuarioTo usuario = new UsuarioTo();
-    	
-    	usuarios = daoUsuario.consultarUsuarios(usuario);
-    	if (usuarios.size()>0){
-    		for (UsuarioTo usuarioTo: usuarios){
-    			System.out.println(usuarioTo.toString()); 
-    		}
-    	}else {
-    		System.out.println("No trae datos");
-    	}
     }
 }

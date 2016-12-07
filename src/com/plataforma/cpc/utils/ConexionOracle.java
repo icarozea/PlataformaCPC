@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,8 +64,9 @@ public class ConexionOracle implements Conexion {
 		sentenciaActual.setInt(numAtributo, atributo);
 	}
 	
-	public void agregarAtributo(int numAtributo, Date atributo) throws Exception{
-		sentenciaActual.setDate(numAtributo, atributo);
+	public void agregarAtributo(int numAtributo, LocalDateTime atributo) throws Exception{
+		Timestamp timestamp = Timestamp.valueOf(atributo);
+		sentenciaActual.setTimestamp(numAtributo, timestamp);
 	}
 	
 	@Override

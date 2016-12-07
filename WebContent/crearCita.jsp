@@ -35,11 +35,10 @@
 	<%@include file="/menuNavegacion.jsp"%>
 	
 	<h1 id="titulo">Cita</h1>
-	<form id="FormDatos" name="FormDatos" action="./ServletCrearCita" method="POST">
+	<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="operacion" id="operacion" />
-		<input type="hidden" name="idPersona" id="idPersona" value="${requestScope.practicante.idPersona}"/>
-		<input type="hidden" name="idPersona" id="idPaciente"/>
-		
+		<input type="hidden" name="idPracticante" id="idPracticante" value="${requestScope.practicante.idPersona}"/>
+		<input type="hidden" name="idPaciente" id="idPaciente"/>
 		<table class="rwd-table-noBorder">
 			<tr>
 				<th>Practicante: </th>
@@ -59,13 +58,13 @@
 							<th>Seleccionar</th>
 							<th>Paciente</th>
 							<th>Tipo Documento</th>
-							<th>Numero Documento </th>
+							<th>Número Documento </th>
 							<th>Dirección</th>
-							<th>Telefono</th>
+							<th>Teléfono</th>
 						</tr>
 					<c:forEach items="${requestScope.listaPacientes}" var="paciente">
 						<tr>
-							<td><input type="radio" id="${paciente.idPersona}" name="grupoPaciente" onclick="radioSelect(this.id);"></td>
+							<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}"></td>
 							<td>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</td>
 							<td>${paciente.tipoDocumento.idTipoDocumento}</td>
 							<td>${paciente.numeroDocumento}</td>
@@ -78,7 +77,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td>Salon: </td>
+				<td>Salón: </td>
 				<td><input type="text" id="salon" name="salon" required></td>
 				<td>Fecha y Hora: </td>
 				<td><input type="text" id="fecha" name="fecha" required></td>
@@ -87,7 +86,7 @@
 			</tr>
 		</table>
 		<br>
-        <input type="button" onclick="" id="btnAceptar" value="Aceptar" class="botones">		
+        <input type="button" onclick="{document.FormDatos.operacion.value='guardarCita'; document.FormDatos.submit();}" id="btnAceptar" value="Aceptar" class="botones">		
 	</form>
 </body>
 </html>

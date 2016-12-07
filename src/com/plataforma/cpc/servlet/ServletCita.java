@@ -1,6 +1,9 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.modelo.EpsBean;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.modelo.UtilBean;
+import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaTo;
@@ -35,8 +40,8 @@ public class ServletCita extends HttpServlet{
 		case "crearCita":
 			crearCita(request,response);
 			break;
-		case "listarPersonas":
-			//listarPersonas(request,response);
+		case "guardarCita":
+			guardarCita(request, response);
 			break;
 		case "editarPersona":
 			//editarPersonas(request,response);
@@ -103,6 +108,29 @@ public class ServletCita extends HttpServlet{
 			dispatcher.forward(request, response);
 		}
 		
+	}
+	
+	public void guardarCita(HttpServletRequest request, HttpServletResponse response){
+		DaoCitas dao = new DaoCitas();
+		CitaTo citaTo = new CitaTo();
+		PersonaTo paciente = new PersonaTo();
+		PersonaTo practicante = new PersonaTo();
+		
+		try{
+			practicante.setIdPersona(Integer.parseInt(request.getParameter("idPracticante")));
+			citaTo.setPracticante(practicante);
+			paciente.setIdPersona(Integer.parseInt(request.getParameter("grupoPaciente")));
+			citaTo.setPaciente(paciente);
+			citaTo.setSalon(request.getParameter("salon"));
+			LocalDateTime date = LocalDateTime.parse(request.getParameter("fecha"));
+			citaTo.setFechaCita(date);
+			
+			dao.crearCita(citaTo);
+			System.out.println("Cita creada");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

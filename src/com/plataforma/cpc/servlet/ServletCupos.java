@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.tagplugins.jstl.core.Catch;
-
 import com.plataforma.cpc.dao.DaoUtilidades;
 import com.plataforma.cpc.modelo.EpsBean;
 import com.plataforma.cpc.to.EpsTo;
