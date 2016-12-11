@@ -44,7 +44,7 @@
 				<th>Practicante: </th>
 				<td>${requestScope.practicante.primerNombre} ${requestScope.practicante.segundoNombre} ${requestScope.practicante.primerApellido} ${requestScope.practicante.segundoApellido}</td>
 				<th>Tipo Documento: </th>
-				<td>${requestScope.practicante.tipoDocumento.idTipoDocumento}</td>
+				<td>${requestScope.practicante.tipoDocumento.sigla}</td>
 				<th>Numero Documento: </th>
 				<td>${requestScope.practicante.numeroDocumento}</td>
 			</tr>
@@ -80,13 +80,15 @@
 				<td>Salón: </td>
 				<td><input type="text" id="salon" name="salon" required></td>
 				<td>Fecha y Hora: </td>
-				<td><input type="text" id="fecha" name="fecha" required></td>
-				<td>
-				</td>
+				<td><input type="text" id="fecha" name="fecha" value="${requestScope.fecha}" required></td>
+				<td><input type="button" id="btnFecha" value="Buscar" class="botones" onclick="{document.FormCalendario.submit();}"></td>
 			</tr>
 		</table>
 		<br>
         <input type="button" onclick="{document.FormDatos.operacion.value='guardarCita'; document.FormDatos.submit();}" id="btnAceptar" value="Aceptar" class="botones">		
+	</form>
+	<form id="FormCalendario" name="FormCalendario" action="./Calendario"  method="GET">
+		<input type="hidden" id="idPersona" name="idPersona" value="${requestScope.practicante.idPersona}">
 	</form>
 </body>
 </html>

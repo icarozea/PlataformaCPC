@@ -1,14 +1,10 @@
 package com.plataforma.cpc.dao;
 
-import java.util.Date;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
-import com.plataforma.cpc.to.UsuarioTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
 public class DaoCitas extends ConexionOracle{

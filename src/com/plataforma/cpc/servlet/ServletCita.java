@@ -64,6 +64,8 @@ public class ServletCita extends HttpServlet{
 		
 		Integer idPersona = new Integer(request.getParameter("idPersona"));
 		
+		String fecha = parsearFecha(request.getParameter("fecha"));
+		
 		personaFiltro.setIdPersona(idPersona);			
 		ArrayList<PersonaTo> listaPacientes = new ArrayList<PersonaTo>();
 		
@@ -73,6 +75,7 @@ public class ServletCita extends HttpServlet{
 			
 			request.setAttribute("practicante", practicante);
 			request.setAttribute("listaPacientes", listaPacientes);
+			request.setAttribute("fecha", fecha);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("crearCita.jsp");
 			dispatcher.forward(request, response);
 			
@@ -96,6 +99,7 @@ public class ServletCita extends HttpServlet{
 			practicantes = persona.consultarPracticantes();
 			
 			request.setAttribute("listaPracticantes", practicantes);
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("citaPracticantes.jsp");
 			dispatcher.forward(request, response);
 			
@@ -131,6 +135,64 @@ public class ServletCita extends HttpServlet{
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	private String parsearFecha(String fecha){
+		if(fecha != null){
+			String[] partes = fecha.split(" ");
+			String retorno = partes[3] + "-" + parsearMes(partes[1]) + "-" + partes[2] + "T" + partes[4];
+			System.out.println("La fecha: " + retorno);
+			return retorno;
+		}
+		
+		return "";
+	}
+	
+	private String parsearMes(String mes){
+		String par = "err";
+		
+		switch (mes){
+		case "Jan":
+			par = "01";
+			break;
+		case "Feb":
+			par = "02";
+			break;
+		case "Mar":
+			par = "03";
+			break;
+		case "Apr":
+			par = "04";
+			break;
+		case "May":
+			par = "05";
+			break;
+		case "Jun":
+			par = "06";
+			break;
+		case "Jul":
+			par = "07";
+			break;
+		case "Aug":
+			par = "08";
+			break;
+		case "Sep":
+			par = "09";
+			break;
+		case "Oct":
+			par = "10";
+			break;
+		case "Nov":
+			par = "11";
+			break;
+		case "Dec":
+			par = "12";
+			break;
+		default:
+			break;
+		}
+		
+		return par;
 	}
 	
 	@Override
