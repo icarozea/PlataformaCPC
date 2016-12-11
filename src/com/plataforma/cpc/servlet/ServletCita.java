@@ -1,21 +1,19 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.plataforma.cpc.modelo.CitaBean;
+import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
+
 
 @WebServlet(name="ServletCita", urlPatterns = {"/ServletCita"})
 public class ServletCita extends HttpServlet{
@@ -31,11 +29,11 @@ public class ServletCita extends HttpServlet{
 		case "cargueIncial":
 			cargueInicial(request,response);
 			break;
-		case "irCita":
-			irCita(request,response);
-			break;
 		case "crearCita":
 			crearCita(request,response);
+			break;
+		case "guardarCita":
+			guardarCita(request, response);
 			break;
 		case "editarPersona":
 			//editarPersonas(request,response);
@@ -52,44 +50,13 @@ public class ServletCita extends HttpServlet{
 	
 	private void crearCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		CitaBean citaBean = new CitaBean();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
-		CitaTo citaTo = new CitaTo();
-		PersonaTo practicante = new PersonaTo();
-		PersonaTo paciente = new PersonaTo();
-		
-		try {
-			practicante.setIdPersona(new Integer(request.getParameter("idPracticante")));
-			paciente.setIdPersona(new Integer(request.getParameter("idPaciente")));
-			citaTo.setPracticante(practicante);
-			citaTo.setPaciente(paciente);
-			citaTo.setSalon(request.getParameter("salon"));
-			
-			String stringFechaConHora = request.getParameter("fecha");
-			citaTo.setFechaCita(sdf.parse(stringFechaConHora));
-			citaBean.ingresarCita(citaTo);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("verCitas.jsp");
-			dispatcher.forward(request, response);
-		
-		} catch (Exception e) {
-			System.out.println("Error de formulario: " + e.getMessage());
-			e.printStackTrace();
-			request.setAttribute("respuesta", "2");
-			request.setAttribute("error", e.getMessage());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("");
-			dispatcher.forward(request, response);
-		}
-		
-	}
-	
-	private void irCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		PersonaBean personaBean = new PersonaBean();
 		PersonaTo personaFiltro = new PersonaTo();
 		PersonaTo practicante = new PersonaTo();
 		
 		Integer idPersona = new Integer(request.getParameter("idPersona"));
+		
+		String fecha = parsearFecha(request.getParameter("fecha"));
 		
 		personaFiltro.setIdPersona(idPersona);			
 		ArrayList<PersonaTo> listaPacientes = new ArrayList<PersonaTo>();
@@ -100,6 +67,7 @@ public class ServletCita extends HttpServlet{
 			
 			request.setAttribute("practicante", practicante);
 			request.setAttribute("listaPacientes", listaPacientes);
+			request.setAttribute("fecha", fecha);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("crearCita.jsp");
 			dispatcher.forward(request, response);
 			
@@ -123,6 +91,7 @@ public class ServletCita extends HttpServlet{
 			practicantes = persona.consultarPracticantes();
 			
 			request.setAttribute("listaPracticantes", practicantes);
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("citaPracticantes.jsp");
 			dispatcher.forward(request, response);
 			
@@ -137,6 +106,87 @@ public class ServletCita extends HttpServlet{
 		
 	}
 	
+	public void guardarCita(HttpServletRequest request, HttpServletResponse response){
+		DaoCitas dao = new DaoCitas();
+		CitaTo citaTo = new CitaTo();
+		PersonaTo paciente = new PersonaTo();
+		PersonaTo practicante = new PersonaTo();
+		
+		try{
+			practicante.setIdPersona(Integer.parseInt(request.getParameter("idPracticante")));
+			citaTo.setPracticante(practicante);
+			paciente.setIdPersona(Integer.parseInt(request.getParameter("grupoPaciente")));
+			citaTo.setPaciente(paciente);
+			citaTo.setSalon(request.getParameter("salon"));
+			LocalDateTime date = LocalDateTime.parse(request.getParameter("fecha"));
+			citaTo.setFechaCita(date);
+			
+			dao.crearCita(citaTo);
+			System.out.println("Cita creada");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	private String parsearFecha(String fecha){
+		if(fecha != null){
+			String[] partes = fecha.split(" ");
+			String retorno = partes[3] + "-" + parsearMes(partes[1]) + "-" + partes[2] + "T" + partes[4];
+			System.out.println("La fecha: " + retorno);
+			return retorno;
+		}
+		
+		return "";
+	}
+	
+	private String parsearMes(String mes){
+		String par = "err";
+		
+		switch (mes){
+		case "Jan":
+			par = "01";
+			break;
+		case "Feb":
+			par = "02";
+			break;
+		case "Mar":
+			par = "03";
+			break;
+		case "Apr":
+			par = "04";
+			break;
+		case "May":
+			par = "05";
+			break;
+		case "Jun":
+			par = "06";
+			break;
+		case "Jul":
+			par = "07";
+			break;
+		case "Aug":
+			par = "08";
+			break;
+		case "Sep":
+			par = "09";
+			break;
+		case "Oct":
+			par = "10";
+			break;
+		case "Nov":
+			par = "11";
+			break;
+		case "Dec":
+			par = "12";
+			break;
+		default:
+			break;
+		}
+		
+		return par;
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -148,5 +198,4 @@ public class ServletCita extends HttpServlet{
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-
 }

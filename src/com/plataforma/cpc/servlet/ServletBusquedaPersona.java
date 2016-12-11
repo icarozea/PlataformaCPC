@@ -38,13 +38,17 @@ public class ServletBusquedaPersona extends HttpServlet {
 
 		try{
 			String busqueda = request.getParameter("busqueda");
+			String jornada = request.getParameter("jornada");
 
 			if(busqueda == null)
 				busqueda = "Practicante";
 
-			request.setAttribute("valor", busqueda);
+			if(jornada == null)
+				jornada = "dia";
 
-			request.setAttribute("listaPersonas", RealizarBusqueda(busqueda));
+			request.setAttribute("valor", busqueda);
+			request.setAttribute("jornada", jornada);
+			request.setAttribute("listaPersonas", RealizarBusqueda(busqueda, jornada));
 
 			dispatcher.forward(request, response);
 		}
@@ -56,23 +60,37 @@ public class ServletBusquedaPersona extends HttpServlet {
 		}
 	}
 
-	public ArrayList<PersonaTo> RealizarBusqueda(String perfil){
+	public ArrayList<PersonaTo> RealizarBusqueda(String perfil, String jornada){
 		PersonaBean persona = new PersonaBean();
 		ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
+		ArrayList<PersonaTo> retorno = new ArrayList<PersonaTo>();
+		boolean buscarJornada = false;
 
 		switch(perfil){
 		case "Practicante":
 			resultados = persona.consultarPracticantes();
+			buscarJornada = true;
 			break;
 		case "Supervisor":
 			resultados = persona.consultarSupervisores();
 			break;
 		case "Paciente":
 			resultados = persona.consultarPacientes();
+			buscarJornada = true;
 			break;
 		case "Administrador":
 			resultados = persona.consultarAdministradores();
 			break;	
+		}
+
+		if(buscarJornada){
+			for(int i = 0; i < resultados.size(); i++){
+				PersonaTo actual = resultados.get(i);
+				if(actual.getJornada().equals(jornada))
+					retorno.add(actual);
+			}
+
+			return retorno;
 		}
 		
 		return resultados;

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Calendario</title>
 <meta charset='utf-8' />
 <link href='fullcalendar.css' rel='stylesheet' />
 <link href='fullcalendar.print.css' rel='stylesheet' media='print' />
@@ -18,25 +19,25 @@
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
+				right: 'agendaWeek,agendaDay'
 			},
 			locale: 'es',
 			navLinks: true, // can click day/week names to navigate views
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {
-				var title = prompt('Event Title:');
+				//var title = prompt('Event Title:');
 				var eventData;
-				if (title) {
+				//if (title) {
 					eventData = {
-						title: title,
+						//title: title,
 						start: start,
 						end: end
 					};
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-					$('#fecha').val(eventData.title);
+					$('#fecha').val(eventData.start);
 					$('#enviarFecha').submit();
-				}
+				//}
 				$('#calendar').fullCalendar('unselect');
 			},
 			editable: true,
@@ -65,10 +66,11 @@
 </style>
 </head>
 <body>
-
 	<div id='calendar'></div>
-	<form id="enviarFecha" name="enviarFecha" action="./Calendario" method="POST">
+	<form id="enviarFecha" name="enviarFecha" action="./ServletCita" method="POST">
 		<input type="hidden" name="fecha"  id="fecha"/>
+		<input type="hidden" name="idPersona"  id="idPersona" value="<%= request.getParameter("idPersona") %>"/>
+		<input type="hidden" name="operacion"  id="operacion" value="crearCita"/>
 	</form>
 </body>
 </html>

@@ -1,18 +1,13 @@
 package com.plataforma.cpc.utils;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import java.time.LocalDateTime;
 import com.plataforma.cpc.interfaces.Conexion;
-
 import oracle.jdbc.driver.OracleDriver;
 
 /**
@@ -63,12 +58,9 @@ public class ConexionOracle implements Conexion {
 		sentenciaActual.setInt(numAtributo, atributo);
 	}
 	
-	public void agregarAtributo(int numAtributo, Timestamp atributo) throws Exception{
-		sentenciaActual.setTimestamp(numAtributo, atributo);
-	}
-	
-	public void agregarAtributo(int numAtributo, Date atributo) throws Exception{
-		sentenciaActual.setDate(numAtributo, atributo);
+	public void agregarAtributo(int numAtributo, LocalDateTime atributo) throws Exception{
+		Timestamp timestamp = Timestamp.valueOf(atributo);
+		sentenciaActual.setTimestamp(numAtributo, timestamp);
 	}
 	
 	@Override
@@ -99,24 +91,4 @@ public class ConexionOracle implements Conexion {
         	connection.close();
         }
     }
-    
-    public static void main(String args[]) {
-        ConexionOracle conexionOracle = new ConexionOracle();
-        try {
-            conexionOracle.conectar();
-            Connection conn = conexionOracle.getConexion();
-            // driver@machineName:port:SID           ,  userid,  password
-            Statement stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("select BANNER from SYS.V_$VERSION");
-            while (rset.next()) {
-                System.out.println(rset.getString(1));   // Print col 1
-            }
-            stmt.close();
-            conexionOracle.cerrar();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConexionOracle.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-
 }

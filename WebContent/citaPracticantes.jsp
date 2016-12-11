@@ -44,7 +44,7 @@
 			<c:forEach items="${requestScope.listaPracticantes}" var="persona">
 				<tr>
 					<td>${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</td>
-					<td>${persona.tipoDocumento.idTipoDocumento}</td>
+					<td>${persona.tipoDocumento.sigla}</td>
 					<td>${persona.numeroDocumento}</td>
 					<td>${persona.direccion}</td>
 					<td>${persona.telefono}</td>
