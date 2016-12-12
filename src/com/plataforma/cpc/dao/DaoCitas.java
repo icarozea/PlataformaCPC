@@ -22,6 +22,7 @@ public class DaoCitas extends ConexionOracle{
 		ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
+    	
     	int numeroParametros = 0;
     	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE FROM CITA WHERE 1=1 ";
 		try {
@@ -71,6 +72,48 @@ public class DaoCitas extends ConexionOracle{
     	return citas;
     }
     
+	public ArrayList<CitaTo> consultarCitasPracticante(Integer idPracticante){
+		ResultSet rs =null;
+    	conexionActual = new ConexionOracle();
+    	ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
+    	String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE FROM CITA WHERE  ID_PRACTICANTE=?";
+    	try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idPracticante);
+			
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				CitaTo citaTo = new CitaTo();
+				citaTo.setIdCita(rs.getInt("ID_CITA"));
+				citaTo.setSalon(rs.getString("SALON"));
+				citaTo.setFechaSolicitud(rs.getTimestamp("FECHA_SOLICITUD").toLocalDateTime());
+				citaTo.setFechaCita(rs.getTimestamp("FECHA_CITA").toLocalDateTime());
+				
+				PersonaTo practicante = new PersonaTo();
+				practicante.setIdPersona(rs.getInt("ID_PRACTICANTE"));
+				citaTo.setPracticante(practicante);
+				
+				PersonaTo paciente = new PersonaTo();
+				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));
+				citaTo.setPaciente(paciente);
+				
+				citas.add(citaTo);
+			}
+    	} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+    	return citas;
+	}
+	
     public CitaTo consultarCita(CitaTo cita){
 
     	ResultSet rs =null;

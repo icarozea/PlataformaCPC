@@ -66,7 +66,7 @@
 						<tr>
 							<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}"></td>
 							<td>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</td>
-							<td>${paciente.tipoDocumento.idTipoDocumento}</td>
+							<td>${paciente.tipoDocumento.sigla}</td>
 							<td>${paciente.numeroDocumento}</td>
 							<td>${paciente.direccion}</td>
 							<td>${paciente.telefono}</td>

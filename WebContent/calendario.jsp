@@ -11,6 +11,7 @@
 <script src='js/jquery-3.1.1.min.js'></script>
 <script src='js/fullcalendar.min.js'></script>
 <script src='js/locale-all.js'></script>
+<% String eventos = (String)request.getAttribute("citas"); %>
 <script>
 
 	$(document).ready(function() {
@@ -43,6 +44,7 @@
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: [
+				<%= eventos %>
 			]
 		});
 		
