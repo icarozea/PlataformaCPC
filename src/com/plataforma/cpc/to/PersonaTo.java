@@ -3,6 +3,7 @@ package com.plataforma.cpc.to;
 public class PersonaTo {
 	
 	private 	Integer 		idPersona;
+	private 	Integer			codigoEstudiante;
 	private 	String 			primerNombre;
 	private 	String 			segundoNombre;
 	private 	String 			primerApellido;
@@ -10,14 +11,34 @@ public class PersonaTo {
 	private 	String 			numeroDocumento;
 	private 	String 			direccion;
 	private 	Long 			telefono;
+	private 	Long 			otroTelefono;
 	private 	String 			correo;
 	private 	UsuarioTo 		usuario;
 	private 	TipoDocumentoTo tipoDocumento;
 	private 	EpsTo 			eps;
 	private 	PerfilTo 		perfil;
 	private 	Integer 		superior;
+	private		String			jornada;
 	private		String			password;
 	
+	public Integer getCodigoEstudiante() {
+		return codigoEstudiante;
+	}
+	public void setCodigoEstudiante(Integer codigoEstudiante) {
+		this.codigoEstudiante = codigoEstudiante;
+	}
+	public Long getOtroTelefono() {
+		return otroTelefono;
+	}
+	public void setOtroTelefono(Long otroTelefono) {
+		this.otroTelefono = otroTelefono;
+	}
+	public String getJornada() {
+		return jornada;
+	}
+	public void setJornada(String jornada) {
+		this.jornada = jornada;
+	}
 	public Integer getIdPersona() {
 		return idPersona;
 	}
@@ -108,13 +129,13 @@ public class PersonaTo {
 	public void setSuperior(Integer superior) {
 		this.superior = superior;
 	}
-	
 	@Override
 	public String toString() {
-		return "PersonaTo [idPersona=" + idPersona + ", primerNombre=" + primerNombre + ", segundoNombre="
-				+ segundoNombre + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido
-				+ ", numeroDocumento=" + numeroDocumento + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", correo=" + correo + ", usuario=" + usuario + ", tipoDocumento=" + tipoDocumento + ", eps=" + eps + ", perfil=" + perfil
-				+ ", superior=" + superior + ", password=" + password + "]";
+		return "PersonaTo [idPersona=" + idPersona + ", codigoEstudiante=" + codigoEstudiante + ", primerNombre="
+				+ primerNombre + ", segundoNombre=" + segundoNombre + ", primerApellido=" + primerApellido
+				+ ", segundoApellido=" + segundoApellido + ", numeroDocumento=" + numeroDocumento + ", direccion="
+				+ direccion + ", telefono=" + telefono + ", otroTelefono=" + otroTelefono + ", correo=" + correo
+				+ ", usuario=" + usuario + ", tipoDocumento=" + tipoDocumento + ", eps=" + eps + ", perfil=" + perfil
+				+ ", superior=" + superior + ", jornada=" + jornada + ", password=" + password + "]";
 	}
 }

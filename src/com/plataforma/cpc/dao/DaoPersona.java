@@ -22,7 +22,7 @@ public class DaoPersona {
     	conexionActual = new ConexionOracle();
     	ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
     	int numeroParametros = 0;
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,USUARIO_ID_USUARIO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL FROM PERSONA WHERE 1 = 1 ";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,USUARIO_ID_USUARIO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE 1 = 1 ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -75,6 +75,9 @@ public class DaoPersona {
 				personaTo.setEps(epsTo);
 				perfilTo.setIdPerfil(rs.getInt("PERFIL_ID_PERFIL"));
 				personaTo.setPerfil(perfilTo);
+				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
+				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
+				personaTo.setJornada(rs.getString("JORNADA"));
 				personas.add(personaTo);
 
 			}
@@ -97,7 +100,7 @@ public class DaoPersona {
     	conexionActual = new ConexionOracle();
     	ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
     	
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR FROM PERSONA WHERE PERFIL_ID_PERFIL = ? ";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE PERFIL_ID_PERFIL = ? ";
     	 	
 		try {
 			conexionActual.conectar();
@@ -131,6 +134,9 @@ public class DaoPersona {
 				perfilTo.setIdPerfil(rs.getInt("PERFIL_ID_PERFIL"));
 				personaTo.setPerfil(perfilTo);
 				personaTo.setSuperior(rs.getInt("PERSONA_ID_SUPERIOR"));
+				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
+				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
+				personaTo.setJornada(rs.getString("JORNADA"));
 				personas.add(personaTo);
 
 			}
@@ -152,7 +158,7 @@ public class DaoPersona {
     	conexionActual = new ConexionOracle();
     	ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
     	
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL FROM PERSONA WHERE PERSONA_ID_SUPERIOR = ? ";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE PERSONA_ID_SUPERIOR = ? ";
     	
     	try {
 			conexionActual.conectar();
@@ -182,6 +188,10 @@ public class DaoPersona {
 				personaTo.setEps(epsTo);
 				perfilTo.setIdPerfil(rs.getInt("PERFIL_ID_PERFIL"));
 				personaTo.setPerfil(perfilTo);
+				personaTo.setSuperior(rs.getInt("PERSONA_ID_SUPERIOR"));
+				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
+				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
+				personaTo.setJornada(rs.getString("JORNADA"));
 				personas.add(personaTo);
 			}
     	}
@@ -205,7 +215,7 @@ public class DaoPersona {
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	PersonaTo personaTo = new PersonaTo();
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PASS FROM PERSONA WHERE ID_PERSONA = ?";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PASS, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE ID_PERSONA = ?";
     	 	
 		try {
 			DaoUtilidades utils = new DaoUtilidades();
@@ -236,6 +246,10 @@ public class DaoPersona {
 				perfilTo = utils.buscarPerfil((rs.getInt("PERFIL_ID_PERFIL")));
 				personaTo.setPerfil(perfilTo);
 				personaTo.setPassword(rs.getString("PASS"));
+				personaTo.setSuperior(rs.getInt("PERSONA_ID_SUPERIOR"));
+				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
+				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
+				personaTo.setJornada(rs.getString("JORNADA"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -255,7 +269,7 @@ public class DaoPersona {
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	PersonaTo personaTo = new PersonaTo();
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL FROM PERSONA WHERE NUMERO_DOCUMENTO = ? AND PASS = ?";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE NUMERO_DOCUMENTO = ? AND PASS = ?";
     	 	
 		try {
 			DaoUtilidades utils = new DaoUtilidades();
@@ -286,6 +300,10 @@ public class DaoPersona {
 				personaTo.setEps(epsTo);
 				perfilTo = utils.buscarPerfil((rs.getInt("PERFIL_ID_PERFIL")));
 				personaTo.setPerfil(perfilTo);
+				personaTo.setSuperior(rs.getInt("PERSONA_ID_SUPERIOR"));
+				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
+				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
+				personaTo.setJornada(rs.getString("JORNADA"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -304,8 +322,8 @@ public class DaoPersona {
     	
     	boolean retorno = Boolean.FALSE;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PERSONA_ID_SUPERIOR,PASS)"
-    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PERSONA_ID_SUPERIOR,PASS,OTRO_TEL,CODIGO,JORNADA)"
+    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     	 	
 		try {
 			conexionActual.conectar();
@@ -323,6 +341,9 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
 			conexionActual.agregarAtributo(12, 0);
 			conexionActual.agregarAtributo(13, persona.getPassword());
+			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
+			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
+			conexionActual.agregarAtributo(16, persona.getJornada());
 			
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
@@ -343,7 +364,7 @@ public class DaoPersona {
     	
     	boolean retorno =  Boolean.FALSE;
     	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE PERSONA SET PRIMER_NOMBRE = ?, SEGUNDO_NOMBRE = ?, PRIMER_APELLIDO = ?, SEGUNDO_APELLIDO = ?,NUMERO_DOCUMENTO = ?,DIRECCION = ?,TELEFONO = ?,CORREO = ?,TIPO_DOCUMENTO_ID_DOCUMENTO = ?, EPS_ID_EPS = ?, PERFIL_ID_PERFIL = ?, PERSONA_ID_SUPERIOR = ? WHERE ID_PERSONA = ?";
+    	String sql = "UPDATE PERSONA SET PRIMER_NOMBRE = ?, SEGUNDO_NOMBRE = ?, PRIMER_APELLIDO = ?, SEGUNDO_APELLIDO = ?,NUMERO_DOCUMENTO = ?,DIRECCION = ?,TELEFONO = ?,CORREO = ?,TIPO_DOCUMENTO_ID_DOCUMENTO = ?, EPS_ID_EPS = ?, PERFIL_ID_PERFIL = ?, PERSONA_ID_SUPERIOR = ?, PASS = ?, OTRO_TEL = ?, CODIGO = ?, JORNADA = ? WHERE ID_PERSONA = ?";
     	 	
 		try {
 			conexionActual.conectar();
@@ -359,8 +380,12 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
-			conexionActual.agregarAtributo(12, persona.getSuperior());
-			conexionActual.agregarAtributo(13, persona.getIdPersona());
+			conexionActual.agregarAtributo(12, persona.getSuperior());		
+			conexionActual.agregarAtributo(13, persona.getPassword());
+			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
+			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
+			conexionActual.agregarAtributo(16, persona.getJornada());
+			conexionActual.agregarAtributo(17, persona.getIdPersona());
 			
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
@@ -405,81 +430,4 @@ public class DaoPersona {
 		}	
     	return retorno;
     }
-    
-    /*public static void main(String args[]) {
-    	DaoUsuario daoUsuario = new DaoUsuario();
-    	
-    	//daoUsuario.consultarDaoUsuarios(daoUsuario);
-    	//daoUsuario.consultarDaoUsuario(daoUsuario);
-    	//daoUsuario.crearDaoUsuario(daoUsuario);
-    	//daoUsuario.modificarDaoUsuario(daoUsuario);
-    	daoUsuario.eliminarDaoUsuario(daoUsuario);
-    }
-    public void eliminarDaoUsuario(DaoUsuario daoUsuario){
-     	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setIdUsuario(new Integer(3));
-   
-    	if (daoUsuario.eliminarUsuario(usuario)){
-    		System.out.println("Eliminado"); 
-    	}else {
-    		System.out.println("No eliminado");
-    	}
-    }
-    public void modificarDaoUsuario(DaoUsuario daoUsuario){
-      	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setIdUsuario(new Integer(4));
-    	usuario.setNombreUsuario("alberto");
-    	usuario.setContrasena("alberto123");
-    	usuario.setCorreo("alberto@gmail.com");
-   
-    	if (daoUsuario.actualizarUsuario(usuario)){
-    		System.out.println("Actualizado"); 
-    	}else {
-    		System.out.println("No actualizado");
-    	}
-    }
-    
-    public void crearDaoUsuario(DaoUsuario daoUsuario){
-   	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setNombreUsuario("vanessa");
-    	usuario.setContrasena("vanessa123");
-    	usuario.setCorreo("vanessa@gmail.com");
-   
-    	if (daoUsuario.crearUsuario(usuario)){
-    		System.out.println("Creado"); 
-    	}else {
-    		System.out.println("No creado");
-    	}
-    }
-    
-    public void consultarDaoUsuario(DaoUsuario daoUsuario){
-    	 
-    	UsuarioTo usuario = new UsuarioTo();
-    	usuario.setIdUsuario(new Integer(4));
-    	
-    	usuario = daoUsuario.consultarUsuario(usuario);
-    	if (usuario != null){
-    		System.out.println(usuario.toString()); 
-    	}else {
-    		System.out.println("No trae datos");
-    	}
-    }
-    public void consultarDaoUsuarios(DaoUsuario daoUsuario){
- 
-    	ArrayList<UsuarioTo> usuarios = new ArrayList<UsuarioTo>();
-    	UsuarioTo usuario = new UsuarioTo();
-    	
-    	usuarios = daoUsuario.consultarUsuarios(usuario);
-    	if (usuarios.size()>0){
-    		for (UsuarioTo usuarioTo: usuarios){
-    			System.out.println(usuarioTo.toString()); 
-    		}
-    	}else {
-    		System.out.println("No trae datos");
-    	}
-    }*/
-
 }
