@@ -106,7 +106,8 @@ public class ServletCita extends HttpServlet{
 		
 	}
 	
-	public void guardarCita(HttpServletRequest request, HttpServletResponse response){
+	public void guardarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
 		DaoCitas dao = new DaoCitas();
 		CitaTo citaTo = new CitaTo();
 		PersonaTo paciente = new PersonaTo();
@@ -121,11 +122,20 @@ public class ServletCita extends HttpServlet{
 			LocalDateTime date = LocalDateTime.parse(request.getParameter("fecha"));
 			citaTo.setFechaCita(date);
 			
-			dao.crearCita(citaTo);
-			System.out.println("Cita creada");
+			if(dao.crearCita(citaTo))
+				request.setAttribute("respuesta", "1");
+			else{
+				request.setAttribute("respuesta", "2");
+				request.setAttribute("error", "No fue posible crear una nueva cita");
+			}
+			
+			dispatcher.forward(request, response);
 		}
 		catch(Exception e){
 			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			dispatcher.forward(request, response);
 		}
 	}
 	
@@ -133,7 +143,6 @@ public class ServletCita extends HttpServlet{
 		if(fecha != null){
 			String[] partes = fecha.split(" ");
 			String retorno = partes[3] + "-" + parsearMes(partes[1]) + "-" + partes[2] + "T" + partes[4];
-			System.out.println("La fecha: " + retorno);
 			return retorno;
 		}
 		

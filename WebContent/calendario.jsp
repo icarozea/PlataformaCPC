@@ -24,21 +24,20 @@
 			},
 			locale: 'es',
 			navLinks: true, // can click day/week names to navigate views
+			defaultView: 'agendaWeek',
+			lazyFetching: true,
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {
-				//var title = prompt('Event Title:');
 				var eventData;
-				//if (title) {
 					eventData = {
-						//title: title,
 						start: start,
 						end: end
 					};
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 					$('#fecha').val(eventData.start);
 					$('#enviarFecha').submit();
-				//}
+
 				$('#calendar').fullCalendar('unselect');
 			},
 			editable: true,
@@ -62,12 +61,13 @@
 
 	#calendar {
 		max-width: 900px;
-		margin: 0 auto;
+		margin: 100px auto;
 	}
 
 </style>
 </head>
 <body>
+	<%@include file="/menuNavegacion.jsp"%>
 	<div id='calendar'></div>
 	<form id="enviarFecha" name="enviarFecha" action="./ServletCita" method="POST">
 		<input type="hidden" name="fecha"  id="fecha"/>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.plataforma.cpc.dao.DaoCitas;
+import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
 
@@ -48,16 +49,18 @@ public class ServletCalendario extends HttpServlet {
 	}
 	
 	private String parsearCitas(ArrayList<CitaTo> citas){
-		
+		PersonaBean personaBean = new PersonaBean();
 		String par = "";
 		for(int i = 0; i < citas.size(); i++){
 			CitaTo actual = citas.get(i);
 			LocalDateTime fecha = actual.getFechaCita();
-			String paciente = actual.getPaciente().getPrimerNombre();
+			PersonaTo personaTo = new PersonaTo();
+			personaTo.setIdPersona(actual.getPaciente().getIdPersona());
+			PersonaTo pacienteTo = personaBean.consultarPersona(personaTo);
+			String paciente = pacienteTo.getPrimerNombre() + " " + pacienteTo.getPrimerApellido() + " " + pacienteTo.getSegundoApellido();
 			String mes = fecha.getMonthValue() > 9? fecha.getMonthValue() + "" : "0" + fecha.getMonthValue();
 			String dia = fecha.getDayOfMonth() > 9? fecha.getDayOfMonth() + "" : "0" + fecha.getDayOfMonth();
-			par += "{Title: '" + paciente +"', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + fecha.getHour() + ":" + fecha.getMinute() + "'},";
-			System.out.println(par);
+			par += "{title: '" + paciente + " Salon: " + actual.getSalon() + "', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + fecha.getHour() + ":" + fecha.getMinute() + "'},";
 		}
 		return par;
 	}
