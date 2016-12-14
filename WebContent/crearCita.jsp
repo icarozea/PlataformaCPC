@@ -11,25 +11,10 @@
 <head>
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
-<link type="text/css" href="jquery/css/custom-theme/jquery-ui-1.8.13.custom.css" rel="stylesheet">
-<script type="text/javascript" src="jquery/js/jquery-1.5.1.min.js"></script>
-<script type="text/javascript" src="jquery/js/jquery-ui-1.8.13.custom.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="js/validarCita.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Crear citas</title>
 </head>
-<script type="text/javascript">
-	$( function() {
-		$('#fecha').datetimepicker();
-	} );
-	
-	function enviarFormulario(operacion, idPersona){
-		document.getElementById('operacion').value=operacion;
-		document.getElementById('idPersona').value=idPersona;
-		document.getElementById("FormDatos").submit();
-	}
-
-</script>
 <body>
 	<!--MEMU SUPERIOR-->
 	<%@include file="/menuNavegacion.jsp"%>
@@ -85,7 +70,7 @@
 			</tr>
 		</table>
 		<br>
-        <input type="button" onclick="{document.FormDatos.operacion.value='guardarCita'; document.FormDatos.submit();}" id="btnAceptar" value="Aceptar" class="botones">		
+        <input type="button" onclick="validarCita()" id="btnAceptar" value="Aceptar" class="botones">		
 	</form>
 	<form id="FormCalendario" name="FormCalendario" action="./Calendario"  method="GET">
 		<input type="hidden" id="idPersona" name="idPersona" value="${requestScope.practicante.idPersona}">

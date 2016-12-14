@@ -35,8 +35,8 @@ public class ServletCita extends HttpServlet{
 		case "guardarCita":
 			guardarCita(request, response);
 			break;
-		case "editarPersona":
-			//editarPersonas(request,response);
+		case "eliminarCita":
+			eliminarCita(request, response);
 			break;
 		case "eliminarPersona":
 			//eliminarPersonas(request,response);
@@ -136,6 +136,27 @@ public class ServletCita extends HttpServlet{
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
 			dispatcher.forward(request, response);
+		}
+	}
+	
+	public void eliminarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		DaoCitas daoCitas = new DaoCitas();
+		CitaTo citaTo = new CitaTo();
+		
+		try{
+			Integer idCita = Integer.parseInt(request.getParameter("idCita"));
+			citaTo.setIdCita(idCita);
+			
+			if(daoCitas.eliminarCita(citaTo)){
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./Calendario");
+				dispatcher.forward(request, response);
+			}
+			else
+				throw new Exception("No fue posible eliminar la cita");
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	

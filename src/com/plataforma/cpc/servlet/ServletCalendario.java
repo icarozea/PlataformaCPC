@@ -60,7 +60,7 @@ public class ServletCalendario extends HttpServlet {
 			String paciente = pacienteTo.getPrimerNombre() + " " + pacienteTo.getPrimerApellido() + " " + pacienteTo.getSegundoApellido();
 			String mes = fecha.getMonthValue() > 9? fecha.getMonthValue() + "" : "0" + fecha.getMonthValue();
 			String dia = fecha.getDayOfMonth() > 9? fecha.getDayOfMonth() + "" : "0" + fecha.getDayOfMonth();
-			par += "{title: '" + paciente + " Salon: " + actual.getSalon() + "', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + fecha.getHour() + ":" + fecha.getMinute() + "'},";
+			par += "{id: "+ actual.getIdCita() +", title: '" + paciente + " Salon: " + actual.getSalon() + "', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + fecha.getHour() + ":" + fecha.getMinute() + "'},";
 		}
 		return par;
 	}

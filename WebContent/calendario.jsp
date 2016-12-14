@@ -36,10 +36,19 @@
 					};
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 					$('#fecha').val(eventData.start);
-					$('#enviarFecha').submit();
+					$('#operacion').val('crearCita');
+					$('#formDatos').submit();
 
 				$('#calendar').fullCalendar('unselect');
 			},
+			eventClick: function(calEvent, jsEvent, view) {
+				var ask=confirm("¿Desea eliminar la cita?");
+			    if(ask){
+			    	$('#idCita').val(calEvent.id);
+					$('#operacion').val('eliminarCita');
+					$('#formDatos').submit();
+			    }
+		    },
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: [
@@ -62,6 +71,7 @@
 	#calendar {
 		max-width: 900px;
 		margin: 100px auto;
+		background-color: #ffffff;
 	}
 
 </style>
@@ -69,10 +79,11 @@
 <body>
 	<%@include file="/menuNavegacion.jsp"%>
 	<div id='calendar'></div>
-	<form id="enviarFecha" name="enviarFecha" action="./ServletCita" method="POST">
+	<form id="formDatos" name="formDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="fecha"  id="fecha"/>
 		<input type="hidden" name="idPersona"  id="idPersona" value="<%= request.getParameter("idPersona") %>"/>
-		<input type="hidden" name="operacion"  id="operacion" value="crearCita"/>
+		<input type="hidden" name="operacion"  id="operacion"/>
+		<input type="hidden" name="idCita"  id="idCita"/>
 	</form>
 </body>
 </html>
