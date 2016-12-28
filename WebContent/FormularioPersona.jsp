@@ -304,8 +304,8 @@
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
-							<c:when test="${requestScope.jornada == 'dia'}"><option value="dia" selected>Mañana L-V</option></c:when>
-							<c:otherwise><option value="dia">Mañana L-V</option></c:otherwise>
+							<c:when test="${requestScope.jornada == 'manana'}"><option value="mañana" selected>Mañana L-V</option></c:when>
+							<c:otherwise><option value="mañana">Mañana L-V</option></c:otherwise>
 						</c:choose>
 						<c:choose>
 							<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>

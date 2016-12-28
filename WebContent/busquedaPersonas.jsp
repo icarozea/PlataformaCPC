@@ -33,7 +33,7 @@
                     	<td><h2><b>Jornada</b></h2></td>
                     	<td>
                     	<select id ="jornada" name="jornada" onchange="this.form.submit()">
-                    		<c:forTokens items="dia,tarde,noche" delims="," var="name">
+                    		<c:forTokens items="manana,tarde,noche" delims="," var="name">
 				                	<c:choose>
 				                		<c:when test="${requestScope.jornada == name}">
 				                			<option value="${name}" selected>${name}</option>

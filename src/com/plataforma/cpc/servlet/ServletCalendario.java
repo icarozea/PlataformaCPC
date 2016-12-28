@@ -60,8 +60,14 @@ public class ServletCalendario extends HttpServlet {
 			String paciente = pacienteTo.getPrimerNombre() + " " + pacienteTo.getPrimerApellido() + " " + pacienteTo.getSegundoApellido();
 			String mes = fecha.getMonthValue() > 9? fecha.getMonthValue() + "" : "0" + fecha.getMonthValue();
 			String dia = fecha.getDayOfMonth() > 9? fecha.getDayOfMonth() + "" : "0" + fecha.getDayOfMonth();
-			par += "{id: "+ actual.getIdCita() +", title: '" + paciente + " Salon: " + actual.getSalon() + "', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + fecha.getHour() + ":" + fecha.getMinute() + "'},";
+			String hora = fecha.getHour() > 9? fecha.getHour() + "" : "0" + fecha.getHour();
+			int fin = fecha.getHour() + 1;
+			String horaFin = fin > 9? fin + "" : "0" + fin;
+			String minutos = fecha.getMinute() > 9? fecha.getMinute() + "" : "0" + fecha.getMinute();
+			par += "{id: "+ actual.getIdCita() +", title: '" + paciente + " Salon: " + actual.getSalon() + 
+					"', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + hora + ":" + minutos + "', end: '" + fecha.getYear() +  "-" + mes + "-" + dia + " " + horaFin + ":" + minutos + "'},";
 		}
+		System.out.println("Objeto fecha construido: " + par);
 		return par;
 	}
 }
