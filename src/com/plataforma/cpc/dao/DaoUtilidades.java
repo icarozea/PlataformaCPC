@@ -205,4 +205,64 @@ public class DaoUtilidades {
     	}
     	return null;
     }
+    
+    /**
+     * Busca y retorna el máximo de cupos actuales definidos en el sistema que se pueden asignar a un practicante
+     * @return Un entero con el máximo de cupos actuales
+     */
+    public int buscarCuposActuales() throws Exception{
+    	ResultSet rs =null;
+    	conexionActual = new ConexionOracle();
+    	int cupos = 0;
+    	
+    	String sql = "SELECT NUMERO FROM CUPOS ";
+    	
+    	try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				cupos = rs.getInt("NUMERO");
+			}
+    	}
+    	catch (SQLException e) {
+			throw new Exception("Error al tratar de cargar el maximo de cupos");
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (SQLException e) {
+				throw new Exception("Error en la conexión con la base de datos");
+			}
+		}	
+    	return cupos;  	
+    }
+    
+    public boolean actualizarCupos(Integer numero) throws Exception{
+    	conexionActual = new ConexionOracle();
+    	boolean actualizado = false;
+    	
+    	String sql = "UPDATE CUPOS SET NUMERO = ?";
+    	
+    	try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, numero);
+			
+			conexionActual.ejecutarActualizacion();
+			actualizado = true;
+			
+    	}
+    	catch (SQLException e) {
+			throw new Exception("Error al tratar de cargar el maximo de cupos");
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (SQLException e) {
+				throw new Exception("Error en la conexión con la base de datos");
+			}
+		}	
+    	return actualizado;
+    }
 }

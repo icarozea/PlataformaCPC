@@ -1,12 +1,13 @@
 package com.plataforma.cpc.to;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class CitaTo {
 	private Integer idCita;
 	private String salon;
-	private Date fechaSolicitud;
-	private Date fechaCita;
+	private LocalDateTime fechaSolicitud;
+	private LocalDateTime fechaCita;
 	private PersonaTo practicante;
 	private PersonaTo paciente;
 	private String estado;
@@ -23,16 +24,16 @@ public class CitaTo {
 	public void setSalon(String salon) {
 		this.salon = salon;
 	}
-	public Date getFechaSolicitud() {
+	public LocalDateTime getFechaSolicitud() {
 		return fechaSolicitud;
 	}
-	public void setFechaSolicitud(Date fechaSolicitud) {
+	public void setFechaSolicitud(LocalDateTime fechaSolicitud) {
 		this.fechaSolicitud = fechaSolicitud;
 	}
-	public Date getFechaCita() {
+	public LocalDateTime getFechaCita() {
 		return fechaCita;
 	}
-	public void setFechaCita(Date fechaCita) {
+	public void setFechaCita(LocalDateTime fechaCita) {
 		this.fechaCita = fechaCita;
 	}
 	public PersonaTo getPracticante() {

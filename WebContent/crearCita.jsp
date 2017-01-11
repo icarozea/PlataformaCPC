@@ -11,38 +11,22 @@
 <head>
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
+<link type="text/css" href="jquery/css/custom-theme/jquery-ui-1.8.13.custom.css" rel="stylesheet">
+<script type="text/javascript" src="jquery/js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="jquery/js/jquery-ui-1.8.13.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Crear citas</title>
-<style type="text/css">
-			body,img,p,h1,h2,h3,h4,h5,h6,form,table,td,ul,ol,li,dl,dt,dd,pre,blockquote,fieldset,label{
-				margin:0;
-				padding:0;
-				border:0;
-			}
-			#ui-datepicker-div, .ui-datepicker{ font-size: 85%; }
-</style>
-<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
-		<link rel="stylesheet" media="all" type="text/css" href="js/datePicker/jquery-ui-timepicker-addon.css" />
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="js/datePicker/jquery-ui-timepicker-addon.js"></script>
-		<script type="text/javascript" src="js/datePicker/jquery-ui-timepicker-addon-i18n.min.js"></script>
 </head>
 <script type="text/javascript">
 	$( function() {
-		$('#fecha').datetimepicker({
-			timeFormat: "hh:mm tt",
-			dateFormat: "dd/mm/yy"
-		});
+		$('#fecha').datetimepicker();
 	} );
 	
-	function enviarFormulario(operacion){
+	function enviarFormulario(operacion, idPersona){
 		document.getElementById('operacion').value=operacion;
+		document.getElementById('idPersona').value=idPersona;
 		document.getElementById("FormDatos").submit();
-	}
-	
-	function radioSelect(idPaciente){
-		document.getElementById('idPaciente').value=idPaciente;
 	}
 
 </script>
@@ -55,13 +39,12 @@
 		<input type="hidden" name="operacion" id="operacion" />
 		<input type="hidden" name="idPracticante" id="idPracticante" value="${requestScope.practicante.idPersona}"/>
 		<input type="hidden" name="idPaciente" id="idPaciente"/>
-		
 		<table class="rwd-table-noBorder">
 			<tr>
 				<th>Practicante: </th>
 				<td>${requestScope.practicante.primerNombre} ${requestScope.practicante.segundoNombre} ${requestScope.practicante.primerApellido} ${requestScope.practicante.segundoApellido}</td>
 				<th>Tipo Documento: </th>
-				<td>${requestScope.practicante.tipoDocumento.idTipoDocumento}</td>
+				<td>${requestScope.practicante.tipoDocumento.sigla}</td>
 				<th>Numero Documento: </th>
 				<td>${requestScope.practicante.numeroDocumento}</td>
 			</tr>
@@ -75,13 +58,13 @@
 							<th>Seleccionar</th>
 							<th>Paciente</th>
 							<th>Tipo Documento</th>
-							<th>Numero Documento </th>
+							<th>Número Documento </th>
 							<th>Dirección</th>
-							<th>Telefono</th>
+							<th>Teléfono</th>
 						</tr>
 					<c:forEach items="${requestScope.listaPacientes}" var="paciente">
 						<tr>
-							<td><input type="radio" id="${paciente.idPersona}" name="grupoPaciente" onclick="radioSelect(this.id);"></td>
+							<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}"></td>
 							<td>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</td>
 							<td>${paciente.tipoDocumento.idTipoDocumento}</td>
 							<td>${paciente.numeroDocumento}</td>
@@ -94,16 +77,18 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td>Salon: </td>
+				<td>Salón: </td>
 				<td><input type="text" id="salon" name="salon" required></td>
 				<td>Fecha y Hora: </td>
-				<td><input type="text" id="fecha" name="fecha" required></td>
-				<td>
-				</td>
+				<td><input type="text" id="fecha" name="fecha" value="${requestScope.fecha}" required></td>
+				<td><input type="button" id="btnFecha" value="Buscar" class="botones" onclick="{document.FormCalendario.submit();}"></td>
 			</tr>
 		</table>
 		<br>
-        <input type="button" onclick="enviarFormulario(this.id)" id="crearCita" value="Aceptar" class="botones">		
+        <input type="button" onclick="{document.FormDatos.operacion.value='guardarCita'; document.FormDatos.submit();}" id="btnAceptar" value="Aceptar" class="botones">		
+	</form>
+	<form id="FormCalendario" name="FormCalendario" action="./Calendario"  method="GET">
+		<input type="hidden" id="idPersona" name="idPersona" value="${requestScope.practicante.idPersona}">
 	</form>
 </body>
 </html>

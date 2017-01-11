@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.plataforma.cpc.dao.DaoUtilidades;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.PersonaTo;
 
@@ -37,6 +38,7 @@ public class ServletAsignaciones extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("asignaciones.jsp");
 
 		try{
+			DaoUtilidades utils = new DaoUtilidades();
 			String operacion = request.getParameter("operacion");
 			Integer idActual = Integer.parseInt(request.getParameter("id"));
 			Integer idAsignado = Integer.parseInt(request.getParameter("asignado"));
@@ -60,7 +62,7 @@ public class ServletAsignaciones extends HttpServlet {
 			request.setAttribute("asignados", asignados);
 			
 			if(request.getParameter("rol").equals("Practicante")){
-				int cupos = 7 - asignados.size();
+				int cupos = utils.buscarCuposActuales() - asignados.size();
 				request.setAttribute("cupos", cupos);
 			}
 			else

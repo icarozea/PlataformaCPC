@@ -1,10 +1,9 @@
 package com.plataforma.cpc.interfaces;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * Interfaz que define una conexión genérica a la base de datos
@@ -50,14 +49,12 @@ public interface Conexion {
 	 */
 	public void agregarAtributo(int numAtributo, int atributo) throws Exception;
 	
-	public void agregarAtributo(int numAtributo, Timestamp atributo) throws Exception;
-	
 	/**
 	 * Define el contrato para añadir un atributo de tipo Date a una sentencia previamente preparada
 	 * @param atributo Atributo que se desea agregar a la sentencia
 	 * @throws Exception Si no hay una sentencia previa
 	 */
-	public void agregarAtributo(int numAtributo, Date atributo) throws Exception;
+	public void agregarAtributo(int numAtributo, LocalDateTime atributo) throws Exception;
 	
 	
 	public void agregarAtributo(int numAtributo, Long atributo) throws SQLException;
@@ -79,7 +76,5 @@ public interface Conexion {
 	 * Define el contrato para cerrar una conexión previa con la base de datos
 	 * @throws Exception Si se genera un error en el proceso
 	 */
-	public void cerrar() throws Exception;
-
-	
+	public void cerrar() throws Exception;	
 }
