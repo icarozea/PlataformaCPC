@@ -48,9 +48,8 @@
 					<td>${persona.numeroDocumento}</td>
 					<td>${persona.direccion}</td>
 					<td>${persona.telefono}</td>
-					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnVerCita"
-							 onclick=""/></td>
-					<td><input type="submit" name="crearCita" id="irCita" value="" class="btnCrearCita"
+					<td><a href="./Calendario?idPersona=${persona.idPersona}"><input type="button" name="verCita" id="verCita" value="" class="btnVerCita"/></a></td>
+					<td><input type="submit" name="crearCita" id="crearCita" value="" class="btnCrearCita"
 						onclick="enviarFormulario(this.id,${persona.idPersona})"/>
 					</td>
 				</tr>

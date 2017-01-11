@@ -19,7 +19,7 @@
 
                     	<td><a href="inicioPersonas.jsp"><img src="resources/personas.png"/></a></td>                                       
                         <td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/appointment.png"/></a></td>                     
-                        <td><a href="calendario.jsp"><img src="resources/reporte.png"/></a></td>                      
+                        <td><a href=""><img src="resources/reporte.png"/></a></td>                      
 
                     </tr>
                     <tr>

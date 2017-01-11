@@ -8,15 +8,11 @@
 </head>
 <body>
 	<nav id="menu">
-		<%                 
-                if (request.getAttribute("usuario") != null) {                    
-            %>
-		<div class="NombreUsuario">Hola</div>
-		<%}%>
 		<ul>
 			<a href="VentanaAdministrador.jsp"><li>Inicio</li></a>
 			<a href="inicioPersonas.jsp"><li>Personas</li></a>
-			<a href="inicioCita.jsp"><li>Citas</li></a>
+			<a href="./ServletCita?operacion=cargueIncial"><li>Citas</li></a>
+			<a href=""><li>Reportes</li></a>
 		</ul>
 	</nav>
 	<br>

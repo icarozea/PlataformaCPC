@@ -11,6 +11,7 @@
 <script src='js/jquery-3.1.1.min.js'></script>
 <script src='js/fullcalendar.min.js'></script>
 <script src='js/locale-all.js'></script>
+<% String eventos = (String)request.getAttribute("citas"); %>
 <script>
 
 	$(document).ready(function() {
@@ -23,26 +24,35 @@
 			},
 			locale: 'es',
 			navLinks: true, // can click day/week names to navigate views
+			defaultView: 'agendaWeek',
+			lazyFetching: true,
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {
-				//var title = prompt('Event Title:');
 				var eventData;
-				//if (title) {
 					eventData = {
-						//title: title,
 						start: start,
 						end: end
 					};
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 					$('#fecha').val(eventData.start);
-					$('#enviarFecha').submit();
-				//}
+					$('#operacion').val('crearCita');
+					$('#formDatos').submit();
+
 				$('#calendar').fullCalendar('unselect');
 			},
+			eventClick: function(calEvent, jsEvent, view) {
+				var ask=confirm("¿Desea eliminar la cita?");
+			    if(ask){
+			    	$('#idCita').val(calEvent.id);
+					$('#operacion').val('eliminarCita');
+					$('#formDatos').submit();
+			    }
+		    },
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: [
+				<%= eventos %>
 			]
 		});
 		
@@ -60,17 +70,20 @@
 
 	#calendar {
 		max-width: 900px;
-		margin: 0 auto;
+		margin: 100px auto;
+		background-color: #ffffff;
 	}
 
 </style>
 </head>
 <body>
+	<%@include file="/menuNavegacion.jsp"%>
 	<div id='calendar'></div>
-	<form id="enviarFecha" name="enviarFecha" action="./ServletCita" method="POST">
+	<form id="formDatos" name="formDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="fecha"  id="fecha"/>
 		<input type="hidden" name="idPersona"  id="idPersona" value="<%= request.getParameter("idPersona") %>"/>
-		<input type="hidden" name="operacion"  id="operacion" value="crearCita"/>
+		<input type="hidden" name="operacion"  id="operacion"/>
+		<input type="hidden" name="idCita"  id="idCita"/>
 	</form>
 </body>
 </html>
