@@ -13,7 +13,7 @@
         <title>Admin/Reportes</title>
     </head>
     <body>
-        <%@include file="./menuNavegacion.jsp" %>
+        <%@include file="./menuNavegacionAdmin.jsp" %>
         <div id="gestioncitas" class="caja">
             <h1>REPORTES Y DOCUMENTOS</h1>
             <table>

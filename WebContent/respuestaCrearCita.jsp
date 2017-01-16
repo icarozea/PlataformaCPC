@@ -9,7 +9,7 @@
     </head>
     <body>
     	<!--MENU SUPERIOR--> 
-         <%@include file="./menuNavegacion.jsp" %>
+         <%@include file="./menuNavegacionAdmin.jsp" %>
         <!--MEMU LATERAL--> 
         <%@include file="./menuPersona.jsp" %>      
         <div id="marcoRespuesta" class="caja">

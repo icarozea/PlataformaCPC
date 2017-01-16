@@ -264,12 +264,12 @@ public class DaoPersona {
     	return personaTo;
     }
     
-    public PersonaTo consultarPersonaUsuario (String numeroDocumento, String password){
+    public PersonaTo consultarPersonaUsuario (String numeroDocumento){
 
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	PersonaTo personaTo = new PersonaTo();
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE NUMERO_DOCUMENTO = ? AND PASS = ?";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA, PASS FROM PERSONA WHERE NUMERO_DOCUMENTO = ?";
     	 	
 		try {
 			DaoUtilidades utils = new DaoUtilidades();
@@ -277,7 +277,6 @@ public class DaoPersona {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, numeroDocumento);
-			conexionActual.agregarAtributo(2, password); 
 			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
@@ -304,6 +303,7 @@ public class DaoPersona {
 				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
 				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
 				personaTo.setJornada(rs.getString("JORNADA"));
+				personaTo.setPassword(rs.getString("PASS"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

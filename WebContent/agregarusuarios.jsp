@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="estilo.css"></link>
     </head>
     <body>
-         <%@include file="./menuNavegacion.jsp" %>
+         <%@include file="./menuNavegacionAdmin.jsp" %>
         <div id="gestioncitas" class="caja">
             <h1>AGREGAR USUARIO</h1>
             <div id="gestionContenido">

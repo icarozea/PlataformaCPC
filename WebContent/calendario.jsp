@@ -77,7 +77,7 @@
 </style>
 </head>
 <body>
-	<%@include file="/menuNavegacion.jsp"%>
+	<%@include file="/menuNavegacionAdmin.jsp"%>
 	<div id='calendar'></div>
 	<form id="formDatos" name="formDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="fecha"  id="fecha"/>

@@ -7,17 +7,20 @@
     </head>
     <body>
 
-         <%@include file="./menuNavegacion.jsp" %> 
+         <%@include file="./menuNavegacionPracticante.jsp" %> 
         <div id="gestioncitas" class="caja">
-            <h1>Citas</h1>
+            <h1>Mis Citas</h1>
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>                  	 
-                    	<!-- <td><a href="FormularioPersona.jsp"><img src="resources/man.png"/></a></td>-->
-                    	<td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/agenda.png"/></a></td>
+                    	<td><a href="FormularioPersona.jsp"><img src="resources/paciente.png"/></a></td>
+                    	<td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/agendaCitas.png"/></a></td>
+                    	<td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/newCita.png"/></a></td>
                     </tr>
                     <tr>             	
-                        <td>Cita</td>                                                
+                        <td>Mis Pacientes</td>
+                        <td>Agenda</td>
+                        <td>Crear Cita</td>                                                  
                     </tr>
                 </table>
             </div>

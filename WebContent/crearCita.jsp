@@ -17,7 +17,7 @@
 </head>
 <body>
 	<!--MEMU SUPERIOR-->
-	<%@include file="/menuNavegacion.jsp"%>
+	<%@include file="/menuNavegacionAdmin.jsp"%>
 	
 	<h1 id="titulo">Cita</h1>
 	<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">

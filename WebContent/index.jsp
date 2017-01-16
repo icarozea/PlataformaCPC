@@ -25,11 +25,13 @@
                     if (request.getAttribute("mensaje").equals("2")) {%>
                 <label class="alerta">.::El usuario no existe en la base de datos del CPC::.</label>
                 <%}
-                    } //azd 28-05-2016 Fin%>
+                    if (request.getAttribute("mensaje").equals("3")) {%>
+                <label class="alerta">.::Clave incorrecta::.</label>
+                <%}
+                }//azd 28-05-2016 Fin%>
         </div>        
 
         <footer>
-
             <small>Fundación Universitaria Konrad Lorenz</small>
             <address>www.konradlorenz.edu.co</address>
         </footer> 

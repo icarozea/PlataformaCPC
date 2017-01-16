@@ -7,7 +7,7 @@
     </head>
     <body>
 
-         <%@include file="./menuNavegacion.jsp" %> 
+         <%@include file="./menuNavegacionAdmin.jsp" %> 
         <div id="configuracion" class="caja">
             <h1>Configuración</h1>
             <div id="contenido">

@@ -20,14 +20,29 @@ import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 
 /**
- * Servlet implementation class ServletPersona
+ * Servlet que se ocupa de la creación y edición de personas mediante el formulario correspondiente
  */
 @WebServlet(name="ServletPersona", urlPatterns = {"/ServletPersona"})
 public class ServletPersona extends HttpServlet {
+
+//-----------------------------------------------------------------------------------------------------
+// Proceso de la peticion
+//-----------------------------------------------------------------------------------------------------
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-
 		
 		String operacion = request.getParameter("operacion");
 		System.out.println("Operacion: "+operacion);
@@ -57,7 +72,15 @@ public class ServletPersona extends HttpServlet {
 		
 		}
 	}
+
+//-----------------------------------------------------------------------------------------------------
+// Funciones
+//-----------------------------------------------------------------------------------------------------
 	
+	/**
+	 * Responde a una petición de eliminar una persona con el id presente en el request
+	 * Redirige a la pagina de respuestaEliminarPersona con el mensaje apropiado
+	 */
 	private void eliminarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PersonaBean personaBean = new PersonaBean();
@@ -78,6 +101,11 @@ public class ServletPersona extends HttpServlet {
 		
 	}
 	
+	/**
+	 * Responde a una petición de ediciones de persona y puebla el formulario de personas con la informacion
+	 * de la persona cuyo ID está presente en el request.
+	 * Redirige al formulario de personas
+	 */
 	private void editarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PersonaBean personaBean = new PersonaBean();
@@ -98,7 +126,7 @@ public class ServletPersona extends HttpServlet {
 		request.setAttribute("tel", persona.getTelefono());
 		request.setAttribute("tel2", persona.getOtroTelefono());
 		request.setAttribute("mail", persona.getCorreo());
-		request.setAttribute("perfil", persona.getPerfil().getNombrePerfil());
+		request.setAttribute("perfil", persona.getPerfil().getIdPerfil());
 		request.setAttribute("idPersona", persona.getIdPersona());
 		request.setAttribute("eps", persona.getEps().getNombreEPS());
 		request.setAttribute("pass", persona.getPassword());
@@ -145,6 +173,10 @@ public class ServletPersona extends HttpServlet {
 		
 	}
 	
+	/**
+	 * Responde a la peticion de guardar una nueva persona en la base de datos con la informacion capturada en el formulario
+	 * Redirige a la pagina de respuestaAgregarPersona
+	 */
 	private void guardarPersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
 		
@@ -189,7 +221,7 @@ public class ServletPersona extends HttpServlet {
 			Integer eps;
 			Integer idEPS = Integer.parseInt(request.getParameter("eps"));
 			if(idEPS < 0)
-				eps = 1;
+				eps = 0;
 			else{
 				EpsTo epsTo = daoUtilidades.buscarEps(idEPS);
 				if(epsTo != null)
@@ -214,10 +246,13 @@ public class ServletPersona extends HttpServlet {
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
 			dispatcher.forward(request, response);
-		}
-		
+		}		
 	}
 	
+	/**
+	 * Responde a una funcion de actualizar los datos de una persona ya existente en la base de datos
+	 * Redirige a la pagina de respuestaAgregarPersona
+	 */
 	private void actualizarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
@@ -291,6 +326,10 @@ public class ServletPersona extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Carga la información de los campos desplegables del formulario (eps, tipos de documentos y perfiles)
+	 * Redirige al formulario de personas
+	 */
 	private void cargueInicial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilBean util = new UtilBean();
 		EpsBean  epsBean = new EpsBean();
@@ -324,19 +363,6 @@ public class ServletPersona extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
 			dispatcher.forward(request, response);
-		}
-		
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
+		}	
 	}
 }

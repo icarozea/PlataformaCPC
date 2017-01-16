@@ -10,7 +10,7 @@
     </head>
     <body>
   		<!--MEMU SUPERIOR--> 
-         <%@include file="./menuNavegacion.jsp" %>
+         <%@include file="./menuNavegacionAdmin.jsp" %>
          <!--MEMU LATERAL--> 
         <%@include file="./menuLateral.jsp" %>
         <div id="marcoBusqueda" class="cajaBusqueda">
