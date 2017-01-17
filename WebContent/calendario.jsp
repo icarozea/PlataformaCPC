@@ -77,7 +77,14 @@
 </style>
 </head>
 <body>
-	<%@include file="/menuNavegacionAdmin.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+			<%@include file="./menuNavegacionAdmin.jsp"%>
+		</c:when>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+			<%@include file="./menuNavegacionPracticante.jsp"%>
+		</c:when>
+	</c:choose>
 	<div id='calendar'></div>
 	<form id="formDatos" name="formDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="fecha"  id="fecha"/>

@@ -13,9 +13,9 @@
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>                  	 
-                    	<td><a href="FormularioPersona.jsp"><img src="resources/paciente.png"/></a></td>
-                    	<td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/agendaCitas.png"/></a></td>
-                    	<td><a href="./ServletCita?operacion=cargueIncial"><img src="resources/newCita.png"/></a></td>
+                    	<td><a href="./ServletPersona?operacion=listarPacientes"><img src="resources/paciente.png"/></a></td>
+                    	<td><a href="./Calendario?idPersona=${sessionScope.personaSession.idPersona}"><img src="resources/agendaCitas.png"/></a></td>
+                    	<td><a href="./ServletCita?operacion=crearCita&idPersona=${sessionScope.personaSession.idPersona}"><img src="resources/newCita.png"/></a></td>
                     </tr>
                     <tr>             	
                         <td>Mis Pacientes</td>

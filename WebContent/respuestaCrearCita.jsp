@@ -9,9 +9,19 @@
     </head>
     <body>
     	<!--MENU SUPERIOR--> 
-         <%@include file="./menuNavegacionAdmin.jsp" %>
-        <!--MEMU LATERAL--> 
-        <%@include file="./menuPersona.jsp" %>      
+        <c:choose>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+				<%@include file="./menuNavegacionAdmin.jsp"%>
+			</c:when>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+				<%@include file="./menuNavegacionPracticante.jsp"%>
+			</c:when>
+		</c:choose>
+        <!--MEMU LATERAL-->
+        <c:if test="${sessionScope.personaSession.perfil.idPerfil == 1}" >
+        	<%@include file="./menuPersona.jsp" %> 
+        </c:if>
+             
         <div id="marcoRespuesta" class="caja">
             &nbsp;&nbsp;&nbsp;
             
@@ -27,7 +37,14 @@
             
             <h2><%= mensaje %></h2>
             <h4><%= error %></h4>
-            <a href="./ServletCita?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Volver" class="botones"></a>     
+            <c:choose>
+            	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+            		<a href="./ServletCita?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Volver" class="botones"></a>   
+            	</c:when>
+            	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+            		<a href="./ServletCita?operacion=crearCita&idPersona=${sessionScope.personaSession.idPersona}"><input type="button" id="btnContinuar" value="Volver" class="botones"></a>  
+            	</c:when>
+            </c:choose>
        </div>
     </body>
 </html>

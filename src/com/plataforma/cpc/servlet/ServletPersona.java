@@ -57,6 +57,9 @@ public class ServletPersona extends HttpServlet {
 		case "listarPersonas":
 			listarPersonas(request,response);
 			break;
+		case "listarPacientes":
+			listarPacientes(request,response);
+			break;
 		case "editarPersona":
 			editarPersonas(request,response);
 			break;
@@ -137,6 +140,10 @@ public class ServletPersona extends HttpServlet {
 		cargueInicial(request,response);
 	}
 	
+	/**
+	 * Responde a la petición de ver el detalle de una persona
+	 * Redirige a la pagina verPersonas  que consecuentemente ofrece la opción de editar o eliminar una persona
+	 */
 	private void listarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
 			PersonaBean personaBean = new PersonaBean();
@@ -171,6 +178,30 @@ public class ServletPersona extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		
+	}
+	
+	/**
+	 * Responde a la peticion de listar todos los pacientes de un practicante especifico, cuyo id esta en el request
+	 * Redirige a la pagina de verPacientes, que consecuentemente redirige a la creación de citas
+	 */
+	private void listarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{		
+			PersonaBean personaBean = new PersonaBean();
+			ArrayList<PersonaTo> listaPacientes = new ArrayList<PersonaTo>();
+			
+			PersonaTo practicante = (PersonaTo)request.getSession().getAttribute("personaSession");
+			listaPacientes = personaBean.consultarAsignados(practicante.getIdPersona());
+			
+			request.setAttribute("listaPacientes", listaPacientes);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPacientes.jsp");
+			dispatcher.forward(request, response);
+		}
+		catch(Exception e){
+			System.out.println("Error de Busqueda: " + e.getMessage());
+			e.printStackTrace();
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPacientes.jsp");
+			dispatcher.forward(request, response);
+		}	
 	}
 	
 	/**

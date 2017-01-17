@@ -17,7 +17,14 @@
 </head>
 <body>
 	<!--MEMU SUPERIOR-->
-	<%@include file="/menuNavegacionAdmin.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+			<%@include file="./menuNavegacionAdmin.jsp"%>
+		</c:when>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+			<%@include file="./menuNavegacionPracticante.jsp"%>
+		</c:when>
+	</c:choose>
 	
 	<h1 id="titulo">Cita</h1>
 	<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
@@ -44,16 +51,23 @@
 							<th>Paciente</th>
 							<th>Tipo Documento</th>
 							<th>Número Documento </th>
-							<th>Dirección</th>
+							<th>Correo</th>
 							<th>Teléfono</th>
 						</tr>
 					<c:forEach items="${requestScope.listaPacientes}" var="paciente">
 						<tr>
-							<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}"></td>
+							<c:choose>
+								<c:when test="${requestScope.paciente.idPersona == paciente.idPersona}">
+									<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}" checked></td>
+								</c:when>
+								<c:otherwise>
+									<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}"></td>
+								</c:otherwise>
+							</c:choose>
 							<td>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</td>
 							<td>${paciente.tipoDocumento.sigla}</td>
 							<td>${paciente.numeroDocumento}</td>
-							<td>${paciente.direccion}</td>
+							<td>${paciente.correo}</td>
 							<td>${paciente.telefono}</td>
 						</tr>
 					</c:forEach>
