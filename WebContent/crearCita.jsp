@@ -12,6 +12,20 @@
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
 <script type="text/javascript" src="js/validarCita.js"></script>
+<script>
+function mostrarTipo(){
+	var select = document.getElementById('tipoTratamiento');
+	var label = document.getElementById('lblTratamiento');
+	if(select.style.display == 'none'){
+		select.style.display='block';
+		label.style.display='block';
+	}
+	else{
+		select.style.display='none';
+		label.style.display='none';
+	}
+}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Crear citas</title>
 </head>
@@ -81,6 +95,19 @@
 				<td>Fecha y Hora: </td>
 				<td><input type="text" id="fecha" name="fecha" value="${requestScope.fecha}" required></td>
 				<td><input type="button" id="btnFecha" value="Buscar" class="botones" onclick="{document.FormCalendario.submit();}"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>Valoración </td>
+				<td> <input type="checkbox" name="valoracion" id="valoracion" value="valoracion" onchange="mostrarTipo()"></td>
+				<td><div id="lblTratamiento" style="display: none;">Tipo Tratamiento:</div></td>
+				<td><select id="tipoTratamiento" name="tipoTratamiento" style="display: none;">
+							<option value="individual">Individual</option>
+							<option value="pareja">Pareja</option>
+							<option value="familiar">Familiar</option>
+							<option value="infantil">Infantil</option>					
+					</select>
+				</td>
 			</tr>
 		</table>
 		<br>

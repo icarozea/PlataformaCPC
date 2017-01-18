@@ -13,6 +13,7 @@ import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
+import com.plataforma.cpc.to.TratamientoTo;
 
 
 @WebServlet(name="ServletCita", urlPatterns = {"/ServletCita"})
@@ -22,7 +23,7 @@ public class ServletCita extends HttpServlet{
 		response.setContentType("text/html;charset=UTF-8");
 
 		String operacion = request.getParameter("operacion");
-		System.out.println("Operacion: "+operacion);
+
 		switch (operacion) {
 
 		case "cargueIncial":
@@ -129,12 +130,30 @@ public class ServletCita extends HttpServlet{
 			citaTo.setSalon(request.getParameter("salon"));
 			LocalDateTime date = LocalDateTime.parse(request.getParameter("fecha"));
 			citaTo.setFechaCita(date);
-
-			if(dao.crearCita(citaTo))
-				request.setAttribute("respuesta", "1");
-			else{
-				request.setAttribute("respuesta", "2");
-				request.setAttribute("error", "No fue posible crear una nueva cita");
+			String valoracion = request.getParameter("valoracion");
+			String tipoTratamiento = request.getParameter("tipoTratamiento");
+			
+			if(valoracion != null){
+				citaTo.setValoracion(true);
+				TratamientoTo tratamiento = new TratamientoTo();
+				tratamiento.setPaciente(paciente);
+				tratamiento.setFechaInicio(date);
+				tratamiento.setTipo(tipoTratamiento);
+				int idTratamiento = dao.crearTratamiento(tratamiento);
+				if(idTratamiento > 0){
+					tratamiento.setIdTratamiento(idTratamiento);
+					citaTo.setTratamiento(tratamiento);
+					if(dao.crearCita(citaTo))
+						request.setAttribute("respuesta", "1");
+					else{
+						request.setAttribute("respuesta", "2");
+						request.setAttribute("error", "No fue posible crear una nueva cita");
+					}
+				}
+				else{
+					request.setAttribute("respuesta", "2");
+					request.setAttribute("error", "No fue posible crear el nuevo tratamiento");
+				}
 			}
 
 			dispatcher.forward(request, response);
