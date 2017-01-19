@@ -281,4 +281,42 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return retorno;
 	}
+	
+	public ArrayList<TratamientoTo> concultarTratamientosPaciente (Integer idPaciente){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		ArrayList<TratamientoTo> tratamientos = new ArrayList<TratamientoTo>();
+		String sql = "SELECT ID_TRATAMIENTO,ESTADO,FECHA_INICIO,FECHA_CIERRE,TIPO FROM TRATAMIENTO WHERE ID_PACIENTE=?";
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idPaciente);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){
+				TratamientoTo tratamientoTo = new TratamientoTo();
+				tratamientoTo.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
+				tratamientoTo.setEstado(rs.getString("ESTADO"));
+				tratamientoTo.setFechaInicio(rs.getTimestamp("FECHA_INICIO").toLocalDateTime());
+				
+				if(rs.getTimestamp("FECHA_CIERRE") != null)
+					tratamientoTo.setFechaCierre(rs.getTimestamp("FECHA_CIERRE").toLocalDateTime());
+				
+				tratamientoTo.setTipo(rs.getString("TIPO"));
+
+				tratamientos.add(tratamientoTo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return tratamientos;
+	}
 }

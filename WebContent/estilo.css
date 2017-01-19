@@ -7,7 +7,6 @@ body{
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100%;
-
 }
 
 .NombreUsuario{
@@ -25,7 +24,7 @@ body{
     border: #006699 double medium;
 }
 
-#agrupar{
+.agrupar{
     width:30%;
     height:40%;
     margin: 0 auto;    
@@ -44,6 +43,19 @@ body{
     padding: 2% 10% 2% 10%;
     font-size: 20px;
     border-radius: 2%;
+    background-color: #fff;
+}
+
+.cajaAlt{
+    display: inline-block;
+    width:30%;
+    height:40%;
+    margin: 20% auto;    
+    /*border: 2px solid #084B8A;*/
+    margin-top: 10%;
+    padding: 2% 10% 2% 10%;
+    font-size: 20px;
+    /*border-radius: 2%;*/
     background-color: #fff;
 }
 

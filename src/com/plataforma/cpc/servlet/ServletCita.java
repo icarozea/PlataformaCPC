@@ -38,8 +38,8 @@ public class ServletCita extends HttpServlet{
 		case "eliminarCita":
 			eliminarCita(request, response);
 			break;
-		case "eliminarPersona":
-			//eliminarPersonas(request,response);
+		case "ejecutarCita":
+			ejecutarCita(request, response);
 			break;
 		default:
 			System.out.println("Opción no existe");
@@ -132,7 +132,7 @@ public class ServletCita extends HttpServlet{
 			citaTo.setFechaCita(date);
 			String valoracion = request.getParameter("valoracion");
 			String tipoTratamiento = request.getParameter("tipoTratamiento");
-			
+
 			if(valoracion != null){
 				citaTo.setValoracion(true);
 				TratamientoTo tratamiento = new TratamientoTo();
@@ -154,9 +154,32 @@ public class ServletCita extends HttpServlet{
 					request.setAttribute("respuesta", "2");
 					request.setAttribute("error", "No fue posible crear el nuevo tratamiento");
 				}
-			}
 
-			dispatcher.forward(request, response);
+				dispatcher.forward(request, response);
+			}
+			else{
+				if(request.getParameter("flag") != null){
+					TratamientoTo tratamiento = new TratamientoTo();
+					tratamiento.setIdTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
+					citaTo.setTratamiento(tratamiento);
+					if(dao.crearCita(citaTo))
+						request.setAttribute("respuesta", "1");
+					else{
+						request.setAttribute("respuesta", "2");
+						request.setAttribute("error", "No fue posible crear una nueva cita");
+					}
+					
+					dispatcher.forward(request, response);
+				}
+				else{
+					ArrayList<TratamientoTo> tratamientos = dao.concultarTratamientosPaciente(paciente.getIdPersona());
+					request.setAttribute("tratamientos", tratamientos);
+					citaTo.setValoracion(false);
+					request.setAttribute("cita", citaTo);
+					dispatcher = request.getRequestDispatcher("verTratamientos.jsp");
+					dispatcher.forward(request, response);
+				}
+			}		
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -181,6 +204,29 @@ public class ServletCita extends HttpServlet{
 			}
 			else
 				throw new Exception("No fue posible eliminar la cita");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void ejecutarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		DaoCitas daoCitas = new DaoCitas();
+		CitaTo filtroCita = new CitaTo();
+		CitaTo citaTo = new CitaTo();
+		
+		try{
+			Integer idCita = Integer.parseInt(request.getParameter("idCita"));
+			filtroCita.setIdCita(idCita);
+			citaTo = daoCitas.consultarCita(filtroCita);
+			if(citaTo.getIdCita() != null){
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./ReporteCita?operacion=cargueIncial");
+				request.setAttribute("cita", citaTo);
+				dispatcher.forward(request, response);
+			}
+			else
+				throw new Exception("No se encontró la cita especificada");
 		}
 		catch(Exception e){
 			e.printStackTrace();
