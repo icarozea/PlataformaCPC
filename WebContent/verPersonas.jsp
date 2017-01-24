@@ -29,7 +29,7 @@
 </script>
 <body>
 	<!--MEMU SUPERIOR-->
-	<%@include file="/menuNavegacion.jsp"%>
+	<%@include file="/menuNavegacionAdmin.jsp"%>
 	<!--MEMU LATERAL--> 
         <%@include file="./menuPersona.jsp" %>
 	<h1 id="titulo">DATOS PERSONA</h1>

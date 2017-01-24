@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.plataforma.cpc.interfaces.Conexion;
+import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaTo;
@@ -125,8 +126,6 @@ public class DaoPersona {
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
 				
-				//usuarioTo.setIdUsuario(rs.getInt("USUARIO_ID_USUARIO"));
-				//personaTo.setUsuario(usuarioTo);
 				tipoDocumentoTo.setIdTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
 				personaTo.setTipoDocumento(tipoDocumentoTo);
 				epsTo.setIdEPS(rs.getInt("EPS_ID_EPS"));
@@ -161,6 +160,9 @@ public class DaoPersona {
     	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE PERSONA_ID_SUPERIOR = ? ";
     	
     	try {
+    		UtilBean util = new UtilBean();
+        	ArrayList<TipoDocumentoTo> documentos = util.consultarTiposDocumento();
+        	
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, idSuperior); 
@@ -182,8 +184,12 @@ public class DaoPersona {
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
-				tipoDocumentoTo.setIdTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
-				personaTo.setTipoDocumento(tipoDocumentoTo);
+				
+				for(int i=0; i < documentos.size(); i++){
+					if(documentos.get(i).getIdTipoDocumento() == rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"))
+						personaTo.setTipoDocumento(documentos.get(i));
+				}
+				
 				epsTo.setIdEPS(rs.getInt("EPS_ID_EPS"));
 				personaTo.setEps(epsTo);
 				perfilTo.setIdPerfil(rs.getInt("PERFIL_ID_PERFIL"));
@@ -264,12 +270,12 @@ public class DaoPersona {
     	return personaTo;
     }
     
-    public PersonaTo consultarPersonaUsuario (String numeroDocumento, String password){
+    public PersonaTo consultarPersonaUsuario (String numeroDocumento){
 
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	PersonaTo personaTo = new PersonaTo();
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE NUMERO_DOCUMENTO = ? AND PASS = ?";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA, PASS FROM PERSONA WHERE NUMERO_DOCUMENTO = ?";
     	 	
 		try {
 			DaoUtilidades utils = new DaoUtilidades();
@@ -277,7 +283,6 @@ public class DaoPersona {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, numeroDocumento);
-			conexionActual.agregarAtributo(2, password); 
 			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
@@ -304,6 +309,7 @@ public class DaoPersona {
 				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
 				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
 				personaTo.setJornada(rs.getString("JORNADA"));
+				personaTo.setPassword(rs.getString("PASS"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

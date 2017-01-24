@@ -17,11 +17,15 @@ import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
 
 /**
- * Servlet implementation class ServletCalendario
+ * Responde a la petición para mostrar la agenda de un practicante especifico
  */
 @WebServlet(name="/ServletCalendario", urlPatterns = {"/Calendario"})
 public class ServletCalendario extends HttpServlet {
 
+//-----------------------------------------------------------------------------------------------------
+// Proceso de la peticion
+//-----------------------------------------------------------------------------------------------------
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ResponderPeticion(request, response);
@@ -47,7 +51,17 @@ public class ServletCalendario extends HttpServlet {
 			e.printStackTrace();
 		}	
 	}
+
+//-----------------------------------------------------------------------------------------------------
+// Funciones
+//-----------------------------------------------------------------------------------------------------
 	
+	/**
+	 * Transforma lo objetos CitaTo en un JSON de la forma {id,title,start,end}
+	 * title tiene la forma nom_paciente Salon: num_salon
+	 * start y end son fechas que tienen la forma YYYY-MM-DD HH:mm en formato de 24H
+	 * @return un string con todos los objetos CitaTo parseados
+	 */
 	private String parsearCitas(ArrayList<CitaTo> citas){
 		PersonaBean personaBean = new PersonaBean();
 		String par = "";
@@ -60,7 +74,12 @@ public class ServletCalendario extends HttpServlet {
 			String paciente = pacienteTo.getPrimerNombre() + " " + pacienteTo.getPrimerApellido() + " " + pacienteTo.getSegundoApellido();
 			String mes = fecha.getMonthValue() > 9? fecha.getMonthValue() + "" : "0" + fecha.getMonthValue();
 			String dia = fecha.getDayOfMonth() > 9? fecha.getDayOfMonth() + "" : "0" + fecha.getDayOfMonth();
-			par += "{id: "+ actual.getIdCita() +", title: '" + paciente + " Salon: " + actual.getSalon() + "', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + fecha.getHour() + ":" + fecha.getMinute() + "'},";
+			String hora = fecha.getHour() > 9? fecha.getHour() + "" : "0" + fecha.getHour();
+			int fin = fecha.getHour() + 1;
+			String horaFin = fin > 9? fin + "" : "0" + fin;
+			String minutos = fecha.getMinute() > 9? fecha.getMinute() + "" : "0" + fecha.getMinute();
+			par += "{id: "+ actual.getIdCita() +", title: '" + paciente + " Salon: " + actual.getSalon() + 
+					"', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + hora + ":" + minutos + "', end: '" + fecha.getYear() +  "-" + mes + "-" + dia + " " + horaFin + ":" + minutos + "'},";
 		}
 		return par;
 	}

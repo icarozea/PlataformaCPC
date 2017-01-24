@@ -25,7 +25,7 @@
 </script>
 <body>
 	<!--MEMU SUPERIOR-->
-	<%@include file="/menuNavegacion.jsp"%>
+	<%@include file="/menuNavegacionAdmin.jsp"%>
 	<h1 id="titulo">LISTA DE EPS</h1>
 	<form id="FormDatos" name="FormDatos" action="./ServletEPS" method="POST">
 		<input type="hidden" name="operacion" id="operacion" />

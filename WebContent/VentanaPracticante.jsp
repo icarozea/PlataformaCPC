@@ -8,16 +8,16 @@
     </head>
     <body>
 
-         <%@include file="./menuNavegacion.jsp" %> 
+         <%@include file="./menuNavegacionPracticante.jsp" %> 
         <div id="gestioncitas" class="caja">
             <h1>INICIO</h1>
             <h2>Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>
-                    	<td><a href="./ServletPersona?operacion=editarPersona&idPersona=30"><img src="resources/personas.png"/></a></td>
-                        <td><a href="GestiondeUsuarios.jsp"><img src="resources/appointment.png"/></a></td>                     
-                        <td><a href="inicio_calendario.jsp"><img src="resources/reporte.png"/></a></td>                      
+                    	<td><a href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}"><img src="resources/personas.png"/></a></td>                                       
+                        <td><a href="inicioCita.jsp"><img src="resources/appointment.png"/></a></td>                     
+                        <td><a href=""><img src="resources/reporte.png"/></a></td>                       
                     </tr>
                     <tr>
                         <td>Mi Perfil</td>

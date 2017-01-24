@@ -9,7 +9,7 @@
     </head>
     <body>
 
-         <%@include file="./menuNavegacion.jsp" %> 
+         <%@include file="./menuNavegacionAdmin.jsp" %> 
         <div id="gestioncitas" class="caja">
             <h1>INICIO</h1>
             <h2>Bienvenido ${sessionScope.personaSession.primerNombre}</h2>

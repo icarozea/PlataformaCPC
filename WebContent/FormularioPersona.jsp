@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="estilo.css"></link>
 
 <script type="text/javascript" src="js/ValidarPassword.js"></script>
-<script type="text/javascript" src="js/mostrarEPS.js"></script>
 <script type="text/javascript" src="js/util.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agregar Persona</title>
@@ -19,9 +18,22 @@
 
 <body onload="cargueInicial()">
 	<!--MENU SUPERIOR-->
-	<%@include file="./menuNavegacion.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+			<%@include file="./menuNavegacionAdmin.jsp"%>
+		</c:when>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+			<%@include file="./menuNavegacionPracticante.jsp"%>
+		</c:when>
+	</c:choose>
+	
 	<!--MEMU LATERAL-->
-	<%@include file="./menuPersona.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+			<%@include file="./menuPersona.jsp"%>
+		</c:when>
+	</c:choose>
+	
 	<div id="formularioIngreso">
 		<c:choose>
 			<c:when test="${requestScope.pNom != null}">
@@ -210,6 +222,8 @@
 					</c:otherwise>
 					</c:choose>
 				</tr>
+				<c:choose>
+					<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
 				<tr>
 					<td>Perfil:</td>
 					<td><select id="perfil" name="perfil"
@@ -218,7 +232,7 @@
 							<c:forEach items="${listaPerfiles}" var="perfilPersona">
 								<c:choose>
 									<c:when
-										test="${requestScope.perfil == perfilPersona.nombrePerfil}">
+										test="${requestScope.perfil == perfilPersona.idPerfil}">
 										<option value="${perfilPersona.idPerfil}" selected>${perfilPersona.nombrePerfil}</option>
 									</c:when>
 									<c:otherwise>
@@ -228,16 +242,39 @@
 							</c:forEach>
 					</select></td>
 				</tr>
+					</c:when>
+					<c:otherwise>
+				<tr>
+					<% String perfil = "0"; %>
+					<td>Perfil:</td>
+					<td><select id="perfil" name="perfil" disabled>
+							<option value="-1">Seleccione</option>
+							<c:forEach items="${listaPerfiles}" var="perfilPersona">
+								<c:choose>
+									<c:when
+										test="${requestScope.perfil == perfilPersona.idPerfil}">
+										<option value="${perfilPersona.idPerfil}" selected>${perfilPersona.nombrePerfil}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${perfilPersona.idPerfil}">${perfilPersona.nombrePerfil}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+					</select></td>
+					<input type="hidden" id="perfil" name="perfil" value="${requestScope.perfil}">
+				</tr>
+					</c:otherwise>
+				</c:choose>
 				<tr>
 				<c:choose>
-					<c:when test="${requestScope.perfil == 'Practicante'}">
+					<c:when test="${requestScope.perfil == 3}">
 						<td id="seccionCodigo">Codigo:</td>
 					</c:when>
 					<c:otherwise>
 						<td id="seccionCodigo" style="display: none;">Codigo:</td>
 					</c:otherwise>
 				</c:choose>
-				<td><c:choose><c:when test="${requestScope.perfil == 'Practicante'}">
+				<td><c:choose><c:when test="${requestScope.perfil == 3}">
 					<c:choose>
 						<c:when test="${requestScope.cod != null}">
 							<input type="text" id="codigo" name="codigo" value="${requestScope.cod}" required="">
@@ -259,7 +296,7 @@
 				</tr>
 				<tr>
 					<c:choose>
-						<c:when test="${requestScope.perfil == 'Paciente'}">
+						<c:when test="${requestScope.perfil == 4}">
 							<td id="seccionEPS">EPS:</td>
 						</c:when>
 						<c:otherwise>
@@ -267,7 +304,7 @@
 						</c:otherwise>
 					</c:choose>
 					<td><c:choose>
-							<c:when test="${requestScope.perfil == 'Paciente'}">
+							<c:when test="${requestScope.perfil == 4}">
 								<select id="eps" name="eps">
 							</c:when>
 							<c:otherwise>
@@ -288,7 +325,7 @@
 				</tr>
 				<tr>
 					<c:choose>
-						<c:when test="${requestScope.perfil == 'Paciente' || requestScope.perfil == 'Practicante'}">
+						<c:when test="${requestScope.perfil == 4 || requestScope.perfil == 3}">
 							<td id="seccionJornada">Jornada:</td>
 						</c:when>
 						<c:otherwise>
@@ -296,7 +333,7 @@
 						</c:otherwise>
 					</c:choose>
 					<td><c:choose>
-							<c:when test="${requestScope.perfil == 'Paciente' || requestScope.perfil == 'Practicante'}">
+							<c:when test="${requestScope.perfil == 4 || requestScope.perfil == 3}">
 								<select id="jornada" name="jornada">
 							</c:when>
 							<c:otherwise>
@@ -304,8 +341,8 @@
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
-							<c:when test="${requestScope.jornada == 'dia'}"><option value="dia" selected>Mañana L-V</option></c:when>
-							<c:otherwise><option value="dia">Mañana L-V</option></c:otherwise>
+							<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Mañana L-V</option></c:when>
+							<c:otherwise><option value="manana">Mañana L-V</option></c:otherwise>
 						</c:choose>
 						<c:choose>
 							<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>
@@ -318,13 +355,16 @@
 					</select></td>
 				</tr>
 			</table>
-			<br> <input type="button"
-				onclick="checkTodo(${requestScope.idPersona})" id="btnAceptar"
-				value="Aceptar" class="botones"> <a
-				href="inicioPersonas.jsp"><input type="button" id="btnCancelar"
-				value="Cancelar" class="botones"></a>
+			<br><input type="button" onclick="checkTodo(${requestScope.idPersona})" id="btnAceptar" value="Aceptar" class="botones">
+			<c:choose>
+				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+					<a href="inicioPersonas.jsp"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a>
+				</c:when>
+				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+					<a href="VentanaPracticante.jsp"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a>
+				</c:when>
+			</c:choose>
 		</form>
 	</div>
-
 </body>
 </html>

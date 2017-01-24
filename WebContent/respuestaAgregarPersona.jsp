@@ -14,9 +14,21 @@
     </head>
     <body>
     	<!--MENU SUPERIOR--> 
-         <%@include file="./menuNavegacion.jsp" %>
+        <c:choose>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+				<%@include file="./menuNavegacionAdmin.jsp"%>
+			</c:when>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+				<%@include file="./menuNavegacionPracticante.jsp"%>
+			</c:when>
+		</c:choose>
         <!--MEMU LATERAL--> 
-        <%@include file="./menuPersona.jsp" %>      
+        <c:choose>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+				<%@include file="./menuPersona.jsp"%>
+			</c:when>
+		</c:choose>
+	     
         <div id="marcoRespuesta" class="caja">
             &nbsp;&nbsp;&nbsp;
             
@@ -32,8 +44,16 @@
             
             <h2><%= mensaje %></h2>
             <h4><%= error %></h4>
-            <a href="./ServletPersona?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Crear Otro" class="botones"></a>     
-       		<a href="./busquedaPersonas"><input type="button" id="btnVer" value="Ver Actuales" class="botones"></a>
+            <c:choose>
+				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+            		<a href="./ServletPersona?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Crear Otro" class="botones"></a>
+            		<a href="./busquedaPersonas"><input type="button" id="btnVer" value="Ver Actuales" class="botones"></a>
+            	</c:when>
+            	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+            	    <a href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}"><input type="button" id="btnContinuar" value="Volver" class="botones"></a>
+            		<a href="VentanaPracticante.jsp"><input type="button" id="btnVer" value="Salir" class="botones"></a>
+            	</c:when>
+            </c:choose>
        </div>
     </body>
 </html>

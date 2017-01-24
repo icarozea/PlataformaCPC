@@ -26,6 +26,18 @@ h1#titulo{
     padding: 0.5%;
 }
 
+.rwd-table-noBorder th{
+    /*position: fixed;*/
+    width: auto;  
+    font-style:italic;
+    font-size: 16px;     
+    color: #006699;
+    background:#f2f5f7;
+/*    border-radius:2px;
+    background: #cc3c21;
+    color: #ffffff;*/
+}
+
 .rwd-table{
     /*border:#cc3300 solid 2px;*/
     margin: 0 auto;

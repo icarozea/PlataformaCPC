@@ -8,7 +8,7 @@
     </head>
     <body>      
         <!--MEMU SUPERIOR--> 
-         <%@include file="/menuNavegacion.jsp" %>
+         <%@include file="/menuNavegacionAdmin.jsp" %>
         <!--MEMU LATERAL--> 
         <%@include file="/menuPersona.jsp" %>
         <div id="formularioCupos" class="cajaformulario" style="margin-top: 15%;">

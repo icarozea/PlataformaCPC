@@ -12,12 +12,33 @@
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
 <script type="text/javascript" src="js/validarCita.js"></script>
+<script>
+function mostrarTipo(){
+	var select = document.getElementById('tipoTratamiento');
+	var label = document.getElementById('lblTratamiento');
+	if(select.style.display == 'none'){
+		select.style.display='block';
+		label.style.display='block';
+	}
+	else{
+		select.style.display='none';
+		label.style.display='none';
+	}
+}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Crear citas</title>
 </head>
 <body>
 	<!--MEMU SUPERIOR-->
-	<%@include file="/menuNavegacion.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+			<%@include file="./menuNavegacionAdmin.jsp"%>
+		</c:when>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+			<%@include file="./menuNavegacionPracticante.jsp"%>
+		</c:when>
+	</c:choose>
 	
 	<h1 id="titulo">Cita</h1>
 	<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
@@ -44,16 +65,23 @@
 							<th>Paciente</th>
 							<th>Tipo Documento</th>
 							<th>Número Documento </th>
-							<th>Dirección</th>
+							<th>Correo</th>
 							<th>Teléfono</th>
 						</tr>
 					<c:forEach items="${requestScope.listaPacientes}" var="paciente">
 						<tr>
-							<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}"></td>
+							<c:choose>
+								<c:when test="${requestScope.paciente.idPersona == paciente.idPersona}">
+									<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}" checked></td>
+								</c:when>
+								<c:otherwise>
+									<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}"></td>
+								</c:otherwise>
+							</c:choose>
 							<td>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</td>
 							<td>${paciente.tipoDocumento.sigla}</td>
 							<td>${paciente.numeroDocumento}</td>
-							<td>${paciente.direccion}</td>
+							<td>${paciente.correo}</td>
 							<td>${paciente.telefono}</td>
 						</tr>
 					</c:forEach>
@@ -67,6 +95,19 @@
 				<td>Fecha y Hora: </td>
 				<td><input type="text" id="fecha" name="fecha" value="${requestScope.fecha}" required></td>
 				<td><input type="button" id="btnFecha" value="Buscar" class="botones" onclick="{document.FormCalendario.submit();}"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>Valoración </td>
+				<td> <input type="checkbox" name="valoracion" id="valoracion" value="valoracion" onchange="mostrarTipo()"></td>
+				<td><div id="lblTratamiento" style="display: none;">Tipo Tratamiento:</div></td>
+				<td><select id="tipoTratamiento" name="tipoTratamiento" style="display: none;">
+							<option value="individual">Individual</option>
+							<option value="pareja">Pareja</option>
+							<option value="familiar">Familiar</option>
+							<option value="infantil">Infantil</option>					
+					</select>
+				</td>
 			</tr>
 		</table>
 		<br>

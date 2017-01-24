@@ -15,33 +15,46 @@ import com.plataforma.cpc.modelo.UsuarioBean;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.UsuarioTo;
 
+/**
+ * Servlet que maneja el inicio de sesión para entrar al portal web
+ */
 @WebServlet(name = "ServletUsuario", urlPatterns = { "/ServletUsuario" })
 public class ServletUsuario extends HttpServlet {
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		response.setContentType("text/html;charset=UTF-8");
 		String operacion = request.getParameter("operacion");
 		PersonaTo personaSesion = new PersonaTo();
 		UsuarioBean usuarioBean = new UsuarioBean();
 		HttpSession session = request.getSession(true);
+
 		switch (operacion) {
 		case "btnIngresar":
 			personaSesion = usuarioBean.validarUsuario(request.getParameter("user"), request.getParameter("password"));
-			
-			if (personaSesion.getIdPersona()!= null) {
-				session.setAttribute("personaSession", personaSesion);
-				request.setAttribute("mensaje", "1");
-				if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
-					RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
-					dispatcher.forward(request, response);
+
+			if (personaSesion.getIdPersona() != null) {
+				
+				if(personaSesion.getNumeroDocumento().equals("000")){
+					request.setAttribute("mensaje", "3");
+					System.out.println("Clave incorrecta");
+					request.getRequestDispatcher("index.jsp").forward(request, response);
 				}
-				else{
+				else {
+					session.setAttribute("personaSession", personaSesion);
 					request.setAttribute("mensaje", "1");
-					RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaPracticante.jsp");
-					dispatcher.forward(request, response);
-				}
-			} else {
+					
+					if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
+						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
+						dispatcher.forward(request, response);
+					}
+					else{
+						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaPracticante.jsp");
+						dispatcher.forward(request, response);
+					}
+				}		
+			} 
+			else {
 				request.setAttribute("mensaje", "2");
 				System.out.println("usuario no existe");
 				request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -50,9 +63,7 @@ public class ServletUsuario extends HttpServlet {
 		default:
 			System.out.println("Opción no existe");
 			break;
-
 		}
-
 	}
 
 	@Override
@@ -66,5 +77,4 @@ public class ServletUsuario extends HttpServlet {
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-
 }

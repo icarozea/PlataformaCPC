@@ -44,7 +44,7 @@ public class ServletBusquedaPersona extends HttpServlet {
 				busqueda = "Practicante";
 
 			if(jornada == null)
-				jornada = "dia";
+				jornada = "manana";
 
 			request.setAttribute("valor", busqueda);
 			request.setAttribute("jornada", jornada);
@@ -61,6 +61,7 @@ public class ServletBusquedaPersona extends HttpServlet {
 	}
 
 	public ArrayList<PersonaTo> RealizarBusqueda(String perfil, String jornada){
+		System.out.println("Jornada halada: " + jornada);
 		PersonaBean persona = new PersonaBean();
 		ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
 		ArrayList<PersonaTo> retorno = new ArrayList<PersonaTo>();
