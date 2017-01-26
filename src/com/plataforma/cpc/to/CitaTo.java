@@ -20,7 +20,7 @@ public class CitaTo {
 	private PersonaTo 		paciente;
 	private String 			estado;
 	private TratamientoTo 	tratamiento;
-	private ReporteTo 		reporte;
+	private SesionIndividualTo 		reporte;
 	private boolean			valoracion;
 	
 	//-------------------------------------------------------------------------------------
@@ -91,11 +91,11 @@ public class CitaTo {
 		this.tratamiento = tratamiento;
 	}
 	
-	public ReporteTo getReporte() {
+	public SesionIndividualTo getReporte() {
 		return reporte;
 	}
 	
-	public void setReporte(ReporteTo reporte) {
+	public void setReporte(SesionIndividualTo reporte) {
 		this.reporte = reporte;
 	}
 
@@ -105,5 +105,12 @@ public class CitaTo {
 
 	public void setValoracion(boolean esValoracion) {
 		this.valoracion = esValoracion;
+	}
+
+	@Override
+	public String toString() {
+		return "CitaTo [idCita=" + idCita + ", salon=" + salon + ", fechaSolicitud=" + fechaSolicitud + ", fechaCita="
+				+ fechaCita + ", practicante=" + practicante + ", paciente=" + paciente + ", estado=" + estado
+				+ ", tratamiento=" + tratamiento + ", reporte=" + reporte + ", valoracion=" + valoracion + "]";
 	}	
 }

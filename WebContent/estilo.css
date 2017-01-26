@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans');
 
 body{
     align-content: center;
@@ -7,6 +8,10 @@ body{
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100%;
+}
+
+.droidSans{
+	font-family: 'Droid Sans', sans-serif;
 }
 
 .NombreUsuario{

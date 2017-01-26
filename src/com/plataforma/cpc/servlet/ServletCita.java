@@ -220,8 +220,9 @@ public class ServletCita extends HttpServlet{
 			Integer idCita = Integer.parseInt(request.getParameter("idCita"));
 			filtroCita.setIdCita(idCita);
 			citaTo = daoCitas.consultarCita(filtroCita);
+			
 			if(citaTo.getIdCita() != null){
-				RequestDispatcher dispatcher = request.getRequestDispatcher("./ReporteCita?operacion=cargueIncial");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./reporteCita.jsp");
 				request.setAttribute("cita", citaTo);
 				dispatcher.forward(request, response);
 			}
