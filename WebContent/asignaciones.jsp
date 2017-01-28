@@ -8,6 +8,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Asignar</title>
     </head>
+		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>    
     <body>
     	<!--MEMU SUPERIOR--> 
          <%@include file="./menuNavegacionAdmin.jsp" %>

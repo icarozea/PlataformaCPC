@@ -13,6 +13,7 @@ import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
+import com.plataforma.cpc.to.TratamientoTo;
 
 
 @WebServlet(name="ServletCita", urlPatterns = {"/ServletCita"})
@@ -22,7 +23,7 @@ public class ServletCita extends HttpServlet{
 		response.setContentType("text/html;charset=UTF-8");
 
 		String operacion = request.getParameter("operacion");
-		System.out.println("Operacion: "+operacion);
+
 		switch (operacion) {
 
 		case "cargueIncial":
@@ -37,8 +38,8 @@ public class ServletCita extends HttpServlet{
 		case "eliminarCita":
 			eliminarCita(request, response);
 			break;
-		case "eliminarPersona":
-			//eliminarPersonas(request,response);
+		case "ejecutarCita":
+			ejecutarCita(request, response);
 			break;
 		default:
 			System.out.println("Opción no existe");
@@ -129,15 +130,56 @@ public class ServletCita extends HttpServlet{
 			citaTo.setSalon(request.getParameter("salon"));
 			LocalDateTime date = LocalDateTime.parse(request.getParameter("fecha"));
 			citaTo.setFechaCita(date);
+			String valoracion = request.getParameter("valoracion");
+			String tipoTratamiento = request.getParameter("tipoTratamiento");
 
-			if(dao.crearCita(citaTo))
-				request.setAttribute("respuesta", "1");
-			else{
-				request.setAttribute("respuesta", "2");
-				request.setAttribute("error", "No fue posible crear una nueva cita");
+			if(valoracion != null){
+				citaTo.setValoracion(true);
+				TratamientoTo tratamiento = new TratamientoTo();
+				tratamiento.setPaciente(paciente);
+				tratamiento.setFechaInicio(date);
+				tratamiento.setTipo(tipoTratamiento);
+				int idTratamiento = dao.crearTratamiento(tratamiento);
+				if(idTratamiento > 0){
+					tratamiento.setIdTratamiento(idTratamiento);
+					citaTo.setTratamiento(tratamiento);
+					if(dao.crearCita(citaTo))
+						request.setAttribute("respuesta", "1");
+					else{
+						request.setAttribute("respuesta", "2");
+						request.setAttribute("error", "No fue posible crear una nueva cita");
+					}
+				}
+				else{
+					request.setAttribute("respuesta", "2");
+					request.setAttribute("error", "No fue posible crear el nuevo tratamiento");
+				}
+
+				dispatcher.forward(request, response);
 			}
-
-			dispatcher.forward(request, response);
+			else{
+				if(request.getParameter("flag") != null){
+					TratamientoTo tratamiento = new TratamientoTo();
+					tratamiento.setIdTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
+					citaTo.setTratamiento(tratamiento);
+					if(dao.crearCita(citaTo))
+						request.setAttribute("respuesta", "1");
+					else{
+						request.setAttribute("respuesta", "2");
+						request.setAttribute("error", "No fue posible crear una nueva cita");
+					}
+					
+					dispatcher.forward(request, response);
+				}
+				else{
+					ArrayList<TratamientoTo> tratamientos = dao.concultarTratamientosPaciente(paciente.getIdPersona());
+					request.setAttribute("tratamientos", tratamientos);
+					citaTo.setValoracion(false);
+					request.setAttribute("cita", citaTo);
+					dispatcher = request.getRequestDispatcher("verTratamientos.jsp");
+					dispatcher.forward(request, response);
+				}
+			}		
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -162,6 +204,30 @@ public class ServletCita extends HttpServlet{
 			}
 			else
 				throw new Exception("No fue posible eliminar la cita");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void ejecutarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		DaoCitas daoCitas = new DaoCitas();
+		CitaTo filtroCita = new CitaTo();
+		CitaTo citaTo = new CitaTo();
+		
+		try{
+			Integer idCita = Integer.parseInt(request.getParameter("idCita"));
+			filtroCita.setIdCita(idCita);
+			citaTo = daoCitas.consultarCita(filtroCita);
+			
+			if(citaTo.getIdCita() != null){
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./reporteCita.jsp");
+				request.setAttribute("cita", citaTo);
+				dispatcher.forward(request, response);
+			}
+			else
+				throw new Exception("No se encontró la cita especificada");
 		}
 		catch(Exception e){
 			e.printStackTrace();

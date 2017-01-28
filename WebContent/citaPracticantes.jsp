@@ -14,6 +14,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Lista Practicantes</title>
 </head>
+		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
 <script type="text/javascript">
 	function enviarFormulario(operacion, idPersona){
 		document.getElementById('operacion').value=operacion;

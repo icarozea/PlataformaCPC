@@ -1,11 +1,3 @@
-/**
- * 
- */
-
-function cargueInicial(){
-	
-}
-
 function mostrarEPS(perfil){
 	if (perfil == 4){
 		document.getElementById('seccionCodigo').style.display='none';
