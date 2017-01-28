@@ -165,8 +165,9 @@ input.radio{
 
 
 #menu ul{
-    margin-right: 20%;
+    margin-right: 6%;
     margin-bottom: 10%;
+    margin-left: 3%;
 }
 
 #menu li{
@@ -174,6 +175,7 @@ input.radio{
     list-style: none;
     padding: 15px;        
     font: bold 14px verdana, sans-serif;
+    /*font-family: 'Droid Sans', sans-serif;*/
     background-color:#ffffff;
     border-left-color:#006699; 
     border: #006699 groove 3px;
@@ -290,6 +292,34 @@ h3{
     border: #006699 double 2px;
     color: #006699; 
     border-radius: 5px;
+}
+
+.btnLogout {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.btnLogout-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
 }
 
 .btnEPS{
