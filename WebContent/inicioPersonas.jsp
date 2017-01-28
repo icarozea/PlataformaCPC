@@ -5,6 +5,14 @@
         <title>Personas</title>
         <link rel="stylesheet" href="estilo.css"></link>
     </head>
+		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
     <body>
 
          <%@include file="./menuNavegacionAdmin.jsp" %> 

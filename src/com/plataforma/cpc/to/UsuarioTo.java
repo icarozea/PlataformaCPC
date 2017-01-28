@@ -36,9 +36,5 @@ public class UsuarioTo {
 		return "UsuarioTo [idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", contrasena=" + contrasena
 				+ ", correo=" + correo + "]";
 	}
-	
-	
-	
-	
 
 }

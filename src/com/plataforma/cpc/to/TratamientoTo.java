@@ -69,4 +69,10 @@ public class TratamientoTo {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	@Override
+	public String toString() {
+		return "TratamientoTo [idTratamiento=" + idTratamiento + ", paciente=" + paciente + ", estado=" + estado
+				+ ", fechaInicio=" + fechaInicio + ", fechaCierre=" + fechaCierre + ", tipo=" + tipo + "]";
+	}
 }
