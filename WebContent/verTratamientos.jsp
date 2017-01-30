@@ -8,6 +8,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Tratamientos</title>
 </head>
+		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
 <body>
 	<!--MENU SUPERIOR-->
 	<c:choose>
