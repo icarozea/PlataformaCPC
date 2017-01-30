@@ -46,5 +46,4 @@ public class DaoSesionIndividual extends ConexionOracle{
 		}	
 		return retorno;
 	}
-
 }

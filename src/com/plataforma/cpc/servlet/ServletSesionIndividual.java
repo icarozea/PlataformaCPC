@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.to.SesionIndividualTo;
 
@@ -18,27 +19,16 @@ import com.plataforma.cpc.to.SesionIndividualTo;
 @WebServlet("/ServletSesionIndividual")
 public class ServletSesionIndividual extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletSesionIndividual() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		ResponderPeticion(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		ResponderPeticion(request, response);
+	}
+	
+	public void ResponderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		SesionIndividualTo sesion = new SesionIndividualTo();
 		sesion.setCitaId(request.getParameter("idCita"));
@@ -48,17 +38,28 @@ public class ServletSesionIndividual extends HttpServlet {
 		sesion.setDescripcion(request.getParameter("descripcionSesion"));
 		sesion.setTareasAsignadas(request.getParameter("tareasSesion"));
 		sesion.setActividadesProximaSesion(request.getParameter("actividadesProxSesion"));
-		
-		boolean resultado = dao.crearReporteSesionIndividual(sesion);
-		if (resultado) {
-			request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
-		}else{
-			request.setAttribute("mensajeRespuestaReporte", "Ha odurrido un error durante la creación del reporte.");
+
+		try{
+			boolean resultado = dao.crearReporteSesionIndividual(sesion);
+			if (resultado) {
+				DaoCitas daoCitas = new DaoCitas();
+				if(daoCitas.actualizarEstadoCita(Integer.parseInt(request.getParameter("idCita")), "pendiente"))
+					request.setAttribute("respuesta", "1");
+				else{
+					request.setAttribute("respuesta", "2");
+					request.setAttribute("error", "No fue posible cambiar el estado de la cita");
+				}
+			}else{
+				request.setAttribute("respuesta", "2");
+				request.setAttribute("error", "Error en la creación del reporte");
+			}
 		}
-		
+		catch (Exception e){
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		dispatcher.forward(request, response);
-		
 	}
-
 }

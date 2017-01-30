@@ -63,7 +63,7 @@
 
 			<div>
 				<div>
-					<input id="saveForm" name="saveForm" type="submit" value="Guardar">
+					<input id="saveForm" name="saveForm" type="submit" value="Guardar" class="botones">
 				</div>
 			</div>
 
