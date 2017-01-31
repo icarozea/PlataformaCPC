@@ -319,4 +319,64 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return tratamientos;
 	}
+	
+	public ArrayList<CitaTo> consultarCitasPacienteTratamiento(Integer idPaciente, Integer idTratamiento){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
+		String sql = "SELECT CITA.ID_CITA, CITA.SALON, CITA.FECHA_SOLICITUD, CITA.FECHA_CITA,CITA.ID_PRACTICANTE, CITA.ID_PACIENTE, ";
+				sql+="CITA.ESTADO, CITA.ID_TRATAMIENTO, CITA.ES_VALORACION ";
+				sql+="FROM PERSONA PER, TRATAMIENTO TRA, CITA CITA ";
+				sql+="WHERE PER.PERFIL_ID_PERFIL  =  4 ";
+				sql+="AND PER.ID_PERSONA = TRA.ID_PACIENTE ";
+				sql+="AND CITA.ID_TRATAMIENTO = TRA.ID_TRATAMIENTO ";
+				sql+="AND PER.ID_PERSONA =NVL(?,PER.ID_PERSONA) ";
+				sql+="AND TRA.ID_TRATAMIENTO = NVL(?,TRA.ID_TRATAMIENTO) ";
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idPaciente);
+			conexionActual.agregarAtributo(2, idTratamiento);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){
+				CitaTo citaTo = new CitaTo();
+				citaTo.setIdCita(rs.getInt("CITA.ID_CITA"));
+				citaTo.setSalon(rs.getString("CITA.SALON"));
+				citaTo.setFechaSolicitud(rs.getTimestamp("CITA.FECHA_SOLICITUD").toLocalDateTime());
+				citaTo.setFechaCita(rs.getTimestamp("CITA.FECHA_CITA").toLocalDateTime());
+
+				PersonaTo practicante = new PersonaTo();
+				practicante.setIdPersona(rs.getInt("CITA.ID_PRACTICANTE"));
+				citaTo.setPracticante(practicante);
+
+				PersonaTo paciente = new PersonaTo();
+				paciente.setIdPersona(rs.getInt("CITA.ID_PACIENTE"));
+				citaTo.setPaciente(paciente);
+				
+				citaTo.setEstado(rs.getString("CITA.ESTADO"));
+				
+				TratamientoTo tratamiento = new TratamientoTo();
+				tratamiento.setIdTratamiento(rs.getInt("CITA.ID_TRATAMIENTO"));
+				citaTo.setTratamiento(tratamiento);
+				
+				int valoracion = rs.getInt("CITA.ES_VALORACION");
+				boolean b = (valoracion != 0);
+				citaTo.setValoracion(b);
+
+				citas.add(citaTo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return citas;
+	}
 }
