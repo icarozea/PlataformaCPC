@@ -47,3 +47,48 @@ function validarFecha(){
 	alert('Seleccione una fecha válida');
 	return false;
 }
+function validarTratamiento(){
+	var nomForm = document.getElementById('FormDatos');
+	document.getElementById('operacion').value = "detalleCitas";
+	
+    if (validarSeleccionTratamiento()) {
+    	nomForm.submit();
+
+    }
+}
+
+function validarSeleccionTratamiento(){
+	var pacientes = document.getElementsByName("grupoTratamiento");
+	
+	for(var i = 0; i < pacientes.length; i++) {
+		if(pacientes[i].checked == true) {
+			return true;
+		}
+	}
+	
+	alert('Seleccione un tratamiento');
+	return false;
+}
+
+function enviarCita(){
+	var nomForm = document.getElementById('FormDatos');
+	document.getElementById('operacion').value = "detalleSesion";
+	
+    if (validarSeleccionCita()) {
+    	nomForm.submit();
+
+    }
+}
+
+function validarSeleccionCita(){
+	var pacientes = document.getElementsByName("grupoCita");
+	
+	for(var i = 0; i < pacientes.length; i++) {
+		if(pacientes[i].checked == true) {
+			return true;
+		}
+	}
+	
+	alert('Seleccione una cita');
+	return false;
+}

@@ -75,7 +75,7 @@ public class ServletHistoriaClinica extends HttpServlet {
 		PersonaTo personaFiltro = new PersonaTo();
 		PersonaTo paciente = new PersonaTo();
 
-		Integer idPaciente = new Integer(request.getParameter("dPersona"));
+		Integer idPaciente = new Integer(request.getParameter("idPersona"));
 		personaFiltro.setIdPersona(idPaciente);
 
 		try {
@@ -102,15 +102,17 @@ public class ServletHistoriaClinica extends HttpServlet {
 
 		HistoriaClinicaBean historiaClinica = new HistoriaClinicaBean();
 		ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
+		TratamientoTo tratamiento = new TratamientoTo();
 		
-		Integer idPaciente = new Integer(request.getParameter("idPersona"));
-		Integer idTratamiento = new Integer(request.getParameter("idTratamiento"));
+		Integer idPaciente = new Integer(request.getParameter("idPaciente"));
+		Integer idTratamiento = Integer.parseInt(request.getParameter("grupoTratamiento"));
 
 		try {
-
+			tratamiento = historiaClinica.consultarTratamiento(idTratamiento);
 			citas = historiaClinica.consultarCitasxTratamiento(idPaciente, idTratamiento);
 			
-			request.setAttribute("citas", citas);
+			request.setAttribute("tratamiento", tratamiento);
+			request.setAttribute("listaCitas", citas);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleTratamiento.jsp");
 			dispatcher.forward(request, response);
 
@@ -130,14 +132,22 @@ public class ServletHistoriaClinica extends HttpServlet {
 		HistoriaClinicaBean historiaClinica = new HistoriaClinicaBean();
 		ArrayList<SesionIndividualTo> sesiones = new ArrayList<SesionIndividualTo>();
 		
-		Integer idCita = new Integer(request.getParameter("idCita"));
-
+		Integer idCita = Integer.parseInt(request.getParameter("grupoCita"));
+		CitaTo citaFiltro = new CitaTo();
+		CitaTo cita = new CitaTo();
+		citaFiltro.setIdCita(idCita);
 		try {
-
+			
+			cita = historiaClinica.consultarCita(citaFiltro);
 			sesiones = historiaClinica.consultarReportesSesion(idCita);
 			
 			request.setAttribute("sesiones", sesiones);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleCita.jsp");
+			if (sesiones != null && sesiones.size()>0)
+				request.setAttribute("sesion", sesiones.get(0));
+			else 
+				request.setAttribute("sesion", null);
+			request.setAttribute("cita", cita);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleSesion.jsp");
 			dispatcher.forward(request, response);
 
 		} catch (Exception e) {

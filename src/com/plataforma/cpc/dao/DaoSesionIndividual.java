@@ -55,11 +55,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
 		ArrayList<SesionIndividualTo> sesiones = new ArrayList<SesionIndividualTo>();
-		String sql = "SELECT RS.ID_SESION, RS.CITA_ID_CITA, RS.FECHA, RS.NOMBRE_PROFESIONAL,RS.OBJETIVO_SESION,RS.DESCRIPCION_SESION,";
-				sql+= "RS.TAREAS_ASIGNADAS,RS.ACTIVIDADES_PROX_SESION ";
+		String sql = "SELECT RS.ID_SESION, RS.CITA_ID_CITA, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
+				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION ";
 				sql+= "FROM CITA CITA, REPORTE_SESION RS ";
 				sql+= "WHERE ID_CITA = ? ";
-				sql+= "AND CITA.ID_CITA = RS.CITA_ID_CITA";
+				sql+= "AND CITA.ID_CITA = RS.CITA_ID_CITA ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -69,14 +69,14 @@ public class DaoSesionIndividual extends ConexionOracle{
 
 			while (rs.next()){
 				SesionIndividualTo sesionIndividual = new SesionIndividualTo();
-				sesionIndividual.setIdSesion(rs.getInt(""));
-				sesionIndividual.setCitaId(rs.getString(""));
-				sesionIndividual.setFecha(rs.getString(""));
-				sesionIndividual.setNombreProfesional(rs.getString(""));
-				sesionIndividual.setObjetivo(rs.getString(""));
-				sesionIndividual.setDescripcion(rs.getString(""));
-				sesionIndividual.setTareasAsignadas(rs.getString(""));
-				sesionIndividual.setActividadesProximaSesion(rs.getString(""));
+				sesionIndividual.setIdSesion(rs.getInt("ID_SESION"));
+				sesionIndividual.setCitaId(rs.getString("CITA_ID_CITA"));
+				sesionIndividual.setFecha(rs.getString("FECHA"));
+				sesionIndividual.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
+				sesionIndividual.setObjetivo(rs.getString("OBJETIVO_SESION"));
+				sesionIndividual.setDescripcion(rs.getString("DESCRIPCION_SESION"));
+				sesionIndividual.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
+				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
 				sesiones.add(sesionIndividual);
 			}
 		} catch (Exception e) {

@@ -320,6 +320,47 @@ public class DaoCitas extends ConexionOracle{
 		return tratamientos;
 	}
 	
+	public TratamientoTo consultarTratamiento(Integer idTratamiento){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		TratamientoTo tratamientoTo = new TratamientoTo();
+		String sql = "SELECT ID_TRATAMIENTO,ID_PACIENTE,ESTADO,FECHA_INICIO,FECHA_CIERRE,TIPO FROM TRATAMIENTO WHERE ID_TRATAMIENTO=?";
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idTratamiento);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){
+				
+				tratamientoTo.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
+				
+				PersonaTo paciente = new PersonaTo();
+				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));				
+				tratamientoTo.setPaciente(paciente);
+				
+				tratamientoTo.setEstado(rs.getString("ESTADO"));
+				tratamientoTo.setFechaInicio(rs.getTimestamp("FECHA_INICIO").toLocalDateTime());
+				
+				if(rs.getTimestamp("FECHA_CIERRE") != null)
+					tratamientoTo.setFechaCierre(rs.getTimestamp("FECHA_CIERRE").toLocalDateTime());
+				
+				tratamientoTo.setTipo(rs.getString("TIPO"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return tratamientoTo;
+	}
+	
 	public ArrayList<CitaTo> consultarCitasPacienteTratamiento(Integer idPaciente, Integer idTratamiento){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
@@ -342,26 +383,26 @@ public class DaoCitas extends ConexionOracle{
 
 			while (rs.next()){
 				CitaTo citaTo = new CitaTo();
-				citaTo.setIdCita(rs.getInt("CITA.ID_CITA"));
-				citaTo.setSalon(rs.getString("CITA.SALON"));
-				citaTo.setFechaSolicitud(rs.getTimestamp("CITA.FECHA_SOLICITUD").toLocalDateTime());
-				citaTo.setFechaCita(rs.getTimestamp("CITA.FECHA_CITA").toLocalDateTime());
+				citaTo.setIdCita(rs.getInt("ID_CITA"));
+				citaTo.setSalon(rs.getString("SALON"));
+				citaTo.setFechaSolicitud(rs.getTimestamp("FECHA_SOLICITUD").toLocalDateTime());
+				citaTo.setFechaCita(rs.getTimestamp("FECHA_CITA").toLocalDateTime());
 
 				PersonaTo practicante = new PersonaTo();
-				practicante.setIdPersona(rs.getInt("CITA.ID_PRACTICANTE"));
+				practicante.setIdPersona(rs.getInt("ID_PRACTICANTE"));
 				citaTo.setPracticante(practicante);
 
 				PersonaTo paciente = new PersonaTo();
-				paciente.setIdPersona(rs.getInt("CITA.ID_PACIENTE"));
+				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));
 				citaTo.setPaciente(paciente);
 				
-				citaTo.setEstado(rs.getString("CITA.ESTADO"));
+				citaTo.setEstado(rs.getString("ESTADO"));
 				
 				TratamientoTo tratamiento = new TratamientoTo();
-				tratamiento.setIdTratamiento(rs.getInt("CITA.ID_TRATAMIENTO"));
+				tratamiento.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
 				citaTo.setTratamiento(tratamiento);
 				
-				int valoracion = rs.getInt("CITA.ES_VALORACION");
+				int valoracion = rs.getInt("ES_VALORACION");
 				boolean b = (valoracion != 0);
 				citaTo.setValoracion(b);
 
