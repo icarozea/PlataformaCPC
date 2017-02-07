@@ -60,6 +60,9 @@ public class ServletHistoriaClinica extends HttpServlet {
 		case "detalleSesion":
 			detalleSesion(request,response);
 			break;
+		case "detalleSesion2":
+			detalleSesion(request,response);
+			break;	
 		default:
 			System.out.println("Opción no existe");
 			break;
