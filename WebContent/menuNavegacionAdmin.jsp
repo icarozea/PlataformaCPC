@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="estilo.css" />
+<link rel="stylesheet" href="estilo.css"/>
+<link rel="stylesheet" href="estiloMenu.css" />
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JSP Page</title>
 </head>
@@ -15,14 +17,28 @@
 		  }
 		%>
 <body>
-	<nav id="menu">
-		<ul>
-			<a href="VentanaAdministrador.jsp"><li>Inicio</li></a>
-			<a href="inicioPersonas.jsp"><li>Personas</li></a>
-			<a href="./ServletCita?operacion=cargueIncial"><li>Citas</li></a>
-			<a href=""><li>Reportes</li></a>
-		</ul>
-	</nav>
-	<br>
+	<div class="top-header">	
+	 <div class="container">
+	 	
+		 <div class="top-menu">
+		 	<span class="menu"> </span>
+			 <ul>
+				 <li><a href="VentanaAdministrador.jsp">INICIO</a></li>
+				 <li><a href="inicioPersonas.jsp">PERSONAS</a></li>
+				 <li><a href="./ServletCita?operacion=cargueIncial">CITAS</a></li>
+				 <li><a href="#">REPORTES</a></li>
+				<div class="clearfix"></div>
+			 </ul>
+			 <script>
+					$("span.menu").click(function(){
+						$(".top-menu ul").slideToggle(200);
+					});
+				</script>
+		</div>
+		<div class="logo">
+	 		<img id="logoK" alt="Logo Konrad" class="logoKonrad" src="resources/LOGO.jpg"/>
+	 	</div>
+	 </div>	
+	</div>
 </body>
 </html>

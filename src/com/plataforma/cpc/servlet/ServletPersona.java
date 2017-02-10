@@ -167,7 +167,7 @@ public class ServletPersona extends HttpServlet {
 			request.setAttribute("jornada", persona.getJornada());
 			request.setAttribute("cod", persona.getCodigoEstudiante());
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas2.jsp");
 			dispatcher.forward(request, response);
 		}
 		catch(Exception e){

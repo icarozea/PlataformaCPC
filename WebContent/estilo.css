@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Droid+Sans');
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url('https://fonts.googleapis.com/css?family=Cabin');
 
 body{
     align-content: center;
@@ -14,20 +16,57 @@ body{
 	font-family: 'Droid Sans', sans-serif;
 }
 
+.roboto{
+	font-family: 'Roboto', sans-serif;
+}
+
+.cabin{
+	font-family: 'Cabin', sans-serif;
+}
+
+.padding100{
+	padding-top: 100px;
+}
+
+.btn-xlarge{
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+  padding: 31px 35px;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #47a3da;
+  border: 0;
+  cursor: pointer;
+  
+  border-radius: 100%;
+}
+/*.btn-xlarge:active {
+  top: 2px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}*/
+.btn-xlarge:hover {
+  background: #CCC914;
+}
+
 .NombreUsuario{
     position: absolute;
     margin-right: 10%;
     color:#fff;
 }
 
-#titleForm{
+/*#titleForm{
     margin-top: 10%;
     padding: 0px;
     font-size: 24px;
     color: #006699;
     width: 100%;
     border: #006699 double medium;
-}
+}*/
 
 .agrupar{
     width:30%;
@@ -117,17 +156,17 @@ body{
     color: #cccccc;
     margin-top: 2%;
 }
-footer{
+/*footer{
     width: 100%; 
     height: 50px; 
-    /*    background: #006699; */
-    /*    color: #fff;*/
+    /*    background: #006699; 
+    /*    color: #fff;
     color: #006699;
     text-align: center;
     border-top: 2px;
     position: absolute;
     bottom: 0;    
-}
+}*/
 
 header{
     width: 100%;
@@ -198,7 +237,7 @@ input.radio{
 .tablaPrincipal{
     align-content: center;
     margin: 0 auto;
-    width: 90%;
+    width: 50%;
 }
 
 
@@ -223,6 +262,33 @@ input.radio{
     margin-top: 5%;
     padding: 2% 5% 2% 5%;
     border-radius: 2%;
+}
+
+#tablaDetallePersona{
+	max-width: 1040px;
+  	margin: 10px auto;
+}
+
+#tablaDetallePersona thead th {
+  font-weight: 400;
+  background: #47a3da;
+  color: #FFF;
+}
+
+#tablaDetallePersona tr {
+  background: #f4f7f8;
+  border-bottom: 1px solid #FFF;
+  margin-bottom: 5px;
+}
+
+#tablaDetallePersona tr:nth-child(even) {
+  background: #e8eeef;
+}
+
+#tablaDetallePersona th, td {
+  text-align: center;
+  padding: 10px;
+  font-weight: 300;
 }
 
 #eps{
@@ -285,14 +351,14 @@ input.radio{
 
 }
 
-h3{
+/*h3{
     width: 100%;
     text-align: center;
-    /*background: #006699;*/
+    background: #006699;
     border: #006699 double 2px;
     color: #006699; 
     border-radius: 5px;
-}
+}*/
 
 .btnLogout {
     display: inline-block;
@@ -320,6 +386,99 @@ h3{
     color: #fff;
     background-color: #d9534f;
     border-color: #d43f3a;
+}
+
+.btnReturn{
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.btnReturn-warning {
+    color: #fff;
+    background-color: #ded749;
+    border-color: #cacd41;
+}
+
+#register-form {
+ 	background:#fff;
+    border: 1px solid #DFDCDC;
+    border-radius: 15px 15px 15px 15px;
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+    /*padding: 25px 50px 10px;*/
+    padding-left: 10px;
+    padding-right: 55px;
+    width: 60%;
+ 	font-family:Tahoma, Geneva, sans-serif;
+}
+
+#register-form .fieldgroup {
+    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
+    display: inline-block;
+    padding: 8px 10px;
+    width: 340px;
+}
+fieldset{ border:none; }
+
+#register-form .fieldgroup input{
+    margin: 10px 0;
+    height: 40px;
+ 	width:100%;
+	border:solid #cdcdcd 1px;
+ 	border-radius:3px;
+ 	padding-left:10px;
+ 	font-size: 16px;
+}
+
+#register-form .fieldgroup select{
+    margin: 10px 0;
+    height: 40px;
+ 	width:103%;
+	border:solid #cdcdcd 1px;
+ 	border-radius:3px;
+ 	padding-left:10px;
+ 	font-size: 16px;
+}
+
+#register-form .submit {
+    padding: 10px;
+    height: 40px !important;
+ background:#00a2d1;
+ color:#fff;
+ font-weight:bolder;
+ border:solid #cdcdcd 1px;
+ border-radius:3px;
+}
+
+#register-form .fieldgroup label.error {
+    color: #FB3A3A;
+    display: inline-block;
+    font-weight:500;
+    padding: 0;
+    text-align: left;
+}
+
+.margenGestionContenido{
+	padding-top: 10%;
 }
 
 .btnEPS{

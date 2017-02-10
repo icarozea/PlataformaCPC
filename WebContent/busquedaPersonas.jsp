@@ -12,13 +12,15 @@
   		<!--MEMU SUPERIOR--> 
          <%@include file="./menuNavegacionAdmin.jsp" %>
          <!--MEMU LATERAL--> 
-        <%@include file="./menuLateral.jsp" %>
-        <div id="marcoBusqueda" class="cajaBusqueda">
-            <form id="buscarPersona" name="buscarPersona" value="buscarPersona" action="./busquedaPersonas" method="GET">
-            	<table>
-                	<tr><td><h2><b>Seleccionar</b></h2></td>
-                    	<td>
-                        	<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
+<%--         <%@include file="./menuLateral.jsp" %> --%>
+        <div>
+        	<h1 class="cabin">Búsqueda de personas</h1>
+        </div>
+        <div id="marcoSeleccionPersona">
+        	<form action="">
+        		<div class="fieldgroup">
+        			<label class="cabin">Rol</label>
+        			<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
                             	<c:forTokens items="Practicante,Supervisor,Paciente,Administrador" delims="," var="name">
 				                	<c:choose>
 				                		<c:when test="${requestScope.valor == name}">
@@ -29,10 +31,10 @@
 				                		</c:otherwise>
 									</c:choose>
 				            	</c:forTokens></select>
-                    	</td>
-                    	<td><h2><b>Jornada</b></h2></td>
-                    	<td>
-                    	<select id ="jornada" name="jornada" onchange="this.form.submit()">
+        		</div>
+        		<div class="fieldgroup">
+        			<label class="cabin">Jornada</label>
+        			<select id ="jornada" name="jornada" onchange="this.form.submit()">
                     		<c:forTokens items="manana,tarde,noche" delims="," var="name">
 				                	<c:choose>
 				                		<c:when test="${requestScope.jornada == name}">
@@ -43,31 +45,43 @@
 				                		</c:otherwise>
 									</c:choose>
                     		</c:forTokens></select>
-                    	</td>	
-                    </tr>
-            	</table></form></div>  
-        <div id="marcoTabla" class="cajaAsignacion">
-            <table class="tablaAsignacion">
-                <c:forEach items="${requestScope.listaPersonas}" var="persona">
-                	<tr>
-                    	<td class="tdNombre"><h2>${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</h2></td>
-                    	<td class="tdBoton"><a href="./ServletPersona?operacion=listarPersonas&id=${persona.idPersona}"><input type="button" id="btnVer" class="btnVer"></a></td>
-                    	<c:if test="${requestScope.valor == 'Paciente'}">
-                    		<td class="tdBoton"><a href="./ServletHistoriaClinica?operacion=detalleTratamiento&idPersona=${persona.idPersona}"><input type="button" id="btnHistoria" class="btnHistoria"></a></td>
-                    	</c:if>                	
+        		</div>
+        	</form>
+        </div>
+        <div id="usuarios">
+        	<table id="tablaUsuarios">
+        		<thead>
+        			<tr>
+		          		<th scope="col">Nombre</th>
+		          		<th scope="col">Visualizar</th>
+	          			<c:forEach items="${requestScope.listaPersonas}" var="persona">
+	          				<c:if test="${requestScope.valor == 'Paciente'}">
+	          					<th scope="col">Historia clínica</th>
+	          				</c:if>
+	          				<c:if test="${requestScope.valor == 'Practicante' || requestScope.valor == 'Supervisor'}">
+	          					<th scope="col">Asignación de usuarios</th>
+	          				</c:if>
+	          			</c:forEach>
+			         </tr> 		
+        		</thead>
+        		<tbody>
+	        		<c:forEach items="${requestScope.listaPersonas}" var="persona">
+	                	<tr>
+	                    <td class="tdNombre"><label class="cabin">${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</label></td>
+	                    <td class="tdBoton"><a href="./ServletPersona?operacion=listarPersonas&id=${persona.idPersona}"><input type="button" id="btnVer" class="btnVer"></a></td>
 	                    <c:choose>
-					    <c:when test="${requestScope.valor == 'Practicante' || requestScope.valor == 'Supervisor'}">
-	                    	<td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar"
-	                    		onclick="manejarAsignacion('consultar',-1,${persona.idPersona},'${persona.primerNombre}','${persona.segundoNombre}', '${persona.primerApellido}', '${persona.segundoApellido}', '${requestScope.valor}')"></td>
-	                    </c:when>
-	                    <c:otherwise>
-	                    <td class="tdBoton"></td>
-	                    </c:otherwise>
+						    <c:when test="${requestScope.valor == 'Practicante' || requestScope.valor == 'Supervisor'}">
+		                    	<td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar" onclick="manejarAsignacion('consultar',-1,${persona.idPersona},'${persona.primerNombre}','${persona.segundoNombre}', '${persona.primerApellido}', '${persona.segundoApellido}', '${requestScope.valor}')"></td>
+		                    </c:when>
+	                    	<c:when test="${requestScope.valor == 'Paciente'}">
+	                    		<td class="tdBoton"><a href="./ServletHistoriaClinica?operacion=detalleTratamiento&idPersona=${persona.idPersona}"><input type="button" id="btnHistoria" class="btnHistoria"></a></td>
+	                    	</c:when>
 	                    </c:choose>
-                	</tr> 
-                </c:forEach>
-            </table>   
-       </div>
+	                </tr> 
+	                </c:forEach>
+                </tbody>
+        	</table>
+        </div>
        <form name="data" action="./ServletAsignaciones" method="get">
        		<input type="hidden" name="operacion">
        		<input type="hidden" name="asignado">
