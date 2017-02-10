@@ -20,9 +20,10 @@
     	<!--MEMU SUPERIOR--> 
          <%@include file="./menuNavegacionAdmin.jsp" %>
          <!--MEMU LATERAL--> 
-        <%@include file="./menuLateral.jsp" %>
-        <div id="marcoGeneral" class="cajaVentanaAsignacion">
-            <p>${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}----------Cupos: ${requestScope.cupos}</p>
+<%--         <%@include file="./menuLateral.jsp" %> --%>
+        <div id="" class="">
+            <h1 class="cabin">${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}</h1>
+            <h2 class="cabin">Cupos: ${requestScope.cupos}</h2>
             <a href="busquedaPersonas"><input type="button" id="btnAsignar" value="Volver" class="botones"></a>
             <table>
                 <tr>

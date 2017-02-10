@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Personas</title>
         <link rel="stylesheet" href="estilo.css"></link>
+        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
 		<%
 		  if (session.getAttribute("perfil")==null)
@@ -15,26 +16,50 @@
 		%>
     <body>
 
-         <%@include file="./menuNavegacionAdmin.jsp" %> 
-        <div id="gestioncitas" class="caja">
-            <h1>Personas</h1>
-            <div id="gestionContenido">
-                <table class="tablaPrincipal">
-                    <tr>                  	 
-                    	<!-- <td><a href="FormularioPersona.jsp"><img src="resources/man.png"/></a></td>-->
-                    	<td><a href="./ServletPersona?operacion=cargueIncial"><img src="resources/agregarPersona.png"/></a></td>
-                    	<td><a href="busquedaPersonas"><img src="resources/buscar.png"/></a></td>
-                    	<td><a href="InicioConfiguracion.jsp"><img src="resources/config.png"/></a></td>  
-                    </tr>
-                    <tr>             	
-                        <td>Crear</td>
-                        <td>Buscar</td>
-                        <td>Configuración</td>                                                  
-                    </tr>
-                </table>
-            </div>
-        </div>
-        
+         <%@include file="./menuNavegacionAdmin.jsp" %>
+		<div id="gestionContenido">
+		<h1 class="cabin">Administración</h1>
+		<h2 class="cabin">de personas</h2>
+		<div id="gestionContenido">
+			<table class="tablaPrincipal">
+				<tr>
+					<td>
+						<div>
+							<a href="./ServletPersona?operacion=cargueIncial"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
+						</div>
+					</td>
+					<td>
+						<div>
+							<a href="busquedaPersonas"><button class="btn-xlarge"><i class="fa fa-calendar fa-4x" ></i></button></a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cabin"><a href="FormularioPersona.jsp">CREAR</a></td>
+					<td class="cabin"><a href="busquedaPersonas">BUSCAR</a><br></td>
+				</tr>
+			</table>
+			
+			<table class="tablaPrincipal">
+				<tr>
+					<td>
+						<div>
+							<a href="InicioConfiguracion.jsp"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cabin"><a href="InicioConfiguracion.jsp">CONFIGURACIÓN</a><br></td>
+				</tr>
+			</table>
+			
+		</div>
+		<br>
+		<div>
+			<a href="VentanaAdministrador.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>
+		<br>
+	</div>
         <footer>
             <small>Fundación Universitaria Konrad Lorenz</small>
             <address>www.konradlorenz.edu.co</address>

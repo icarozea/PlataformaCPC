@@ -10,8 +10,8 @@
 
          <%@include file="./menuNavegacionPracticante.jsp" %> 
         <div id="gestioncitas" class="caja">
-            <h1>INICIO</h1>
-            <h2>Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
+            <h1 class="droidSans">INICIO</h1>
+            <h2 class="droidSans">Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
             <div id="gestionContenido">
                 <table class="tablaPrincipal">
                     <tr>
@@ -20,12 +20,16 @@
                         <td><a href=""><img src="resources/reporte.png"/></a></td>                       
                     </tr>
                     <tr>
-                        <td>Mi Perfil</td>
-                        <td>Citas</td>
-                        <td>Reportes</td>                       
+                        <td class="droidSans">Mi Perfil</td>
+                        <td class="droidSans">Citas</td>
+                        <td class="droidSans">Reportes</td>                       
                     </tr>
                 </table>
             </div>
+            <br>
+         <div>
+			<a href="/PlataformaCPC/Logout"><button id = "logoutBtn" class="btnLogout btnLogout-danger">Cerrar sesión</button></a>
+		</div>
         </div>
         
         <footer>
