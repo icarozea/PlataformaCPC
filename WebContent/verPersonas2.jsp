@@ -88,6 +88,9 @@
         		</tbody>
 			</table>   	
     	</form>
-    </div>    
+    </div>
+    <div id="" class="">
+            <a href="busquedaPersonas"><input type="button" id="btnAsignar" value="Volver" class="botones"></a>
+     </div>    
 </body>
 </html>
