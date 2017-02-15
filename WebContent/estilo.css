@@ -477,6 +477,94 @@ fieldset{ border:none; }
     text-align: left;
 }
 
+#registerForm {
+ 	background:#fff;
+    border: 1px solid #DFDCDC;
+    border-radius: 15px 15px 15px 15px;
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+    /*padding: 25px 50px 10px;*/
+    padding-left: 10px;
+    padding-right: 55px;
+    width: 60%;
+ 	font-family:Tahoma, Geneva, sans-serif;
+}
+
+#registerForm .fieldgroup {
+    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
+    display: inline-block;
+    padding: 8px 10px;
+    width: 340px;
+}
+fieldset{ border:none; }
+
+#registerForm .fieldgroup input{
+    margin: 10px 0;
+    height: 40px;
+ 	width:100%;
+	border:solid #cdcdcd 1px;
+ 	border-radius:3px;
+ 	padding-left:10px;
+ 	font-size: 16px;
+}
+
+#registerForm .fieldgroup select{
+    margin: 10px 0;
+    height: 40px;
+ 	width:103%;
+	border:solid #cdcdcd 1px;
+ 	border-radius:3px;
+ 	padding-left:10px;
+ 	font-size: 16px;
+}
+
+#registerForm .submit {
+    padding: 10px;
+    height: 40px !important;
+ background:#00a2d1;
+ color:#fff;
+ font-weight:bolder;
+ border:solid #cdcdcd 1px;
+ border-radius:3px;
+}
+
+#registerForm .fieldgroup label.error {
+    color: #FB3A3A;
+    display: inline-block;
+    font-weight:500;
+    padding: 0;
+    text-align: left;
+}
+
+#tablaListaEPS{
+	max-width: 960px;
+  	margin: 10px auto;
+}
+
+#tablaListaEPS thead th {
+  font-weight: 400;
+  background: #47a3da;
+  color: #FFF;
+}
+
+#tablaListaEPS tr {
+  background: #f4f7f8;
+  border-bottom: 1px solid #FFF;
+  margin-bottom: 5px;
+}
+
+#tablaListaEPS tr:nth-child(even) {
+  background: #e8eeef;
+}
+
+#tablaListaEPS th, td {
+  text-align: center;
+  padding: 10px;
+  font-weight: 300;
+}
+
 .margenGestionContenido{
 	padding-top: 10%;
 }

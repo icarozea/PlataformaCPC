@@ -82,6 +82,9 @@
                 </tbody>
         	</table>
         </div>
+        <div>
+			<a href="inicioPersonas.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>
        <form name="data" action="./ServletAsignaciones" method="get">
        		<input type="hidden" name="operacion">
        		<input type="hidden" name="asignado">

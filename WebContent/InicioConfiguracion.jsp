@@ -31,9 +31,8 @@
          		</tr>
          	</table>
          </div>
-        <footer>
-            <small>Fundación Universitaria Konrad Lorenz</small>
-            <address>www.konradlorenz.edu.co</address>
-        </footer> 
+         <div>
+			<a href="inicioPersonas.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>
     </body>
 </html>
