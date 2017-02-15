@@ -71,3 +71,24 @@
 .btnVer{
      background-image: url("resources/binoculares.png");
 }
+
+.botones{
+    font-size: 12px;
+    font-family: verdana,Helvetica;
+    font-weight: bold;
+    color: white;
+    background: rgb(16, 129, 236); /* color del interior de la caja*/
+    border-radius: -5px;
+    border: 0px;
+    width:111px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+.botones:hover{
+    background-color: #084B8A;
+    color: #cc3300;
+    position: inherit;
+}

@@ -225,21 +225,17 @@ public class DaoCitas extends ConexionOracle{
 		return id;
 	}
 
-	public boolean actualizarCita(CitaTo cita){
+	public boolean actualizarEstadoCita(Integer idCita, String estado){
 
 		boolean retorno;
 		conexionActual = new ConexionOracle();
-		String sql = "UPDATE CITA SET SALON = ?, FECHA_SOLICITUD = TO_TIMESTAMP(SYSDATE,'DD/MM/RR HH24:MI:SS'),";
-		sql+="FECHA_CITA = TO_TIMESTAMP(?,'DD/MM/RR HH24:MI:SS'),ID_PRACTICANTE = ?, ID_PACIENTE = ? WHERE ID_CITA = ? ";
+		String sql = "UPDATE CITA SET ESTADO = ? WHERE ID_CITA = ? ";
 
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
-			conexionActual.agregarAtributo(1, cita.getSalon()); 
-			conexionActual.agregarAtributo(2, cita.getFechaCita()); 
-			conexionActual.agregarAtributo(3, cita.getPracticante().getIdPersona()); 
-			conexionActual.agregarAtributo(4, cita.getPaciente().getIdPersona()); 
-			conexionActual.agregarAtributo(5, cita.getIdCita()); 
+			conexionActual.agregarAtributo(1, estado); 
+			conexionActual.agregarAtributo(2, idCita); 
 
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
