@@ -26,34 +26,40 @@
 <body>
 	<!--MEMU SUPERIOR-->
 	<%@include file="/menuNavegacionAdmin.jsp"%>
-	<h1 id="titulo">LISTA DE EPS</h1>
-	<form id="FormDatos" name="FormDatos" action="./ServletEPS" method="POST">
-		<input type="hidden" name="operacion" id="operacion" />
-		<input type="hidden" name="idEPS" id="idEPS"/>
-		<table class="rwd-table">
-			<tr>
-				<th>Código</th>
-				<th>Nombre</th>
-				<th>Editar</th>
-				<th>Eliminar</th>
-			</tr>
-			<%
-				ArrayList<EpsTo> lista = (ArrayList<EpsTo>) request.getAttribute("listaEPS");
-				for (int i = 0; i < lista.size(); i++) {
-			%>
-			<tr>
-				<td><%=lista.get(i).getIdEPS()%></td>
-				<td><%=lista.get(i).getNombreEPS()%></td>
-				<td><input type="submit" name="btnEditarEPS" id="btnEditarEPS" value="" class="btnEditar"
-						 onclick="enviarFormulario(this.id,<%=lista.get(i).getIdEPS()%>)"/></td>
-				<td><input type="submit" name="btnEliminarEPS" id="btnEliminarEPS" value="" class="btnEliminar"
-					onclick="enviarFormulario(this.id,<%=lista.get(i).getIdEPS()%>)"/>
-				</td>
-			</tr>
-			<%
-				}
-			%>
-		</table>
-	</form>
+    <div>
+    	<h1 class="cabin">Ver lista de EPS</h1>
+    </div>
+    <div id="EPSs">
+    	<form id="FormDatos" name="FormDatos" action="./ServletEPS" method="POST">
+	    	<input type="hidden" name="operacion" id="operacion" />
+			<input type="hidden" name="idEPS" id="idEPS"/>
+	    	<table id="tablaListaEPS">
+	    		<thead>
+	    			<th>Código</th>
+	    			<th>Nombre</th>
+	    			<th>Editar</th>
+	    			<th>Eliminar</th>
+	    		</thead>
+	    		<tbody>
+		    		<%
+						ArrayList<EpsTo> lista = (ArrayList<EpsTo>) request.getAttribute("listaEPS");
+						for (int i = 0; i < lista.size(); i++) {
+					%>
+		    		<tr>
+		    			<td><%=lista.get(i).getIdEPS()%></td>
+		    			<td><%=lista.get(i).getNombreEPS()%></td>
+		    			<td><input type="submit" name="btnEditarEPS" id="btnEditarEPS" value="" class="btnEditar" onclick="enviarFormulario(this.id,<%=lista.get(i).getIdEPS()%>)"/></td>
+						<td><input type="submit" name="btnEliminarEPS" id="btnEliminarEPS" value="" class="btnEliminar" onclick="enviarFormulario(this.id,<%=lista.get(i).getIdEPS()%>)"/>
+						</td>	 
+		    		</tr>
+		    		<% } %>
+	    		</tbody>
+	    	</table>
+    	</form>
+    </div>
+    <div>
+		<a href="InicioConfiguracion.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+	</div>
+	
 </body>
 </html>

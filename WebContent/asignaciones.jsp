@@ -20,35 +20,54 @@
     	<!--MEMU SUPERIOR--> 
          <%@include file="./menuNavegacionAdmin.jsp" %>
          <!--MEMU LATERAL--> 
-        <%@include file="./menuLateral.jsp" %>
-        <div id="marcoGeneral" class="cajaVentanaAsignacion">
-            <p>${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}----------Cupos: ${requestScope.cupos}</p>
-            <a href="busquedaPersonas"><input type="button" id="btnAsignar" value="Volver" class="botones"></a>
-            <table>
-                <tr>
-                    <td><div id="marcoAsignados" class="cajaTablas">
-                    	<h1>ASIGNADOS</h1>
-                        <table><c:forEach items="${requestScope.asignados}" var="asignado">
-                        	<tr>
-                            	<td>${asignado.primerNombre} ${asignado.segundoNombre} ${asignado.primerApellido} ${asignado.segundoApellido}</td>
-                            	<td><input type="button" id="btnEliminar" value="-"
-                            	onclick="manejarAsignacion('eliminar',${asignado.idPersona},${requestScope.id},'${requestScope.pNom}','${requestScope.sNom}', '${requestScope.pApe}', '${requestScope.sApe}', '${requestScope.valor}')"></td>
-                        	</tr>
-                        </c:forEach>
-                        </table></div></td>
-                    <td><div id="marcoCandidatos" class="cajaTablas">
-                    	<h1>CANDIDATOS</h1>
-                        <table><c:forEach items="${requestScope.posibilidades}" var="posible">
-                        	<tr>
-                            	<td>${posible.primerNombre} ${posible.segundoNombre} ${posible.primerApellido} ${posible.segundoApellido}</td>
-                            	<td><input type="button" id="btnAsignar" value="+"
-                            	onclick="manejarAsignacion('asignar',${posible.idPersona},${requestScope.id},'${requestScope.pNom}','${requestScope.sNom}', '${requestScope.pApe}', '${requestScope.sApe}', '${requestScope.valor}', ${requestScope.cupos})"></td>
-                        	</tr>
-                        </c:forEach>
-                        </table></div></td>
-                </tr>
-            </table>          
-        </div>
+<%--         <%@include file="./menuLateral.jsp" %> --%>
+
+		<div id="datos" class="datosPerfil">
+			<h1 class="cabin">${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}</h1>
+            <h2 class="cabin">Cupos: ${requestScope.cupos}</h2>
+		</div>
+		<div id="tituloAsignaciones" class="tituloAsignaciones">
+		<p class="cabin">ASIGNACIÓN DE USUARIOS</p>
+		</div>
+		<div id="listaCandidatos" class="listaCandidatos">
+			<table id="tablaCandidatos">
+				<thead>
+					<th scope="col">CANDIDATOS POR ASIGNAR</th>
+					<th>ASIGNAR</th>
+				</thead>
+				<tbody>
+				<c:forEach items="${requestScope.posibilidades}" var="posible">
+	               	<tr>
+	                   	<td>${posible.primerNombre} ${posible.segundoNombre} ${posible.primerApellido} ${posible.segundoApellido}</td>
+	                   	<td><input type="button" id="btnAsignar" value="+"
+	                   	onclick="manejarAsignacion('asignar',${posible.idPersona},${requestScope.id},'${requestScope.pNom}','${requestScope.sNom}', '${requestScope.pApe}', '${requestScope.sApe}', '${requestScope.valor}', ${requestScope.cupos})"></td>
+	               	</tr>
+	            </c:forEach>
+	            </tbody>
+            </table>
+		</div>
+		<div id="listaAsignados" class="listaAsignados">
+			<table id="tablaAsignados">
+				<thead>
+					<th scope="col">CANDIDATOS ASIGNADOS</th>
+					<th>DESASIGNAR</th>
+				</thead>
+				<tbody>
+				<c:forEach items="${requestScope.asignados}" var="asignado">
+	               	<tr>
+	                   	<td>${asignado.primerNombre} ${asignado.segundoNombre} ${asignado.primerApellido} ${asignado.segundoApellido}</td>
+	                   	<td><input type="button" id="btnEliminar" value="-"
+	                   	onclick="manejarAsignacion('eliminar',${asignado.idPersona},${requestScope.id},'${requestScope.pNom}','${requestScope.sNom}', '${requestScope.pApe}', '${requestScope.sApe}', '${requestScope.valor}')"></td>
+	               	</tr>
+	            </c:forEach>
+	            </tbody>
+           	</table>
+		</div>
+		
+        <div>
+			<a href="busquedaPersonas"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>        
+        
         <form name="data" action="./ServletAsignaciones" method="post">
     		<input type="hidden" name="operacion">
     		<input type="hidden" name="asignado">

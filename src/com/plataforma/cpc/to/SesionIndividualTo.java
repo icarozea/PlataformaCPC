@@ -72,5 +72,12 @@ public class SesionIndividualTo {
 	public void setActividadesProximaSesion(String actividadesProximaSesion) {
 		this.actividadesProximaSesion = actividadesProximaSesion;
 	}
+	@Override
+	public String toString() {
+		return "SesionIndividualTo [idSesion=" + idSesion + ", citaId=" + citaId + ", fecha=" + fecha
+				+ ", nombreProfesional=" + nombreProfesional + ", objetivo=" + objetivo + ", descripcion=" + descripcion
+				+ ", tareasAsignadas=" + tareasAsignadas + ", actividadesProximaSesion=" + actividadesProximaSesion
+				+ "]";
+	}
 
 }

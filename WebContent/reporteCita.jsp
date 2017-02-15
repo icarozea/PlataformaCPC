@@ -25,7 +25,7 @@
 			</c:when>
 		</c:choose>	
 	<div style="height: 50px;"></div>
-	<h1 class="droidSans">Reporte de Sesión Individual</h1>
+	<h1 class="cabin">Reporte de Sesión Individual</h1>
 	<div id="div-form-reporte-cita">
 		
 		<form id="reporteSesionForm" action="./ServletSesionIndividual" method="POST">
@@ -63,7 +63,7 @@
 
 			<div>
 				<div>
-					<input id="saveForm" name="saveForm" type="submit" value="Guardar" class="botones">
+					<input id="saveForm" name="saveForm" type="submit" value="Guardar">
 				</div>
 			</div>
 

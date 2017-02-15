@@ -1,7 +1,11 @@
 package com.plataforma.cpc.dao;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.SesionIndividualTo;
+import com.plataforma.cpc.to.TratamientoTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
 public class DaoSesionIndividual extends ConexionOracle{
@@ -46,4 +50,46 @@ public class DaoSesionIndividual extends ConexionOracle{
 		}	
 		return retorno;
 	}
+	
+	public ArrayList<SesionIndividualTo> consultarReporteSesionporCita(Integer idCita){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		ArrayList<SesionIndividualTo> sesiones = new ArrayList<SesionIndividualTo>();
+		String sql = "SELECT RS.ID_SESION, RS.CITA_ID_CITA, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
+				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION ";
+				sql+= "FROM CITA CITA, REPORTE_SESION RS ";
+				sql+= "WHERE ID_CITA = ? ";
+				sql+= "AND CITA.ID_CITA = RS.CITA_ID_CITA ";
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idCita);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){
+				SesionIndividualTo sesionIndividual = new SesionIndividualTo();
+				sesionIndividual.setIdSesion(rs.getInt("ID_SESION"));
+				sesionIndividual.setCitaId(rs.getString("CITA_ID_CITA"));
+				sesionIndividual.setFecha(rs.getString("FECHA"));
+				sesionIndividual.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
+				sesionIndividual.setObjetivo(rs.getString("OBJETIVO_SESION"));
+				sesionIndividual.setDescripcion(rs.getString("DESCRIPCION_SESION"));
+				sesionIndividual.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
+				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
+				sesiones.add(sesionIndividual);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return sesiones;
+	}
+
 }
