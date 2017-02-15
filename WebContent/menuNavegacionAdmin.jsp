@@ -18,7 +18,7 @@
 		%>
 <body>
 	<div class="top-header">	
-	 <div class="container">
+	 <div class="container" style="margin-bottom: 8%;">
 	 	
 		 <div class="top-menu">
 		 	<span class="menu"> </span>

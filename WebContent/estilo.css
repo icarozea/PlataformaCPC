@@ -291,6 +291,33 @@ input.radio{
   font-weight: 300;
 }
 
+#tablaCitasPracticantes{
+	max-width: 960px;
+  	margin: 10px auto;
+}
+
+#tablaCitasPracticantes thead th {
+  font-weight: 400;
+  background: #47a3da;
+  color: #FFF;
+}
+
+#tablaCitasPracticantes tr {
+  background: #f4f7f8;
+  border-bottom: 1px solid #FFF;
+  margin-bottom: 5px;
+}
+
+#tablaCitasPracticantes tr:nth-child(even) {
+  background: #e8eeef;
+}
+
+#tablaCitasPracticantes th, td {
+  text-align: center;
+  padding: 10px;
+  font-weight: 300;
+}
+
 #eps{
     width: 100%;
 }
@@ -437,6 +464,13 @@ input.radio{
     padding: 8px 10px;
     width: 340px;
 }
+
+#register-form .fieldgroupTextArea {
+    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
+    padding: 10px 10px;
+    width: 98%;
+}
+
 fieldset{ border:none; }
 
 #register-form .fieldgroup input{
