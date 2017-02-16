@@ -20,19 +20,20 @@ public class DaoSesionIndividual extends ConexionOracle{
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 		
-		String sql = "INSERT INTO REPORTE_SESION (ID_SESION,CITA_ID_CITA,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION) ";
-			   sql +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,?,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?)";
+		String sql = "INSERT INTO REPORTE_SESION (ID_SESION,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION,ES_FALLO,RECIBO) ";
+			   sql +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?,?,?)";
 		
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);	
-			conexionActual.agregarAtributo(1, sesion.getCitaId()); 
-			conexionActual.agregarAtributo(2, sesion.getFecha());
-			conexionActual.agregarAtributo(3, sesion.getNombreProfesional());
-			conexionActual.agregarAtributo(4, sesion.getObjetivo());
-			conexionActual.agregarAtributo(5, sesion.getDescripcion());
-			conexionActual.agregarAtributo(6, sesion.getTareasAsignadas());
-			conexionActual.agregarAtributo(7, sesion.getActividadesProximaSesion());
+			conexionActual.agregarAtributo(1, sesion.getFecha());
+			conexionActual.agregarAtributo(2, sesion.getNombreProfesional());
+			conexionActual.agregarAtributo(3, sesion.getObjetivo());
+			conexionActual.agregarAtributo(4, sesion.getDescripcion());
+			conexionActual.agregarAtributo(5, sesion.getTareasAsignadas());
+			conexionActual.agregarAtributo(6, sesion.getActividadesProximaSesion());
+			conexionActual.agregarAtributo(7,sesion.isFallo()?1:0);
+			conexionActual.agregarAtributo(8,sesion.getNumRecibo());
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
 			
@@ -51,15 +52,15 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 	
-	public ArrayList<SesionIndividualTo> consultarReporteSesionporCita(Integer idCita){
+	public SesionIndividualTo consultarReporteSesionporCita(Integer idCita){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
-		ArrayList<SesionIndividualTo> sesiones = new ArrayList<SesionIndividualTo>();
-		String sql = "SELECT RS.ID_SESION, RS.CITA_ID_CITA, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
-				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION ";
+		SesionIndividualTo sesionIndividual = new SesionIndividualTo();
+		String sql = "SELECT RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
+				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO";
 				sql+= "FROM CITA CITA, REPORTE_SESION RS ";
 				sql+= "WHERE ID_CITA = ? ";
-				sql+= "AND CITA.ID_CITA = RS.CITA_ID_CITA ";
+				sql+= "AND CITA.ID_REPORTE = RS.ID_SESION";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -67,17 +68,16 @@ public class DaoSesionIndividual extends ConexionOracle{
 
 			rs = conexionActual.ejecutarSentencia();
 
-			while (rs.next()){
-				SesionIndividualTo sesionIndividual = new SesionIndividualTo();
+			while (rs.next()){			
 				sesionIndividual.setIdSesion(rs.getInt("ID_SESION"));
-				sesionIndividual.setCitaId(rs.getString("CITA_ID_CITA"));
 				sesionIndividual.setFecha(rs.getString("FECHA"));
 				sesionIndividual.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
 				sesionIndividual.setObjetivo(rs.getString("OBJETIVO_SESION"));
 				sesionIndividual.setDescripcion(rs.getString("DESCRIPCION_SESION"));
 				sesionIndividual.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
 				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
-				sesiones.add(sesionIndividual);
+				sesionIndividual.setFallo(rs.getInt("ES_FALLO")>0?true:false);
+				sesionIndividual.setNumRecibo(rs.getInt("RECIBO"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,7 +89,6 @@ public class DaoSesionIndividual extends ConexionOracle{
 				e.printStackTrace();
 			}
 		}	
-		return sesiones;
+		return sesionIndividual;
 	}
-
 }

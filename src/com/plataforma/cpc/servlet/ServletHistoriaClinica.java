@@ -142,11 +142,10 @@ public class ServletHistoriaClinica extends HttpServlet {
 		try {
 			
 			cita = historiaClinica.consultarCita(citaFiltro);
-			sesiones = historiaClinica.consultarReportesSesion(idCita);
-			
-			request.setAttribute("sesiones", sesiones);
-			if (sesiones != null && sesiones.size()>0)
-				request.setAttribute("sesion", sesiones.get(0));
+			SesionIndividualTo sesion = historiaClinica.consultarReportesSesion(idCita);
+
+			if (sesion != null)
+				request.setAttribute("sesion", sesion);
 			else 
 				request.setAttribute("sesion", null);
 			request.setAttribute("cita", cita);
@@ -162,6 +161,4 @@ public class ServletHistoriaClinica extends HttpServlet {
 			dispatcher.forward(request, response);
 		}	
 	}
-	
-
 }

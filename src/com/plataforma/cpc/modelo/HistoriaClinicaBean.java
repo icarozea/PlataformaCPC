@@ -43,13 +43,10 @@ public class HistoriaClinicaBean {
 		tratamiento = dao.consultarTratamiento(idTratamiento);	
 		return tratamiento;
 	}
-	
-	
-	public ArrayList<SesionIndividualTo> consultarReportesSesion(Integer idCita){
-		ArrayList<SesionIndividualTo> sesiones = new ArrayList<SesionIndividualTo>();
+		
+	public SesionIndividualTo consultarReportesSesion(Integer idCita){
 		DaoSesionIndividual dao = new DaoSesionIndividual();
-		sesiones = dao.consultarReporteSesionporCita(idCita);
-		return sesiones;
+		return dao.consultarReporteSesionporCita(idCita);
 	}
 	
 	public CitaTo consultarCita(CitaTo cita){
@@ -58,5 +55,4 @@ public class HistoriaClinicaBean {
 		citaTo = dao.consultarCita(cita);
 		return citaTo;
 	}
-
 }

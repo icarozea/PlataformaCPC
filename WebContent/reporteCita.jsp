@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="com.plataforma.cpc.dao.DaoPersona"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -8,12 +9,30 @@
 <head>
 <link rel="stylesheet" href="estiloAsignaciones.css"></link>
 <script type="text/javascript" src="js/manejarAsignacion.js"></script>
+<script type="text/javascript">
+	function modCamposTexto(){
+		var estado = document.getElementById('objetivoSesion').disabled;
+		document.getElementById('objetivoSesion').disabled = !estado;
+		document.getElementById('descripcionSesion').disabled = !estado;
+		document.getElementById('tareasSesion').disabled = !estado;
+		document.getElementById('actividadesProxSesion').disabled = !estado;
+	}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Reporte Sesión</title>
 </head>
 <% CitaTo citaRecibida = (CitaTo) request.getAttribute("cita"); %>
 <% PersonaTo practicante = new DaoPersona().consultarPersona(citaRecibida.getPracticante()); %>
 <% PersonaTo paciente =  new DaoPersona().consultarPersona(citaRecibida.getPaciente());%>
+<% LocalDateTime hoy = LocalDateTime.now(); %>
+<% String dia = hoy.getDayOfMonth() > 9? hoy.getDayOfMonth() + "" : "0" + hoy.getDayOfMonth(); %>
+<% String mes = hoy.getMonthValue() > 9? hoy.getMonthValue() + "" : "0" + hoy.getMonthValue(); %>
+<% String ano = hoy.getYear() + ""; %>
+<% String horas = (hoy.getHour())%12 > 9? (hoy.getHour())%12 + "": "0" + (hoy.getHour())%12; %>
+<% String minutos = hoy.getMinute() > 9?  hoy.getMinute() + "": "0" + hoy.getMinute(); %>
+<% String meridiano = hoy.getHour() >= 12? "p.m." : "a.m."; %>
+<% horas = horas.equals("0")? "12" : horas; %>
+<% meridiano = horas.equals("0")? "a.m." : meridiano; %>
 <body>
 	<!--MEMU SUPERIOR-->
         <c:choose>
@@ -32,15 +51,20 @@
 			<input type="hidden" name="operacion" value="guardarSesionIndividual"/>
 			<input type="hidden" name="idCita" value="<%=citaRecibida.getIdCita() %>"/>
 			<input type="hidden" name="citaFull" value="<%=citaRecibida %>"/>
-			<label id="hora_label" class="droidSans">Fecha:</label><input id="fecha" name="fecha" type="date" class="field text fn" value="" size="8" tabindex="1">
-			<label id="hora_label" class="droidSans">Hora:</label><input id="hora" name="hora" type="time" class="field text fn" value="" size="8" tabindex="1">
+			<label id="hora_label" class="droidSans">Fecha:</label><input id="fecha" name="fecha" type="text" class="field text fn" value="<%=dia + "/" + mes + "/" + ano%>" size="8" tabindex="1" readonly>
+			<label id="hora_label" class="droidSans">Hora:</label><input id="hora" name="hora" type="text" class="field text fn" value="<%=horas + ":" + minutos + " " + meridiano%>" size="8" tabindex="1" readonly>
 	
 		<div>
 			<label id="nombrePaciente_label" class="droidSans">Nombre del paciente:</label><p class="droidSans"><b><%=paciente.getPrimerNombre()+" "+paciente.getPrimerApellido() %></b></p>
+			<label id="numeroRecibo_label" class="droidSans">No Recibo:</label><input id="numeroRecibo" name="numeroRecibo" type="text" class="field text fn" value="" size="8" tabindex="1">
 		</div>
 		
 		<div>
 			<label id="profesional_label" class="droidSans">Profesional en formación del área clínica:</label><input id="profesional" name="profesional" type="text" class="field text fn" value="" size="8" tabindex="1">
+		</div>
+		
+		<div>
+			<label id="fallo_label" class="droidSans">¿Reportar la cita como una falla?</label><input id="fallo" name="fallo" type="checkbox" class="field text fn" value="fallo" size="8" tabindex="1" onChange="modCamposTexto()">
 		</div>
 		
 		<div>

@@ -41,13 +41,15 @@ public class ServletSesionIndividual extends HttpServlet {
 		
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		SesionIndividualTo sesion = new SesionIndividualTo();
-		sesion.setCitaId(request.getParameter("idCita"));
 		sesion.setFecha(request.getParameter("fecha") +" "+ request.getParameter("hora"));
 		sesion.setNombreProfesional(request.getParameter("profesional"));
 		sesion.setObjetivo(request.getParameter("objetivoSesion"));
 		sesion.setDescripcion(request.getParameter("descripcionSesion"));
 		sesion.setTareasAsignadas(request.getParameter("tareasSesion"));
 		sesion.setActividadesProximaSesion(request.getParameter("actividadesProxSesion"));
+		String fallo = request.getParameter("fallo");
+		sesion.setFallo(fallo != null?true:false);
+		sesion.setNumRecibo(Integer.parseInt(request.getParameter("numeroRecibo")));
 		
 		boolean resultado = dao.crearReporteSesionIndividual(sesion);
 		if (resultado) {
@@ -58,7 +60,5 @@ public class ServletSesionIndividual extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		dispatcher.forward(request, response);
-		
 	}
-
 }

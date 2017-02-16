@@ -19,6 +19,11 @@
 	font-family: 'Raleway', sans-serif;
 }
 
+textarea[readonly]
+{
+    background-color:blue;
+}
+
 .datosPerfil{
 	padding-top: 8%;
 }
