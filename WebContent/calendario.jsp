@@ -79,13 +79,16 @@
 
 	#calendar {
 		max-width: 900px;
-		margin: 100px auto;
+		margin: 2% auto;
 		background-color: #ffffff;
 	}
 
 </style>
 </head>
 <body>
+	<div>
+	
+	</div>
 	<c:choose>
 		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
 			<%@include file="./menuNavegacionAdmin.jsp"%>
@@ -94,18 +97,20 @@
 			<%@include file="./menuNavegacionPracticante.jsp"%>
 		</c:when>
 	</c:choose>
-	
+	<div>
+        <h1 class="cabin">Selección de citas</h1>
+    </div>
 	<div id="aside">
-    	<h2>Al seleccionar</h2>
+    	<h2 class="cabin">Al seleccionar</h2>
     	<table>
     		<tr>
     			<td><input type="radio" id="ejecutar" name="grupoMenu" value="ejecutar" checked></td>
-    			<td>Ejecutar</td>
+    			<td class="cabin">Ejecutar</td>
     			
     		</tr>
     		<tr>
     			<td><input type="radio" id="eliminar" name="grupoMenu" value="eliminar"></td>
-    			<td>Eliminar</td>
+    			<td class="cabin">Eliminar</td>
     		</tr>
     	</table>
     </div>

@@ -15,6 +15,11 @@
 				<%@include file="./menuNavegacionPracticante.jsp"%>
 			</c:when>
 		</c:choose>	
-		<div style="margin-top: 50px;"><%=request.getAttribute("mensajeRespuestaReporte") %></div>
+		<div>
+			<h3 class="cabin"><%=request.getAttribute("mensajeRespuestaReporte") %></h3>
+		</div>
+        <div>
+			<a href=""><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>		
 </body>
 </html>

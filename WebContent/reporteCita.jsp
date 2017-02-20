@@ -25,48 +25,56 @@
 			</c:when>
 		</c:choose>	
 	<div style="height: 50px;"></div>
-	<h1 class="cabin">Reporte de Sesión Individual</h1>
-	<div id="div-form-reporte-cita">
-		
-		<form id="reporteSesionForm" action="./ServletSesionIndividual" method="POST">
+	<div>
+		<h1 class="cabin">Reporte de Sesión Individual</h1>
+	</div>
+	<div>
+		<form id="register-form" action="./ServletSesionIndividual" method="POST">
 			<input type="hidden" name="operacion" value="guardarSesionIndividual"/>
 			<input type="hidden" name="idCita" value="<%=citaRecibida.getIdCita() %>"/>
 			<input type="hidden" name="citaFull" value="<%=citaRecibida %>"/>
-			<label id="hora_label" class="droidSans">Fecha:</label><input id="fecha" name="fecha" type="date" class="field text fn" value="" size="8" tabindex="1">
-			<label id="hora_label" class="droidSans">Hora:</label><input id="hora" name="hora" type="time" class="field text fn" value="" size="8" tabindex="1">
-	
-		<div>
-			<label id="nombrePaciente_label" class="droidSans">Nombre del paciente:</label><p class="droidSans"><b><%=paciente.getPrimerNombre()+" "+paciente.getPrimerApellido() %></b></p>
-		</div>
-		
-		<div>
-			<label id="profesional_label" class="droidSans">Profesional en formación del área clínica:</label><input id="profesional" name="profesional" type="text" class="field text fn" value="" size="8" tabindex="1">
-		</div>
-		
-		<div>
-			<label id="objetivo_label" class="droidSans">Objetivo de la sesión:</label><br><br><textarea id="objetivoSesion" name="objetivoSesion" rows="10" cols="90" style=" resize: none;"></textarea>
-		</div>
-		
-		<div>
-			<label id="descripcion_label" class="droidSans">Descripción de la sesión:</label><br><br><textarea id="descripcionSesion" name="descripcionSesion" rows="10" cols="90" style=" resize: none;"></textarea>
-		</div>
-		
-		<div>
-			<label id="tareas_label" class="droidSans">Tareas asignadas:</label><br><br><textarea id="tareasSesion" name="tareasSesion" rows="10" cols="90" style=" resize: none;"></textarea>
-		</div>
-		
-		<div>
-			<label id="actividades_label" class="droidSans">Actividades para la próxima sesión:</label><br><br><textarea id="actividadesProxSesion" name="actividadesProxSesion" rows="10" cols="90" style=" resize: none;"></textarea>
-		</div>
-				
-	</div>
-
-			<div>
-				<div>
-					<input id="saveForm" name="saveForm" type="submit" value="Guardar">
-				</div>
+			<div id="form-content">
+				<fieldset>
+					<div class="fieldgroup">
+						<label class="cabin">Fecha</label>
+						<input id="fecha" name="fecha" type="date" class="field text fn" value="" size="8" tabindex="1">
+					</div>
+					<div class="fieldgroup">
+						<label class="cabin">Hora</label>
+						<input id="hora" name="hora" type="time" class="field text fn" value="" size="8" tabindex="1">
+					</div>
+					<div class="fieldgroup">
+						<label class="cabin">Nombre del paciente</label>
+						<label class="cabin"><b><%=paciente.getPrimerNombre()+" "+paciente.getPrimerApellido() %></b></label>
+					</div>
+					<div class="fieldgroup">
+						<label class="cabin">Profesional en formación del área clínica</label>
+						<input id="profesional" name="profesional" type="text" class="field text fn" value="<%=practicante.getPrimerNombre()+" "+practicante.getSegundoNombre()+" "+practicante.getPrimerApellido()+" "+practicante.getSegundoApellido()%>" size="8" tabindex="1">
+					</div>
+					<div class="fieldgroupTextArea">
+						<label class="cabin">Objetivo de la sesión</label>
+						<textarea id="objetivoSesion" name="objetivoSesion" rows="10" cols="90" style=" resize: none;"></textarea>
+					</div>
+					<div class="fieldgroupTextArea">
+						<label class="cabin">Descripción de la sesión</label>
+						<textarea id="descripcionSesion" name="descripcionSesion" rows="10" cols="90" style=" resize: none;"></textarea>
+					</div>
+					<div class="fieldgroupTextArea">
+						<label class="cabin">Tareas asignadas</label>
+						<textarea id="tareasSesion" name="tareasSesion" rows="10" cols="90" style=" resize: none;"></textarea>
+					</div>
+					<div class="fieldgroupTextArea">
+						<label class="cabin">Actividades para la próxima sesión</label>
+						<textarea id="actividadesProxSesion" name="actividadesProxSesion" rows="10" cols="90" style=" resize: none;"></textarea>
+					</div>
+					<div class="fieldgroup">
+						<input id="saveForm" class="submit cabin" name="saveForm" type="submit" value="Guardar">
+					</div>
+					<div class="fieldgroup">
+						<a href="Calendario?idPersona=<%=practicante.getIdPersona()%>"><input type="button" value="Cancelar" class="submit cabin"></a>
+					</div>
+				</fieldset>
 			</div>
-
 		</form>
 	</div>
 </body>
