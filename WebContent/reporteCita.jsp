@@ -28,11 +28,8 @@
 <% String dia = hoy.getDayOfMonth() > 9? hoy.getDayOfMonth() + "" : "0" + hoy.getDayOfMonth(); %>
 <% String mes = hoy.getMonthValue() > 9? hoy.getMonthValue() + "" : "0" + hoy.getMonthValue(); %>
 <% String ano = hoy.getYear() + ""; %>
-<% String horas = (hoy.getHour())%12 > 9? (hoy.getHour())%12 + "": "0" + (hoy.getHour())%12; %>
+<% String horas = hoy.getHour() > 9? hoy.getHour() + "": "0" + hoy.getHour(); %>
 <% String minutos = hoy.getMinute() > 9?  hoy.getMinute() + "": "0" + hoy.getMinute(); %>
-<% String meridiano = hoy.getHour() >= 12? "p.m." : "a.m."; %>
-<% horas = horas.equals("0")? "12" : horas; %>
-<% meridiano = horas.equals("0")? "a.m." : meridiano; %>
 <body>
 	<!--MEMU SUPERIOR-->
         <c:choose>
@@ -50,9 +47,10 @@
 		<form id="reporteSesionForm" action="./ServletSesionIndividual" method="POST">
 			<input type="hidden" name="operacion" value="guardarSesionIndividual"/>
 			<input type="hidden" name="idCita" value="<%=citaRecibida.getIdCita() %>"/>
+			<input type="hidden" name="idTratamiento" value="<%=citaRecibida.getTratamiento().getIdTratamiento() %>"/>
 			<input type="hidden" name="citaFull" value="<%=citaRecibida %>"/>
-			<label id="hora_label" class="droidSans">Fecha:</label><input id="fecha" name="fecha" type="text" class="field text fn" value="<%=dia + "/" + mes + "/" + ano%>" size="8" tabindex="1" readonly>
-			<label id="hora_label" class="droidSans">Hora:</label><input id="hora" name="hora" type="text" class="field text fn" value="<%=horas + ":" + minutos + " " + meridiano%>" size="8" tabindex="1" readonly>
+			<label id="hora_label" class="droidSans">Fecha:</label><input id="fecha" name="fecha" type="text" class="field text fn" value="<%=ano + "-" + mes + "-" + dia%>" size="8" tabindex="1" readonly>
+			<label id="hora_label" class="droidSans">Hora:</label><input id="hora" name="hora" type="text" class="field text fn" value="<%=horas + ":" + minutos%>" size="8" tabindex="1" readonly>
 	
 		<div>
 			<label id="nombrePaciente_label" class="droidSans">Nombre del paciente:</label><p class="droidSans"><b><%=paciente.getPrimerNombre()+" "+paciente.getPrimerApellido() %></b></p>

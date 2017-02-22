@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
+import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TratamientoTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
@@ -80,7 +81,7 @@ public class DaoCitas extends ConexionOracle{
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
 		ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
-		String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE,";
+		String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_TRATAMIENTO,ID_REPORTE,ID_PACIENTE,ESTADO,";
 			sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE  ID_PRACTICANTE=? ";
 		try {
 			conexionActual.conectar();
@@ -103,6 +104,12 @@ public class DaoCitas extends ConexionOracle{
 				PersonaTo paciente = new PersonaTo();
 				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));
 				citaTo.setPaciente(paciente);
+				TratamientoTo tratamiento = new TratamientoTo();
+				tratamiento.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
+				citaTo.setTratamiento(tratamiento);
+				SesionIndividualTo reporte = new SesionIndividualTo();
+				reporte.setIdSesion(rs.getInt("ID_REPORTE"));
+				citaTo.setReporte(reporte);
 				citaTo.setEstado(rs.getString("ESTADO"));
 				citaTo.setValoracion(rs.getInt("ES_VALORACION") > 0 ? true : false);
 				citaTo.setNumCita(rs.getInt("NUM_CITA"));
@@ -127,7 +134,7 @@ public class DaoCitas extends ConexionOracle{
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
 		CitaTo citaTo = new CitaTo();
-		String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE,";
+		String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE,ID_TRATAMIENTO,ID_REPORTE,ESTADO,";
 			sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE ID_CITA = ? ";
 
 		try {
@@ -149,6 +156,12 @@ public class DaoCitas extends ConexionOracle{
 				PersonaTo paciente = new PersonaTo();
 				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));
 				citaTo.setPaciente(paciente);
+				TratamientoTo tratamiento = new TratamientoTo();
+				tratamiento.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
+				citaTo.setTratamiento(tratamiento);
+				SesionIndividualTo reporte = new SesionIndividualTo();
+				reporte.setIdSesion(rs.getInt("ID_REPORTE"));
+				citaTo.setReporte(reporte);
 				citaTo.setEstado(rs.getString("ESTADO"));
 				citaTo.setValoracion(rs.getInt("ES_VALORACION") > 0 ? true : false);
 				citaTo.setNumCita(rs.getInt("NUM_CITA"));

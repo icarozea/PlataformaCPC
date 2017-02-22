@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
+import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 
 /**
@@ -54,10 +55,17 @@ public class ServletSesionIndividual extends HttpServlet {
 		
 		boolean resultado = dao.crearReporteSesionIndividual(sesion);
 		if (resultado) {
-			request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
+			
 			if(!sesion.isFallo()){
 				DaoCitas daoCitas = new DaoCitas();
-				//daoCitas.avanzarCitaActual(idTratamiento)
+				Integer idTratamiento = Integer.parseInt(request.getParameter("idTratamiento"));
+				if(daoCitas.avanzarCitaActual(idTratamiento))
+					request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
+				else
+					request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la creación del reporte: Error en el consecutivo de la cita.");
+			}
+			else{
+				request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
 			}
 		}else{
 			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la creación del reporte.");
