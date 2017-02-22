@@ -143,6 +143,7 @@ public class ServletCita extends HttpServlet{
 				if(idTratamiento > 0){
 					tratamiento.setIdTratamiento(idTratamiento);
 					citaTo.setTratamiento(tratamiento);
+					citaTo.setNumCita(0);
 					if(dao.crearCita(citaTo))
 						request.setAttribute("respuesta", "1");
 					else{
@@ -160,8 +161,9 @@ public class ServletCita extends HttpServlet{
 			else{
 				if(request.getParameter("flag") != null){
 					TratamientoTo tratamiento = new TratamientoTo();
-					tratamiento.setIdTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
+					tratamiento = dao.consultarTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
 					citaTo.setTratamiento(tratamiento);
+					citaTo.setNumCita(tratamiento.getNumCitaActual());
 					if(dao.crearCita(citaTo))
 						request.setAttribute("respuesta", "1");
 					else{

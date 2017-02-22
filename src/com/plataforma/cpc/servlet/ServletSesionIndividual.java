@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.to.SesionIndividualTo;
 
@@ -54,8 +55,12 @@ public class ServletSesionIndividual extends HttpServlet {
 		boolean resultado = dao.crearReporteSesionIndividual(sesion);
 		if (resultado) {
 			request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
+			if(!sesion.isFallo()){
+				DaoCitas daoCitas = new DaoCitas();
+				//daoCitas.avanzarCitaActual(idTratamiento)
+			}
 		}else{
-			request.setAttribute("mensajeRespuestaReporte", "Ha odurrido un error durante la creación del reporte.");
+			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la creación del reporte.");
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
