@@ -72,6 +72,14 @@ public interface Conexion {
 	 */
 	public void ejecutarActualizacion() throws Exception;
 	
+	public void iniciarTransaccion() throws Exception;
+	
+	public void commit() throws Exception;
+	
+	public void rollback() throws Exception;
+	
+	public void cerrarTransaccion() throws Exception;
+	
 	/**
 	 * Define el contrato para cerrar una conexión previa con la base de datos
 	 * @throws Exception Si se genera un error en el proceso

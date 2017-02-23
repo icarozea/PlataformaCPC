@@ -91,4 +91,28 @@ public class ConexionOracle implements Conexion {
         	connection.close();
         }
     }
+
+	public void iniciarTransaccion() throws SQLException{
+		if (connection != null && connection.isClosed() == false) {
+        	connection.setAutoCommit(false);
+        }
+	}
+
+	public void commit() throws SQLException {
+		if (connection != null && connection.isClosed() == false) {
+        	connection.commit();
+        }
+	}
+
+	public void rollback() throws SQLException{
+		if (connection != null && connection.isClosed() == false) {
+        	connection.rollback();
+        }
+	}
+	
+	public void cerrarTransaccion() throws Exception{
+		if (connection != null && connection.isClosed() == false) {
+        	connection.setAutoCommit(true);
+        }
+	}
 }

@@ -1,11 +1,8 @@
 package com.plataforma.cpc.dao;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.SesionIndividualTo;
-import com.plataforma.cpc.to.TratamientoTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
 public class DaoSesionIndividual extends ConexionOracle{
@@ -16,16 +13,21 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 	}
 	
-	public boolean crearReporteSesionIndividual(SesionIndividualTo sesion){
+	public boolean crearReporteSesionIndividual(SesionIndividualTo sesion, Integer idTratamiento, Integer idCita, String estado, boolean fallo){
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 		
-		String sql = "INSERT INTO REPORTE_SESION (ID_SESION,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION,ES_FALLO,RECIBO) ";
-			   sql +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?,?,?)";
+		String sqlReporte = "INSERT INTO REPORTE_SESION (ID_SESION,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION,ES_FALLO,RECIBO) ";
+		sqlReporte +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?,?,?)";
 		
+		String sqlAvance = "UPDATE TRATAMIENTO SET NUM_CITA_ACTUAL = NUM_CITA_ACTUAL + 1, PENDIENTE = 1 WHERE ID_TRATAMIENTO = ? ";
+		
+		String sqlEstado = "UPDATE CITA SET ESTADO = ? WHERE ID_CITA = ? ";
 		try {
 			conexionActual.conectar();
-			conexionActual.prepararSentencia(sql);	
+			conexionActual.iniciarTransaccion();
+			
+			conexionActual.prepararSentencia(sqlReporte);	
 			conexionActual.agregarAtributo(1, sesion.getFecha());
 			conexionActual.agregarAtributo(2, sesion.getNombreProfesional());
 			conexionActual.agregarAtributo(3, sesion.getObjetivo());
@@ -35,20 +37,37 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.agregarAtributo(7,sesion.isFallo()?1:0);
 			conexionActual.agregarAtributo(8,sesion.getNumRecibo());
 			conexionActual.ejecutarActualizacion();
-			retorno = Boolean.TRUE;
 			
+			conexionActual.prepararSentencia(sqlEstado);
+			conexionActual.agregarAtributo(1, estado);
+			conexionActual.agregarAtributo(2, idCita); 
+			conexionActual.ejecutarActualizacion();
+			
+			if(!fallo){
+				conexionActual.prepararSentencia(sqlAvance);
+				conexionActual.agregarAtributo(1, idTratamiento);
+				conexionActual.ejecutarActualizacion();
+			}
+			
+			conexionActual.commit();
+			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
-			
-		}finally{
-			
 			try {
+                conexionActual.rollback();
+            } catch(Exception exep) {
+            	exep.printStackTrace();
+            }
+		}finally{
+			try {
+				conexionActual.cerrarTransaccion();
 				conexionActual.cerrar();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}	
+		}
+		
 		return retorno;
 	}
 	

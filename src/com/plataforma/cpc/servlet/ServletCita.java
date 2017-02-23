@@ -155,20 +155,25 @@ public class ServletCita extends HttpServlet{
 					request.setAttribute("respuesta", "2");
 					request.setAttribute("error", "No fue posible crear el nuevo tratamiento");
 				}
-
 				dispatcher.forward(request, response);
 			}
 			else{
 				if(request.getParameter("flag") != null){
 					TratamientoTo tratamiento = new TratamientoTo();
 					tratamiento = dao.consultarTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
-					citaTo.setTratamiento(tratamiento);
-					citaTo.setNumCita(tratamiento.getNumCitaActual());
-					if(dao.crearCita(citaTo))
-						request.setAttribute("respuesta", "1");
+					if(!tratamiento.isPendiente()){
+						citaTo.setTratamiento(tratamiento);
+						citaTo.setNumCita(tratamiento.getNumCitaActual());
+						if(dao.crearCita(citaTo))
+							request.setAttribute("respuesta", "1");
+						else{
+							request.setAttribute("respuesta", "2");
+							request.setAttribute("error", "No fue posible crear una nueva cita");
+						}
+					}
 					else{
 						request.setAttribute("respuesta", "2");
-						request.setAttribute("error", "No fue posible crear una nueva cita");
+						request.setAttribute("error", "Hay un reporte pendiente de revisión en el tratamiento seleccionado");
 					}
 					
 					dispatcher.forward(request, response);

@@ -18,6 +18,7 @@ public class TratamientoTo {
 	private LocalDateTime 	fechaCierre;
 	private String			tipo;
 	private Integer			numCitaActual;
+	private boolean			pendiente;
 	
 	//---------------------------------------------------------------------------------------------------------
 	// Getters y Setters
@@ -77,5 +78,13 @@ public class TratamientoTo {
 
 	public void setNumCitaActual(Integer numCitaActual) {
 		this.numCitaActual = numCitaActual;
+	}
+
+	public boolean isPendiente() {
+		return pendiente;
+	}
+
+	public void setPendiente(boolean pendiente) {
+		this.pendiente = pendiente;
 	}
 }
