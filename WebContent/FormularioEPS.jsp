@@ -17,21 +17,27 @@
         <!--MEMU SUPERIOR--> 
          <%@include file="/menuNavegacionAdmin.jsp" %>
         <!--MEMU LATERAL--> 
-        <%@include file="/menuPersona.jsp" %>
-        <div id="formularioIngreso" >
-            <h3 id="titleForm">NUEVA EPS</h3>
-            <form align="center" id="FormDatos" name="FormDatos" action="./ServletEPS" method="POST">
-                <input type="hidden" name="operacion" />
-                <table id="tablaFormulario">
-                    <tr>
-                        <td>Nombre: </td>
-                        <td><input type="text" id="nombre" placeholder="Nombre" name="nombre" required></td>
-                    </tr>
-                </table>
-                <br>
-                <input type="submit" name="btnAgregarEPS" id="btnAgregarEPS" value="Aceptar" class="botones" onclick="{document.FormDatos.operacion.value=this.id;document.FormDatos.submit();}"/>
-            </form>
-        </div>
+<%--         <%@include file="/menuPersona.jsp" %> --%>
         
+        <div>
+        	<h1 class="cabin">Agregar EPS</h1>
+        </div>
+        <div id="marcoFormularioEPS">
+        	<form id="registerForm" name="registerForm" action="./ServletEPS" method="POST">
+        		<input type="hidden" name="operacion"/>
+        		<fieldset>
+        			<div class="fieldgroup">
+        				<label class="cabin">Nombre de la nueva EPS:</label>
+        				<input type="text" id="nombre" placeholder="Nombre de la nueva EPS" name="nombre" required>
+        			</div>
+        			<div class="fieldgroup">
+        				<input type="submit" name="btnAgregarEPS" id="btnAgregarEPS" value="Registrar" class="submit cabin" onclick="{document.registerForm.operacion.value=this.id;document.registerForm.submit();}"/>
+        			</div>
+        		</fieldset>
+        	</form>
+        </div>
+        <div>
+			<a href="InicioConfiguracion.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>
     </body>
 </html>

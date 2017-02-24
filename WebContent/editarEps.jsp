@@ -18,26 +18,31 @@
         <!--MEMU SUPERIOR--> 
          <%@include file="/menuNavegacionAdmin.jsp" %>
         <!--MEMU LATERAL--> 
-        <%@include file="/menuPersona.jsp" %>
-        <div id="formularioIngreso" >
-            <h3 id="titleForm">NUEVA EPS</h3>
-            <%
-				EpsTo eps = (EpsTo) request.getAttribute("EPS");
-            
-			%>
-            <form align="center" id="FormDatos" name="FormDatos" action="./ServletEPS" method="POST">
-                <input type="hidden" name="operacion" />
-                <input type="hidden" name="EpsId" id="EpsId" value="<%=eps.getIdEPS()%>"/>
-                <table id="tablaFormulario">
-                    <tr>
-                        <td>Nombre:</td>
-                        <td><input type="text" id="nombre" value="<%=eps.getNombreEPS()%>" placeholder="Nombre" name="nombre" required></td>
-                    </tr>
-                </table>
-                <br>
-                <input type="submit" name="btnModificarEPS" id="btnModificarEPS" value="Aceptar" class="botones" onclick="{document.FormDatos.operacion.value=this.id;document.FormDatos.submit();}"/>
-            </form>
+<%--         <%@include file="/menuPersona.jsp" %> --%>
+		<div>
+        	<h1 class="cabin">Editar EPS</h1>
         </div>
+        <div id="marcoFormularioEPS">
+        	<%
+				EpsTo eps = (EpsTo) request.getAttribute("EPS");
+			%>
+        	<form align="center" id="registerForm" name="registerForm" action="./ServletEPS" method="POST">
+        		<input type="hidden" name="operacion" />
+                <input type="hidden" name="EpsId" id="EpsId" value="<%=eps.getIdEPS()%>"/>
+                <fieldset>
+                	<div class="fieldgroup">
+                		<label class="cabin">Nombre de la EPS:</label>
+                		<input type="text" id="nombre" value="<%=eps.getNombreEPS()%>" placeholder="Nombre" name="nombre" required>
+                	</div>
+                	<div class="fieldgroup">
+                		<input type="submit" name="btnModificarEPS" id="btnModificarEPS" value="Aceptar" class="submit cabin" onclick="{document.registerForm.operacion.value=this.id;document.FormDatos.submit();}"/>
+                	</div>
+                </fieldset>
+        	</form>
         
+        </div>
+        <div>
+			<a href="InicioConfiguracion.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>
     </body>
 </html>

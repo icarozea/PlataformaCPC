@@ -131,11 +131,15 @@ public class ServletPersona extends HttpServlet {
 		request.setAttribute("mail", persona.getCorreo());
 		request.setAttribute("perfil", persona.getPerfil().getIdPerfil());
 		request.setAttribute("idPersona", persona.getIdPersona());
-		request.setAttribute("eps", persona.getEps().getNombreEPS());
 		request.setAttribute("pass", persona.getPassword());
 		request.setAttribute("jornada", persona.getJornada());
-		request.setAttribute("cod", persona.getCodigoEstudiante());
 		request.setAttribute("sup", persona.getSuperior());
+		
+		if (persona.getPerfil().getIdPerfil().equals("Practicante")) {
+			request.setAttribute("cod", persona.getCodigoEstudiante());
+		}else if(persona.getPerfil().getIdPerfil().equals("Paciente")){
+			request.setAttribute("eps", persona.getEps().getNombreEPS());
+		}
 		
 		cargueInicial(request,response);
 	}
@@ -163,18 +167,22 @@ public class ServletPersona extends HttpServlet {
 			request.setAttribute("mail", persona.getCorreo());
 			request.setAttribute("perfil", persona.getPerfil().getNombrePerfil());
 			request.setAttribute("idPersona", persona.getIdPersona());
-			request.setAttribute("eps", persona.getEps().getNombreEPS());
 			request.setAttribute("jornada", persona.getJornada());
-			request.setAttribute("cod", persona.getCodigoEstudiante());
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas.jsp");
+			if (persona.getPerfil().getNombrePerfil().equals("Practicante")) {
+				request.setAttribute("cod", persona.getCodigoEstudiante());
+			}else if(persona.getPerfil().getNombrePerfil().equals("Paciente")){
+				request.setAttribute("eps", persona.getEps().getNombreEPS());
+			}
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas2.jsp");
 			dispatcher.forward(request, response);
 		}
 		catch(Exception e){
 			System.out.println("Error de Busqueda: " + e.getMessage());
 			e.printStackTrace();
 			request.setAttribute("valor", "Practicante");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas2.jsp");
 			dispatcher.forward(request, response);
 		}
 		

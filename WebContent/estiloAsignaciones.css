@@ -1,3 +1,225 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans');
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url('https://fonts.googleapis.com/css?family=Cabin');
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,700,500,300);
+
+.droidSans{
+	font-family: 'Droid Sans', sans-serif;
+}
+
+.roboto{
+	font-family: 'Roboto', sans-serif;
+}
+
+.cabin{
+	font-family: 'Cabin', sans-serif;
+}
+
+.raleway{
+	font-family: 'Raleway', sans-serif;
+}
+
+textarea[readonly]
+{
+    background-color:blue;
+}
+
+.datosPerfil{
+	padding-top: 8%;
+}
+
+.tituloAsignaciones{
+	width: 62%;
+    margin-top: 2%;
+    margin-left: 19%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: #47a3da;
+    color: #f8f8f8;
+}
+
+.candidatosTitulo{
+	float: left;
+    width: 25%;
+    margin-left: 25%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: #dc8144;
+    color: #f8f8f8;
+}
+
+.asignadosTitulo{
+	float: right;
+	width: 25%;
+    margin-right: 25%;
+    padding-top: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: #45BF55;
+    color: #f8f8f8;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+#tablaCandidatos{
+	margin: 0 0 0 0;
+	width: 100%;
+}
+
+#tablaCandidatos thead th {
+  font-weight: 400;
+  background: #47a3da;
+  color: #FFF;
+}
+
+#tablaCandidatos tr {
+  background: #f4f7f8;
+  border-bottom: 1px solid #FFF;
+  margin-bottom: 5px;
+}
+
+#tablaCandidatos tr:nth-child(even) {
+  background: #e8eeef;
+}
+
+#tablaCandidatos th, td {
+  text-align: center;
+  padding: 10px;
+  font-weight: 300;
+}
+
+#tablaAsignados{
+	margin: 0 0 0 0;
+	width: 100%;
+}
+
+#tablaAsignados thead th {
+  font-weight: 400;
+  background: #47a3da;
+  color: #FFF;
+}
+
+#tablaAsignados tr {
+  background: #f4f7f8;
+  border-bottom: 1px solid #FFF;
+  margin-bottom: 5px;
+}
+
+#tablaAsignados tr:nth-child(even) {
+  background: #e8eeef;
+}
+
+#tablaAsignados th, td {
+  text-align: center;
+  padding: 10px;
+  font-weight: 300;
+}
+
+.listaCandidatos{
+    float: left;
+    width: 30%;
+    margin-left: 19%;
+}
+
+.listaAsignados{
+    float: right;
+    width: 30%;
+    margin-right: 19%;
+}
+
+#marcoSeleccionPersona {
+ 	background:#fff;
+    border: 1px solid #DFDCDC;
+    border-radius: 15px 15px 15px 15px;
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-top: 2%;
+    /*padding: 25px 50px 10px;*/
+    padding-left: 10px;
+    padding-right: 55px;
+    width: 60%;
+ 	font-family:Tahoma, Geneva, sans-serif;
+}
+
+#marcoSeleccionPersona .fieldgroup {
+    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
+    display: inline-block;
+    padding: 8px 10px;
+    width: 340px;
+}
+
+#marcoSeleccionPersona .fieldgroup input{
+    margin: 10px 0;
+    height: 40px;
+ 	width:100%;
+	border:solid #cdcdcd 1px;
+ 	border-radius:3px;
+ 	padding-left:10px;
+ 	font-size: 16px;
+}
+
+#marcoSeleccionPersona .fieldgroup select{
+    margin: 10px 0;
+    height: 40px;
+ 	width:103%;
+	border:solid #cdcdcd 1px;
+ 	border-radius:3px;
+ 	padding-left:10px;
+ 	font-size: 16px;
+}
+
+#marcoSeleccionPersona .submit {
+    padding: 10px;
+    height: 40px !important;
+ background:#00a2d1;
+ color:#fff;
+ font-weight:bolder;
+ border:solid #cdcdcd 1px;
+ border-radius:3px;
+}
+
+#marcoSeleccionPersona .fieldgroup label.error {
+    color: #FB3A3A;
+    display: inline-block;
+    font-weight:500;
+    padding: 0;
+    text-align: left;
+}
+
+#tablaUsuarios{
+	max-width: 960px;
+  	margin: 10px auto;
+}
+
+#tablaUsuarios thead th {
+  font-weight: 400;
+  background: #47a3da;
+  color: #FFF;
+}
+
+#tablaUsuarios tr {
+  background: #f4f7f8;
+  border-bottom: 1px solid #FFF;
+  margin-bottom: 5px;
+}
+
+#tablaUsuarios tr:nth-child(even) {
+  background: #e8eeef;
+}
+
+#tablaUsuarios th, td {
+  text-align: center;
+  padding: 10px;
+  font-weight: 300;
+}
+
 
 .cajaTablas{
     display: inline-block;
@@ -56,7 +278,7 @@
 }
 
 .tdNombre{
-	width: 80%;
+	width: 32%;
 }
 
 .tdBoton{
@@ -70,25 +292,4 @@
 
 .btnVer{
      background-image: url("resources/binoculares.png");
-}
-
-.botones{
-    font-size: 12px;
-    font-family: verdana,Helvetica;
-    font-weight: bold;
-    color: white;
-    background: rgb(16, 129, 236); /* color del interior de la caja*/
-    border-radius: -5px;
-    border: 0px;
-    width:111px;
-    height: 30px;
-    border-radius: 5px;
-    margin: 5px;
-    text-align: center;
-}
-
-.botones:hover{
-    background-color: #084B8A;
-    color: #cc3300;
-    position: inherit;
 }

@@ -12,13 +12,14 @@ public class SesionIndividualTo {
 	//------------------------------------------------------------------------------------
 	
 	private Integer idSesion;
-	private String citaId;
 	private String fecha;
 	private String nombreProfesional;
 	private String objetivo;
 	private String descripcion;
 	private String tareasAsignadas;
 	private String actividadesProximaSesion;
+	private boolean fallo;
+	private Integer numRecibo;
 
 	//------------------------------------------------------------------------------------
 	// Getters y Setters
@@ -29,12 +30,6 @@ public class SesionIndividualTo {
 	}
 	public void setIdSesion(Integer idSesion) {
 		this.idSesion = idSesion;
-	}
-	public String getCitaId() {
-		return citaId;
-	}
-	public void setCitaId(String citaId) {
-		this.citaId = citaId;
 	}
 	public String getFecha() {
 		return fecha;
@@ -72,5 +67,16 @@ public class SesionIndividualTo {
 	public void setActividadesProximaSesion(String actividadesProximaSesion) {
 		this.actividadesProximaSesion = actividadesProximaSesion;
 	}
-
+	public boolean isFallo() {
+		return fallo;
+	}
+	public void setFallo(boolean fallo) {
+		this.fallo = fallo;
+	}
+	public Integer getNumRecibo() {
+		return numRecibo;
+	}
+	public void setNumRecibo(Integer numRecibo) {
+		this.numRecibo = numRecibo;
+	}
 }

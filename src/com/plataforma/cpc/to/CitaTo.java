@@ -12,16 +12,17 @@ public class CitaTo {
 	// Atributos
 	//-------------------------------------------------------------------------------------
 	
-	private Integer 		idCita;
-	private String 			salon;
-	private LocalDateTime 	fechaSolicitud;
-	private LocalDateTime 	fechaCita;
-	private PersonaTo 		practicante;
-	private PersonaTo 		paciente;
-	private String 			estado;
-	private TratamientoTo 	tratamiento;
-	private SesionIndividualTo 		reporte;
-	private boolean			valoracion;
+	private Integer 			idCita;
+	private String 				salon;
+	private LocalDateTime 		fechaSolicitud;
+	private LocalDateTime 		fechaCita;
+	private PersonaTo 			practicante;
+	private PersonaTo 			paciente;
+	private String 				estado;
+	private TratamientoTo 		tratamiento;
+	private SesionIndividualTo 	reporte;
+	private boolean				valoracion;
+	private Integer				numCita;
 	
 	//-------------------------------------------------------------------------------------
 	// Getters y Setters
@@ -107,10 +108,11 @@ public class CitaTo {
 		this.valoracion = esValoracion;
 	}
 
-	@Override
-	public String toString() {
-		return "CitaTo [idCita=" + idCita + ", salon=" + salon + ", fechaSolicitud=" + fechaSolicitud + ", fechaCita="
-				+ fechaCita + ", practicante=" + practicante + ", paciente=" + paciente + ", estado=" + estado
-				+ ", tratamiento=" + tratamiento + ", reporte=" + reporte + ", valoracion=" + valoracion + "]";
+	public Integer getNumCita() {
+		return numCita;
+	}
+
+	public void setNumCita(Integer numCita) {
+		this.numCita = numCita;
 	}	
 }

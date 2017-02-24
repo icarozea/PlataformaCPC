@@ -146,7 +146,8 @@ function validarNombreCompleto(nom1,nom2,ape1,ape2) {
 }
 
 function checkTodo(id){
-	var nomForm = document.getElementById('formCreatePersona');
+	console.log("llega a checkTodo");
+	var nomForm = document.getElementById('register-form');
 	
 	if(id != null)
 		document.getElementById('operacion').value = "actualizarDatos";

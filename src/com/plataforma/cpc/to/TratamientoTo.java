@@ -17,6 +17,8 @@ public class TratamientoTo {
 	private LocalDateTime 	fechaInicio;
 	private LocalDateTime 	fechaCierre;
 	private String			tipo;
+	private Integer			numCitaActual;
+	private boolean			pendiente;
 	
 	//---------------------------------------------------------------------------------------------------------
 	// Getters y Setters
@@ -70,9 +72,19 @@ public class TratamientoTo {
 		this.tipo = tipo;
 	}
 
-	@Override
-	public String toString() {
-		return "TratamientoTo [idTratamiento=" + idTratamiento + ", paciente=" + paciente + ", estado=" + estado
-				+ ", fechaInicio=" + fechaInicio + ", fechaCierre=" + fechaCierre + ", tipo=" + tipo + "]";
+	public Integer getNumCitaActual() {
+		return numCitaActual;
+	}
+
+	public void setNumCitaActual(Integer numCitaActual) {
+		this.numCitaActual = numCitaActual;
+	}
+
+	public boolean isPendiente() {
+		return pendiente;
+	}
+
+	public void setPendiente(boolean pendiente) {
+		this.pendiente = pendiente;
 	}
 }

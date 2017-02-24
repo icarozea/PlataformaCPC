@@ -47,3 +47,13 @@ function validarFecha(){
 	alert('Seleccione una fecha válida');
 	return false;
 }
+
+function validarTratamiento(){
+	var form = document.getElementById("FormDatos");
+	form.submit();
+}
+
+function enviarCita(){
+	var form = document.getElementById("FormDatos");
+	form.submit();
+}
