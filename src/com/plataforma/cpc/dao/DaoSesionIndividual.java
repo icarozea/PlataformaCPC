@@ -22,7 +22,8 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 		String sqlAvance = "UPDATE TRATAMIENTO SET NUM_CITA_ACTUAL = NUM_CITA_ACTUAL + 1, PENDIENTE = 1 WHERE ID_TRATAMIENTO = ? ";
 		
-		String sqlEstado = "UPDATE CITA SET ESTADO = ? WHERE ID_CITA = ? ";
+		String sqlEstado = "UPDATE CITA SET ESTADO = ?, ID_REPORTE = REPORTE_SESION_SEQ.CURRVAL WHERE ID_CITA = ? ";
+		
 		try {
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
@@ -76,7 +77,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		conexionActual = new ConexionOracle();
 		SesionIndividualTo sesionIndividual = new SesionIndividualTo();
 		String sql = "SELECT RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
-				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO";
+				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO ";
 				sql+= "FROM CITA CITA, REPORTE_SESION RS ";
 				sql+= "WHERE ID_CITA = ? ";
 				sql+= "AND CITA.ID_REPORTE = RS.ID_SESION";

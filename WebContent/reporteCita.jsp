@@ -41,7 +41,7 @@
 			</c:when>
 		</c:choose>	
 	<div style="height: 50px;"></div>
-	<h1 class="cabin">Reporte de Sesión Individual</h1>
+	<h1 class="cabin">Reporte de Sesión</h1>
 	<div id="div-form-reporte-cita">
 		
 		<form id="reporteSesionForm" action="./ServletSesionIndividual" method="POST">
@@ -51,14 +51,16 @@
 			<input type="hidden" name="citaFull" value="<%=citaRecibida %>"/>
 			<label id="hora_label" class="droidSans">Fecha:</label><input id="fecha" name="fecha" type="text" class="field text fn" value="<%=ano + "-" + mes + "-" + dia%>" size="8" tabindex="1" readonly>
 			<label id="hora_label" class="droidSans">Hora:</label><input id="hora" name="hora" type="text" class="field text fn" value="<%=horas + ":" + minutos%>" size="8" tabindex="1" readonly>
+			<label id="num_cita_label" class="droidSans">Cita No:</label><input id="num_cita" name="num_cita" type="text" class="field text fn" value="<%=citaRecibida.getNumCita()%>" size="8" tabindex="1" readonly>
 	
 		<div>
 			<label id="nombrePaciente_label" class="droidSans">Nombre del paciente:</label><p class="droidSans"><b><%=paciente.getPrimerNombre()+" "+(paciente.getSegundoNombre()==null?"":paciente.getSegundoNombre())+" "+paciente.getPrimerApellido()+" "+paciente.getSegundoApellido()%></b></p>
-			<label id="numeroRecibo_label" class="droidSans"># Recibo:</label><input id="numeroRecibo" name="numeroRecibo" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="numeroRecibo_label" class="droidSans">Recibo No:</label><input id="numeroRecibo" name="numeroRecibo" type="text" class="field text fn" value="" size="8" tabindex="1">
 		</div>
 		
 		<div>
-			<label id="profesional_label" class="droidSans">Profesional en formación del área clínica:</label><p class="droidSans"><b><%=practicante.getPrimerNombre()+" "+(practicante.getSegundoNombre()==null?"":practicante.getSegundoNombre())+" "+practicante.getPrimerApellido()+" "+practicante.getSegundoApellido()%></b></p>
+			<label id="profesional_label" class="droidSans">Profesional en formación del área clínica:</label>
+			<input id="profesional" name="profesional" type="text" class="field text fn" value="<%=practicante.getPrimerNombre()+" "+(practicante.getSegundoNombre()==null?"":practicante.getSegundoNombre())+" "+practicante.getPrimerApellido()+" "+practicante.getSegundoApellido()%>" size="8" tabindex="1" readonly>
 		</div>
 		
 		<div>

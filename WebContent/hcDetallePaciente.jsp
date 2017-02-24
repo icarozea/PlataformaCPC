@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="listas.css"></link>
 <script type="text/javascript" src="js/validarCita.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Crear citas</title>
+<title>Historia Clínica - Paciente</title>
 </head>
 <body>
 	<!--MEMU SUPERIOR-->
@@ -28,7 +28,7 @@
 	
 	<h1 id="titulo">Tratamientos</h1>
 	<form id="FormDatos" name="FormDatos" action="./ServletHistoriaClinica" method="POST">
-		<input type="hidden" name="operacion" id="operacion" />
+		<input type="hidden" name="operacion" id="operacion" value="detalleCitas"/>
 		<input type="hidden" name="idPaciente" id="idPaciente" value="${requestScope.paciente.idPersona}"/>
 		<table class="rwd-table-noBorder">
 			<tr>
