@@ -19,12 +19,17 @@
     <body>
     	<!--MEMU SUPERIOR--> 
          <%@include file="./menuNavegacionAdmin.jsp" %>
-         <!--MEMU LATERAL--> 
-<%--         <%@include file="./menuLateral.jsp" %> --%>
 
 		<div id="datos" class="datosPerfil">
 			<h1 class="cabin">${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}</h1>
-            <h2 class="cabin">Cupos: ${requestScope.cupos}</h2>
+            <c:choose>
+            	<c:when test="${requestScope.cupos >= 999}">
+            		<h2 class="cabin">Cupos: ---</h2>
+            	</c:when>
+            	<c:when test="${requestScope.cupos < 999}">
+            		<h2 class="cabin">Cupos: ${requestScope.cupos}</h2>
+            	</c:when>
+            </c:choose>
 		</div>
 		<div id="tituloAsignaciones" class="tituloAsignaciones">
 		<p class="cabin">ASIGNACIÓN DE USUARIOS</p>

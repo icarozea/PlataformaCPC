@@ -49,8 +49,12 @@ public class ServletUsuario extends HttpServlet {
 						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
 						dispatcher.forward(request, response);
 					}
-					else{
+					else if(personaSesion.getPerfil().getNombrePerfil().equals("Practicante")){
 						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaPracticante.jsp");
+						dispatcher.forward(request, response);
+					}
+					else{
+						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAsesor.jsp");
 						dispatcher.forward(request, response);
 					}
 				}		

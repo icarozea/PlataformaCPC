@@ -66,7 +66,7 @@ public class ServletAsignaciones extends HttpServlet {
 				request.setAttribute("cupos", cupos);
 			}
 			else
-				request.setAttribute("cupos", "---");
+				request.setAttribute("cupos", 999);
 			
 
 			dispatcher.forward(request, response);

@@ -1,6 +1,8 @@
 package com.plataforma.cpc.dao;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.utils.ConexionOracle;
@@ -110,5 +112,48 @@ public class DaoSesionIndividual extends ConexionOracle{
 			}
 		}	
 		return sesionIndividual;
+	}
+	
+	public ArrayList<SesionIndividualTo> consultarReporteSesionporPracticante(Integer idPracticante){
+		ResultSet rs =null;
+		ArrayList<SesionIndividualTo> reportes = new ArrayList<SesionIndividualTo>();
+		conexionActual = new ConexionOracle();
+
+		String sql = "SELECT RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
+				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO ";
+				sql+= "FROM REPORTE_SESION RS INNER JOIN CITA CITA ";
+				sql+= "ON CITA.ID_PRACTICANTE = ? AND CITA.ID_REPORTE = RS.ID_SESION ORDER BY CITA.ESTADO DESC, RS.FECHA DESC ";
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idPracticante);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){
+				SesionIndividualTo sesionIndividual = new SesionIndividualTo();
+				sesionIndividual.setIdSesion(rs.getInt("ID_SESION"));
+				sesionIndividual.setFecha(rs.getString("FECHA"));
+				sesionIndividual.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
+				sesionIndividual.setObjetivo(rs.getString("OBJETIVO_SESION"));
+				sesionIndividual.setDescripcion(rs.getString("DESCRIPCION_SESION"));
+				sesionIndividual.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
+				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
+				sesionIndividual.setFallo(rs.getInt("ES_FALLO")>0?true:false);
+				sesionIndividual.setNumRecibo(rs.getInt("RECIBO"));
+				
+				reportes.add(sesionIndividual);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return reportes;
 	}
 }
