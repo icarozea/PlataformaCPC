@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.plataforma.cpc.interfaces.Conexion;
+import com.plataforma.cpc.to.ComentariosTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
@@ -79,7 +80,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		conexionActual = new ConexionOracle();
 		SesionIndividualTo sesionIndividual = new SesionIndividualTo();
 		String sql = "SELECT RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
-				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO ";
+				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO, RS.ID_COMENTARIOS ";
 				sql+= "FROM CITA CITA, REPORTE_SESION RS ";
 				sql+= "WHERE ID_CITA = ? ";
 				sql+= "AND CITA.ID_REPORTE = RS.ID_SESION";
@@ -100,6 +101,13 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
 				sesionIndividual.setFallo(rs.getInt("ES_FALLO")>0?true:false);
 				sesionIndividual.setNumRecibo(rs.getInt("RECIBO"));
+				Integer idComentarios = rs.getInt("ID_COMENTARIOS");
+				if(idComentarios != null){
+					ComentariosTo comentarios = new ComentariosTo();
+					comentarios.setIdComentarios(idComentarios);
+					sesionIndividual.setComentarios(comentarios);
+				}
+					
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,7 +128,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		conexionActual = new ConexionOracle();
 
 		String sql = "SELECT RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
-				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO ";
+				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO, RS.ID_COMENTARIOS ";
 				sql+= "FROM REPORTE_SESION RS INNER JOIN CITA CITA ";
 				sql+= "ON CITA.ID_PRACTICANTE = ? AND CITA.ID_REPORTE = RS.ID_SESION ORDER BY CITA.ESTADO DESC, RS.FECHA DESC ";
 		try {
@@ -141,7 +149,12 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
 				sesionIndividual.setFallo(rs.getInt("ES_FALLO")>0?true:false);
 				sesionIndividual.setNumRecibo(rs.getInt("RECIBO"));
-				
+				Integer idComentarios = rs.getInt("ID_COMENTARIOS");
+				if(idComentarios != null){
+					ComentariosTo comentarios = new ComentariosTo();
+					comentarios.setIdComentarios(idComentarios);
+					sesionIndividual.setComentarios(comentarios);
+				}
 				reportes.add(sesionIndividual);
 			}
 		} catch (Exception e) {
@@ -155,5 +168,121 @@ public class DaoSesionIndividual extends ConexionOracle{
 			}
 		}	
 		return reportes;
+	}
+	
+	public boolean guardarComentarios(Integer idReporte, ComentariosTo comentarios){
+		boolean retorno;
+		conexionActual = new ConexionOracle();
+		
+		String guardar = "INSERT INTO COMENTARIOS_REPORTE (ID_COMENTARIOS,COM_OBJETIVO,COM_DESCRIPCION,COM_TAREAS,COM_ACTIVIDADES) ";
+		guardar +="VALUES (COMENTARIOS_REPORTE_SEQ.NEXTVAL,?,?,?,?)";
+		
+		String asociar = "UPDATE REPORTE_SESION SET ID_COMENTARIOS = COMENTARIOS_REPORTE_SEQ.CURRVAL WHERE ID_SESION = ? ";
+		try {
+			conexionActual.conectar();
+			conexionActual.iniciarTransaccion();
+			
+			conexionActual.prepararSentencia(guardar);	
+			conexionActual.agregarAtributo(1, comentarios.getComentariosObjetivo());
+			conexionActual.agregarAtributo(2, comentarios.getComentariosDescripcion());
+			conexionActual.agregarAtributo(3, comentarios.getComentariosTareas());
+			conexionActual.agregarAtributo(4, comentarios.getComentariosActividades());
+			
+			conexionActual.ejecutarActualizacion();
+			
+			conexionActual.prepararSentencia(asociar);
+			conexionActual.agregarAtributo(1, idReporte);
+			
+			conexionActual.ejecutarActualizacion();
+			
+			conexionActual.commit();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+			try {
+                conexionActual.rollback();
+            } catch(Exception exep) {
+            	exep.printStackTrace();
+            }
+		}finally{
+			try {
+				conexionActual.cerrarTransaccion();
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return retorno;
+	}
+	
+	public boolean actualizarComentarios(ComentariosTo comentarios){
+		boolean retorno;
+		conexionActual = new ConexionOracle();
+		
+		String actualizar = "UPDATE COMENTARIOS_REPORTE SET COM_OBJETIVO = ?, COM_DESCRIPCION = ?, COM_TAREAS = ?, COM_ACTIVIDADES = ? ";
+		actualizar +="WHERE ID_COMENTARIOS = ?";
+	
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(actualizar);	
+			conexionActual.agregarAtributo(1, comentarios.getComentariosObjetivo());
+			conexionActual.agregarAtributo(2, comentarios.getComentariosDescripcion());
+			conexionActual.agregarAtributo(3, comentarios.getComentariosTareas());
+			conexionActual.agregarAtributo(4, comentarios.getComentariosActividades());
+			conexionActual.agregarAtributo(5, comentarios.getIdComentarios());
+			
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return retorno;
+	}
+	
+	public ComentariosTo consultarComentarios(Integer idComentarios){
+		
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		ComentariosTo comentarios = new ComentariosTo();
+		
+		String sql = "SELECT ID_COMENTARIOS,COM_OBJETIVO,COM_DESCRIPCION,COM_TAREAS,COM_ACTIVIDADES ";
+		sql+= "FROM COMENTARIOS_REPORTE WHERE ID_COMENTARIOS = ? ";
+		
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idComentarios);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){
+				comentarios.setIdComentarios(idComentarios);
+				comentarios.setComentariosObjetivo(rs.getString("COM_OBJETIVO"));
+				comentarios.setComentariosDescripcion("COM_DESCRIPCION");
+				comentarios.setComentariosTareas("COM_TAREAS");
+				comentarios.setComentariosActividades("COM_ACTIVIDADES");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return comentarios;
 	}
 }

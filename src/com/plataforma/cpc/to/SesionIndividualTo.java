@@ -20,6 +20,7 @@ public class SesionIndividualTo {
 	private String actividadesProximaSesion;
 	private boolean fallo;
 	private Integer numRecibo;
+	private ComentariosTo comentarios;
 
 	//------------------------------------------------------------------------------------
 	// Getters y Setters
@@ -78,5 +79,11 @@ public class SesionIndividualTo {
 	}
 	public void setNumRecibo(Integer numRecibo) {
 		this.numRecibo = numRecibo;
+	}
+	public ComentariosTo getComentarios() {
+		return comentarios;
+	}
+	public void setComentarios(ComentariosTo comentarios) {
+		this.comentarios = comentarios;
 	}
 }
