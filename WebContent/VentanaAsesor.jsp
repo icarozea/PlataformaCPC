@@ -17,7 +17,7 @@
                     <tr>
                     	<td><a href="./ServletAsesor?operacion=practicantes&idAsesor=${sessionScope.personaSession.idPersona}"><img src="resources/personas.png"/></a></td>                                       
                         <td><a href="./ServletAsesor?operacion=reportes&idPracticante=183"><img src="resources/appointment.png"/></a></td>                     
-                        <td><a href=""><img src="resources/reporte.png"/></a></td>                       
+                        <td><a href="./ServletAsesor?operacion=aceptar&idReporte=121"><img src="resources/reporte.png"/></a></td>                       
                     </tr>
                     <tr>
                         <td class="droidSans">Mi Perfil</td>

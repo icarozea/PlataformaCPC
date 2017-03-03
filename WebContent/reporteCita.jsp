@@ -45,7 +45,7 @@
 	<div id="div-form-reporte-cita">
 		
 		<form id="reporteSesionForm" action="./ServletSesionIndividual" method="POST">
-			<input type="hidden" name="operacion" value="guardarSesionIndividual"/>
+			<input type="hidden" name="operacion" value="crear"/>
 			<input type="hidden" name="idCita" value="<%=citaRecibida.getIdCita() %>"/>
 			<input type="hidden" name="idTratamiento" value="<%=citaRecibida.getTratamiento().getIdTratamiento() %>"/>
 			<input type="hidden" name="citaFull" value="<%=citaRecibida %>"/>

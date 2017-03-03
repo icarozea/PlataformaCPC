@@ -16,28 +16,27 @@ import com.plataforma.cpc.to.SesionIndividualTo;
  */
 @WebServlet("/ServletSesionIndividual")
 public class ServletSesionIndividual extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletSesionIndividual() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	
+	public void ResponderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		response.setContentType("text/html;charset=UTF-8");
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String operacion = request.getParameter("operacion");
 
+		switch (operacion) {
+
+		case "crear":
+			crearReporte(request,response);
+			break;
+		case "actualizar":
+			actualizarReporte(request, response);
+			break;
+		default:
+			System.out.println("Opción no existe");
+			break;
+		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+       
+	public void crearReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		SesionIndividualTo sesion = new SesionIndividualTo();
 		sesion.setFecha(request.getParameter("fecha") +" "+ request.getParameter("hora"));
@@ -60,5 +59,37 @@ public class ServletSesionIndividual extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		dispatcher.forward(request, response);
+	}
+	
+	public void actualizarReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		DaoSesionIndividual dao = new DaoSesionIndividual();
+		SesionIndividualTo sesion = new SesionIndividualTo();
+		sesion.setIdSesion(Integer.parseInt(request.getParameter("idSesion")));
+		sesion.setObjetivo(request.getParameter("objetivoSesion"));
+		sesion.setDescripcion(request.getParameter("descripcionSesion"));
+		sesion.setTareasAsignadas(request.getParameter("tareasSesion"));
+		sesion.setActividadesProximaSesion(request.getParameter("actividadesProxSesion"));
+		boolean resultado = dao.actualizarReporteSesionIndividual(sesion);
+		if (resultado) 	
+			request.setAttribute("mensajeRespuestaReporte", "Se ha actualizado exitosamente el reporte de la sesión.");
+		else
+			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la actualizacion del reporte.");
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ResponderPeticion(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ResponderPeticion(request, response);	
 	}
 }

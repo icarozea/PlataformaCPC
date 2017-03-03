@@ -17,7 +17,7 @@
                     <tr>
                     	<td><a href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}"><img src="resources/personas.png"/></a></td>                                       
                         <td><a href="inicioCita.jsp"><img src="resources/appointment.png"/></a></td>                     
-                        <td><a href=""><img src="resources/reporte.png"/></a></td>                       
+                        <td><a href="./ServletSesionIndividual?operacion=actualizar&idSesion=141&objetivoSesion=x&descripcionSesion=x&tareasSesion=x&actividadesProxSesion=x"><img src="resources/reporte.png"/></a></td>                       
                     </tr>
                     <tr>
                         <td class="droidSans">Mi Perfil</td>

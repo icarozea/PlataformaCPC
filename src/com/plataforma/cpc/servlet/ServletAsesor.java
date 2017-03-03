@@ -44,6 +44,9 @@ public class ServletAsesor extends HttpServlet {
 		case "actualizarComentarios":
 			actualizarComentarios(request,response);
 			break;
+		case "aceptar":
+			aceptarReporte(request,response);
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
@@ -102,7 +105,7 @@ public class ServletAsesor extends HttpServlet {
 			Integer idComentarios = Integer.parseInt(request.getParameter("idComentarios"));
 			ComentariosTo comentarios = daoSesionIndividual.consultarComentarios(idComentarios);
 			request.setAttribute("comentarios", comentarios);
-			System.out.println(comentarios);
+			System.out.println(comentarios.getComentariosObjetivo());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("");
 			dispatcher.forward(request, response);
 		}
@@ -181,8 +184,28 @@ public class ServletAsesor extends HttpServlet {
 		}
 	}
 	
+	private void aceptarReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
+		
+		try{
+			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
+			if(daoSesion.aceptarReporte(idReporte)){
+				System.out.println("Reporte aceptado");
+				request.setAttribute("respuesta", "1");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("");
+				dispatcher.forward(request, response);
+			}
+		}
+		catch(Exception e){
+			System.out.println("Operacion fallida: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			dispatcher.forward(request, response);
+		}
+	}
 	
-
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ResponderPeticion(request, response);

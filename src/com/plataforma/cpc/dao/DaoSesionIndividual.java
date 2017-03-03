@@ -75,6 +75,54 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 	
+	public boolean actualizarReporteSesionIndividual(SesionIndividualTo sesion){
+		boolean retorno;
+		conexionActual = new ConexionOracle();
+		
+		String actualizacion = "UPDATE REPORTE_SESION SET OBJETIVO_SESION = ?, DESCRIPCION_SESION = ?, TAREAS_ASIGNADAS = ?, ACTIVIDADES_PROX_SESION = ? ";
+		actualizacion+= "WHERE ID_SESION = ? "; 
+		
+		String sqlEstado = "UPDATE CITA SET ESTADO = 'pendiente' WHERE ID_REPORTE = ? ";
+		
+		Integer idSesion = sesion.getIdSesion();
+		try {
+			conexionActual.conectar();
+			conexionActual.iniciarTransaccion();
+			
+			conexionActual.prepararSentencia(actualizacion);	
+			conexionActual.agregarAtributo(1, sesion.getObjetivo());
+			conexionActual.agregarAtributo(2, sesion.getDescripcion());
+			conexionActual.agregarAtributo(3, sesion.getTareasAsignadas());
+			conexionActual.agregarAtributo(4, sesion.getActividadesProximaSesion());
+			conexionActual.agregarAtributo(5, idSesion);
+			conexionActual.ejecutarActualizacion();
+			
+			conexionActual.prepararSentencia(sqlEstado);
+			conexionActual.agregarAtributo(1, idSesion); 
+			conexionActual.ejecutarActualizacion();
+			
+			conexionActual.commit();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+			try {
+                conexionActual.rollback();
+            } catch(Exception exep) {
+            	exep.printStackTrace();
+            }
+		}finally{
+			try {
+				conexionActual.cerrarTransaccion();
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return retorno;
+	}
+	
 	public SesionIndividualTo consultarReporteSesionporCita(Integer idCita){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
@@ -178,6 +226,8 @@ public class DaoSesionIndividual extends ConexionOracle{
 		guardar +="VALUES (COMENTARIOS_REPORTE_SEQ.NEXTVAL,?,?,?,?)";
 		
 		String asociar = "UPDATE REPORTE_SESION SET ID_COMENTARIOS = COMENTARIOS_REPORTE_SEQ.CURRVAL WHERE ID_SESION = ? ";
+		
+		String actualizar = "UPDATE CITA SET ESTADO = 'revision' WHERE ID_REPORTE = ?";
 		try {
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
@@ -191,6 +241,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.ejecutarActualizacion();
 			
 			conexionActual.prepararSentencia(asociar);
+			conexionActual.agregarAtributo(1, idReporte);
+			
+			conexionActual.ejecutarActualizacion();
+			
+			conexionActual.prepararSentencia(actualizar);
 			conexionActual.agregarAtributo(1, idReporte);
 			
 			conexionActual.ejecutarActualizacion();
@@ -284,5 +339,64 @@ public class DaoSesionIndividual extends ConexionOracle{
 		}
 		
 		return comentarios;
+	}
+	
+	public boolean aceptarReporte(Integer idReporte){
+		boolean retorno = false;
+		ResultSet rs = null;
+		conexionActual = new ConexionOracle();
+		
+		String buscar = "SELECT ID_TRATAMIENTO FROM CITA WHERE ID_REPORTE = ? ";
+		String actualizar = "UPDATE CITA SET ESTADO = 'cerrada' WHERE ID_REPORTE = ? ";
+		String desbloquear = "UPDATE TRATAMIENTO SET PENDIENTE = 0 WHERE ID_TRATAMIENTO = ? ";
+	
+		try {
+			conexionActual.conectar();
+			conexionActual.iniciarTransaccion();
+			
+			conexionActual.prepararSentencia(buscar);	
+			conexionActual.agregarAtributo(1, idReporte);
+			
+			rs = conexionActual.ejecutarSentencia();
+			Integer idTratamiento = 0;
+			
+			while(rs.next()){
+				idTratamiento = rs.getInt("ID_TRATAMIENTO");
+			}
+			
+			if(idTratamiento > 0){
+				conexionActual.prepararSentencia(actualizar);	
+				conexionActual.agregarAtributo(1, idReporte);
+			
+				conexionActual.ejecutarActualizacion();
+				
+				conexionActual.prepararSentencia(desbloquear);	
+				conexionActual.agregarAtributo(1, idTratamiento); 
+
+				conexionActual.ejecutarActualizacion();
+				
+				conexionActual.commit();
+				retorno = Boolean.TRUE;
+			}
+			else
+				retorno = Boolean.FALSE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+			try {
+                conexionActual.rollback();
+            } catch(Exception exep) {
+            	exep.printStackTrace();
+            }
+		}finally{
+			try {
+				rs.close();
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return retorno;
 	}
 }
