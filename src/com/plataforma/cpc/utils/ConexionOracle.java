@@ -16,7 +16,7 @@ import oracle.jdbc.driver.OracleDriver;
  */
 public class ConexionOracle implements Conexion {
 
-    private final String USUARIO = "CPCDB";
+    private final String USUARIO = "CPC";
     private final String PASSWORD = "1234";
     private final String SID = "xe";
     private final String HOST = "localhost";
