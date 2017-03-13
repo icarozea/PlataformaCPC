@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import com.plataforma.cpc.interfaces.Conexion;
@@ -16,7 +17,7 @@ import oracle.jdbc.driver.OracleDriver;
  */
 public class ConexionOracle implements Conexion {
 
-    private final String USUARIO = "CPCDB";
+    private final String USUARIO = "CPC";
     private final String PASSWORD = "1234";
     private final String SID = "xe";
     private final String HOST = "localhost";
@@ -45,6 +46,10 @@ public class ConexionOracle implements Conexion {
 
         }
     }
+    
+    public void prepararSentencia(String sentencia, String generarColumna[]) throws Exception {
+		sentenciaActual = this.connection.prepareStatement(sentencia, generarColumna);
+	}
     
 	public void prepararSentencia(String sentencia) throws Exception {
 		sentenciaActual = this.connection.prepareStatement(sentencia);
@@ -83,6 +88,15 @@ public class ConexionOracle implements Conexion {
 		else
 			throw new Exception("No se ha preparado previamente una sentencia SQL");
 	}
+	
+	public int recuperarLlavePrimaria() throws SQLException{
+		ResultSet generatedKeys = sentenciaActual.getGeneratedKeys();
+		if (generatedKeys.next()) {
+		  int primaryKey = generatedKeys.getInt(1);
+		  return primaryKey;
+		}
+		return -1;
+	}
 
     public void cerrar() throws SQLException {
         if (connection != null && connection.isClosed() == false) {
@@ -114,5 +128,11 @@ public class ConexionOracle implements Conexion {
 		if (connection != null && connection.isClosed() == false) {
         	connection.setAutoCommit(true);
         }
+	}
+
+	@Override
+	public PreparedStatement recuperarSentencia() throws Exception {
+		// TODO Auto-generated method stub
+		return this.sentenciaActual;
 	}
 }

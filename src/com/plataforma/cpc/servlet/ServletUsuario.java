@@ -1,7 +1,9 @@
 package com.plataforma.cpc.servlet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.plataforma.cpc.modelo.UsuarioBean;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.UsuarioTo;
+import com.plataforma.cpc.utils.CargueInicial;
 
 /**
  * Servlet que maneja el inicio de sesión para entrar al portal web
@@ -44,7 +47,7 @@ public class ServletUsuario extends HttpServlet {
 					session.setAttribute("personaSession", personaSesion);
 					request.setAttribute("mensaje", "1");
 					session.setAttribute("perfil", personaSesion.getPerfil().getNombrePerfil());
-					
+					//cargarPropiedades();
 					if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
 						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
 						dispatcher.forward(request, response);
@@ -69,6 +72,12 @@ public class ServletUsuario extends HttpServlet {
 			System.out.println("Opción no existe");
 			break;
 		}
+	}
+	
+	private void cargarPropiedades(){
+		CargueInicial cargue = new CargueInicial();
+		String pathAbsoluto = getServletContext().getRealPath("index.jsp").replace("index.jsp", "");
+		cargue.leerArchivoPropiedades();
 	}
 
 	@Override
