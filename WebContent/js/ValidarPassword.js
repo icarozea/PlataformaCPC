@@ -172,3 +172,9 @@ function checkTodo(id){
         }
     }
 }
+
+function guardarDetalle(){	
+	var nomForm = document.getElementById('register-form');
+	document.getElementById('operacion').value = "guardarPersona";
+    nomForm.submit();
+}

@@ -11,9 +11,9 @@ import com.plataforma.cpc.to.UsuarioTo;
 
 public class PersonaBean {
 	
-	public boolean ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, Long otroTelefono, String correo, Integer idPerfil, String password, Integer eps, String jornada, Integer codigo){
+	public int ingresarPersona(String nombre1,String nombre2, String apellido1, String apellido2, Integer tipoDocumento,String numeroDocumento, String direccion, Long telefono, Long otroTelefono, String correo, Integer idPerfil, String password, Integer eps, String jornada, Integer codigo){
 		PersonaTo persona = new PersonaTo();
-		
+		int idPersona;
 		persona.setPrimerNombre(nombre1);
 		persona.setSegundoNombre(nombre2);
 		persona.setPrimerApellido(apellido1);
@@ -41,8 +41,10 @@ public class PersonaBean {
 		persona.setCodigoEstudiante(codigo);
 
 		DaoPersona daoPersona = new DaoPersona();
+		
+		idPersona = daoPersona.crearPersona2(persona);
 
-		return daoPersona.crearPersona(persona);
+		return idPersona;
 	}
 	
 	public ArrayList<PersonaTo> consultarPracticantes(){
