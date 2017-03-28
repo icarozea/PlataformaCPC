@@ -33,7 +33,7 @@ public class Reporte {
      * Default constructor. 
      */
 	public Reporte(String directorio) {
-		String RUTA_REPORTES = "C:/Users/black/OneDrive/Documentos/GitHub/PlataformaCPC/WebContent/resources/reportes";
+		String RUTA_REPORTES = "C:/Users/sebastian.gilp/Documents/github/WebContent/resources/reportes";
 		this.directorio = RUTA_REPORTES;   	
     } 
 				
