@@ -25,12 +25,12 @@
 				<tr>
 					<td>
 						<div>
-							<a href="./ServletPersona?operacion=cargueIncial"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
+							<a href="./ServletPersona?operacion=cargueIncial"><button class="btn-xlarge"><i class="fa fa-plus fa-4x" ></i></button></a>
 						</div>
 					</td>
 					<td>
 						<div>
-							<a href="busquedaPersonas"><button class="btn-xlarge"><i class="fa fa-calendar fa-4x" ></i></button></a>
+							<a href="busquedaPersonas"><button class="btn-xlarge"><i class="fa fa-search fa-4x" ></i></button></a>
 						</div>
 					</td>
 				</tr>
@@ -44,7 +44,7 @@
 				<tr>
 					<td>
 						<div>
-							<a href="InicioConfiguracion.jsp"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+							<a href="InicioConfiguracion.jsp"><button class="btn-xlarge"><i class="fa fa-cogs fa-4x" ></i></button></a>
 						</div>
 					</td>
 				</tr>

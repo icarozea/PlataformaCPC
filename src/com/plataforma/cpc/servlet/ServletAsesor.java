@@ -14,6 +14,7 @@ import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.to.ComentariosTo;
 import com.plataforma.cpc.to.PersonaTo;
+import com.plataforma.cpc.to.SesionIndividualPreviewTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 
 /**
@@ -32,11 +33,16 @@ public class ServletAsesor extends HttpServlet {
 		case "practicantes":
 			verPracticantes(request,response);
 			break;
-		case "reportes":
-			verReportes(request,response);
+		case "reporte":
+			verReporte(request,response);
 			break;
+		case "reporteDetallado":
+			verReporteDetallado(request,response);
+			break;	
+		case "reportesPreview":
+			verPreviewReportes(request,response);
 		case "comentarios":
-			verComentarios(request,response);
+//			verComentarios(request,response);
 			break;
 		case "guardarComentarios":
 			guardarComentarios(request,response);
@@ -61,8 +67,7 @@ public class ServletAsesor extends HttpServlet {
 			Integer idAsesor = Integer.parseInt(request.getParameter("idAsesor"));
 			ArrayList<PersonaTo> practicantes = daoPersona.consultarAsignados(idAsesor);
 			request.setAttribute("practicantes", practicantes);
-			System.out.println(practicantes);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verPracticantes.jsp");
 			dispatcher.forward(request, response);
 		}
 		catch(Exception e){
@@ -74,8 +79,33 @@ public class ServletAsesor extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
+	
+	private void verReporteDetallado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+		
+		try{
+			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
+			SesionIndividualTo sesionIndividual = daoSesionIndividual.consultarSesionPorId(idReporte);
+			request.setAttribute("idReporte", idReporte);
+			request.setAttribute("objetivoSesion", sesionIndividual.getObjetivo());
+			request.setAttribute("descripcionSesion", sesionIndividual.getDescripcion());
+			request.setAttribute("tareasAsignadasSesion",sesionIndividual.getTareasAsignadas());
+			request.setAttribute("actividadesProxSesion",sesionIndividual.getActividadesProximaSesion());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verReporteDetallado.jsp");
+			dispatcher.forward(request, response);
+			
+		}catch(Exception e){
+			System.out.println("Busqueda de reporte individual fallida: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			dispatcher.forward(request, response);
+		}
+	}
 
-	private void verReportes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void verReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();		
 
@@ -83,8 +113,10 @@ public class ServletAsesor extends HttpServlet {
 			Integer idPracticante = Integer.parseInt(request.getParameter("idPracticante"));
 			ArrayList<SesionIndividualTo> reportes = daoSesionIndividual.consultarReporteSesionporPracticante(idPracticante);
 			request.setAttribute("reportes", reportes);
+			request.setAttribute("idPracticante", idPracticante);
+			
 			System.out.println(reportes);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verReportesPracticantes.jsp");
 			dispatcher.forward(request, response);
 		}
 		catch(Exception e){
@@ -94,6 +126,30 @@ public class ServletAsesor extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("");
 			dispatcher.forward(request, response);
+		}
+	}
+	
+	private void verPreviewReportes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+		
+		try{
+			Integer idPracticante = Integer.parseInt(request.getParameter("idPracticante"));
+			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
+			request.setAttribute("reportesPreview", reportesPreview);
+			request.setAttribute("idPracticante", idPracticante);
+			request.setAttribute("nomPracticante", request.getParameter("pNom")+" "+request.getParameter("sNom")+" "
+					+request.getParameter("pApe")+" "+request.getParameter("sApe"));
+			System.out.println(reportesPreview);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verReportesPracticantes.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e){
+			System.out.println("Busqueda fallida: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			dispatcher.forward(request, response);			
 		}
 	}
 	
@@ -190,7 +246,6 @@ public class ServletAsesor extends HttpServlet {
 		try{
 			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
 			if(daoSesion.aceptarReporte(idReporte)){
-				System.out.println("Reporte aceptado");
 				request.setAttribute("respuesta", "1");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("");
 				dispatcher.forward(request, response);

@@ -44,6 +44,7 @@ public class ServletUsuario extends HttpServlet {
 					session.setAttribute("personaSession", personaSesion);
 					request.setAttribute("mensaje", "1");
 					session.setAttribute("perfil", personaSesion.getPerfil().getNombrePerfil());
+					session.setAttribute("idPersona", personaSesion.getIdPersona());
 					
 					if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
 						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");

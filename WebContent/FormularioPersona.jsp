@@ -26,6 +26,9 @@
 		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
 			<%@include file="./menuNavegacionPracticante.jsp"%>
 		</c:when>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 2}">
+			<%@include file="./menuNavegacionAsesor.jsp" %> 
+		</c:when>
 	</c:choose>
 	
 	<!--MEMU LATERAL-->
@@ -351,9 +354,14 @@
 		                		<a href="inicioPersonas.jsp"><input type="button" value="Cancelar" class="submit cabin"></a>
 		            		</div>
 		            	</c:when>
+		            	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 2}">
+		            		<div class="fieldgroup">
+		                		<a href="VentanaAsesor.jsp"><input type="button" value="Cancelar" class="submit cabin"></a>
+		            		</div>
+		            	</c:when>		            	
 		            	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
 		            		<div class="fieldgroup">
-		                		<a href="VentanaPracticante"><input type="button" value="Cancelar" class="submit cabin"></a>
+		                		<a href="VentanaPracticante.jsp"><input type="button" value="Cancelar" class="submit cabin"></a>
 		            		</div>
 		            	</c:when>
 		            </c:choose>

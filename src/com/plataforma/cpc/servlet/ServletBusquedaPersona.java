@@ -61,7 +61,7 @@ public class ServletBusquedaPersona extends HttpServlet {
 	}
 
 	public ArrayList<PersonaTo> RealizarBusqueda(String perfil, String jornada){
-		System.out.println("Jornada halada: " + jornada);
+//		System.out.println("Jornada halada: " + jornada);
 		PersonaBean persona = new PersonaBean();
 		ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
 		ArrayList<PersonaTo> retorno = new ArrayList<PersonaTo>();

@@ -15,7 +15,7 @@
          		<tr>
          			<td>
          				<div>
-							<a href="FormularioEPS.jsp"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
+							<a href="FormularioEPS.jsp"><button class="btn-xlarge"><i class="fa fa-book fa-4x" ></i></button></a>
 						</div>
 					</td>
 					<td>
