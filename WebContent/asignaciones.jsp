@@ -17,8 +17,13 @@
 		  }
 		%>    
     <body>
-    	<!--MEMU SUPERIOR--> 
-         <%@include file="./menuNavegacionAdmin.jsp" %>
+	<!--MENU SUPERIOR-->
+	<c:choose>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+			<%@include file="./menuNavegacionAdmin.jsp" %>
+		</c:when>
+	</c:choose>
+         
 
 		<div id="datos" class="datosPerfil">
 			<h1 class="cabin">${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}</h1>

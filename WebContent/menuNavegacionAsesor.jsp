@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="estilo.css" />
+<link rel="stylesheet" href="estilo.css"/>
 <link rel="stylesheet" href="estiloMenu.css" />
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JSP Page</title>
 </head>
@@ -18,11 +19,12 @@
 <body>
 	<div class="top-header">	
 	 <div class="container" style="margin-bottom: 8%;">
+	 	
 		 <div class="top-menu">
 		 	<span class="menu"> </span>
 			 <ul>
-				 <li><a href="VentanaPracticante.jsp">INICIO</a></li>
-				 <li><a href="inicioCita.jsp">CITAS</a></li>
+				 <li><a href="VentanaAsesor.jsp">INICIO</a></li>
+				 <li><a href="./busquedaPersonas">PERSONAS</a></li>
 				 <li><a href="#">REPORTES</a></li>
 				<div class="clearfix"></div>
 			 </ul>
@@ -37,13 +39,5 @@
 	 	</div>
 	 </div>	
 	</div>
-<!-- 	<nav id="menu"> -->
-<!-- 		<ul> -->
-<!-- 			<a href="VentanaPracticante.jsp"><li>Inicio</li></a> -->
-<!-- 			<a href="inicioCita.jsp"><li>Citas</li></a> -->
-<!-- 			<a href=""><li>Reportes</li></a> -->
-<!-- 		</ul> -->
-<!-- 	</nav> -->
-<!-- 	<br> -->
 </body>
 </html>
