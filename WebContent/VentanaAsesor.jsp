@@ -5,31 +5,47 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Inicio</title>
         <link rel="stylesheet" href="estilo.css"></link>
+        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
+   		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
     <body>
 
-        <%@include file="./menuNavegacionPracticante.jsp" %> 
-        <div id="gestioncitas" class="caja">
-            <h1 class="droidSans">INICIO</h1>
-            <h2 class="droidSans">Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
-            <div id="gestionContenido">
-                <table class="tablaPrincipal">
-                    <tr>
-                    	<td><a href="./ServletAsesor?operacion=practicantes&idAsesor=${sessionScope.personaSession.idPersona}"><img src="resources/personas.png"/></a></td>                                       
-                        <td><a href="./ServletAsesor?operacion=reportes&idPracticante=183"><img src="resources/appointment.png"/></a></td>                     
-                        <td><a href="./ServletAsesor?operacion=aceptar&idReporte=121"><img src="resources/reporte.png"/></a></td>                       
-                    </tr>
-                    <tr>
-                        <td class="droidSans">Mi Perfil</td>
-                        <td class="droidSans">Citas</td>
-                        <td class="droidSans">Reportes</td>                       
-                    </tr>
-                </table>
-            </div>
-            <br>
-         <div>
-			<a href="/PlataformaCPC/Logout"><button id = "logoutBtn" class="btnLogout btnLogout-danger">Cerrar sesión</button></a>
-		</div>
+        <%@include file="./menuNavegacionAsesor.jsp" %>
+        <div id="gestioncitas">
+        	<h1 class="cabin">INICIO</h1>
+			<h2 class="cabin">Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
+			<div id="gestionContenido">
+				<table class="tablaPrincipal">
+					<tr>
+						<td>
+							<div>
+								<a href="./ServletAsesor?operacion=practicantes&idAsesor=<%=session.getAttribute("idPersona")%>"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
+							</div>
+						</td>
+						<td>
+							<div>
+								<a href="./ServletPersona?operacion=editarPersona&idPersona=<%=session.getAttribute("idPersona")%>"><button class="btn-xlarge"><i class="fa fa-user-md fa-4x" ></i></button></a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="cabin"><a href="./ServletAsesor?operacion=practicantes&idAsesor=<%=session.getAttribute("idPersona")%>">MIS PRACTICANTES</a></td>
+						<td class="cabin"><a href="./ServletPersona?operacion=editarPersona&idPersona=<%=session.getAttribute("idPersona")%>">MI PERFIL</a><br></td>
+					</tr>
+				</table>
+			</div>
+			<br>
+			<div>
+				<a href="/PlataformaCPC/Logout"><button id="logoutBtn" class="btnLogout btnLogout-danger">Cerrar sesión</button></a>
+			</div>
+			<br>
         </div>
         
         <footer>

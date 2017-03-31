@@ -28,6 +28,10 @@ body{
 	padding-top: 100px;
 }
 
+.btnRegresar{
+	margin-top: 2%;
+}
+
 .btn-xlarge{
   margin: 10px;
   width: 150px;
@@ -437,6 +441,24 @@ input.radio{
     padding: 8px 10px;
     width: 340px;
 }
+
+#register-form .fieldgroupTextArea {
+    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
+    display: inline-block;
+    padding: 8px 10px;
+    width: 94%;
+}
+
+.marginTextArea{
+    margin-top: 2%;
+    margin-left: 1%;
+}
+
+.sizeTextArea{
+	width: 80%;
+	height: 150px;
+}
+
 fieldset{ border:none; }
 
 #register-form .fieldgroup input{

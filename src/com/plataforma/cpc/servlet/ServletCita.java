@@ -102,7 +102,7 @@ public class ServletCita extends HttpServlet{
 
 			request.setAttribute("listaPracticantes", practicantes);
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("citaPracticantes.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("citaPracticantes2.jsp");
 			dispatcher.forward(request, response);
 
 		} catch (Exception e) {

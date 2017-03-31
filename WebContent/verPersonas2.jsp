@@ -1,8 +1,3 @@
-<%-- 
-    Document   : FormularioEPS
-    Created on : 07/11/2016
-    Author     : Ovidio Zea
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -36,10 +31,18 @@
 
 </script>
 <body>
-	<!--MEMU SUPERIOR-->
-	<%@include file="/menuNavegacionAdmin.jsp"%>
-	<!--MEMU LATERAL--> 
-<%--     <%@include file="./menuPersona.jsp" %> --%>
+	<!--MENU SUPERIOR-->
+	<c:choose>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+			<%@include file="./menuNavegacionAdmin.jsp"%>
+		</c:when>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+			<%@include file="./menuNavegacionPracticante.jsp"%>
+		</c:when>
+		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 2}">
+			<%@include file="./menuNavegacionAsesor.jsp" %> 
+		</c:when>
+	</c:choose>
     
     <div id="detallesPersona">
     	<h1 class="cabin">DATOS PERSONA</h1>
@@ -56,14 +59,17 @@
 		          		<th scope="col">Dirección</th>
 		          		<th scope="col">Teléfono</th>
 		          		<th scope="col">Correo</th>
+		          		
 		          		<c:if test="${requestScope.perfil == 'Paciente'}">
 							<th>EPS</th>
 						</c:if>
 						<c:if test="${requestScope.perfil == 'Practicante'}">
 							<th>Código</th>
 						</c:if>
-						<th>Editar</th>
-						<th>Eliminar</th>
+						<c:if test="${sessionScope.personaSession.perfil.idPerfil != 2}">
+							<th>Editar</th>
+							<th>Eliminar</th>
+						</c:if>
 			         </tr> 		
         		</thead>
         		<tbody>
@@ -80,17 +86,31 @@
 				<c:if test="${requestScope.perfil == 'Practicante'}">
 					<td>${requestScope.cod}</td>
 				</c:if>
-				<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditar"
-							 onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
-				<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminar"
-						onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
+				<c:if test="${sessionScope.personaSession.perfil.idPerfil != 2}">
+					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditar" onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
+					<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminar" onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
+				</c:if>		
 			</tr>
         		</tbody>
 			</table>   	
     	</form>
     </div>
-    <div id="" class="">
-            <a href="busquedaPersonas"><input type="button" id="btnAsignar" value="Volver" class="botones"></a>
-     </div>    
+    <c:choose>
+    	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+    		<div class="btnRegresar">
+				<a href="busquedaPersonas"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			</div> 
+    	</c:when>
+    	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 2}">
+    		<div class="btnRegresar">
+				<a href="./ServletAsesor?operacion=practicantes&idAsesor=<%=session.getAttribute("idPersona")%>"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			</div>    	
+    	</c:when>
+    	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+    		<div class="btnRegresar">
+				<a href="#"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			</div>     	
+    	</c:when>
+    </c:choose>
 </body>
 </html>

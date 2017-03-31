@@ -34,7 +34,7 @@
 	<!--MEMU SUPERIOR-->
 	<%@include file="/menuNavegacionAdmin.jsp"%>
 	
-	<h1 id="titulo">LISTA DE PRACTICANTES</h1>
+	<h1>LISTA DE PRACTICANTES</h1>
 	<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="operacion" id="operacion" />
 		<input type="hidden" name="idPersona" id="idPersona"/>

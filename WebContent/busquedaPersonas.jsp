@@ -58,8 +58,11 @@
 	          				<c:if test="${requestScope.valor == 'Paciente'}">
 	          					<th scope="col">Historia clínica</th>
 	          				</c:if>
-	          				<c:if test="${requestScope.valor == 'Practicante' || requestScope.valor == 'Supervisor'}">
-	          					<th scope="col">Asignación de usuarios</th>
+	          				<c:if test="${requestScope.valor == 'Practicante'}">
+	          					<th scope="col">Asignación de pacientes</th>
+	          				</c:if>
+	          				<c:if test="${requestScope.valor == 'Supervisor'}">
+	          					<th scope="col" id="colheader">Asignación de </th>
 	          				</c:if>
 	          			</c:forEach>
 			         </tr> 		

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.to.ComentariosTo;
+import com.plataforma.cpc.to.SesionIndividualPreviewTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
@@ -168,6 +169,87 @@ public class DaoSesionIndividual extends ConexionOracle{
 			}
 		}	
 		return sesionIndividual;
+	}
+	
+	public ArrayList<SesionIndividualPreviewTo> consultarListaReportesSesionesPorPracticante(Integer idPracticante){
+		ResultSet rs =null;
+		ArrayList<SesionIndividualPreviewTo> listaSesionesPracticante = new ArrayList<SesionIndividualPreviewTo>();
+		conexionActual = new ConexionOracle();
+		
+		String sql = "SELECT CT.ID_CITA, CT.SALON, CT.FECHA_CITA, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, CT.ID_REPORTE, CT.ESTADO, CT.ES_VALORACION ";
+			   sql+= "FROM CITA CT INNER JOIN PERSONA PE ON CT.ID_PACIENTE = PE.ID_PERSONA WHERE CT.ID_PRACTICANTE = ? ORDER BY CT.ESTADO DESC, CT.FECHA_CITA DESC";
+			   
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idPracticante);
+			
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				
+				SesionIndividualPreviewTo previewSesion = new SesionIndividualPreviewTo(); 
+				previewSesion.setIdCita(rs.getInt("ID_CITA"));
+				previewSesion.setSalon(rs.getString("SALON"));
+				previewSesion.setFecha(rs.getString("FECHA_CITA"));
+				previewSesion.setPrimerNombrePaciente(rs.getString("PRIMER_NOMBRE"));
+				previewSesion.setSegundoNombrePaciente(rs.getString("SEGUNDO_NOMBRE"));
+				previewSesion.setPrimerApellidoPaciente(rs.getString("PRIMER_APELLIDO"));
+				previewSesion.setSegundoApellidoPaciente(rs.getString("SEGUNDO_APELLIDO"));
+				previewSesion.setEstado(rs.getString("ESTADO"));
+				previewSesion.setIdReporte(rs.getString("ID_REPORTE"));
+				listaSesionesPracticante.add(previewSesion);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+				try {
+					conexionActual.cerrar();
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+		return listaSesionesPracticante;
+	}
+	
+	public SesionIndividualTo consultarSesionPorId(Integer idSesion){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		String sql = "SELECT ID_SESION, FECHA, NOMBRE_PROFESIONAL, OBJETIVO_SESION, DESCRIPCION_SESION, TAREAS_ASIGNADAS, ACTIVIDADES_PROX_SESION, RECIBO, ES_FALLO, ID_COMENTARIOS FROM REPORTE_SESION WHERE ID_SESION = ?";
+		
+		SesionIndividualTo sesion = new SesionIndividualTo();
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idSesion);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				sesion.setIdSesion(rs.getInt("ID_SESION"));
+				sesion.setFecha(rs.getString("FECHA"));
+				sesion.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
+				sesion.setObjetivo(rs.getString("OBJETIVO_SESION"));
+				sesion.setDescripcion(rs.getString("DESCRIPCION_SESION"));
+				sesion.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
+				sesion.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
+				boolean fallo;
+				if (rs.getInt("ES_FALLO")==1) {
+					fallo=true;
+				}else{
+					fallo = false;
+				}
+				sesion.setFallo(fallo);
+				sesion.setNumRecibo(rs.getInt("RECIBO"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("falla en busqueda");
+			e.getLocalizedMessage();
+		}
+		
+		return sesion;
 	}
 	
 	public ArrayList<SesionIndividualTo> consultarReporteSesionporPracticante(Integer idPracticante){

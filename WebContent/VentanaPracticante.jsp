@@ -1,40 +1,68 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Inicio</title>
-        <link rel="stylesheet" href="estilo.css"></link>
-    </head>
-    <body>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Inicio</title>
+<link rel="stylesheet" href="estilo.css"></link>
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+</head>
+<body>
 
-         <%@include file="./menuNavegacionPracticante.jsp" %> 
-        <div id="gestioncitas" class="caja">
-            <h1 class="droidSans">INICIO</h1>
-            <h2 class="droidSans">Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
-            <div id="gestionContenido">
-                <table class="tablaPrincipal">
-                    <tr>
-                    	<td><a href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}"><img src="resources/personas.png"/></a></td>                                       
-                        <td><a href="inicioCita.jsp"><img src="resources/appointment.png"/></a></td>                     
-                        <td><a href="./ServletSesionIndividual?operacion=actualizar&idSesion=141&objetivoSesion=x&descripcionSesion=x&tareasSesion=x&actividadesProxSesion=x"><img src="resources/reporte.png"/></a></td>                       
-                    </tr>
-                    <tr>
-                        <td class="droidSans">Mi Perfil</td>
-                        <td class="droidSans">Citas</td>
-                        <td class="droidSans">Reportes</td>                       
-                    </tr>
-                </table>
-            </div>
-            <br>
-         <div>
-			<a href="/PlataformaCPC/Logout"><button id = "logoutBtn" class="btnLogout btnLogout-danger">Cerrar sesión</button></a>
+	<%@include file="./menuNavegacionPracticante.jsp"%>
+	<div id="gestioncitas">
+		<h1 class="droidSans">INICIO</h1>
+		<h2 class="droidSans">Bienvenido
+			${sessionScope.personaSession.primerNombre}</h2>
+		<div id="gestionContenido">
+			<table class="tablaPrincipal">
+				<tr>
+					<td>
+						<div>
+							<a
+								href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}"><button
+									class="btn-xlarge">
+									<i class="fa fa-users fa-4x"></i>
+								</button></a>
+						</div>
+					</td>
+					<td>
+						<div>
+							<a href="inicioCita.jsp"><button class="btn-xlarge">
+									<i class="fa fa-calendar fa-4x"></i>
+								</button></a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cabin"><a
+						href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}">MI
+							PERFIL</a></td>
+					<td class="cabin"><a href="inicioCita.jsp">CITAS</a><br></td>
+				</tr>
+			</table>
+
+			<table class="tablaPrincipal">
+				<tr>
+					<td>
+						<div>
+							<a href="#"><button class="btn-xlarge">
+									<i class="fa fa-file-text fa-4x"></i>
+								</button></a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cabin">REPORTES<br></td>
+				</tr>
+			</table>
 		</div>
-        </div>
-        
-        <footer>
-            <small>Fundación Universitaria Konrad Lorenz</small>
-            <address>www.konradlorenz.edu.co</address>
-        </footer> 
-    </body>
+		<br>
+		<div>
+			<a href="/PlataformaCPC/Logout"><button id="logoutBtn"
+					class="btnLogout btnLogout-danger">Cerrar sesión</button></a>
+		</div>
+	</div>
+</body>
 </html>
