@@ -17,11 +17,11 @@ import oracle.jdbc.driver.OracleDriver;
  */
 public class ConexionOracle implements Conexion {
 
-    private final String USUARIO = "cpcdb";
-    private final String PASSWORD = "1234";
-    private final String SID = "xe";
-    private final String HOST = "localhost";
-    private final String PUERTO = "1521";
+    private final String USUARIO = Propiedades.getInstance().valorPropiedad("USUARIO");
+    private final String PASSWORD = Propiedades.getInstance().valorPropiedad("PASSWORD");
+    private final String SID = Propiedades.getInstance().valorPropiedad("SID");
+    private final String HOST = Propiedades.getInstance().valorPropiedad("HOST");
+    private final String PUERTO = Propiedades.getInstance().valorPropiedad("PUERTO");
     private Connection connection;
     private PreparedStatement sentenciaActual;
 

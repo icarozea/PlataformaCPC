@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
+import com.plataforma.cpc.utils.Propiedades;
 import com.plataforma.cpc.utils.Reporte;
 
 
@@ -72,7 +71,7 @@ public class ServletReporte extends HttpServlet {
 		response.setHeader("Content-disposition",nombreArchivo);
 		byte[] buffer = null;
 		String rutaReportes = getServletContext().getRealPath("index.jsp").replace("index.jsp", "resources/reportes");
-		Reporte reporte = new Reporte(rutaReportes);
+		Reporte reporte = new Reporte(Propiedades.getInstance().valorPropiedad(Propiedades.RUTA_JASPER));
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("ID_PERFIL",new Integer(1));
