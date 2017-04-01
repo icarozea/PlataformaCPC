@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.plataforma.cpc.dao.DaoUtilidades;
 import com.plataforma.cpc.modelo.EpsBean;
 import com.plataforma.cpc.modelo.PersonaBean;
+import com.plataforma.cpc.modelo.PersonaDetalleBean;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
+import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 
@@ -250,12 +252,13 @@ public class ServletPersona extends HttpServlet {
 
 			String numDoc = request.getParameter("numeroDocumento");
 			String dir = request.getParameter("direccion");
-			Long tel = new Long(request.getParameter("telefono"));
+			
+			Long tel = (!request.getParameter("telefono").equals(""))? new Long(request.getParameter("telefono")) : 0;
 			String otroTel = request.getParameter("telefono2");
 			Long tel2 = !otroTel.equals("")? new Long(otroTel) : 0;
 			String correo = request.getParameter("correo");
 
-			Integer idPerfil = Integer.parseInt(request.getParameter("perfil"));
+			Integer idPerfil = (!request.getParameter("perfil").equals(""))? new Integer(request.getParameter("perfil")) : 0;
 			PerfilTo perfilTo = daoUtilidades.buscarPerfil(idPerfil);
 			if(idPerfil > 0 || perfilTo != null)
 				idPerfil = perfilTo.getIdPerfil();
@@ -309,7 +312,7 @@ public class ServletPersona extends HttpServlet {
 	 */
 	private void actualizarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
 		
 		PersonaBean personaBean = new PersonaBean();
 		try{
@@ -331,11 +334,13 @@ public class ServletPersona extends HttpServlet {
 
 			String numDoc = request.getParameter("numeroDocumento");
 			String dir = request.getParameter("direccion");
-			Long tel = new Long(request.getParameter("telefono"));
-			Long tel2 = new Long(request.getParameter("telefono2"));
+	
+			Long tel = (!request.getParameter("telefono").equals(""))? new Long(request.getParameter("telefono")) : 0;
+
+			Long tel2 = (!request.getParameter("telefono2").equals(""))? new Long(request.getParameter("telefono2")) : 0;
 			String correo = request.getParameter("correo");
 
-			Integer idPerfil = Integer.parseInt(request.getParameter("perfil"));
+			Integer idPerfil = (!request.getParameter("perfil").equals(""))? new Integer(request.getParameter("perfil")) : 0;
 			PerfilTo perfilTo = daoUtilidades.buscarPerfil(idPerfil);
 			if(idPerfil > 0 || perfilTo != null)
 				idPerfil = perfilTo.getIdPerfil();
@@ -346,10 +351,13 @@ public class ServletPersona extends HttpServlet {
 			
 			String password = request.getParameter("password");
 			String jornada = request.getParameter("jornada");
-			Integer codigo = Integer.parseInt(request.getParameter("codigo"));
 			
+			Integer codigo = 0;
+			if(!request.getParameter("codigo").equals("")){
+				codigo = new Integer(request.getParameter("codigo"));
+			}
 			Integer eps;
-			Integer idEPS = Integer.parseInt(request.getParameter("eps"));
+			Integer idEPS = (!request.getParameter("eps").equals(""))? new Integer(request.getParameter("eps")) : 0;
 			if(idEPS < 0)
 				eps = 1;
 			else{
@@ -363,7 +371,13 @@ public class ServletPersona extends HttpServlet {
 			String superior = request.getParameter("superior");
 			Integer idSuperior = superior.equals("") ? 0 : Integer.parseInt(superior); 
 			if(personaBean.modificarPersona(id, nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, idSuperior, jornada, codigo)){
+				PersonaDetalleBean personaDetalle = new PersonaDetalleBean();
+				PersonaDetalleTo personaDetalleTo = new PersonaDetalleTo();
+				personaDetalleTo.setPersonaId(id);
+				personaDetalleTo = personaDetalle.consultarPersonaDetalle(personaDetalleTo);
+				request.setAttribute("personaDetalle", personaDetalleTo);
 				request.setAttribute("respuesta", "1");
+				
 				request.setAttribute("error", "");
 				dispatcher.forward(request, response);
 			}

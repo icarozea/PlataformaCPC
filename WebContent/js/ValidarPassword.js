@@ -178,3 +178,9 @@ function guardarDetalle(){
 	document.getElementById('operacion').value = "guardarPersona";
     nomForm.submit();
 }
+
+function modificarDetalle(){	
+	var nomForm = document.getElementById('register-form');
+	document.getElementById('operacion').value = "modificarPersona";
+    nomForm.submit();
+}

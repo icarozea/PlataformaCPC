@@ -47,14 +47,7 @@ public class ServletUsuario extends HttpServlet {
 					session.setAttribute("personaSession", personaSesion);
 					request.setAttribute("mensaje", "1");
 					session.setAttribute("perfil", personaSesion.getPerfil().getNombrePerfil());
-<<<<<<< HEAD
-					cargarPropiedades();
-=======
-					//cargarPropiedades();
-
 					session.setAttribute("idPersona", personaSesion.getIdPersona());
-					
->>>>>>> refs/remotes/origin/master
 					if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
 						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
 						dispatcher.forward(request, response);
@@ -79,10 +72,6 @@ public class ServletUsuario extends HttpServlet {
 			System.out.println("Opción no existe");
 			break;
 		}
-	}
-	
-	private void cargarPropiedades(){
-		Propiedades cargue = Propiedades.getInstance();
 	}
 
 	@Override

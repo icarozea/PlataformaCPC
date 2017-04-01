@@ -13,6 +13,7 @@ public class PersonaDetalleTo {
 	private String problematica;
 	private String observación;
 	private String nombreModifica;
+	
 	public Integer getPersonaId() {
 		return personaId;
 	}

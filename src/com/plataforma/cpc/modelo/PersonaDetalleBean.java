@@ -9,5 +9,15 @@ public class PersonaDetalleBean {
 		DaoPersona daoPersona = new DaoPersona();
 		return daoPersona.crearPersonaDetalle(persona);		
 	}
+	
+	public PersonaDetalleTo consultarPersonaDetalle(PersonaDetalleTo persona){
+		DaoPersona daoPersona = new DaoPersona();
+		return daoPersona.consultarPersonaDetalle(persona);
+	}
+	
+	public boolean modificarPersonaDetalle(PersonaDetalleTo persona){
+		DaoPersona daoPersona = new DaoPersona();
+		return daoPersona.actualizarPersonaDetalle(persona);
+	}
 
 }
