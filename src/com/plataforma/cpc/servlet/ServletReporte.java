@@ -70,7 +70,6 @@ public class ServletReporte extends HttpServlet {
 		String nombreArchivo = "attachment; filename="+nombreReporte+".xls";
 		response.setHeader("Content-disposition",nombreArchivo);
 		byte[] buffer = null;
-		String rutaReportes = getServletContext().getRealPath("index.jsp").replace("index.jsp", "resources/reportes");
 		Reporte reporte = new Reporte(Propiedades.getInstance().valorPropiedad(Propiedades.RUTA_JASPER));
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
