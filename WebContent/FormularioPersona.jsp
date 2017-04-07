@@ -345,9 +345,6 @@
 		            		</div>				        
 				        </c:otherwise>
 				    </c:choose>
-				    <div>
-						<a href="./ServletPersona?operacion=detallePersona">Detalle</a>
-					</div>
 		            <div class="fieldgroup">
 		                <input type="button" value="Registrar" onclick="checkTodo(${requestScope.idPersona})" class="submit cabin">
 		            </div>

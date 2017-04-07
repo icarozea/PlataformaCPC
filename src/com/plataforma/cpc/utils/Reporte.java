@@ -1,8 +1,9 @@
 package com.plataforma.cpc.utils;
 
 import java.io.ByteArrayOutputStream;
-
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
@@ -33,8 +34,7 @@ public class Reporte {
      * Default constructor. 
      */
 	public Reporte(String directorio) {
-		String RUTA_REPORTES = "C:/Users/sebastian.gilp/Documents/github/WebContent/resources/reportes";
-		this.directorio = RUTA_REPORTES;   	
+		this.directorio = directorio;   	
     } 
 				
 	/**
@@ -67,7 +67,7 @@ public class Reporte {
 		JasperPrint jprint = null;
 		
 		// concatenamos el nombre del archivo con el directorio y la extensión
-		String nombreArchivo = directorio + "/" + jasperFileName + ".jasper";
+		String nombreArchivo = directorio + File.separator + jasperFileName + ".jasper";
 		
 		jprint = JasperFillManager.fillReport(nombreArchivo, parametros, (Connection)conexion);
 		

@@ -53,11 +53,55 @@ public class ServletPersonaDetalle extends HttpServlet {
 		case "guardarPersona":
 			guardarPersonaDetalle(request,response);
 			break;
+		case "modificarPersona":
+			modificarPersonaDetalle(request,response);
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
 		
 		}
+	}
+	
+	/**
+	 * Responde a una funcion de actualizar los datos de una persona ya existente en la base de datos
+	 * Redirige a la pagina de respuestaAgregarPersona
+	 */
+	private void modificarPersonaDetalle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+		
+		PersonaDetalleBean personaBean = new PersonaDetalleBean();
+		PersonaDetalleTo personaTo = new PersonaDetalleTo();
+		try{
+			personaTo.setPersonaId(Integer.parseInt(request.getParameter("idPersona")));
+			personaTo.setSexo(request.getParameter("sexo")); 
+			personaTo.setEdad( request.getParameter("edad"));
+			personaTo.setAcudiente(request.getParameter("acudiente"));
+			personaTo.setProceso(request.getParameter("proceso"));
+			personaTo.setPerteneceU(request.getParameter("perteneceU"));
+			personaTo.setFacultad(request.getParameter("facultad"));
+			personaTo.setSemestre(request.getParameter("semestre"));
+			personaTo.setProblematica(request.getParameter("nombre"));
+			personaTo.setObservación(request.getParameter("problematica"));
+			personaTo.setNombreModifica(request.getParameter("observaciones"));
+			
+			if(personaBean.modificarPersonaDetalle(personaTo)){
+				request.setAttribute("respuesta", "1");
+				request.setAttribute("error", "");
+				dispatcher.forward(request, response);
+			}
+			else{
+				throw new Exception("Hubo un error al intentar guardar la información");
+			}
+		}
+		catch(Exception e){
+			System.out.println("Error de formulario: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			dispatcher.forward(request, response);
+		}		
 	}
 	
 	
