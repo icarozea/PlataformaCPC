@@ -8,6 +8,14 @@
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
 </head>
+   		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
 <body>
 
 	<%@include file="./menuNavegacionPracticante.jsp"%>
@@ -47,14 +55,14 @@
 				<tr>
 					<td>
 						<div>
-							<a href="#"><button class="btn-xlarge">
+							<a href="./ReportesPracticante?operacion=visualizarReportes"><button class="btn-xlarge">
 									<i class="fa fa-file-text fa-4x"></i>
 								</button></a>
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<td class="cabin">REPORTES<br></td>
+					<td class="cabin"><a href="./ReportesPracticante?operacion=visualizarReportes">REPORTES</a><br></td>
 				</tr>
 			</table>
 		</div>

@@ -24,7 +24,7 @@ import com.plataforma.cpc.to.SesionIndividualTo;
 public class ServletAsesor extends HttpServlet {
 
 	public void ResponderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("text/html;charset=ISO-8859-1");
 
 		String operacion = request.getParameter("operacion");
 
@@ -86,8 +86,12 @@ public class ServletAsesor extends HttpServlet {
 		
 		try{
 			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
-			SesionIndividualTo sesionIndividual = daoSesionIndividual.consultarSesionPorId(idReporte);
+			SesionIndividualTo sesionIndividual = daoSesionIndividual.consultarDetalleSesionPorId(idReporte);
 			request.setAttribute("idReporte", idReporte);
+			request.setAttribute("fechaCita", sesionIndividual.getFecha());
+			request.setAttribute("nomPaciente", request.getParameter("pNomPaciente")+" "+request.getParameter("sNomPaciente")+" "+request.getParameter("pApePaciente")+" "+request.getParameter("sApePaciente"));
+			request.setAttribute("reciboNum", sesionIndividual.getNumRecibo());
+			request.setAttribute("profesionalNom", sesionIndividual.getNombreProfesional());
 			request.setAttribute("objetivoSesion", sesionIndividual.getObjetivo());
 			request.setAttribute("descripcionSesion", sesionIndividual.getDescripcion());
 			request.setAttribute("tareasAsignadasSesion",sesionIndividual.getTareasAsignadas());
@@ -161,7 +165,6 @@ public class ServletAsesor extends HttpServlet {
 			Integer idComentarios = Integer.parseInt(request.getParameter("idComentarios"));
 			ComentariosTo comentarios = daoSesionIndividual.consultarComentarios(idComentarios);
 			request.setAttribute("comentarios", comentarios);
-			System.out.println(comentarios.getComentariosObjetivo());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("");
 			dispatcher.forward(request, response);
 		}
@@ -177,29 +180,35 @@ public class ServletAsesor extends HttpServlet {
 
 	private void guardarComentarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		request.setCharacterEncoding("ISO-8859-1");
 		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
 		ComentariosTo comentarios = new ComentariosTo();
 
 		try{
+			System.out.println("ServletAsesor recibe params!");
+			System.out.println("accionAsesor: " + request.getParameter("accionAsesor"));
+			System.out.println("idReporte: " + request.getParameter("idReporte"));
+			System.out.println("comObjetivo: " + request.getParameter("campoObjetivo"));
+			System.out.println("comDescripcion: " + request.getParameter("campoDesc"));
+			System.out.println("comTareas: " + request.getParameter("campoTareasAsig"));
+			System.out.println("comActividades: " + request.getParameter("campoActividades"));
+			
 			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
-			comentarios.setComentariosObjetivo(request.getParameter("comObjetivo"));
-			comentarios.setComentariosDescripcion(request.getParameter("comDescripcion"));
-			comentarios.setComentariosTareas(request.getParameter("comTareas"));
-			comentarios.setComentariosActividades(request.getParameter("comActividades"));
+			comentarios.setComentariosObjetivo(request.getParameter("campoObjetivo"));
+			comentarios.setComentariosDescripcion(request.getParameter("campoDesc"));
+			comentarios.setComentariosTareas(request.getParameter("campoTareasAsig"));
+			comentarios.setComentariosActividades(request.getParameter("campoActividades"));
 
 			if(daoSesion.guardarComentarios(idReporte, comentarios)){
-				System.out.println("Creacion exitosa");
 				request.setAttribute("respuesta", "1");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("");
 				dispatcher.forward(request, response);
 			}	
-			else{
-				throw new Exception("Error al guardar los comentarios");
-			}
+//			else{
+//				throw new Exception("Error al guardar los comentarios");
+//			}
 		}
 		catch(Exception e){
-			System.out.println("Creación fallida: " + e.getMessage());
-			e.printStackTrace();
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("");

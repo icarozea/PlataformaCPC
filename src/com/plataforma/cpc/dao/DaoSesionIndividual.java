@@ -214,10 +214,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return listaSesionesPracticante;
 	}
 	
-	public SesionIndividualTo consultarSesionPorId(Integer idSesion){
+	public SesionIndividualTo consultarDetalleSesionPorId(Integer idSesion){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
-		String sql = "SELECT ID_SESION, FECHA, NOMBRE_PROFESIONAL, OBJETIVO_SESION, DESCRIPCION_SESION, TAREAS_ASIGNADAS, ACTIVIDADES_PROX_SESION, RECIBO, ES_FALLO, ID_COMENTARIOS FROM REPORTE_SESION WHERE ID_SESION = ?";
+//		String sql = "SELECT ID_SESION, FECHA, NOMBRE_PROFESIONAL, OBJETIVO_SESION, DESCRIPCION_SESION, TAREAS_ASIGNADAS, ACTIVIDADES_PROX_SESION, RECIBO, ES_FALLO, ID_COMENTARIOS FROM REPORTE_SESION WHERE ID_SESION = ?";
+		String sql = "SELECT RS.ID_SESION, RS.FECHA, CT.NUM_CITA, RS.RECIBO, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION, RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO FROM CITA CT INNER JOIN REPORTE_SESION RS ON CT.ID_REPORTE = RS.ID_SESION WHERE RS.ID_SESION = ?";
 		
 		SesionIndividualTo sesion = new SesionIndividualTo();
 		try {
@@ -230,6 +231,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesion.setIdSesion(rs.getInt("ID_SESION"));
 				sesion.setFecha(rs.getString("FECHA"));
 				sesion.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
+				sesion.setNumRecibo(Integer.parseInt(rs.getString("RECIBO")));
 				sesion.setObjetivo(rs.getString("OBJETIVO_SESION"));
 				sesion.setDescripcion(rs.getString("DESCRIPCION_SESION"));
 				sesion.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));

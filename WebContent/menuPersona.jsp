@@ -1,9 +1,3 @@
-<%-- 
-    Document   : menuLateral
-    Created on : 26/06/2016, 10:42:10 PM
-    Author     : HARLIN
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

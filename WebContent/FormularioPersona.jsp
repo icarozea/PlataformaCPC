@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -114,7 +114,7 @@
 		                </select>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">N煤mero de Documento</label>
+		                <label class="cabin">N鷐ero de Documento</label>
 		                <c:choose>
 							<c:when test="${requestScope.num != null}">
 								<input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Numero Documento" value="${requestScope.num}" required>
@@ -125,63 +125,63 @@
 						</c:choose>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">Direcci贸n</label>
+		                <label class="cabin">Direcci髇</label>
 		                <c:choose>
 							<c:when test="${requestScope.dir != null}">
 								<input type="text" id="direccion" name="direccion"
-									placeholder="Direcci贸n Residencia" value="${requestScope.dir}"
+									placeholder="Direcci髇 Residencia" value="${requestScope.dir}"
 									required="">
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="direccion" name="direccion"
-								placeholder="Direcci贸n Residencia" required="">
+								placeholder="Direcci髇 Residencia" required="">
 						</c:otherwise>
 						</c:choose>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">Tel茅fono</label>
+		                <label class="cabin">Tel閒ono</label>
 		                <c:choose>
 							<c:when test="${requestScope.tel != null}">
 								<input type="text" id="telefono" name="telefono"
-									placeholder="Tel茅fono" value="${requestScope.tel}" required="">
+									placeholder="Tel閒ono" value="${requestScope.tel}" required="">
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="telefono" name="telefono"
-								placeholder="Tel茅fono" required="">
+								placeholder="Tel閒ono" required="">
 						</c:otherwise>
 						</c:choose>
 		            </div>
 					<div class="fieldgroup">
-		                <label class="cabin">Otro Tel茅fono</label>
+		                <label class="cabin">Otro Tel閒ono</label>
 		                <c:choose>
 							<c:when test="${requestScope.tel2 != null}">
 								<input type="text" id="telefono2" name="telefono2"
-									placeholder="Otro Tel茅fono" value="${requestScope.tel2}">
+									placeholder="Otro Tel閒ono" value="${requestScope.tel2}">
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="telefono2" name="telefono2"
-								placeholder="Otro Tel茅fono">
+								placeholder="Otro Tel閒ono">
 							
 						</c:otherwise>
 						</c:choose>
 		            </div>
 					<div class="fieldgroup">
-		                <label class="cabin">Correo Electr贸nico</label>
+		                <label class="cabin">Correo Electr髇ico</label>
 		                <c:choose>
 							<c:when test="${requestScope.mail != null}">
 								<input type="text" id="correo" name="correo"
-									placeholder="Correo Electr贸nico" value="${requestScope.mail}"
+									placeholder="Correo Electr髇ico" value="${requestScope.mail}"
 									required>
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="correo" name="correo"
-								placeholder="Correo Electr贸nico" required="">
+								placeholder="Correo Electr髇ico" required="">
 							
 						</c:otherwise>
 						</c:choose>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">Contrase帽a</label>
+		                <label class="cabin">Contrase馻</label>
 		                <c:choose>
 							<c:when test="${requestScope.pass != null}">
 								<input type="password" id="password" name="password"
@@ -193,7 +193,7 @@
 							</c:choose>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">Confirmar Contrase帽a</label>
+		                <label class="cabin">Confirmar Contrase馻</label>
 		                <c:choose>
 							<c:when test="${requestScope.pass != null}">
 								<input type="password" id="password2" name="password2"
@@ -250,13 +250,13 @@
 					<c:choose>
 						<c:when test="${requestScope.perfil == 3}">
 							<div class="fieldgroup" id="campoCodigo">
-		                		<label class="cabin">C贸digo</label>
+		                		<label class="cabin">C骴igo</label>
 		                		<input type="text" id="codigo" name="codigo" value="${requestScope.cod}" required>
 		            		</div>
 						</c:when>
 						<c:otherwise>
 							<div class="fieldgroup" id="campoCodigo" style="display: none;">
-		                		<label class="cabin">C贸digo</label>
+		                		<label class="cabin">C骴igo</label>
 		                		<input type="text" id="codigo" name="codigo" value="${requestScope.cod}">
 		            		</div>
 						</c:otherwise>
@@ -307,8 +307,8 @@
 				                <label class="cabin">Jornada</label>
 				                <select id="jornada" name="jornada" required>
 					                <c:choose>
-										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Ma帽ana L-V</option></c:when>
-										<c:otherwise><option value="manana">Ma帽ana L-V</option></c:otherwise>
+										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Ma馻na L-V</option></c:when>
+										<c:otherwise><option value="manana">Ma馻na L-V</option></c:otherwise>
 									</c:choose>
 									<c:choose>
 										<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>
@@ -328,8 +328,8 @@
 				                <label class="cabin">Jornada</label>
 				                <select id="jornada" name="jornada">
 					                <c:choose>
-										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Ma帽ana L-V</option></c:when>
-										<c:otherwise><option value="manana">Ma帽ana L-V</option></c:otherwise>
+										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Ma馻na L-V</option></c:when>
+										<c:otherwise><option value="manana">Ma馻na L-V</option></c:otherwise>
 									</c:choose>
 									<c:choose>
 										<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>

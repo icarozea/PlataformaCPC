@@ -4,10 +4,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ver Practicantes</title>
         <link rel="stylesheet" href="estilo.css"></link>
         <link rel="stylesheet" href="estiloAsignaciones.css"></link>
         <script type="text/javascript" src="js/manejarAsignacion.js"></script>
+        <title>Ver Practicantes</title>
     </head>
 		<%
 		  if (session.getAttribute("perfil")==null)
@@ -17,7 +17,7 @@
 		    dispatcher.forward(request,response);
 		  }
 		%>
-    <body>
+<body>
         <%@include file="./menuNavegacionAsesor.jsp" %>
         <div id="gestioncitas" class="">
         	<h1 class="cabin">Reportes del practicante</h1>
@@ -40,9 +40,11 @@
 	        					<td>${reportePreview.salon}</td>
 	        					<td>${reportePreview.primerNombrePaciente} ${reportePreview.segundoNombrePaciente}
 	        						${reportePreview.primerApellidoPaciente} ${reportePreview.segundoApellidoPaciente}</td>
+	        					
 	        					<td>${reportePreview.estado}</td>
+	        					
 	        					<td>${reportePreview.fecha}</td>
-	        					<td class="tdBoton"><a href="./ServletAsesor?operacion=reporteDetallado&idReporte=${reportePreview.idReporte}"><input type="button" id="btnReportes" class="btnAsignar"></a></td>
+	        					<td class="tdBoton"><a href="./ServletAsesor?operacion=reporteDetallado&idReporte=${reportePreview.idReporte}&pNomPaciente=${reportePreview.primerNombrePaciente}&sNomPaciente=${reportePreview.segundoNombrePaciente}&pApePaciente=${reportePreview.primerApellidoPaciente}&sApePaciente=${reportePreview.segundoApellidoPaciente}"><input type="button" id="btnReportes" class="btnAsignar"></a></td>
         					</tr>
         				</c:forEach>
         			</tbody>
