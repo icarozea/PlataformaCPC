@@ -1,6 +1,7 @@
 package com.plataforma.cpc.interfaces;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -34,6 +35,20 @@ public interface Conexion {
 	 * @throws Exception Si se genera un error en el proceso
 	 */
 	public void prepararSentencia(String sentencia) throws Exception;
+	
+	/**
+	 * Define el contrato para alista una sentencia SQL que será ejecutada en el futuro, el segundo parametro es un arreglo con el nombre d ela columna que se desea recuperar la secuencia
+	 * @param sentencia String con la sentencia SQL que se ejecutará
+	 * @throws Exception Si se genera un error en el proceso
+	 */
+	public void prepararSentencia(String sentencia, String generarColumna[]) throws Exception;
+	
+	/**
+	 * Define el contrato para alista una sentencia SQL que será ejecutada en el futuro
+	 * @param sentencia String con la sentencia SQL que se ejecutará
+	 * @throws Exception Si se genera un error en el proceso
+	 */
+	public PreparedStatement recuperarSentencia() throws Exception;
 	
 	/**
 	 * Define el contrato para añadir un atributo de tipo String a una sentencia previamente preparada
@@ -71,6 +86,8 @@ public interface Conexion {
 	 * @throws Exception Si se genera un error en el proceso
 	 */
 	public void ejecutarActualizacion() throws Exception;
+	
+	public int recuperarLlavePrimaria() throws SQLException;
 	
 	public void iniciarTransaccion() throws Exception;
 	

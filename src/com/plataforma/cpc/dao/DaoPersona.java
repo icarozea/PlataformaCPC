@@ -1,6 +1,7 @@
 package com.plataforma.cpc.dao;
 
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.PerfilTo;
+import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 import com.plataforma.cpc.to.UsuarioTo;
@@ -324,9 +326,9 @@ public class DaoPersona {
     	return personaTo;
     }
     
-    public boolean crearPersona(PersonaTo persona){
+    public int crearPersona(PersonaTo persona){
     	
-    	boolean retorno = Boolean.FALSE;
+    	int retorno;
     	conexionActual = new ConexionOracle();
     	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PERSONA_ID_SUPERIOR,PASS,OTRO_TEL,CODIGO,JORNADA)"
     				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -352,10 +354,54 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(16, persona.getJornada());
 			
 			conexionActual.ejecutarActualizacion();
-			retorno = Boolean.TRUE;
+			retorno = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
-			retorno = Boolean.FALSE;
+			retorno = -1;
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+    	return retorno;
+    }
+    
+    public int crearPersona2(PersonaTo persona){
+    	
+    	String generatedColumns[] = { "ID_PERSONA" };
+    	int retorno;
+    	conexionActual = new ConexionOracle();
+    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PERSONA_ID_SUPERIOR,PASS,OTRO_TEL,CODIGO,JORNADA)"
+    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    	 	
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql,generatedColumns);
+			conexionActual.agregarAtributo(1, persona.getPrimerNombre()); 	
+			conexionActual.agregarAtributo(2, persona.getSegundoNombre()); 
+			conexionActual.agregarAtributo(3, persona.getPrimerApellido()); 
+			conexionActual.agregarAtributo(4, persona.getSegundoApellido()); 
+			conexionActual.agregarAtributo(5, persona.getNumeroDocumento());
+			conexionActual.agregarAtributo(6,persona.getDireccion());
+			conexionActual.agregarAtributo(7, persona.getTelefono());
+			conexionActual.agregarAtributo(8, persona.getCorreo());
+			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
+			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
+			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
+			conexionActual.agregarAtributo(12, 0);
+			conexionActual.agregarAtributo(13, persona.getPassword());
+			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
+			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
+			conexionActual.agregarAtributo(16, persona.getJornada());
+			
+			conexionActual.ejecutarActualizacion();
+			
+			retorno = conexionActual.recuperarLlavePrimaria();
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = -1;
 		}finally{
 			try {
 				conexionActual.cerrar();
@@ -435,5 +481,147 @@ public class DaoPersona {
 			}
 		}	
     	return retorno;
+    }
+    
+    public boolean crearPersonaDetalle(PersonaDetalleTo persona){
+    	
+    	boolean retorno;
+    	conexionActual = new ConexionOracle();
+    	String sql = "Insert into DETALLE_PERSONA (ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS)"
+    				+ "values (?,?,?,?,?,?,?,?,?,?,?)";
+    	 	
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, persona.getPersonaId());
+			conexionActual.agregarAtributo(2, persona.getSexo()); 	
+			conexionActual.agregarAtributo(3, persona.getEdad()); 
+			conexionActual.agregarAtributo(4, persona.getAcudiente()); 
+			conexionActual.agregarAtributo(5, persona.getProceso()); 
+			conexionActual.agregarAtributo(6, persona.getPerteneceU());
+			conexionActual.agregarAtributo(7,persona.getFacultad());
+			conexionActual.agregarAtributo(8, persona.getSemestre());
+			conexionActual.agregarAtributo(9, persona.getProblematica());
+			conexionActual.agregarAtributo(10, persona.getObservación());
+			conexionActual.agregarAtributo(11, persona.getNombreModifica());
+			
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+    	return retorno;
+    }
+    
+    public boolean actualizarPersonaDetalle(PersonaDetalleTo persona){
+    	
+    	boolean retorno =  Boolean.FALSE;
+    	conexionActual = new ConexionOracle();
+    	String sql = "UPDATE DETALLE_PERSONA SET SEXO = ?, EDAD = ?, ACUDIENTE = ?, PROCESO = ?, PERTENECE_U = ?, FACULTAD = ?, SEMESTRE = ?, PROBLEMATICA = ?, OBSERVACIONES = ?, PERSONA_MODIFICA_DATOS = ? WHERE ID_PERSONA = ?";
+    	 	
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, persona.getSexo()); 	
+			conexionActual.agregarAtributo(2, persona.getEdad()); 
+			conexionActual.agregarAtributo(3, persona.getAcudiente()); 
+			conexionActual.agregarAtributo(4, persona.getProceso()); 
+			conexionActual.agregarAtributo(5, persona.getPerteneceU());
+			conexionActual.agregarAtributo(6, persona.getFacultad());
+			conexionActual.agregarAtributo(7, persona.getSemestre());
+			conexionActual.agregarAtributo(8, persona.getProblematica());
+			conexionActual.agregarAtributo(9, persona.getObservación());
+			conexionActual.agregarAtributo(10, persona.getNombreModifica());
+			conexionActual.agregarAtributo(11, persona.getPersonaId());
+			
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}finally{
+			try {
+				conexionActual.cerrar();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				retorno = Boolean.FALSE;
+				return retorno;
+			}
+		}	
+    	return retorno;
+    }
+    
+    public boolean eliminarPersonaDetalle(PersonaDetalleTo persona){
+    	
+    	boolean retorno;
+    	conexionActual = new ConexionOracle();
+    	String sql = "DELETE FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
+    	 	
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, persona.getPersonaId());
+			
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+    	return retorno;
+    }
+    
+    public PersonaDetalleTo consultarPersonaDetalle (PersonaDetalleTo persona){
+
+    	ResultSet rs =null;
+    	conexionActual = new ConexionOracle();
+    	PersonaDetalleTo personaTo = new PersonaDetalleTo();
+    	String sql = "SELECT ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
+    	 	
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, persona.getPersonaId()); 		
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+
+				personaTo.setPersonaId(rs.getInt("ID_PERSONA"));
+				personaTo.setSexo(rs.getString("SEXO")); 
+				personaTo.setEdad(rs.getString("EDAD"));
+				personaTo.setAcudiente(rs.getString("ACUDIENTE"));
+				personaTo.setProceso(rs.getString("PROCESO"));
+				personaTo.setPerteneceU(rs.getString("PERTENECE_U"));
+				personaTo.setFacultad(rs.getString("FACULTAD"));
+				personaTo.setSemestre(rs.getString("SEMESTRE"));
+				personaTo.setProblematica(rs.getString("PROBLEMATICA"));
+				personaTo.setObservación(rs.getString("OBSERVACIONES"));
+				personaTo.setNombreModifica(rs.getString("PERSONA_MODIFICA_DATOS"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+    	return personaTo;
     }
 }

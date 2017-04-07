@@ -69,13 +69,25 @@ public class ServletPersona extends HttpServlet {
 		case "eliminarPersona":
 			eliminarPersonas(request,response);
 			break;
+		case "detallePersona":
+			detallePersona(request,response);
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
 		
 		}
 	}
-
+	
+	/**
+	 * Responde a una petición de eliminar una persona con el id presente en el request
+	 * Redirige a la pagina de respuestaEliminarPersona con el mensaje apropiado
+	 */
+	private void detallePersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		  RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioPersonaDetalle.jsp");		  
+		  request.setAttribute("idPersona", 101);
+		  dispatcher.forward(request, response);
+	}
 //-----------------------------------------------------------------------------------------------------
 // Funciones
 //-----------------------------------------------------------------------------------------------------
@@ -217,7 +229,7 @@ public class ServletPersona extends HttpServlet {
 	 * Redirige a la pagina de respuestaAgregarPersona
 	 */
 	private void guardarPersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioPersonaDetalle.jsp");
 		
 		PersonaBean personaBean = new PersonaBean();
 		try{
@@ -269,9 +281,11 @@ public class ServletPersona extends HttpServlet {
 					throw new Exception("La EPS no es válida o no se encontró");
 			}
 			
-			
-			if(personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, jornada, codigo)){
+			int idPersona = personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, jornada, codigo);
+			System.out.println("Secuencia persona " + idPersona);
+			if(idPersona != -1){
 				request.setAttribute("respuesta", "1");
+				request.setAttribute("idPersona", idPersona);
 				request.setAttribute("error", "");
 				dispatcher.forward(request, response);
 			}
@@ -284,6 +298,7 @@ public class ServletPersona extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
+			dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
 			dispatcher.forward(request, response);
 		}		
 	}

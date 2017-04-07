@@ -20,6 +20,7 @@ public class PersonaTo {
 	private 	Integer 		superior;
 	private		String			jornada;
 	private		String			password;
+	private 	PersonaDetalleTo detalle;
 	
 	public Integer getCodigoEstudiante() {
 		return codigoEstudiante;
@@ -128,6 +129,12 @@ public class PersonaTo {
 	}
 	public void setSuperior(Integer superior) {
 		this.superior = superior;
+	}
+	public PersonaDetalleTo getDetalle() {
+		return detalle;
+	}
+	public void setDetalle(PersonaDetalleTo detalle) {
+		this.detalle = detalle;
 	}
 	@Override
 	public String toString() {

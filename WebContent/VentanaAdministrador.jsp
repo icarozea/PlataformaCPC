@@ -38,12 +38,12 @@
 				<tr>
 					<td>
 						<div>
-							<a href="#"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+							<a href="inicioReporte.jsp"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<td class="cabin">REPORTES<br></td>
+					<td class="cabin"><a href="inicioReporte.jsp">REPORTES</a><br></td>
 				</tr>
 			</table>
 			
