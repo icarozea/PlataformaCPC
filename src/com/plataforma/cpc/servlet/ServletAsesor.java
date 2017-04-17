@@ -201,12 +201,13 @@ public class ServletAsesor extends HttpServlet {
 
 			if(daoSesion.guardarComentarios(idReporte, comentarios)){
 				request.setAttribute("respuesta", "1");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("");
+				request.setAttribute("mensajeRespuestaReporte", "Los comentarios se han guardado exitosamente");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 				dispatcher.forward(request, response);
 			}	
-//			else{
-//				throw new Exception("Error al guardar los comentarios");
-//			}
+			else{
+				throw new Exception("Error al guardar los comentarios");
+			}
 		}
 		catch(Exception e){
 			request.setAttribute("respuesta", "2");

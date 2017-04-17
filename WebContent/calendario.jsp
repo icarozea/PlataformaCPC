@@ -85,6 +85,14 @@
 
 </style>
 </head>
+   		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">

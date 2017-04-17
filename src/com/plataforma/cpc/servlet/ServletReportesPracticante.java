@@ -51,18 +51,21 @@ public class ServletReportesPracticante extends HttpServlet {
     
     public void opcionesReportes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     	RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesPracticante.jsp");
+    	request.setAttribute("idPracticante", request.getParameter("idPersona"));
 		dispatcher.forward(request, response);
     }
     
     public void visualizarReportesPendientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     	//TODO	traer reportes pendientes por practicante
     	RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesPendientesPracticante.jsp");
+    	request.setAttribute("idPracticante", request.getParameter("idPracticante"));
 		dispatcher.forward(request, response);
     }
     
     public void visualizarReportesAprobados(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     	//TODO	traer reportes aprobados por practicante    	
     	RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesAprobadosPracticante.jsp");
+    	request.setAttribute("idPracticante", request.getParameter("idPracticante"));
 		dispatcher.forward(request, response);
     }
 

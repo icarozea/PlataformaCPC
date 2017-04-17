@@ -20,14 +20,14 @@
 	<%@include file="./menuNavegacionPracticante.jsp"%>
 	<div id="gestioncitas">
 		<h1 class="droidSans">Verificación de reportes</h1>
-		<h2 class="droidSans">Reportes pendientes por aprobación</h2>
+		<h2 class="droidSans">Reportes pendientes por aprobación ${requestScope.idPracticante}</h2>
 		<div id="gestionContenido">
 		
 		</div>
 	</div>
 			<br>
 		<div>
-			<a href="VentanaPracticante.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			<a href="./ReportesPracticante?operacion=visualizarReportes&idPersona=${requestScope.idPracticante}"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
 		</div>
 </body>
 </html>

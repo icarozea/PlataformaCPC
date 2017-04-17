@@ -27,22 +27,22 @@
 					<td>
 						<div>
 							<a
-								href="./ReportesPracticante?operacion=reportesAprobados"><button class="btn-xlarge">
+								href="./ReportesPracticante?operacion=reportesAprobados&idPracticante=${requestScope.idPracticante}"><button class="btn-xlarge">
 									<i class="fa fa-check-square-o fa-4x"></i>
 								</button></a>
 						</div>
 					</td>
 					<td>
 						<div>
-							<a href="./ReportesPracticante?operacion=reportesPendientes"><button class="btn-xlarge">
+							<a href="./ReportesPracticante?operacion=reportesPendientes&idPracticante=${requestScope.idPracticante}"><button class="btn-xlarge">
 									<i class="fa fa-exclamation-triangle fa-4x"></i>
 								</button></a>
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<td class="cabin"><a href="./ReportesPracticante?operacion=reportesAprobados">MIS REPORTES APROBADOS</a></td>
-					<td class="cabin"><a href="./ReportesPracticante?operacion=reportesPendientes">MIS REPORTES PENDIENTES</a><br></td>
+					<td class="cabin"><a href="./ReportesPracticante?operacion=reportesAprobados&idPracticante=${requestScope.idPracticante}">MIS REPORTES APROBADOS</a></td>
+					<td class="cabin"><a href="./ReportesPracticante?operacion=reportesPendientes&idPracticante=${requestScope.idPracticante}">MIS REPORTES PENDIENTES</a><br></td>
 				</tr>
 			</table>
 		</div>

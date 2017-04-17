@@ -27,7 +27,7 @@
 	</div>
 			<br>
 		<div>
-			<a href="VentanaPracticante.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			<a href="./ReportesPracticante?operacion=visualizarReportes&idPersona=${requestScope.idPracticante}"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
 		</div>
 </body>
 </html>

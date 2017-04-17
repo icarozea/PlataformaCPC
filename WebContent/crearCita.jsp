@@ -1,9 +1,3 @@
-<%-- 
-    Document   : citaPracticantes
-    Created on : 26/11/2016
-    Author     : Ovidio Zea
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
