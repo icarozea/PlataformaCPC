@@ -10,7 +10,8 @@
 
         <%@include file="./menuNavegacionPracticante.jsp" %> 
         <div id="gestioncitas">
-        	<h1 class="cabin">Mis Citas</h1>
+        	<h1 class="cabin">Citas</h1>
+        	<h2 class="cabin">Practicante: ${sessionScope.personaSession.primerNombre} ${sessionScope.personaSession.segundoNombre} ${sessionScope.personaSession.primerApellido}</h2>
         	<div id="gestionContenido">
 	        	<table class="tablaPrincipal">
 					<tr>

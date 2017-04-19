@@ -1,9 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="estilo.css"></link>
+<link rel="stylesheet" href="estiloAsignaciones.css"></link>
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
 <title>Reportes practicante</title>
@@ -22,28 +24,27 @@
 		<h1 class="droidSans">Gestión de Reportes</h1>
 		<h2 class="droidSans">Verificación de reportes de Sesión Individual emitidos por el practicante</h2>
 		<div id="gestionContenido">
-			<table class="tablaPrincipal">
-				<tr>
-					<td>
-						<div>
-							<a
-								href="./ReportesPracticante?operacion=reportesAprobados&idPracticante=${requestScope.idPracticante}"><button class="btn-xlarge">
-									<i class="fa fa-check-square-o fa-4x"></i>
-								</button></a>
-						</div>
-					</td>
-					<td>
-						<div>
-							<a href="./ReportesPracticante?operacion=reportesPendientes&idPracticante=${requestScope.idPracticante}"><button class="btn-xlarge">
-									<i class="fa fa-exclamation-triangle fa-4x"></i>
-								</button></a>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="cabin"><a href="./ReportesPracticante?operacion=reportesAprobados&idPracticante=${requestScope.idPracticante}">MIS REPORTES APROBADOS</a></td>
-					<td class="cabin"><a href="./ReportesPracticante?operacion=reportesPendientes&idPracticante=${requestScope.idPracticante}">MIS REPORTES PENDIENTES</a><br></td>
-				</tr>
+			<table id="tablaUsuarios">
+				<thead>
+					<th>Cita número</th>
+					<th>Salón</th>
+					<th>Nombre Paciente</th>
+					<th>Estado</th>
+					<th>Fecha</th>
+					<th>Revisar Evaluación</th>
+				</thead>
+				<tbody>
+						<c:forEach items="${requestScope.reportesPreviewPracticante}" var="reportePreviewPracticante">
+							<tr>
+								<td>${reportePreviewPracticante.idCita}</td>
+								<td>${reportePreviewPracticante.salon}</td>
+								<td>${reportePreviewPracticante.primerNombrePaciente}</td>
+								<td>${reportePreviewPracticante.estado}</td>
+								<td>${reportePreviewPracticante.fecha}</td>
+								<td><a href="ReportesPracticante?operacion=comentariosReporte&idCita=${reportePreviewPracticante.idCita}"><input type="button" id="btnComentarios" class="btnAsignar"></a></td>
+							</tr>
+						</c:forEach>
+				</tbody>
 			</table>
 		</div>
 	</div>

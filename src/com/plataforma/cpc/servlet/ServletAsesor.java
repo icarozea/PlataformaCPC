@@ -88,6 +88,7 @@ public class ServletAsesor extends HttpServlet {
 			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
 			SesionIndividualTo sesionIndividual = daoSesionIndividual.consultarDetalleSesionPorId(idReporte);
 			request.setAttribute("idReporte", idReporte);
+			request.setAttribute("idCita", sesionIndividual.getIdCita());
 			request.setAttribute("fechaCita", sesionIndividual.getFecha());
 			request.setAttribute("nomPaciente", request.getParameter("pNomPaciente")+" "+request.getParameter("sNomPaciente")+" "+request.getParameter("pApePaciente")+" "+request.getParameter("sApePaciente"));
 			request.setAttribute("reciboNum", sesionIndividual.getNumRecibo());

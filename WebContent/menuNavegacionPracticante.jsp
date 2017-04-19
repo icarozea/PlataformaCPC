@@ -37,13 +37,5 @@
 	 	</div>
 	 </div>	
 	</div>
-<!-- 	<nav id="menu"> -->
-<!-- 		<ul> -->
-<!-- 			<a href="VentanaPracticante.jsp"><li>Inicio</li></a> -->
-<!-- 			<a href="inicioCita.jsp"><li>Citas</li></a> -->
-<!-- 			<a href=""><li>Reportes</li></a> -->
-<!-- 		</ul> -->
-<!-- 	</nav> -->
-<!-- 	<br> -->
 </body>
 </html>
