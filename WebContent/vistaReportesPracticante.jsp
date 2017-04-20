@@ -22,6 +22,7 @@
 	<%@include file="./menuNavegacionPracticante.jsp"%>
 	<div id="gestioncitas">
 		<h1 class="droidSans">Gestión de Reportes</h1>
+		<br>
 		<h2 class="droidSans">Verificación de reportes de Sesión Individual emitidos por el practicante</h2>
 		<div id="gestionContenido">
 			<table id="tablaUsuarios">
@@ -45,6 +46,47 @@
 							</tr>
 						</c:forEach>
 				</tbody>
+			</table>
+		</div>
+		<br>
+		<h2 class="droidSans">Generación mensual de reportes</h2>
+		<div id="generacionReportes">
+			<table class="tablaPrincipal">
+				<tr>
+					<td>
+						<div>
+							<a href="./ServletReporte?operacion=usuarios"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+						</div>
+					</td>
+					<td>
+						<div>
+							<a href="./ServletReporte?operacion=transacciones"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cabin"><a href="./ServletReporte?operacion=usuarios">USUARIOS</a></td>
+					<td class="cabin"><a href="./ServletReporte?operacion=transacciones">TRANSACCIONES</a><br></td>
+				</tr>
+			</table>
+			
+			<table class="tablaPrincipal">
+				<tr>
+					<td>
+						<div>
+							<a href="./ServletReporte?operacion=consulta"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+						</div>
+					</td>
+					<td>
+						<div>
+							<a href="./ServletReporte?operacion=procedimiento"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cabin"><a href="./ServletReporte?operacion=consulta">CONSULTA</a></td>
+					<td class="cabin"><a href="./ServletReporte?operacion=procedimiento">PROCEDIMIENTO</a><br></td>
+				</tr>
 			</table>
 		</div>
 	</div>

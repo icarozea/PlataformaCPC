@@ -26,7 +26,7 @@ public class ServletReporte extends HttpServlet {
 //-----------------------------------------------------------------------------------------------------
 // Proceso de la peticion
 //-----------------------------------------------------------------------------------------------------
-	
+	private Integer idPerfil;
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -48,15 +48,19 @@ public class ServletReporte extends HttpServlet {
 		
 		case "usuarios":
 			reporteJasper(request,response,"ripsUsuario");
+			this.idPerfil = new Integer(4);//Paciente
 			break;
 		case "transacciones":
 			reporteJasper(request,response,"ripsTransaccion");
+			this.idPerfil = new Integer(3);//Practicante
 			break;
 		case "consulta":
 			reporteJasper(request,response,"ripsConsulta");
+			this.idPerfil = new Integer(3);//Practicante
 			break;
 		case "procedimiento":
 			reporteJasper(request,response,"ripsProcedimiento");
+			this.idPerfil = new Integer(3);//Practicante
 			break;	
 		default:
 			System.out.println("Opción no existe");
@@ -73,7 +77,7 @@ public class ServletReporte extends HttpServlet {
 		Reporte reporte = new Reporte(Propiedades.getInstance().valorPropiedad(Propiedades.RUTA_JASPER));
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("ID_PERFIL",new Integer(1));
+		parametros.put("ID_PERFIL",this.idPerfil);
 		
 		try {
 			 buffer = reporte.reporte(nombreReporte, parametros);
@@ -83,7 +87,6 @@ public class ServletReporte extends HttpServlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 }
