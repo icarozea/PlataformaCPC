@@ -217,8 +217,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 	public SesionIndividualTo consultarDetalleSesionPorId(Integer idSesion){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
-//		String sql = "SELECT ID_SESION, FECHA, NOMBRE_PROFESIONAL, OBJETIVO_SESION, DESCRIPCION_SESION, TAREAS_ASIGNADAS, ACTIVIDADES_PROX_SESION, RECIBO, ES_FALLO, ID_COMENTARIOS FROM REPORTE_SESION WHERE ID_SESION = ?";
-		String sql = "SELECT RS.ID_SESION, RS.FECHA, CT.NUM_CITA, RS.RECIBO, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION, RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO FROM CITA CT INNER JOIN REPORTE_SESION RS ON CT.ID_REPORTE = RS.ID_SESION WHERE RS.ID_SESION = ?";
+		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, CT.NUM_CITA, RS.RECIBO, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION, RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO FROM CITA CT INNER JOIN REPORTE_SESION RS ON CT.ID_REPORTE = RS.ID_SESION WHERE RS.ID_SESION = ?";
 		
 		SesionIndividualTo sesion = new SesionIndividualTo();
 		try {
@@ -229,6 +228,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 			
 			while (rs.next()){
 				sesion.setIdSesion(rs.getInt("ID_SESION"));
+				sesion.setIdCita(rs.getInt("ID_CITA"));
 				sesion.setFecha(rs.getString("FECHA"));
 				sesion.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
 				sesion.setNumRecibo(Integer.parseInt(rs.getString("RECIBO")));
@@ -252,6 +252,54 @@ public class DaoSesionIndividual extends ConexionOracle{
 		}
 		
 		return sesion;
+	}
+	
+	public SesionIndividualTo consultarDetalleComentariosSesionPorIdCita(Integer idCita){
+		
+		SesionIndividualTo sesionComentada = new SesionIndividualTo();
+		ComentariosTo comentario;
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, CR.COM_OBJETIVO, RS.DESCRIPCION_SESION, CR.COM_DESCRIPCION, RS.TAREAS_ASIGNADAS, CR.COM_TAREAS, RS.ACTIVIDADES_PROX_SESION, CR.COM_ACTIVIDADES, RS.RECIBO, RS.ES_FALLO ";
+			   sql += "FROM CITA CT, REPORTE_SESION RS, COMENTARIOS_REPORTE CR WHERE CT.ID_REPORTE=RS.ID_SESION AND RS.ID_COMENTARIOS=CR.ID_COMENTARIOS AND ID_CITA = ?";
+		
+		try{
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idCita);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				comentario = new ComentariosTo();
+				sesionComentada.setIdSesion(rs.getInt("ID_SESION"));
+				sesionComentada.setIdCita(rs.getInt("ID_CITA"));
+				sesionComentada.setFecha(rs.getString("FECHA"));
+				sesionComentada.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
+				sesionComentada.setObjetivo(rs.getString("OBJETIVO_SESION"));
+				comentario.setComentariosObjetivo(rs.getString("COM_OBJETIVO"));
+				sesionComentada.setDescripcion(rs.getString("DESCRIPCION_SESION"));
+				comentario.setComentariosDescripcion(rs.getString("COM_DESCRIPCION"));
+				sesionComentada.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
+				comentario.setComentariosTareas(rs.getString("COM_TAREAS"));
+				sesionComentada.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
+				comentario.setComentariosActividades(rs.getString("COM_ACTIVIDADES"));
+				sesionComentada.setNumRecibo(rs.getInt("RECIBO"));
+				sesionComentada.setComentarios(comentario);
+				boolean fallo;
+				if (rs.getInt("ES_FALLO")==1) {
+					fallo=true;
+				}else{
+					fallo = false;
+				}
+				sesionComentada.setFallo(fallo);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			e.getLocalizedMessage();
+		}
+		
+		return sesionComentada;
 	}
 	
 	public ArrayList<SesionIndividualTo> consultarReporteSesionporPracticante(Integer idPracticante){

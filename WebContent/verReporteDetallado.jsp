@@ -42,7 +42,8 @@
         <!--MEMU SUPERIOR--> 
          <%@include file="./menuNavegacionAsesor.jsp" %>
 		<div>
-        	<h1 class="cabin">Detalle del reporte número ${requestScope.idReporte}</h1>
+        	<h1 class="cabin">Detalle de reporte</h1>
+        	<h2 class="cabin">Cita número ${requestScope.idCita}</h2>
         </div>
         <br>
         <div id="marcoFormularioCupos">

@@ -51,4 +51,11 @@ public class ComentariosTo {
 	public void setComentariosActividades(String comentariosActividades) {
 		this.comentariosActividades = comentariosActividades;
 	}
+
+	@Override
+	public String toString() {
+		return "ComentariosTo [idComentarios=" + idComentarios + ", comentariosObjetivo=" + comentariosObjetivo
+				+ ", comentariosDescripcion=" + comentariosDescripcion + ", comentariosTareas=" + comentariosTareas
+				+ ", comentariosActividades=" + comentariosActividades + "]";
+	}
 }

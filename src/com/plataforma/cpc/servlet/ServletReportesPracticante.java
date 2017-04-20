@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.plataforma.cpc.dao.DaoSesionIndividual;
+import com.plataforma.cpc.to.ComentariosTo;
+import com.plataforma.cpc.to.SesionIndividualPreviewTo;
+import com.plataforma.cpc.to.SesionIndividualTo;
 
 /**
  * Servlet implementation class ServletReportesEstudiante
@@ -32,16 +38,14 @@ public class ServletReportesPracticante extends HttpServlet {
 		switch (operacion) {
 			
 			case "visualizarReportes":
-				opcionesReportes(request, response);
+				verReportesPreviewPracticante(request, response);
 				break;
-			case "reportesPendientes":
-				visualizarReportesPendientes(request, response);
-				System.out.println();
+			case "comentariosReporte":
+				verComentariosDetalladosReporte(request, response);
 				break;
-			case "reportesAprobados":
-				visualizarReportesAprobados(request, response);
-				System.out.println();
-				break;	
+			case "guardarMoficiacionesReporteSesion":
+				guardarMoficiacionesReporteSesion(request, response);
+				break;				
 			default:
 				System.out.println("Opción no existe");
 				break;
@@ -49,26 +53,56 @@ public class ServletReportesPracticante extends HttpServlet {
     	
     }
     
-    public void opcionesReportes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    	RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesPracticante.jsp");
-    	request.setAttribute("idPracticante", request.getParameter("idPersona"));
-		dispatcher.forward(request, response);
+    public void verReportesPreviewPracticante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    	
+    	DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+    	
+    	try{
+    		Integer idPracticante = Integer.parseInt(request.getParameter("idPersona"));
+			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
+			request.setAttribute("reportesPreviewPracticante", reportesPreview);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesPracticante.jsp");
+	    	request.setAttribute("idPracticante", request.getParameter("idPersona"));
+			dispatcher.forward(request, response);
+			
+    	}catch(Exception e){
+			System.out.println("Busqueda fallida: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			dispatcher.forward(request, response);			
+		}
+    	
+    	
     }
     
-    public void visualizarReportesPendientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    	//TODO	traer reportes pendientes por practicante
-    	RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesPendientesPracticante.jsp");
-    	request.setAttribute("idPracticante", request.getParameter("idPracticante"));
-		dispatcher.forward(request, response);
+    public void verComentariosDetalladosReporte(HttpServletRequest request, HttpServletResponse response){
+    	
+    	DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+    	
+    	try{
+    		Integer idCita = Integer.parseInt(request.getParameter("idCita"));
+    		SesionIndividualTo sesionReportePracticante = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(idCita);
+    		ComentariosTo comentarioReportePracticante = sesionReportePracticante.getComentarios();
+    		request.setAttribute("idCita", idCita);
+    		request.setAttribute("sesionReportePracticante", sesionReportePracticante);
+    		request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("verComentariosReporteDetallado.jsp");
+			dispatcher.forward(request, response);
+    	}catch(Exception e){
+    		
+    		e.printStackTrace();
+    		
+    	}
     }
     
-    public void visualizarReportesAprobados(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    	//TODO	traer reportes aprobados por practicante    	
-    	RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesAprobadosPracticante.jsp");
-    	request.setAttribute("idPracticante", request.getParameter("idPracticante"));
-		dispatcher.forward(request, response);
+    public void guardarMoficiacionesReporteSesion(HttpServletRequest request, HttpServletResponse response){
+    	 
+    	System.out.println("operacion: " + request.getParameter("operacion"));
+    	System.out.println("idReporte: " + request.getParameter("idReporte"));
     }
-
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
