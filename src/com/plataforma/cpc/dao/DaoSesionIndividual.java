@@ -4,7 +4,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.plataforma.cpc.interfaces.Conexion;
+import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.ComentariosTo;
+import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualPreviewTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.utils.ConexionOracle;
@@ -254,14 +256,17 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return sesion;
 	}
 	
-	public SesionIndividualTo consultarDetalleComentariosSesionPorIdCita(Integer idCita){
+	public CitaTo consultarDetalleComentariosSesionPorIdCita(Integer idCita){
 		
-		SesionIndividualTo sesionComentada = new SesionIndividualTo();
+		CitaTo cita = new CitaTo();
+		PersonaTo paciente;
+		SesionIndividualTo sesionComentada;
 		ComentariosTo comentario;
+		
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
-		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, CR.COM_OBJETIVO, RS.DESCRIPCION_SESION, CR.COM_DESCRIPCION, RS.TAREAS_ASIGNADAS, CR.COM_TAREAS, RS.ACTIVIDADES_PROX_SESION, CR.COM_ACTIVIDADES, RS.RECIBO, RS.ES_FALLO ";
-			   sql += "FROM CITA CT, REPORTE_SESION RS, COMENTARIOS_REPORTE CR WHERE CT.ID_REPORTE=RS.ID_SESION AND RS.ID_COMENTARIOS=CR.ID_COMENTARIOS AND ID_CITA = ?";
+		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, RS.OBJETIVO_SESION, CR.COM_OBJETIVO, RS.DESCRIPCION_SESION, CR.COM_DESCRIPCION, RS.TAREAS_ASIGNADAS, CR.COM_TAREAS, RS.ACTIVIDADES_PROX_SESION, CR.COM_ACTIVIDADES, RS.RECIBO, RS.ES_FALLO ";
+			   sql += "FROM CITA CT, PERSONA PE, REPORTE_SESION RS, COMENTARIOS_REPORTE CR WHERE CT.ID_REPORTE=RS.ID_SESION AND RS.ID_COMENTARIOS=CR.ID_COMENTARIOS AND CT.ID_PACIENTE=PE.ID_PERSONA AND ID_CITA = ?";
 		
 		try{
 			conexionActual.conectar();
@@ -270,9 +275,18 @@ public class DaoSesionIndividual extends ConexionOracle{
 			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
+				paciente = new PersonaTo();
+				sesionComentada = new SesionIndividualTo();
 				comentario = new ComentariosTo();
+				
+				cita.setIdCita(rs.getInt("ID_CITA"));
+				
+				paciente.setPrimerNombre(rs.getString("PRIMER_NOMBRE"));
+				paciente.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
+				paciente.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
+				paciente.setSegundoNombre(rs.getString("SEGUNDO_APELLIDO"));
+				
 				sesionComentada.setIdSesion(rs.getInt("ID_SESION"));
-				sesionComentada.setIdCita(rs.getInt("ID_CITA"));
 				sesionComentada.setFecha(rs.getString("FECHA"));
 				sesionComentada.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
 				sesionComentada.setObjetivo(rs.getString("OBJETIVO_SESION"));
@@ -292,6 +306,8 @@ public class DaoSesionIndividual extends ConexionOracle{
 					fallo = false;
 				}
 				sesionComentada.setFallo(fallo);
+				cita.setPaciente(paciente);
+				cita.setReporte(sesionComentada);
 			}
 			
 		}catch(Exception e){
@@ -299,7 +315,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 			e.getLocalizedMessage();
 		}
 		
-		return sesionComentada;
+		return cita;
 	}
 	
 	public ArrayList<SesionIndividualTo> consultarReporteSesionporPracticante(Integer idPracticante){
