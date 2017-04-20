@@ -39,7 +39,7 @@
 							<tr>
 								<td>${reportePreviewPracticante.idCita}</td>
 								<td>${reportePreviewPracticante.salon}</td>
-								<td>${reportePreviewPracticante.primerNombrePaciente}</td>
+								<td>${reportePreviewPracticante.primerNombrePaciente} ${reportePreviewPracticante.segundoNombrePaciente} ${reportePreviewPracticante.primerApellidoPaciente} ${reportePreviewPracticante.segundoApellidoPaciente}</td>
 								<td>${reportePreviewPracticante.estado}</td>
 								<td>${reportePreviewPracticante.fecha}</td>
 								<td><a href="ReportesPracticante?operacion=comentariosReporte&idCita=${reportePreviewPracticante.idCita}"><input type="button" id="btnComentarios" class="btnAsignar"></a></td>

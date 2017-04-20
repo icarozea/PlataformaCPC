@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.plataforma.cpc.dao.DaoSesionIndividual;
+import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.ComentariosTo;
 import com.plataforma.cpc.to.SesionIndividualPreviewTo;
-import com.plataforma.cpc.to.SesionIndividualTo;
 
 /**
  * Servlet implementation class ServletReportesEstudiante
@@ -83,10 +83,10 @@ public class ServletReportesPracticante extends HttpServlet {
     	
     	try{
     		Integer idCita = Integer.parseInt(request.getParameter("idCita"));
-    		SesionIndividualTo sesionReportePracticante = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(idCita);
-    		ComentariosTo comentarioReportePracticante = sesionReportePracticante.getComentarios();
+    		CitaTo citaSesionReportePracticante = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(idCita);
+    		ComentariosTo comentarioReportePracticante = citaSesionReportePracticante.getReporte().getComentarios();
     		request.setAttribute("idCita", idCita);
-    		request.setAttribute("sesionReportePracticante", sesionReportePracticante);
+    		request.setAttribute("citaSesionReportePracticante", citaSesionReportePracticante);
     		request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
     		RequestDispatcher dispatcher = request.getRequestDispatcher("verComentariosReporteDetallado.jsp");
 			dispatcher.forward(request, response);
@@ -101,6 +101,28 @@ public class ServletReportesPracticante extends HttpServlet {
     	 
     	System.out.println("operacion: " + request.getParameter("operacion"));
     	System.out.println("idReporte: " + request.getParameter("idReporte"));
+    	System.out.println("**************************************************************************************");
+    	System.out.println("**************************************************************************************");
+    	System.out.println("Objetivo sesión: " + request.getParameter("campoObjetivo"));
+    	System.out.println("**************************************************************************************");
+    	System.out.println("**************************************************************************************");
+    	System.out.println("Descripción de sesión: " + request.getParameter("campoDescripcion"));
+    	System.out.println("**************************************************************************************");
+    	System.out.println("**************************************************************************************");
+    	System.out.println("Tareas asignadas: " + request.getParameter("campoTareas"));
+    	System.out.println("**************************************************************************************");
+    	System.out.println("**************************************************************************************");
+    	System.out.println("Actividades próxima sesión: " + request.getParameter("campoActividades"));
+
+		try{
+			request.setAttribute("mensajeRespuestaActualizacionReporte", "Se ha actualizado la información del reporte correctamente");
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaActualizarReporteCita.jsp");
+			dispatcher.forward(request, response);    				
+		}catch(Exception e){
+			e.getLocalizedMessage();
+		}
+
+    	
     }
     
 	/**

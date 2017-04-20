@@ -114,5 +114,13 @@ public class CitaTo {
 
 	public void setNumCita(Integer numCita) {
 		this.numCita = numCita;
+	}
+
+	@Override
+	public String toString() {
+		return "CitaTo [idCita=" + idCita + ", salon=" + salon + ", fechaSolicitud=" + fechaSolicitud + ", fechaCita="
+				+ fechaCita + ", practicante=" + practicante + ", paciente=" + paciente + ", estado=" + estado
+				+ ", tratamiento=" + tratamiento + ", reporte=" + reporte + ", valoracion=" + valoracion + ", numCita="
+				+ numCita + "]";
 	}	
 }
