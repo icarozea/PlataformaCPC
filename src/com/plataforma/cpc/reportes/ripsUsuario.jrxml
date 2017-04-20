@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-03-11T22:30:21 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rips1" pageWidth="800" pageHeight="200" columnWidth="760" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="267bbc45-f662-494b-a266-a91ce6aaad93">
+<!-- 2017-04-19T22:49:37 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rips1" pageWidth="1000" pageHeight="200" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="267bbc45-f662-494b-a266-a91ce6aaad93">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapterOracle.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="479"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="521"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="ID_PERFIL" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT tip.sigla, 
-per.numero_documento, 
-per.primer_apellido, 
-per.segundo_apellido, 
-per.primer_nombre, 
-per.segundo_nombre, 
-'' as edad, 
-'' as sexo
-FROM persona per, tipo_documento tip
-WHERE per.tipo_documento_id_documento = tip.id_documento
+		<![CDATA[SELECT TIP.SIGLA, 
+PER.NUMERO_DOCUMENTO, 
+PER.PRIMER_APELLIDO, 
+PER.SEGUNDO_APELLIDO, 
+PER.PRIMER_NOMBRE, 
+PER.SEGUNDO_NOMBRE, 
+DET.SEXO, 
+DET.EDAD
+FROM PERSONA PER, TIPO_DOCUMENTO TIP, DETALLE_PERSONA DET
+WHERE PER.TIPO_DOCUMENTO_ID_DOCUMENTO = TIP.ID_DOCUMENTO
+AND PER.ID_PERSONA = DET.ID_PERSONA
 AND per.perfil_id_perfil = nvl($P{ID_PERFIL},per.perfil_id_perfil)]]>
 	</queryString>
 	<field name="SIGLA" class="java.lang.String"/>
@@ -35,8 +28,8 @@ AND per.perfil_id_perfil = nvl($P{ID_PERFIL},per.perfil_id_perfil)]]>
 	<field name="SEGUNDO_APELLIDO" class="java.lang.String"/>
 	<field name="PRIMER_NOMBRE" class="java.lang.String"/>
 	<field name="SEGUNDO_NOMBRE" class="java.lang.String"/>
-	<field name="EDAD" class="java.lang.String"/>
 	<field name="SEXO" class="java.lang.String"/>
+	<field name="EDAD" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -120,6 +113,32 @@ AND per.perfil_id_perfil = nvl($P{ID_PERFIL},per.perfil_id_perfil)]]>
 				</textElement>
 				<text><![CDATA[Segundo nombre]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="721" y="0" width="120" height="20" backcolor="#00BAE6" uuid="1e8fe182-5b22-41e9-a326-63620704d10d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="841" y="0" width="120" height="20" backcolor="#00BAE6" uuid="cfa303c0-7394-4af4-a9a8-c2cb642c8d27"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -184,6 +203,26 @@ AND per.perfil_id_perfil = nvl($P{ID_PERFIL},per.perfil_id_perfil)]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textFieldExpression><![CDATA[$F{SEGUNDO_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="721" y="0" width="120" height="20" uuid="2b67ee26-0265-42e6-a956-19f1a2a456b8"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{SEXO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="841" y="0" width="120" height="20" uuid="82321c9c-3580-468b-9c8c-a4fa3824ee68"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{EDAD}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
