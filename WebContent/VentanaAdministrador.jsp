@@ -13,6 +13,7 @@
 		  {
 		    String address = "/index.jsp";
 		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    session.invalidate();
 		    dispatcher.forward(request,response);
 		  }
 		%>

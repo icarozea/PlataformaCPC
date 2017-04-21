@@ -42,7 +42,7 @@ public class ServletUsuario extends HttpServlet {
 					session.setAttribute("personaSession", personaSesion);
 					request.setAttribute("mensaje", "1");
 					session.setAttribute("perfil", personaSesion.getPerfil().getNombrePerfil());
-					cargarPropiedades();
+//					cargarPropiedades();
 					if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
 						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
 						dispatcher.forward(request, response);
@@ -69,9 +69,9 @@ public class ServletUsuario extends HttpServlet {
 			}
 		}
 
-		private void cargarPropiedades(){
-			Propiedades cargue = Propiedades.getInstance();
-		}
+//		private void cargarPropiedades(){
+//			Propiedades cargue = Propiedades.getInstance();
+//		}
 
 		@Override
 		protected void doGet(HttpServletRequest request, HttpServletResponse response)

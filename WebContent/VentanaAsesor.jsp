@@ -26,18 +26,18 @@
 					<tr>
 						<td>
 							<div>
-								<a href="./ServletAsesor?operacion=practicantes&idAsesor=<%=session.getAttribute("idPersona")%>"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
+								<a href="./ServletAsesor?operacion=practicantes&idAsesor=${sessionScope.personaSession.idPersona}"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
 							</div>
 						</td>
 						<td>
 							<div>
-								<a href="./ServletPersona?operacion=editarPersona&idPersona=<%=session.getAttribute("idPersona")%>"><button class="btn-xlarge"><i class="fa fa-user-md fa-4x" ></i></button></a>
+								<a href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}"><button class="btn-xlarge"><i class="fa fa-user-md fa-4x" ></i></button></a>
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<td class="cabin"><a href="./ServletAsesor?operacion=practicantes&idAsesor=<%=session.getAttribute("idPersona")%>">MIS PRACTICANTES</a></td>
-						<td class="cabin"><a href="./ServletPersona?operacion=editarPersona&idPersona=<%=session.getAttribute("idPersona")%>">MI PERFIL</a><br></td>
+						<td class="cabin"><a href="./ServletAsesor?operacion=practicantes&idAsesor=${sessionScope.personaSession.idPersona}">MIS PRACTICANTES</a></td>
+						<td class="cabin"><a href="./ServletPersona?operacion=editarPersona&idPersona=${sessionScope.personaSession.idPersona}">MI PERFIL</a><br></td>
 					</tr>
 				</table>
 			</div>
