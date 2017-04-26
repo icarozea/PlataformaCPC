@@ -84,10 +84,14 @@ function validarPass()
 {
     var pass1 = document.getElementById('password');
     var pass2 = document.getElementById('password2');
-    if (pass1.value == pass2.value) {
+    if(!pass1 || pass1.value === "" || pass1.length == 0){
+    	alert('Digite una clave');
+        return false;
+    }
+    else if (pass1.value == pass2.value) {
         return true;
     } else {
-        alert('La contraseñas no son iguales');
+        alert('Las claves no coinciden');
         return false;
     }
 }
@@ -120,10 +124,15 @@ function validarNumero(){
     if (!/^([0-9])*$/.test(numero)){
         alert("El telefono digitado no es valido");
         return false;
-    }else{
-        return true;
     }
-
+    
+    numero =  document.getElementById('numeroDocumento').value
+    if (!/^([0-9])*$/.test(numero)){
+        alert("El documento digitado no es valido");
+        return false;
+    }
+    
+    return true;
   }
 
 function validarNombreCompleto(nom1,nom2,ape1,ape2) {
@@ -146,7 +155,7 @@ function validarNombreCompleto(nom1,nom2,ape1,ape2) {
 }
 
 function checkTodo(id){
-	console.log("llega a checkTodo");
+	
 	var nomForm = document.getElementById('register-form');
 	
 	if(id != null)

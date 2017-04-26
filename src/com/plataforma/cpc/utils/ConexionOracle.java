@@ -23,7 +23,7 @@ public class ConexionOracle implements Conexion {
 //	private final String HOST = Propiedades.getInstance().valorPropiedad("HOST");
 //	private final String PUERTO = Propiedades.getInstance().valorPropiedad("PUERTO");
 	
-	private final String USUARIO = "CPC_DB";
+	private final String USUARIO = "cpcdb";
 	private final String PASSWORD = "1234";
 	private final String SID = "xe";
 	private final String HOST = "localhost";

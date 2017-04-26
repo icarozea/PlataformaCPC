@@ -285,12 +285,20 @@ public class ServletPersona extends HttpServlet {
 			}
 			
 			int idPersona = personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, jornada, codigo);
-			System.out.println("Secuencia persona " + idPersona);
+			
 			if(idPersona != -1){
-				request.setAttribute("respuesta", "1");
-				request.setAttribute("idPersona", idPersona);
-				request.setAttribute("error", "");
-				dispatcher.forward(request, response);
+				PersonaDetalleTo detalleTo = new PersonaDetalleTo();
+				detalleTo.setPersonaId(idPersona);
+				PersonaDetalleBean detalleBean = new PersonaDetalleBean();
+				if(detalleBean.ingresarDetallePersona(detalleTo)){
+					request.setAttribute("respuesta", "1");
+					request.setAttribute("idPersona", idPersona);
+					request.setAttribute("error", "");
+					dispatcher.forward(request, response);
+				}
+				else{
+					throw new Exception("Hubo un error al intentar guardar la información");
+				}
 			}
 			else{
 				throw new Exception("Hubo un error al intentar guardar la información");

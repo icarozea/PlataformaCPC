@@ -39,9 +39,12 @@
 			<input type="hidden" name="idPersona" id="idPersona" value="${requestScope.idPersona}" />
 	    	<div id="form-content">
 	        	<fieldset>
-		            <div class="fieldgroup">
+	        		<div class="fieldgroup">
 		                <label class="cabin">Sexo</label>
-		                <input type="text" id="sexo" name="sexo" class="cabin" placeholder="sexo"/>
+		                <select id="sexo" name="sexo">
+					    	<option value="M">Masculino</option>
+							<option value="F">Femenino</option>		
+				        </select>
 		            </div>	
 		            <div class="fieldgroup">
 		                <label class="cabin">Edad</label>
@@ -57,7 +60,10 @@
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Pertenece a la universidad</label>
-						<input type="text" id="perteneceU" name="perteneceU" placeholder="Si/No" />
+						<select id="perteneceU" name="perteneceU">
+					    	<option value="si">Si</option>
+							<option value="no">No</option>		
+				        </select>
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Facultad</label>
@@ -78,11 +84,11 @@
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Observaciones</label>
-						<textarea id=observaciones" name="observaciones" rows="10" cols="46" style=" resize: none;">
+						<textarea id="observaciones" name="observaciones" rows="10" cols="46" style=" resize: none;">
 						</textarea>
 		            </div>
 		            <div class="fieldgroup">
-		                <input type="button" value="Registrar" onclick="guardarDetalle()" class="submit cabin"/>
+		                <input type="button" value="Registrar" onclick="modificarDetalle()" class="submit cabin"/>
 		            </div>
 		            <c:choose>
 		            	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">

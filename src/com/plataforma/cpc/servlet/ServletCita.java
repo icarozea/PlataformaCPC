@@ -15,10 +15,17 @@ import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TratamientoTo;
 
-
+/**
+ * Atiende las llamadas para la creacion y administracion de citas por parte de administradores y practicantes
+ * @author sebastian.gilp
+ */
 @WebServlet(name="ServletCita", urlPatterns = {"/ServletCita"})
 public class ServletCita extends HttpServlet{
 
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------
+	// Procesamiento del Request HTTP
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------
+	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 
@@ -47,6 +54,26 @@ public class ServletCita extends HttpServlet{
 		}
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------
+	// Funciones
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Responde a la peticion para el menu de creacion de cita. Consulta y retorna todos los pracientes de un practicante en especifico
+	 * Puede o no tener en el request una fecha ya establecida para la creación de la cita
+	 */
 	private void crearCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		PersonaBean personaBean = new PersonaBean();
@@ -161,7 +188,7 @@ public class ServletCita extends HttpServlet{
 				if(request.getParameter("flag") != null){
 					TratamientoTo tratamiento = new TratamientoTo();
 					tratamiento = dao.consultarTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
-					if(!tratamiento.isPendiente()){
+					//if(!tratamiento.isPendiente()){
 						citaTo.setTratamiento(tratamiento);
 						citaTo.setNumCita(tratamiento.getNumCitaActual());
 						if(dao.crearCita(citaTo))
@@ -170,11 +197,11 @@ public class ServletCita extends HttpServlet{
 							request.setAttribute("respuesta", "2");
 							request.setAttribute("error", "No fue posible crear una nueva cita");
 						}
-					}
-					else{
-						request.setAttribute("respuesta", "2");
-						request.setAttribute("error", "Hay un reporte pendiente de revisión en el tratamiento seleccionado");
-					}
+					//}
+					//else{
+					//	request.setAttribute("respuesta", "2");
+					//	request.setAttribute("error", "Hay un reporte pendiente de revisión en el tratamiento seleccionado");
+					//}
 					
 					dispatcher.forward(request, response);
 				}
@@ -296,17 +323,5 @@ public class ServletCita extends HttpServlet{
 		}
 
 		return par;
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
 	}
 }

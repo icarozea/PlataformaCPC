@@ -41,7 +41,16 @@
 	        	<fieldset>
 		            <div class="fieldgroup">
 		                <label class="cabin">Sexo</label>
-		                <input type="text" id="sexo" name="sexo" class="cabin" value="${requestScope.personaDetalle.sexo}" placeholder="sexo"/>
+		                <select id="sexo" name="sexo">
+					    	<c:choose>
+								<c:when test="${requestScope.personaDetalle.sexo == 'M'}"><option value="M" selected>Masculino</option></c:when>
+								<c:otherwise><option value="M">Masculino</option></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${requestScope.personaDetalle.sexo == 'F'}"><option value="F" selected>Femenino</option></c:when>
+								<c:otherwise><option value="F">Femenino</option></c:otherwise>
+							</c:choose>
+				        </select>
 		            </div>	
 		            <div class="fieldgroup">
 		                <label class="cabin">Edad</label>
@@ -57,7 +66,16 @@
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Pertenece a la universidad</label>
-						<input type="text" id="perteneceU" name="perteneceU" value="${requestScope.personaDetalle.perteneceU}" placeholder="Si/No" />
+						<select id="perteneceU" name="perteneceU">
+							<c:choose>
+								<c:when test="${requestScope.personaDetalle.perteneceU == 'si'}"><option value="si" selected>Si</option></c:when>
+								<c:otherwise><option value="si">Si</option></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${requestScope.personaDetalle.perteneceU == 'no'}"><option value="no" selected>No</option></c:when>
+								<c:otherwise><option value="no">No</option></c:otherwise>
+							</c:choose>
+						</select>
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Facultad</label>
