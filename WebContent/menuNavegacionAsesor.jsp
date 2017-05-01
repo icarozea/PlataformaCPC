@@ -24,7 +24,6 @@
 		 	<span class="menu"> </span>
 			 <ul>
 				 <li><a href="VentanaAsesor.jsp">INICIO</a></li>
-				 <li><a href="./busquedaPersonas">PERSONAS</a></li>
 				 <li><a href="#">REPORTES</a></li>
 				<div class="clearfix"></div>
 			 </ul>

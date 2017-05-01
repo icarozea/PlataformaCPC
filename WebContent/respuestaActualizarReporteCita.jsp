@@ -25,19 +25,19 @@
 				<tr>
 					<td>
 						<div>
-							<a href="#"><button class="respuestaCheck">
+							<button class="respuestaCheck">
 									<i class="fa fa-check fa-4x"></i>
-								</button></a>
+								</button>
 						</div>
 					</td>
 				</tr>
 			</table>		
 		</div>	
-		<div class="respuestaMsg cabin"><%=request.getAttribute("mensajeRespuestaReporte") %></div>
+		<div class="respuestaMsg cabin"><%=request.getAttribute("mensajeRespuestaActualizacionReporte") %></div>
 		<br>
 		<br>
         <div>
-			<a href="VentanaAsesor.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			<a href="VentanaPracticante.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
 		</div>		
 </body>
 </html>

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : respuestaAgregarPersona
-    Created on : 17/11/2016
-    Author     : Sebastian Gil
---%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,12 +17,6 @@
 				<%@include file="./menuNavegacionPracticante.jsp"%>
 			</c:when>
 		</c:choose>
-        <!--MEMU LATERAL--> 
-        <c:choose>
-			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
-				<%@include file="./menuPersona.jsp"%>
-			</c:when>
-		</c:choose>
 	     
         <div id="marcoRespuesta" class="caja">
             &nbsp;&nbsp;&nbsp;
@@ -35,6 +24,7 @@
             <%String mensaje = "";
             String error = "";
             String respuesta = (String)request.getAttribute("respuesta");
+//             String respuesta = "";
             if(respuesta.equals("1"))
             	mensaje = "Se agregó la nueva persona de forma exitosa";
             else{

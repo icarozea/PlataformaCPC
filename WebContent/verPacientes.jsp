@@ -4,6 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="estilo.css"></link>
+<link rel="stylesheet" href="estiloAsignaciones.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Pacientes</title>
@@ -19,23 +20,24 @@
 <body>
 	<!--MEMU SUPERIOR-->
 	<%@include file="/menuNavegacionPracticante.jsp"%>
-	
-	<h1 id="titulo">MIS PACIENTES</h1>
-	<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
-		<input type="hidden" name="operacion" id="operacion" />
-		<input type="hidden" name="idPersona" id="idPersona"/>
-		<input type="hidden" name="idPaciente" id="idPaciente"/>
-		<table class="rwd-table" style="font-size: 20px">
-		<tr>
+	<div id="usuarios">
+		<h1 class="cabin">MIS PACIENTES</h1>
+		<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
+			<input type="hidden" name="operacion" id="operacion" />
+			<input type="hidden" name="idPersona" id="idPersona"/>
+			<input type="hidden" name="idPaciente" id="idPaciente"/>
+		<table id="tablaUsuarios">
+			<thead>
 				<th>Nombre</th>
 				<th>Tipo Documento</th>
-				<th>No. Documento</th>
+				<th>N° Documento</th>
 				<th>Dirección</th>
-				<th>Telefono</th>
+				<th>Teléfono</th>
 				<th>Correo</th>
-				<th></th>
-			</tr>
-			<c:forEach items="${requestScope.listaPacientes}" var="persona">
+				<th>Acción</th>
+			</thead>
+			<tbody>
+				<c:forEach items="${requestScope.listaPacientes}" var="persona">
 				<tr>
 					<td>${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</td>
 					<td>${persona.tipoDocumento.sigla}</td>
@@ -43,11 +45,15 @@
 					<td>${persona.direccion}</td>
 					<td>${persona.telefono}</td>
 					<td>${persona.correo}</td>
-					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona"
-							 onclick="enviarFormulario(${sessionScope.personaSession.idPersona},${persona.idPersona})"/></td>
+					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona" onclick="enviarFormulario(${sessionScope.personaSession.idPersona},${persona.idPersona})"/></td>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
-	</form>
+		</form>
+	</div>
+		<div>
+			<a href="inicioCita.jsp"><button id="returnBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+		</div>  
 </body>
 </html>

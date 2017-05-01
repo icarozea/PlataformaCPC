@@ -1,9 +1,10 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="estilo.css"></link>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <title>Cupos Practicantes</title>
     </head>
 		<%
@@ -13,73 +14,94 @@
 		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
 		    dispatcher.forward(request,response);
 		  }
-		%>    
+		%>
+	<script>
+		$(document).ready(function() {
+			
+			$('#btnAceptar').click(function() {
+				$('#register-form').attr('action', 'ServletAsesor');
+				$('<input />').attr('type', 'hidden')
+	              .attr('name', 'accionAsesor')
+	              .attr('value', 'aceptarReporte')
+	              .appendTo('#register-form');
+				$('#register-form').submit();
+			});
+
+			$('#btnRechazar').click(function() {
+				$('#register-form').attr('action', 'ServletAsesor');
+				$('<input />').attr('type', 'hidden')
+	              .attr('name', 'accionAsesor')
+	              .attr('value', 'rechazarReporte')
+	              .appendTo('#register-form');
+				$('#register-form').submit();
+			});
+	        
+		});
+	</script>		    
     <body>      
         <!--MEMU SUPERIOR--> 
          <%@include file="./menuNavegacionAsesor.jsp" %>
 		<div>
-        	<h1 class="cabin">Detalle del reporte nÃºmero ${requestScope.idReporte}</h1>
+        	<h1 class="cabin">Detalle de reporte</h1>
+        	<h2 class="cabin">Cita número ${requestScope.idCita}</h2>
         </div>
         <br>
         <div id="marcoFormularioCupos">
-        	<form align="center" id="register-form" name="" action="" method="POST">
+        	<form align="center" id="register-form" name="formularioComentariosAsesor" action="" method="POST">
         		<input type="hidden" id="operacion" name="operacion" value="guardarComentarios"/>
+        		<input type="hidden" id="idReporte" name="idReporte" value="${requestScope.idReporte}"/>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Fecha de la cita:</b></label>
-        				<label class="cabin">blah</label>
-        			</div>
-        			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Cita NÂ°:</b></label>
-        				<label class="cabin">blah</label>
+        				<label class="cabin">${requestScope.fechaCita}</label>
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Paciente:</b></label>
-        				<label class="cabin">blah</label>
+        				<label class="cabin">${requestScope.nomPaciente}</label>
         			</div>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Recibo NÂ°:</b></label>
-        				<label class="cabin">blah</label>
+        				<label class="cabin"><b>Recibo N°:</b></label>
+        				<label class="cabin">${requestScope.reciboNum}</label>
         			</div>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Profesional que atendiÃ³ la cita:</b></label>
-        				<label class="cabin">blah</label>
+        				<label class="cabin"><b>Profesional que atendió la cita:</b></label>
+        				<label class="cabin">${requestScope.profesionalNom}</label>
         			</div>
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Objetivo sesiÃ³n:</b></label>
+        				<label class="cabin"><b>Objetivo sesión:</b></label>
         				<label class="cabin">${requestScope.objetivoSesion}</label>
-						<textarea class="marginTextArea sizeTextArea"></textarea>
+						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea"></textarea>
         			</div>
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>DescripciÃ³n de la sesiÃ³n:</b></label>
+        				<label class="cabin"><b>Descripción de la sesión:</b></label>
         				<label class="cabin">${requestScope.descripcionSesion}</label>
-        				<textarea class="marginTextArea sizeTextArea"></textarea>
+        				<textarea id="campoDesc" name="campoDesc" class="marginTextArea sizeTextArea"></textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Tareas asignadas:</b></label>
         				<label class="cabin">${requestScope.tareasAsignadasSesion}</label>
-        				<textarea class="marginTextArea sizeTextArea"></textarea>
+        				<textarea id="campoTareasAsig" name="campoTareasAsig" class="marginTextArea sizeTextArea"></textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Actividades para la prÃ³xima sesiÃ³n:</b></label>
+        				<label class="cabin"><b>Actividades para la próxima sesión:</b></label>
         				<label class="cabin">${requestScope.actividadesProxSesion}</label>
-        				<textarea class="marginTextArea sizeTextArea"></textarea>
+        				<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea"></textarea>
         			</div>
         		</fieldset>	
         		<fieldset>	
         			<div class="fieldgroup">
-        				<input type="submit" name="btnCupos" id="btnCupos" value="Aceptar" class="botones" onclick=""/>
+        				<input type="button" name="btnAceptar" id="btnAceptar" value="Aceptar" class="botones"/>
         			</div>
         			<div class="fieldgroup">
-        				<input type="button" name="btnCupos" id="btnCupos" value="Rechazar" class="botones" onclick=""/>
+        				<input type="button" name="btnRechazar" id="btnRechazar" value="Rechazar" class="botones"/>
         			</div>
         		</fieldset>
         		

@@ -8,7 +8,14 @@
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <title>Inicio</title>
 </head>
-
+   		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
 <body>
 	<%@include file="./menuNavegacionAdmin.jsp"%>
 	<div id="gestioncitas">
@@ -33,20 +40,6 @@
 					<td class="cabin"><a href="./ServletCita?operacion=cargueIncial">CITAS</a><br></td>
 				</tr>
 			</table>
-			
-			<table class="tablaPrincipal">
-				<tr>
-					<td>
-						<div>
-							<a href="inicioReporte.jsp"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="cabin"><a href="inicioReporte.jsp">REPORTES</a><br></td>
-				</tr>
-			</table>
-			
 		</div>
 		<br>
 		<div>

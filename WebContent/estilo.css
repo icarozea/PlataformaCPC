@@ -28,6 +28,18 @@ body{
 	padding-top: 100px;
 }
 
+.respuestaMsg{
+	font-size: 40px;
+}
+
+.marginTopTabla{
+	margin-top: 2%;
+}
+
+.marginBottomTabla{
+	margin-bottom: 2%;
+}
+
 .btnRegresar{
 	margin-top: 2%;
 }
@@ -44,9 +56,25 @@ body{
   background: #47a3da;
   border: 0;
   cursor: pointer;
-  
   border-radius: 100%;
 }
+
+.respuestaCheck{
+    margin: 10px;
+    width: 110px;
+    height: 110px;
+    padding: 19px 22px;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    background: #23e629;
+    border: 0;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+
 /*.btn-xlarge:active {
   top: 2px;
   outline: none;
@@ -105,12 +133,6 @@ body{
     font-size: 20px;
     /*border-radius: 2%;*/
     background-color: #fff;
-}
-
-
-.tablaPequeÃƒÂ±a{
-    margin-top: 10%;
-    font-size: 80%;
 }
 
 .cajaformulario{
@@ -293,6 +315,11 @@ input.radio{
   text-align: center;
   padding: 10px;
   font-weight: 300;
+}
+
+.flat-table {
+	display: initial;
+	-webkit-font-smoothing: antialiased;
 }
 
 #eps{

@@ -79,12 +79,24 @@
 
 	#calendar {
 		max-width: 900px;
-		margin: 100px auto;
+		margin: 2% auto;
 		background-color: #ffffff;
+	}
+	
+	.divCentro{
+		margin-left: 40%;
 	}
 
 </style>
 </head>
+   		<%
+		  if (session.getAttribute("perfil")==null)
+		  {
+		    String address = "/index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		  }
+		%>
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
@@ -95,19 +107,18 @@
 		</c:when>
 	</c:choose>
 	
-	<div id="aside">
-    	<h2>Al seleccionar</h2>
-    	<table>
-    		<tr>
-    			<td><input type="radio" id="ejecutar" name="grupoMenu" value="ejecutar" checked></td>
-    			<td>Ejecutar</td>
-    			
-    		</tr>
-    		<tr>
-    			<td><input type="radio" id="eliminar" name="grupoMenu" value="eliminar"></td>
-    			<td>Eliminar</td>
-    		</tr>
-    	</table>
+	<div>
+    	<h2 class="cabin">Al seleccionar</h2>
+    	<div class="divCentro">
+	    	<table>
+	    		<tr>
+	    			<td><input type="radio" id="ejecutar" name="grupoMenu" value="ejecutar" checked></td>
+	    			<td>Ejecutar</td>
+	    			<td><input type="radio" id="eliminar" name="grupoMenu" value="eliminar"></td>
+	    			<td>Eliminar</td>
+	    		</tr>
+	    	</table>
+    	</div>
     </div>
     
 	<div id='calendar'></div>

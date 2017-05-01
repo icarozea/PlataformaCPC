@@ -1,9 +1,3 @@
-<%-- 
-    Document   : reportes
-    Created on : 21/05/2016, 04:57:20 PM
-    Author     : HARLIN
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

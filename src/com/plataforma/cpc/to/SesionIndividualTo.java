@@ -20,6 +20,7 @@ public class SesionIndividualTo {
 	private String actividadesProximaSesion;
 	private boolean fallo;
 	private Integer numRecibo;
+	private Integer idCita;
 	private ComentariosTo comentarios;
 
 	//------------------------------------------------------------------------------------
@@ -80,10 +81,23 @@ public class SesionIndividualTo {
 	public void setNumRecibo(Integer numRecibo) {
 		this.numRecibo = numRecibo;
 	}
+	public Integer getIdCita() {
+		return idCita;
+	}
+	public void setIdCita(Integer idCita) {
+		this.idCita = idCita;
+	}
 	public ComentariosTo getComentarios() {
 		return comentarios;
 	}
 	public void setComentarios(ComentariosTo comentarios) {
 		this.comentarios = comentarios;
+	}
+	@Override
+	public String toString() {
+		return "SesionIndividualTo [idSesion=" + idSesion + ", fecha=" + fecha + ", nombreProfesional="
+				+ nombreProfesional + ", objetivo=" + objetivo + ", descripcion=" + descripcion + ", tareasAsignadas="
+				+ tareasAsignadas + ", actividadesProximaSesion=" + actividadesProximaSesion + ", fallo=" + fallo
+				+ ", numRecibo=" + numRecibo + ", idCita=" + idCita + ", comentarios=" + comentarios + "]";
 	}
 }

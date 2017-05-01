@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="estilo.css" />
 <link rel="stylesheet" href="estiloMenu.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JSP Page</title>
+<title>CPC | Practicante</title>
 </head>
 		<%
 		  if (session.getAttribute("perfil")==null)
@@ -37,13 +37,5 @@
 	 	</div>
 	 </div>	
 	</div>
-<!-- 	<nav id="menu"> -->
-<!-- 		<ul> -->
-<!-- 			<a href="VentanaPracticante.jsp"><li>Inicio</li></a> -->
-<!-- 			<a href="inicioCita.jsp"><li>Citas</li></a> -->
-<!-- 			<a href=""><li>Reportes</li></a> -->
-<!-- 		</ul> -->
-<!-- 	</nav> -->
-<!-- 	<br> -->
 </body>
 </html>
