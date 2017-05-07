@@ -6,8 +6,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="estiloAsignaciones.css"></link>
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
-	type="text/css">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type='text/javascript'>
+function generarReporte(operacion){
+	fechaReporte = document.getElementById('fechaReporte').value;
+	if (fechaReporte){
+		document.getElementById('reporteForm').action = "./ServletReporte?operacion="+operacion+"&fechaReporte="+fechaReporte;
+		document.getElementById('reporteForm').submit();
+	}else{
+		alert("Seleccione un mes")
+	}
+}
+
+$( function() {
+	  $( "#fechaReporte" ).datepicker({ 
+		  dateFormat: 'dd/mm/yy' 
+	  });
+	} );
+</script>
 <title>Reportes practicante</title>
 </head>
    		<%
@@ -50,6 +70,9 @@
 		</div>
 		<br>
 		<h2 class="droidSans">Generación mensual de reportes</h2>
+		<label id="hora_label" class="droidSans">Mes:</label>
+		<input id="fechaReporte" name="fechaReporte" type="text" class="field text fn">
+		<form id="reporteForm" action="" method="POST">
 		<div id="generacionReportes">
 			<table class="tablaPrincipal">
 				<tr>
@@ -65,7 +88,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="cabin"><a href="./ServletReporte?operacion=usuarios">USUARIOS</a></td>
+					<td class="cabin"><a href="#" onclick="generarReporte('usuarios'); return false">USUARIOS </a></td>
 					<td class="cabin"><a href="./ServletReporte?operacion=transacciones">TRANSACCIONES</a><br></td>
 				</tr>
 			</table>
@@ -89,6 +112,7 @@
 				</tr>
 			</table>
 		</div>
+		</form>
 	</div>
 			<br>
 		<div>
