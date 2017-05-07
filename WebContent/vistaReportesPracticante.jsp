@@ -78,18 +78,18 @@ $( function() {
 				<tr>
 					<td>
 						<div>
-							<a href="./ServletReporte?operacion=usuarios"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+							<a href="#" onclick="generarReporte('usuarios'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 						</div>
 					</td>
 					<td>
 						<div>
-							<a href="./ServletReporte?operacion=transacciones"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+							<a href="#" onclick="generarReporte('transacciones'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td class="cabin"><a href="#" onclick="generarReporte('usuarios'); return false">USUARIOS </a></td>
-					<td class="cabin"><a href="./ServletReporte?operacion=transacciones">TRANSACCIONES</a><br></td>
+					<td class="cabin"><a href="#" onclick="generarReporte('transacciones'); return false">TRANSACCIONES</a><br></td>
 				</tr>
 			</table>
 			
@@ -97,18 +97,18 @@ $( function() {
 				<tr>
 					<td>
 						<div>
-							<a href="./ServletReporte?operacion=consulta"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+							<a href="#" onclick="generarReporte('consulta'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 						</div>
 					</td>
 					<td>
 						<div>
-							<a href="./ServletReporte?operacion=procedimiento"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+							<a href="#" onclick="generarReporte('procedimiento'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<td class="cabin"><a href="./ServletReporte?operacion=consulta">CONSULTA</a></td>
-					<td class="cabin"><a href="./ServletReporte?operacion=procedimiento">PROCEDIMIENTO</a><br></td>
+					<td class="cabin"><a href="#" onclick="generarReporte('consulta'); return false">CONSULTA</a></td>
+					<td class="cabin"><a href="#" onclick="generarReporte('procedimiento'); return false">PROCEDIMIENTO</a><br></td>
 				</tr>
 			</table>
 		</div>
