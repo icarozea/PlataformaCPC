@@ -64,6 +64,9 @@
 				<tr>
 					<td class="cabin"><a href="./ReportesPracticante?operacion=visualizarReportes&idPersona=${sessionScope.personaSession.idPersona}">REPORTES</a><br></td>
 				</tr>
+				<tr>
+					<td class="cabin"><a href="reporteValoracion.jsp">Test</a><br></td>
+				</tr>
 			</table>
 		</div>
 		<br>

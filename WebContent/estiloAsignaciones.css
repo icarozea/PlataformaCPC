@@ -293,3 +293,16 @@ table {
 .btnVer{
      background-image: url("resources/binoculares.png");
 }
+
+.seccionReportePar{
+	background-color: #76A6FF;
+}
+
+.seccionReporteImpar{
+	background-color: #E0E7FF;
+}
+
+.reporteValoracion{
+	margin-left: 10%;
+	margin-right: 10%
+}
