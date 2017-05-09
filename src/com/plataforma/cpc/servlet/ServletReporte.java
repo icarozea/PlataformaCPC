@@ -11,7 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.utils.Propiedades;
 import com.plataforma.cpc.utils.Reporte;
 
@@ -48,19 +50,15 @@ public class ServletReporte extends HttpServlet {
 		
 		case "usuarios":
 			reporteJasper(request,response,"ripsUsuario");
-			this.idPerfil = new Integer(4);//Paciente
 			break;
 		case "transacciones":
 			reporteJasper(request,response,"ripsTransaccion");
-			this.idPerfil = new Integer(3);//Practicante
 			break;
 		case "consulta":
 			reporteJasper(request,response,"ripsConsulta");
-			this.idPerfil = new Integer(3);//Practicante
 			break;
 		case "procedimiento":
 			reporteJasper(request,response,"ripsProcedimiento");
-			this.idPerfil = new Integer(3);//Practicante
 			break;	
 		default:
 			System.out.println("Opción no existe");
@@ -73,11 +71,16 @@ public class ServletReporte extends HttpServlet {
 		response.setContentType("application/vnd.ms-excel");
 		String nombreArchivo = "attachment; filename="+nombreReporte+".xls";
 		response.setHeader("Content-disposition",nombreArchivo);
+		PersonaTo personaSesion = new PersonaTo();
+		HttpSession session = request.getSession(true);
+		personaSesion = (PersonaTo) session.getAttribute("personaSession");
+		
 		byte[] buffer = null;
 		Reporte reporte = new Reporte(Propiedades.getInstance().valorPropiedad(Propiedades.RUTA_JASPER));
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("ID_PERFIL",this.idPerfil);
+		parametros.put("ID_PRACTICANTE",personaSesion.getIdPersona().toString());
+		parametros.put("FECHA_MES",request.getParameter("fechaReporte"));
 		
 		try {
 			 buffer = reporte.reporte(nombreReporte, parametros);

@@ -193,3 +193,9 @@ function modificarDetalle(){
 	document.getElementById('operacion').value = "modificarPersona";
     nomForm.submit();
 }
+
+function generarReporte(operacion){
+	fechaReporte = document.getElementById('fechaReporte').value;
+    document.reporteForm.action = "./ServletReporte?operacion="+operacion+"&fechaReporte="+fechaReporte;
+    document.reporteForm.submit();
+}

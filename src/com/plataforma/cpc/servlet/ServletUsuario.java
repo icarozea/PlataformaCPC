@@ -26,7 +26,7 @@ public class ServletUsuario extends HttpServlet {
 		PersonaTo personaSesion = new PersonaTo();
 		UsuarioBean usuarioBean = new UsuarioBean();
 		HttpSession session = request.getSession(true);
-
+		//cargarPropiedades();
 		switch (operacion) {
 		case "btnIngresar":
 			personaSesion = usuarioBean.validarUsuario(request.getParameter("user"), request.getParameter("password"));
@@ -42,7 +42,9 @@ public class ServletUsuario extends HttpServlet {
 					session.setAttribute("personaSession", personaSesion);
 					request.setAttribute("mensaje", "1");
 					session.setAttribute("perfil", personaSesion.getPerfil().getNombrePerfil());
+
 //					cargarPropiedades();
+
 					if(personaSesion.getPerfil().getNombrePerfil().equals("Administrador")){
 						RequestDispatcher dispatcher = request.getRequestDispatcher("VentanaAdministrador.jsp");
 						dispatcher.forward(request, response);
