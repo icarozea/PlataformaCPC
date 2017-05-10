@@ -240,7 +240,11 @@ public class DaoPersona {
 				
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
 				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
-				personaTo.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
+				String segNom = rs.getString("SEGUNDO_NOMBRE");
+				if(segNom == null)
+					personaTo.setSegundoNombre(""); 
+				else
+					personaTo.setSegundoNombre(segNom);
 				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
 				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
@@ -294,7 +298,11 @@ public class DaoPersona {
 				
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
 				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
-				personaTo.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
+				String segNom = rs.getString("SEGUNDO_NOMBRE");
+				if(segNom == null)
+					personaTo.setSegundoNombre(""); 
+				else
+					personaTo.setSegundoNombre(segNom);
 				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
 				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));

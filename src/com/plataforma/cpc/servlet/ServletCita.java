@@ -256,7 +256,12 @@ public class ServletCita extends HttpServlet{
 			citaTo = daoCitas.consultarCita(filtroCita);
 			
 			if(citaTo.getIdCita() != null){
-				RequestDispatcher dispatcher = request.getRequestDispatcher("./reporteCita.jsp");
+				RequestDispatcher dispatcher = null;
+				if(citaTo.isValoracion())
+					dispatcher = request.getRequestDispatcher("./reporteValoracion.jsp");
+				else
+					dispatcher = request.getRequestDispatcher("./reporteCita.jsp");
+				
 				request.setAttribute("cita", citaTo);
 				dispatcher.forward(request, response);
 			}
