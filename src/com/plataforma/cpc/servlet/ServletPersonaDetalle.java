@@ -76,7 +76,7 @@ public class ServletPersonaDetalle extends HttpServlet {
 		try{
 			personaTo.setPersonaId(Integer.parseInt(request.getParameter("idPersona")));
 			personaTo.setSexo(request.getParameter("sexo")); 
-			personaTo.setEdad( request.getParameter("edad"));
+			personaTo.setEdad( Integer.parseInt(request.getParameter("edad")));
 			personaTo.setAcudiente(request.getParameter("acudiente"));
 			personaTo.setProceso(request.getParameter("proceso"));
 			personaTo.setPerteneceU(request.getParameter("perteneceU"));
@@ -117,7 +117,7 @@ public class ServletPersonaDetalle extends HttpServlet {
 		try{
 			personaTo.setPersonaId(Integer.parseInt(request.getParameter("idPersona")));
 			personaTo.setSexo(request.getParameter("sexo")); 
-			personaTo.setEdad( request.getParameter("edad"));
+			personaTo.setEdad( Integer.parseInt(request.getParameter("edad")));
 			personaTo.setAcudiente(request.getParameter("acudiente"));
 			personaTo.setProceso(request.getParameter("proceso"));
 			personaTo.setPerteneceU(request.getParameter("perteneceU"));

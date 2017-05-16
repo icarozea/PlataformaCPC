@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.plataforma.cpc.dao.DaoCitas;
+import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.ComentariosTo;
+import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualPreviewTo;
+import com.plataforma.cpc.to.SesionIndividualTo;
 
 /**
  * Servlet implementation class ServletReportesEstudiante
@@ -80,14 +84,21 @@ public class ServletReportesPracticante extends HttpServlet {
     public void verComentariosDetalladosReporte(HttpServletRequest request, HttpServletResponse response){
     	
     	DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+    	DaoCitas daoCitas = new DaoCitas();
+    	DaoPersona daoPersona = new DaoPersona();
     	
     	try{
     		Integer idCita = Integer.parseInt(request.getParameter("idCita"));
-    		CitaTo citaSesionReportePracticante = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(idCita);
-    		ComentariosTo comentarioReportePracticante = citaSesionReportePracticante.getReporte().getComentarios();
+    		SesionIndividualTo citaSesionReportePracticante = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(idCita);
+    		ComentariosTo comentarioReportePracticante = citaSesionReportePracticante.getComentarios();
+    		CitaTo citaTo = new CitaTo();
+    		citaTo.setIdCita(idCita);
+    		citaTo = daoCitas.consultarCita(citaTo);
+    		PersonaTo paciente = daoPersona.consultarPersona(citaTo.getPaciente());
     		request.setAttribute("idCita", idCita);
     		request.setAttribute("citaSesionReportePracticante", citaSesionReportePracticante);
     		request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
+    		request.setAttribute("paciente", paciente);
     		RequestDispatcher dispatcher = request.getRequestDispatcher("verComentariosReporteDetallado.jsp");
 			dispatcher.forward(request, response);
     	}catch(Exception e){

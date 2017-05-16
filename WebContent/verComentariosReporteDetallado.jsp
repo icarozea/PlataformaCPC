@@ -81,79 +81,79 @@
         <div id="marcoFormularioCupos">
         	<form align="center" id="register-form" name="formularioComentariosAsesor" action="ReportesPracticante" method="POST">
         		<input type="hidden" id="operacion" name="operacion" value="guardarMoficiacionesReporteSesion"/>
-        		<input type="hidden" id="idReporte" name="idReporte" value="${requestScope.citaSesionReportePracticante.reporte.idSesion}"/>
+        		<input type="hidden" id="idReporte" name="idReporte" value="${requestScope.citaSesionReportePracticante.idSesion}"/>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Fecha de la cita:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.fecha}</label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.fecha}</label>
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Paciente:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.paciente.primerNombre}
-        									 ${requestScope.citaSesionReportePracticante.paciente.segundoNombre}
-        									 ${requestScope.citaSesionReportePracticante.paciente.primerApellido}
-        									 ${requestScope.citaSesionReportePracticante.paciente.segundoApellido}</label>
+        				<label class="cabin">${requestScope.paciente.primerNombre}
+        									 ${requestScope.paciente.segundoNombre}
+        									 ${requestScope.paciente.primerApellido}
+        									 ${requestScope.paciente.segundoApellido}</label>
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Recibo N°:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.numRecibo}</label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.numRecibo}</label>
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Profesional que atendió la cita:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.nombreProfesional}</label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.nombreProfesional}</label>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Objetivo sesión:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.objetivo}</label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.objetivo}</label>
         				<input type="button" name="btnObjetivo" id="btnObjetivo" value="Actualizar" class="botones"/>
         				<input type="button" name="btnObjetivoCancel" id="btnObjetivoCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.reporte.objetivo}</textarea>
+						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.objetivo}</textarea>
         			</div>
         		</fieldset>
         		<fieldset>
         				<label class="cabin"><b>Comentario sobre objetivo:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.comentarios.comentariosObjetivo}</label>        		
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.comentarios.comentariosObjetivo}</label>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Descripción de sesión:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.descripcion}</label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.descripcion}</label>
         				<input type="button" name="btnDescripcion" id="btnDescripcion" value="Actualizar" class="botones"/>
         				<input type="button" name="btnDescripcionCancel" id="btnDescripcionCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoDescripcion" name="campoDescripcion" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.reporte.descripcion}</textarea>
+						<textarea id="campoDescripcion" name="campoDescripcion" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.descripcion}</textarea>
         			</div>
         		</fieldset>
         		<fieldset>
         				<label class="cabin"><b>Comentario sobre descripción:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.comentarios.comentariosDescripcion}</label>        		
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.comentarios.comentariosDescripcion}</label>        		
         		</fieldset>        		
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Tareas asignadas:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.tareasAsignadas}</label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.tareasAsignadas}</label>
         				<input type="button" name="btnTareas" id="btnTareas" value="Actualizar" class="botones"/>
         				<input type="button" name="btnTareasCancel" id="btnTareasCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoTareas" name="campoTareas" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.reporte.tareasAsignadas}</textarea>
+						<textarea id="campoTareas" name="campoTareas" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.tareasAsignadas}</textarea>
         			</div>
         		</fieldset>
         		<fieldset>
         				<label class="cabin"><b>Comentario sobre tareas asignadas:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.comentarios.comentariosTareas}</label>        		
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.comentarios.comentariosTareas}</label>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Actividades próxima sesión:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.actividadesProximaSesion}</label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.actividadesProximaSesion}</label>
         				<input type="button" name="btnActividadesProx" id="btnActividadesProx" value="Actualizar" class="botones"/>
         				<input type="button" name="btnActividadesProxCancel" id="btnActividadesProxCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.reporte.actividadesProximaSesion}</textarea>
+						<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea" hidden="true">${requestScope.citaSesionReportePracticante.actividadesProximaSesion}</textarea>
         			</div>
         		</fieldset>        		
         		<fieldset>
         				<label class="cabin"><b>Comentario sobre actividades próxima sesión:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.comentarios.comentariosActividades}</label>        		
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.comentarios.comentariosActividades}</label>        		
         		</fieldset>
         		<fieldset>	
         			<div class="fieldgroup">

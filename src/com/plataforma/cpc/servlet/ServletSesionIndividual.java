@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
+import com.plataforma.cpc.dao.DaoUtilidades;
+import com.plataforma.cpc.modelo.PersonaBean;
+import com.plataforma.cpc.modelo.PersonaDetalleBean;
+import com.plataforma.cpc.to.EpsTo;
+import com.plataforma.cpc.to.PersonaDetalleTo;
+import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
+import com.plataforma.cpc.to.TipoDocumentoTo;
 
 /**
  * Servlet implementation class ServletSesionIndividual
@@ -29,6 +37,9 @@ public class ServletSesionIndividual extends HttpServlet {
 			break;
 		case "actualizar":
 			actualizarReporte(request, response);
+			break;
+		case "valoracion":
+			reporteValoracion(request, response);
 			break;
 		default:
 			System.out.println("Opción no existe");
@@ -77,6 +88,84 @@ public class ServletSesionIndividual extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		dispatcher.forward(request, response);
+	}
+	
+	public void reporteValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+		
+		PersonaBean personaBean = new PersonaBean();
+		PersonaDetalleBean detalleBean = new PersonaDetalleBean();
+		PersonaTo personaTo = new PersonaTo();
+		PersonaDetalleTo detalleTo = new PersonaDetalleTo();
+		
+		
+		try{
+			// Actualizacion datos persona
+			DaoUtilidades daoUtilidades = new DaoUtilidades();
+			Integer idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
+			personaTo.setIdPersona(idPaciente);
+			personaTo = personaBean.consultarPersona(personaTo);
+			personaTo.setPrimerNombre(request.getParameter("nombre1"));
+			personaTo.setSegundoNombre(request.getParameter("nombre2"));
+			personaTo.setPrimerApellido(request.getParameter("apellido1"));
+			personaTo.setSegundoApellido(request.getParameter("apellido2"));
+			String sigla = request.getParameter("tipoDocumento");
+			TipoDocumentoTo tipoDocumentoTo = daoUtilidades.buscarTipoDocumento(sigla);
+			if(!sigla.equals("-1") || tipoDocumentoTo != null)
+				personaTo.setTipoDocumento(tipoDocumentoTo);
+			else
+				throw new Exception("El tipo de documento no es valido o no se encontró");
+			personaTo.setNumeroDocumento(request.getParameter("num_documento"));
+			personaTo.setDireccion(request.getParameter("direccion"));
+			Integer idEPS = Integer.parseInt(request.getParameter("aseguradora"));
+			EpsTo epsTo = daoUtilidades.buscarEps(idEPS);
+			if(epsTo != null)
+				personaTo.setEps(epsTo);
+			else
+				throw new Exception("La EPS no es válida o no se encontró");
+			
+			if(personaBean.modificarPersona(personaTo)){
+				// Actualiza datos detalle
+				detalleTo.setPersonaId(idPaciente);
+				detalleTo.setSexo(request.getParameter("sexo"));
+				detalleTo.setEstadoCivil(request.getParameter("estado_civil"));
+				detalleTo.setEdad( Integer.parseInt(request.getParameter("edad")));
+				detalleTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
+				detalleTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
+				detalleTo.setEscolaridad(request.getParameter("escolaridad"));
+				detalleTo.setOcupacion(request.getParameter("ocupacion"));
+				detalleTo.setLocalidad(request.getParameter("localidad"));
+				detalleTo.setBarrio(request.getParameter("barrio"));
+				detalleTo.setEstrato(Integer.parseInt(request.getParameter("estrato")));
+				detalleTo.setPersonaEmergencia(request.getParameter("emergencia"));
+				detalleTo.setParentescoEmergencia(request.getParameter("parentesco"));
+				detalleTo.setTelefonoEmergencia(request.getParameter("telefonos_emergencia"));
+				detalleTo.setFormatoSolicitud(request.getParameter("solicitud"));
+				detalleTo.setInstitucionRemision(request.getParameter("institucion"));
+				detalleTo.setAcudiente(request.getParameter("acudiente"));
+				detalleTo.setParentescoAcudiente(request.getParameter("parentesco_acudiente"));
+				detalleTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
+				
+				if(detalleBean.modificarPersonaDetalle(detalleTo)){
+					request.setAttribute("respuesta", "1");
+					request.setAttribute("error", "");
+					dispatcher.forward(request, response);
+				}
+				else{
+					throw new Exception("Hubo un error al intentar guardar el reporte");
+				}
+			}
+			else{
+				throw new Exception("Hubo un error al intentar guardar el reporte");
+			}
+		}
+		catch(Exception e){
+			System.out.println("Error de formulario: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			dispatcher.forward(request, response);
+		}
 	}
 
 	/**

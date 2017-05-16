@@ -610,7 +610,7 @@ public class DaoPersona {
 
 				personaTo.setPersonaId(rs.getInt("ID_PERSONA"));
 				personaTo.setSexo(rs.getString("SEXO")); 
-				personaTo.setEdad(rs.getString("EDAD"));
+				personaTo.setEdad(rs.getInt("EDAD"));
 				personaTo.setAcudiente(rs.getString("ACUDIENTE"));
 				personaTo.setProceso(rs.getString("PROCESO"));
 				personaTo.setPerteneceU(rs.getString("PERTENECE_U"));

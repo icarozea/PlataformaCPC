@@ -20,7 +20,6 @@ public class CitaTo {
 	private PersonaTo 			paciente;
 	private String 				estado;
 	private TratamientoTo 		tratamiento;
-	private SesionIndividualTo 	reporte;
 	private boolean				valoracion;
 	private Integer				numCita;
 	
@@ -91,14 +90,6 @@ public class CitaTo {
 	public void setTratamiento(TratamientoTo tratamiento) {
 		this.tratamiento = tratamiento;
 	}
-	
-	public SesionIndividualTo getReporte() {
-		return reporte;
-	}
-	
-	public void setReporte(SesionIndividualTo reporte) {
-		this.reporte = reporte;
-	}
 
 	public boolean isValoracion() {
 		return valoracion;
@@ -114,13 +105,5 @@ public class CitaTo {
 
 	public void setNumCita(Integer numCita) {
 		this.numCita = numCita;
-	}
-
-	@Override
-	public String toString() {
-		return "CitaTo [idCita=" + idCita + ", salon=" + salon + ", fechaSolicitud=" + fechaSolicitud + ", fechaCita="
-				+ fechaCita + ", practicante=" + practicante + ", paciente=" + paciente + ", estado=" + estado
-				+ ", tratamiento=" + tratamiento + ", reporte=" + reporte + ", valoracion=" + valoracion + ", numCita="
-				+ numCita + "]";
 	}	
 }

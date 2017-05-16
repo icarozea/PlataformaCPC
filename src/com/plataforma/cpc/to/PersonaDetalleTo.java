@@ -1,10 +1,12 @@
 package com.plataforma.cpc.to;
 
+import java.time.LocalDateTime;
+
 public class PersonaDetalleTo {
 	
 	private Integer personaId;
 	private String sexo;
-	private String edad;
+	private Integer edad;
 	private String acudiente;
 	private String proceso;
 	private String perteneceU;
@@ -13,6 +15,23 @@ public class PersonaDetalleTo {
 	private String problematica;
 	private String observación;
 	private String nombreModifica;
+	private String estadoCivil;
+	private String fechaNacimiento;
+	private String lugarNacimiento;
+	private String escolaridad;
+	private String ocupacion;
+	private String localidad;
+	private String barrio;
+	private Integer estrato;
+	private String personaEmergencia;
+	private String telefonoEmergencia;
+	private String parentescoEmergencia;
+	private String formatoSolicitud;
+	private String institucionRemision;
+	private String parentescoAcudiente;
+	private String telefonoAcudiente;
+	private String personasReside;
+	
 	
 	public Integer getPersonaId() {
 		return personaId;
@@ -26,10 +45,10 @@ public class PersonaDetalleTo {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	public String getEdad() {
+	public Integer getEdad() {
 		return edad;
 	}
-	public void setEdad(String edad) {
+	public void setEdad(Integer edad) {
 		this.edad = edad;
 	}
 	public String getAcudiente() {
@@ -80,13 +99,101 @@ public class PersonaDetalleTo {
 	public void setNombreModifica(String nombreModifica) {
 		this.nombreModifica = nombreModifica;
 	}
-	
-	@Override
-	public String toString() {
-		return "PersonaDetalleTo [personaId=" + personaId + ", sexo=" + sexo + ", edad=" + edad + ", acudiente="
-				+ acudiente + ", proceso=" + proceso + ", perteneceU=" + perteneceU + ", facultad=" + facultad
-				+ ", semestre=" + semestre + ", problematica=" + problematica + ", observación=" + observación
-				+ ", nombreModifica=" + nombreModifica + "]";
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+	public String getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+	public void setFechaNacimiento(String fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	public String getLugarNacimiento() {
+		return lugarNacimiento;
+	}
+	public void setLugarNacimiento(String lugarNacimiento) {
+		this.lugarNacimiento = lugarNacimiento;
+	}
+	public String getEscolaridad() {
+		return escolaridad;
+	}
+	public void setEscolaridad(String escolaridad) {
+		this.escolaridad = escolaridad;
+	}
+	public String getOcupacion() {
+		return ocupacion;
+	}
+	public void setOcupacion(String ocupacion) {
+		this.ocupacion = ocupacion;
+	}
+	public String getLocalidad() {
+		return localidad;
+	}
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+	public String getBarrio() {
+		return barrio;
+	}
+	public void setBarrio(String barrio) {
+		this.barrio = barrio;
+	}
+	public Integer getEstrato() {
+		return estrato;
+	}
+	public void setEstrato(Integer estrato) {
+		this.estrato = estrato;
+	}
+	public String getPersonaEmergencia() {
+		return personaEmergencia;
+	}
+	public void setPersonaEmergencia(String personaEmergencia) {
+		this.personaEmergencia = personaEmergencia;
+	}
+	public String getTelefonoEmergencia() {
+		return telefonoEmergencia;
+	}
+	public void setTelefonoEmergencia(String telefonoEmergencia) {
+		this.telefonoEmergencia = telefonoEmergencia;
+	}
+	public String getParentescoEmergencia() {
+		return parentescoEmergencia;
+	}
+	public void setParentescoEmergencia(String parentescoEmergencia) {
+		this.parentescoEmergencia = parentescoEmergencia;
+	}
+	public String getFormatoSolicitud() {
+		return formatoSolicitud;
+	}
+	public void setFormatoSolicitud(String formatoSolicitud) {
+		this.formatoSolicitud = formatoSolicitud;
+	}
+	public String getInstitucionRemision() {
+		return institucionRemision;
+	}
+	public void setInstitucionRemision(String institucionRemision) {
+		this.institucionRemision = institucionRemision;
+	}
+	public String getParentescoAcudiente() {
+		return parentescoAcudiente;
+	}
+	public void setParentescoAcudiente(String parentescoAcudiente) {
+		this.parentescoAcudiente = parentescoAcudiente;
+	}
+	public String getTelefonoAcudiente() {
+		return telefonoAcudiente;
+	}
+	public void setTelefonoAcudiente(String telefonoAcudiente) {
+		this.telefonoAcudiente = telefonoAcudiente;
+	}
+	public String getPersonasReside() {
+		return personasReside;
+	}
+	public void setPersonasReside(String personasReside) {
+		this.personasReside = personasReside;
 	}
 	
 	

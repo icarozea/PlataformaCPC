@@ -57,6 +57,8 @@
 	<div id="div-form-reporte-cita" class="reporteValoracion">
 		
 		<form id="reporteSesionForm" action="./ServletSesionIndividual" method="POST">
+			<input type="hidden" name="operacion" value="valoracion"/>
+			<input type="hidden" name="idPaciente" value="<%=paciente.getIdPersona() %>"/>
 		<div class="seccionReportePar">
 			<label id="hora_label" class="droidSans"><strong>Fecha:</strong></label><input id="fecha" name="fecha" type="text" class="field text fn" size="8" tabindex="1" value="<%=ano + "-" + mes + "-" + dia%>">
 			<label id="hora_label" class="droidSans"><strong>Hora:</strong></label><input id="hora" name="hora" type="text" class="field text fn" size="8" tabindex="1" value="<%=horas + ":" + minutos%>">
@@ -93,11 +95,11 @@
 					</c:choose>
 				</c:forEach>
 			</select>
-			<label id="nun_documento_label" class="droidSans"><strong>Número</strong></label><input id="num_documento" name="num_documento" type="text" class="field text fn" size="8" tabindex="1">
+			<label id="nun_documento_label" class="droidSans"><strong>Número</strong></label><input id="num_documento" name="num_documento" type="text" class="field text fn" size="8" tabindex="1" value="<%= paciente.getNumeroDocumento()%> ">
 		</div>
 		
 		<div class="seccionReportePar">
-			<label id="sexo" class="droidSans"><strong>Sexo</strong></label>
+			<label id="sexo_label" class="droidSans"><strong>Sexo</strong></label>
 			<select id="sexo" name="sexo" class="droidSans">
 				<option value="M">Hombre</option>
 				<option value="F">Femenino</option>
@@ -110,7 +112,7 @@
 				<option value="viudo">Viudo(a)</option>
 				<option value="union">Union Libre</option>
 			</select>
-			<label id="edad" class="droidSans"><strong>Edad Actual</strong></label><input id="edad" name="edad" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="edad_label" class="droidSans"><strong>Edad Actual</strong></label><input id="edad" name="edad" type="text" class="field text fn" value="" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReporteImpar">
@@ -136,7 +138,7 @@
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="dirección_label" class="droidSans"><strong>Dirección de Residencia:</strong></label><input id="dirección" name="dirección" type="text" class="field text fn" value="" size="10" tabindex="1">
+			<label id="dirección_label" class="droidSans"><strong>Dirección de Residencia:</strong></label><input id="direccion" name="direccion" type="text" class="field text fn" tabindex="1" value=<%= paciente.getDireccion() %>>
 		</div>
 		
 		<div class="seccionReporteImpar">
@@ -162,7 +164,7 @@
 						<option value="${eps.idEPS}" selected>${eps.nombreEPS}</option>
 					</c:when>
 					<c:otherwise>	
-						<option value="${eps.idEPS}" selected>${eps.nombreEPS}</option>
+						<option value="${eps.idEPS}">${eps.nombreEPS}</option>
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>

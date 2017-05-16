@@ -23,26 +23,27 @@ public class DaoSesionIndividual extends ConexionOracle{
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 		
-		String sqlReporte = "INSERT INTO REPORTE_SESION (ID_SESION,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION,ES_FALLO,RECIBO) ";
-		sqlReporte +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?,?,?)";
+		String sqlReporte = "INSERT INTO REPORTE_SESION (ID_SESION,ID_CITA,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION,ES_FALLO,RECIBO) ";
+		sqlReporte +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,?,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?,?,?)";
 		
 		String sqlAvance = "UPDATE TRATAMIENTO SET NUM_CITA_ACTUAL = NUM_CITA_ACTUAL + 1, PENDIENTE = 1 WHERE ID_TRATAMIENTO = ? ";
 		
-		String sqlEstado = "UPDATE CITA SET ESTADO = ?, ID_REPORTE = REPORTE_SESION_SEQ.CURRVAL WHERE ID_CITA = ? ";
+		String sqlEstado = "UPDATE CITA SET ESTADO = ? WHERE ID_CITA = ? ";
 		
 		try {
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
 			
-			conexionActual.prepararSentencia(sqlReporte);	
-			conexionActual.agregarAtributo(1, sesion.getFecha());
-			conexionActual.agregarAtributo(2, sesion.getNombreProfesional());
-			conexionActual.agregarAtributo(3, sesion.getObjetivo());
-			conexionActual.agregarAtributo(4, sesion.getDescripcion());
-			conexionActual.agregarAtributo(5, sesion.getTareasAsignadas());
-			conexionActual.agregarAtributo(6, sesion.getActividadesProximaSesion());
-			conexionActual.agregarAtributo(7,sesion.isFallo()?1:0);
-			conexionActual.agregarAtributo(8,sesion.getNumRecibo());
+			conexionActual.prepararSentencia(sqlReporte);
+			conexionActual.agregarAtributo(1, idCita);
+			conexionActual.agregarAtributo(2, sesion.getFecha());
+			conexionActual.agregarAtributo(3, sesion.getNombreProfesional());
+			conexionActual.agregarAtributo(4, sesion.getObjetivo());
+			conexionActual.agregarAtributo(5, sesion.getDescripcion());
+			conexionActual.agregarAtributo(6, sesion.getTareasAsignadas());
+			conexionActual.agregarAtributo(7, sesion.getActividadesProximaSesion());
+			conexionActual.agregarAtributo(8,sesion.isFallo()?1:0);
+			conexionActual.agregarAtributo(9,sesion.getNumRecibo());
 			conexionActual.ejecutarActualizacion();
 			
 			conexionActual.prepararSentencia(sqlEstado);
@@ -85,7 +86,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		String actualizacion = "UPDATE REPORTE_SESION SET OBJETIVO_SESION = ?, DESCRIPCION_SESION = ?, TAREAS_ASIGNADAS = ?, ACTIVIDADES_PROX_SESION = ? ";
 		actualizacion+= "WHERE ID_SESION = ? "; 
 		
-		String sqlEstado = "UPDATE CITA SET ESTADO = 'pendiente' WHERE ID_REPORTE = ? ";
+		String sqlEstado = "UPDATE CITA SET ESTADO = 'pendiente' WHERE ID_CITA = (SELECT ID_CITA FROM REPORTE_SESION WHERE ID_SESION = ?) ";
 		
 		Integer idSesion = sesion.getIdSesion();
 		try {
@@ -133,8 +134,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		String sql = "SELECT RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
 				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO, RS.ID_COMENTARIOS ";
 				sql+= "FROM CITA CITA, REPORTE_SESION RS ";
-				sql+= "WHERE ID_CITA = ? ";
-				sql+= "AND CITA.ID_REPORTE = RS.ID_SESION";
+				sql+= "WHERE RS.ID_CITA = ? ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -152,6 +152,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
 				sesionIndividual.setFallo(rs.getInt("ES_FALLO")>0?true:false);
 				sesionIndividual.setNumRecibo(rs.getInt("RECIBO"));
+				sesionIndividual.setIdCita(idCita);
 				Integer idComentarios = rs.getInt("ID_COMENTARIOS");
 				if(idComentarios != null){
 					ComentariosTo comentarios = new ComentariosTo();
@@ -178,8 +179,8 @@ public class DaoSesionIndividual extends ConexionOracle{
 		ArrayList<SesionIndividualPreviewTo> listaSesionesPracticante = new ArrayList<SesionIndividualPreviewTo>();
 		conexionActual = new ConexionOracle();
 		
-		String sql = "SELECT CT.ID_CITA, CT.SALON, CT.FECHA_CITA, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, CT.ID_REPORTE, CT.ESTADO, CT.ES_VALORACION ";
-			   sql+= "FROM CITA CT INNER JOIN PERSONA PE ON CT.ID_PACIENTE = PE.ID_PERSONA WHERE CT.ID_PRACTICANTE = ? ORDER BY CT.ESTADO DESC, CT.FECHA_CITA DESC";
+		String sql = "SELECT CT.ID_CITA, CT.SALON, CT.FECHA_CITA, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, CT.ESTADO, CT.ES_VALORACION, RS.ID_SESION ";
+			   sql+= "FROM CITA CT, PERSONA PE, REPORTE_SESION RS WHERE RS.ID_CITA = CT.ID_CITA AND CT.ID_PACIENTE = PE.ID_PERSONA AND CT.ID_PRACTICANTE = ? ORDER BY CT.ESTADO DESC, CT.FECHA_CITA DESC";
 			   
 		try {
 			conexionActual.conectar();
@@ -199,7 +200,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				previewSesion.setPrimerApellidoPaciente(rs.getString("PRIMER_APELLIDO"));
 				previewSesion.setSegundoApellidoPaciente(rs.getString("SEGUNDO_APELLIDO"));
 				previewSesion.setEstado(rs.getString("ESTADO"));
-				previewSesion.setIdReporte(rs.getString("ID_REPORTE"));
+				previewSesion.setIdReporte(rs.getInt("ID_SESION") + "");
 				listaSesionesPracticante.add(previewSesion);
 			}
 			
@@ -219,7 +220,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 	public SesionIndividualTo consultarDetalleSesionPorId(Integer idSesion){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
-		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, CT.NUM_CITA, RS.RECIBO, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION, RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO FROM CITA CT INNER JOIN REPORTE_SESION RS ON CT.ID_REPORTE = RS.ID_SESION WHERE RS.ID_SESION = ?";
+		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, CT.NUM_CITA, RS.RECIBO, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION, RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO FROM CITA CT INNER JOIN REPORTE_SESION RS ON CT.ID_CITA = RS.ID_CITA WHERE RS.ID_SESION = ?";
 		
 		SesionIndividualTo sesion = new SesionIndividualTo();
 		try {
@@ -256,17 +257,17 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return sesion;
 	}
 	
-	public CitaTo consultarDetalleComentariosSesionPorIdCita(Integer idCita){
+	public SesionIndividualTo consultarDetalleComentariosSesionPorIdCita(Integer idCita){
 		
 		CitaTo cita = new CitaTo();
 		PersonaTo paciente;
-		SesionIndividualTo sesionComentada;
+		SesionIndividualTo sesionComentada = new SesionIndividualTo();
 		ComentariosTo comentario;
 		
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
 		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, RS.OBJETIVO_SESION, CR.COM_OBJETIVO, RS.DESCRIPCION_SESION, CR.COM_DESCRIPCION, RS.TAREAS_ASIGNADAS, CR.COM_TAREAS, RS.ACTIVIDADES_PROX_SESION, CR.COM_ACTIVIDADES, RS.RECIBO, RS.ES_FALLO ";
-			   sql += "FROM CITA CT, PERSONA PE, REPORTE_SESION RS, COMENTARIOS_REPORTE CR WHERE CT.ID_REPORTE=RS.ID_SESION AND RS.ID_COMENTARIOS=CR.ID_COMENTARIOS AND CT.ID_PACIENTE=PE.ID_PERSONA AND ID_CITA = ?";
+			   sql += "FROM CITA CT, PERSONA PE, REPORTE_SESION RS, COMENTARIOS_REPORTE CR WHERE RS.ID_CITA = CT.ID_CITA AND RS.ID_COMENTARIOS=CR.ID_COMENTARIOS AND CT.ID_PACIENTE=PE.ID_PERSONA AND ID_CITA = ?";
 		
 		try{
 			conexionActual.conectar();
@@ -276,7 +277,6 @@ public class DaoSesionIndividual extends ConexionOracle{
 			
 			while (rs.next()){
 				paciente = new PersonaTo();
-				sesionComentada = new SesionIndividualTo();
 				comentario = new ComentariosTo();
 				
 				cita.setIdCita(rs.getInt("ID_CITA"));
@@ -287,6 +287,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				paciente.setSegundoNombre(rs.getString("SEGUNDO_APELLIDO"));
 				
 				sesionComentada.setIdSesion(rs.getInt("ID_SESION"));
+				sesionComentada.setIdCita(rs.getInt("ID_CITA"));
 				sesionComentada.setFecha(rs.getString("FECHA"));
 				sesionComentada.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
 				sesionComentada.setObjetivo(rs.getString("OBJETIVO_SESION"));
@@ -307,7 +308,6 @@ public class DaoSesionIndividual extends ConexionOracle{
 				}
 				sesionComentada.setFallo(fallo);
 				cita.setPaciente(paciente);
-				cita.setReporte(sesionComentada);
 			}
 			
 		}catch(Exception e){
@@ -315,7 +315,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 			e.getLocalizedMessage();
 		}
 		
-		return cita;
+		return sesionComentada;
 	}
 	
 	public ArrayList<SesionIndividualTo> consultarReporteSesionporPracticante(Integer idPracticante){
@@ -326,7 +326,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		String sql = "SELECT RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, RS.OBJETIVO_SESION, RS.DESCRIPCION_SESION,";
 				sql+= "RS.TAREAS_ASIGNADAS, RS.ACTIVIDADES_PROX_SESION, RS.ES_FALLO, RS.RECIBO, RS.ID_COMENTARIOS ";
 				sql+= "FROM REPORTE_SESION RS INNER JOIN CITA CITA ";
-				sql+= "ON CITA.ID_PRACTICANTE = ? AND CITA.ID_REPORTE = RS.ID_SESION ORDER BY CITA.ESTADO DESC, RS.FECHA DESC ";
+				sql+= "ON CITA.ID_PRACTICANTE = ? AND CITA.ID_CITA = RS.ID_CITA ORDER BY CITA.ESTADO DESC, RS.FECHA DESC ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -375,7 +375,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 		String asociar = "UPDATE REPORTE_SESION SET ID_COMENTARIOS = COMENTARIOS_REPORTE_SEQ.CURRVAL WHERE ID_SESION = ? ";
 		
-		String actualizar = "UPDATE CITA SET ESTADO = 'revision' WHERE ID_REPORTE = ?";
+		String actualizar = "UPDATE CITA SET ESTADO = 'revision' WHERE ID_CITA = (SELECT ID_CITA FROM REPORTE_SESION WHERE ID_SESION = ?)";
 		try {
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
@@ -494,8 +494,8 @@ public class DaoSesionIndividual extends ConexionOracle{
 		ResultSet rs = null;
 		conexionActual = new ConexionOracle();
 		
-		String buscar = "SELECT ID_TRATAMIENTO FROM CITA WHERE ID_REPORTE = ? ";
-		String actualizar = "UPDATE CITA SET ESTADO = 'cerrada' WHERE ID_REPORTE = ? ";
+		String buscar = "SELECT CT.ID_TRATAMIENTO FROM CITA CT, REPORTE_SESION RS WHERE RS.ID_SESION = ? AND CT.ID_CITA = RS.ID_CITA ";
+		String actualizar = "UPDATE CITA SET ESTADO = 'cerrada' WHERE ID_CITA = (SELECT ID_CITA FROM REPORTE_SESION WHERE ID_SESION = ?) ";
 		String desbloquear = "UPDATE TRATAMIENTO SET PENDIENTE = 0 WHERE ID_TRATAMIENTO = ? ";
 	
 		try {
