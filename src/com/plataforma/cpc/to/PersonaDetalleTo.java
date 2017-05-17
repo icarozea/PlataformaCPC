@@ -6,7 +6,7 @@ public class PersonaDetalleTo {
 	
 	private Integer personaId;
 	private String sexo;
-	private Integer edad;
+	private String edad;
 	private String acudiente;
 	private String proceso;
 	private String perteneceU;
@@ -22,7 +22,7 @@ public class PersonaDetalleTo {
 	private String ocupacion;
 	private String localidad;
 	private String barrio;
-	private Integer estrato;
+	private String estrato;
 	private String personaEmergencia;
 	private String telefonoEmergencia;
 	private String parentescoEmergencia;
@@ -45,10 +45,10 @@ public class PersonaDetalleTo {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	public Integer getEdad() {
+	public String getEdad() {
 		return edad;
 	}
-	public void setEdad(Integer edad) {
+	public void setEdad(String edad) {
 		this.edad = edad;
 	}
 	public String getAcudiente() {
@@ -141,10 +141,10 @@ public class PersonaDetalleTo {
 	public void setBarrio(String barrio) {
 		this.barrio = barrio;
 	}
-	public Integer getEstrato() {
+	public String getEstrato() {
 		return estrato;
 	}
-	public void setEstrato(Integer estrato) {
+	public void setEstrato(String estrato) {
 		this.estrato = estrato;
 	}
 	public String getPersonaEmergencia() {

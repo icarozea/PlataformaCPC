@@ -532,7 +532,9 @@ public class DaoPersona {
     	
     	boolean retorno =  Boolean.FALSE;
     	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE DETALLE_PERSONA SET SEXO = ?, EDAD = ?, ACUDIENTE = ?, PROCESO = ?, PERTENECE_U = ?, FACULTAD = ?, SEMESTRE = ?, PROBLEMATICA = ?, OBSERVACIONES = ?, PERSONA_MODIFICA_DATOS = ? WHERE ID_PERSONA = ?";
+    	String sql = "UPDATE DETALLE_PERSONA SET SEXO = ?, EDAD = ?, ACUDIENTE = ?, PROCESO = ?, PERTENECE_U = ?, FACULTAD = ?, SEMESTRE = ?, PROBLEMATICA = ?, OBSERVACIONES = ?, PERSONA_MODIFICA_DATOS = ?, ";
+    	sql += "ESTADO_CIVIL = ?, FECHA_NACIMIENTO = ?, LUGAR_NACIMIENTO = ?, ESCOLARIDAD = ?, OCUPACION = ?, LOCALIDAD = ?, BARRIO = ?, ESTRATO = ?, PERSONA_EMERGENCIA = ?, TELEFONO_EMERGENCIA = ?, PARENTESCO_EMERGENCIA = ?, ";
+    	sql += "FORMATO_SOLICITUD = ?, INSTITUCION_REMISION = ?, PARENTESCO_ACUDIENTE = ?, TELEFONO_ACUDIENTE = ?, PERSONAS_RESIDE = ? WHERE ID_PERSONA = ?";
     	 	
 		try {
 			conexionActual.conectar();
@@ -547,7 +549,23 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(8, persona.getProblematica());
 			conexionActual.agregarAtributo(9, persona.getObservación());
 			conexionActual.agregarAtributo(10, persona.getNombreModifica());
-			conexionActual.agregarAtributo(11, persona.getPersonaId());
+			conexionActual.agregarAtributo(11, persona.getEstadoCivil());
+			conexionActual.agregarAtributo(12, persona.getFechaNacimiento());
+			conexionActual.agregarAtributo(13, persona.getLugarNacimiento());
+			conexionActual.agregarAtributo(14, persona.getEscolaridad());
+			conexionActual.agregarAtributo(15, persona.getOcupacion());
+			conexionActual.agregarAtributo(16, persona.getLocalidad());
+			conexionActual.agregarAtributo(17, persona.getBarrio());
+			conexionActual.agregarAtributo(18, persona.getEstrato());
+			conexionActual.agregarAtributo(19, persona.getPersonaEmergencia());
+			conexionActual.agregarAtributo(20, persona.getTelefonoEmergencia());
+			conexionActual.agregarAtributo(21, persona.getParentescoEmergencia());
+			conexionActual.agregarAtributo(22, persona.getFormatoSolicitud());
+			conexionActual.agregarAtributo(23, persona.getInstitucionRemision());
+			conexionActual.agregarAtributo(24, persona.getParentescoAcudiente());
+			conexionActual.agregarAtributo(25, persona.getTelefonoAcudiente());
+			conexionActual.agregarAtributo(26, persona.getPersonasReside());
+			conexionActual.agregarAtributo(27, persona.getPersonaId());
 			
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
@@ -598,7 +616,9 @@ public class DaoPersona {
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	PersonaDetalleTo personaTo = new PersonaDetalleTo();
-    	String sql = "SELECT ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
+    	String sql = "SELECT ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS, ";
+    	sql += "ESTADO_CIVIL, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, ESCOLARIDAD, OCUPACION, LOCALIDAD, BARRIO, ESTRATO, PERSONA_EMERGENCIA, TELEFONO_EMERGENCIA, PARENTESCO_EMERGENCIA, ";
+    	sql+= "FORMATO_SOLICITUD, INSTITUCION_REMISION, PARENTESCO_ACUDIENTE, TELEFONO_ACUDIENTE, PERSONAS_RESIDE FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
     	 	
 		try {
 			conexionActual.conectar();
@@ -610,7 +630,7 @@ public class DaoPersona {
 
 				personaTo.setPersonaId(rs.getInt("ID_PERSONA"));
 				personaTo.setSexo(rs.getString("SEXO")); 
-				personaTo.setEdad(rs.getInt("EDAD"));
+				personaTo.setEdad(rs.getString("EDAD"));
 				personaTo.setAcudiente(rs.getString("ACUDIENTE"));
 				personaTo.setProceso(rs.getString("PROCESO"));
 				personaTo.setPerteneceU(rs.getString("PERTENECE_U"));
@@ -619,6 +639,22 @@ public class DaoPersona {
 				personaTo.setProblematica(rs.getString("PROBLEMATICA"));
 				personaTo.setObservación(rs.getString("OBSERVACIONES"));
 				personaTo.setNombreModifica(rs.getString("PERSONA_MODIFICA_DATOS"));
+				personaTo.setEstadoCivil(rs.getString("ESTADO_CIVIL"));
+				personaTo.setFechaNacimiento(rs.getString("FECHA_NACIMIENTO"));
+				personaTo.setLugarNacimiento(rs.getString("LUGAR_NACIMIENTO"));
+				personaTo.setEscolaridad(rs.getString("ESCOLARIDAD"));
+				personaTo.setOcupacion(rs.getString("OCUPACION"));
+				personaTo.setLocalidad(rs.getString("LOCALIDAD"));
+				personaTo.setBarrio(rs.getString("BARRIO"));
+				personaTo.setEstrato(rs.getString("ESTRATO"));
+				personaTo.setPersonaEmergencia(rs.getString("PERSONA_EMERGENCIA"));
+				personaTo.setTelefonoEmergencia(rs.getString("TELEFONO_EMERGENCIA"));
+				personaTo.setParentescoEmergencia(rs.getString("PARENTESCO_EMERGENCIA"));
+				personaTo.setFormatoSolicitud(rs.getString("FORMATO_SOLICITUD"));
+				personaTo.setInstitucionRemision(rs.getString("INSTITUCION_REMISION"));
+				personaTo.setParentescoAcudiente(rs.getString("PARENTESCO_ACUDIENTE"));
+				personaTo.setTelefonoAcudiente(rs.getString("TELEFONO_ACUDIENTE"));
+				personaTo.setPersonasReside(rs.getString("PERSONAS_RESIDE"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

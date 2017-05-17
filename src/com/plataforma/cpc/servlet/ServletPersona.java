@@ -383,6 +383,7 @@ public class ServletPersona extends HttpServlet {
 				PersonaDetalleTo personaDetalleTo = new PersonaDetalleTo();
 				personaDetalleTo.setPersonaId(id);
 				personaDetalleTo = personaDetalle.consultarPersonaDetalle(personaDetalleTo);
+				personaDetalleTo.setPersonaId(id);
 				request.setAttribute("personaDetalle", personaDetalleTo);
 				request.setAttribute("respuesta", "1");
 				

@@ -59,6 +59,8 @@
 		<form id="reporteSesionForm" action="./ServletSesionIndividual" method="POST">
 			<input type="hidden" name="operacion" value="valoracion"/>
 			<input type="hidden" name="idPaciente" value="<%=paciente.getIdPersona() %>"/>
+			<input type="hidden" name="idCita" value="<%=citaRecibida.getIdCita() %>"/>
+			<input type="hidden" name="idTratamiento" value="<%=citaRecibida.getTratamiento().getIdTratamiento() %>"/>
 		<div class="seccionReportePar">
 			<label id="hora_label" class="droidSans"><strong>Fecha:</strong></label><input id="fecha" name="fecha" type="text" class="field text fn" size="8" tabindex="1" value="<%=ano + "-" + mes + "-" + dia%>">
 			<label id="hora_label" class="droidSans"><strong>Hora:</strong></label><input id="hora" name="hora" type="text" class="field text fn" size="8" tabindex="1" value="<%=horas + ":" + minutos%>">

@@ -18,6 +18,7 @@ import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
+import com.plataforma.cpc.to.reporteValoracionTo;
 
 /**
  * Servlet implementation class ServletSesionIndividual
@@ -95,9 +96,10 @@ public class ServletSesionIndividual extends HttpServlet {
 		
 		PersonaBean personaBean = new PersonaBean();
 		PersonaDetalleBean detalleBean = new PersonaDetalleBean();
+		DaoSesionIndividual dao = new DaoSesionIndividual();
 		PersonaTo personaTo = new PersonaTo();
 		PersonaDetalleTo detalleTo = new PersonaDetalleTo();
-		
+		reporteValoracionTo valoracionTo = new reporteValoracionTo();
 		
 		try{
 			// Actualizacion datos persona
@@ -129,14 +131,14 @@ public class ServletSesionIndividual extends HttpServlet {
 				detalleTo.setPersonaId(idPaciente);
 				detalleTo.setSexo(request.getParameter("sexo"));
 				detalleTo.setEstadoCivil(request.getParameter("estado_civil"));
-				detalleTo.setEdad( Integer.parseInt(request.getParameter("edad")));
+				detalleTo.setEdad( request.getParameter("edad"));
 				detalleTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
 				detalleTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
 				detalleTo.setEscolaridad(request.getParameter("escolaridad"));
 				detalleTo.setOcupacion(request.getParameter("ocupacion"));
 				detalleTo.setLocalidad(request.getParameter("localidad"));
 				detalleTo.setBarrio(request.getParameter("barrio"));
-				detalleTo.setEstrato(Integer.parseInt(request.getParameter("estrato")));
+				detalleTo.setEstrato(request.getParameter("estrato"));
 				detalleTo.setPersonaEmergencia(request.getParameter("emergencia"));
 				detalleTo.setParentescoEmergencia(request.getParameter("parentesco"));
 				detalleTo.setTelefonoEmergencia(request.getParameter("telefonos_emergencia"));
@@ -147,9 +149,22 @@ public class ServletSesionIndividual extends HttpServlet {
 				detalleTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
 				
 				if(detalleBean.modificarPersonaDetalle(detalleTo)){
-					request.setAttribute("respuesta", "1");
-					request.setAttribute("error", "");
-					dispatcher.forward(request, response);
+					//Creacion del reporte
+					valoracionTo.setIdCita(Integer.parseInt(request.getParameter("idCita")));
+					valoracionTo.setMotivo(request.getParameter("motivo_consulta"));
+					valoracionTo.setPersonaReporta(request.getParameter("persona_reporta"));
+					valoracionTo.setComportamiento(request.getParameter("aspectos"));
+					valoracionTo.setHipotesis(request.getParameter("hipotesis"));
+					valoracionTo.setServicioRemitido(request.getParameter("remitido"));
+					
+					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "pendiente")){
+						request.setAttribute("respuesta", "1");
+						request.setAttribute("error", "");
+						dispatcher.forward(request, response);
+					}
+					else{
+						throw new Exception("Hubo un error al intentar guardar el reporte");
+					}
 				}
 				else{
 					throw new Exception("Hubo un error al intentar guardar el reporte");
