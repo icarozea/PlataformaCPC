@@ -35,7 +35,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="cabin"><a href="FormularioPersona.jsp">CREAR</a></td>
+					<td class="cabin"><a href="./ServletPersona?operacion=cargueIncial">CREAR</a></td>
 					<td class="cabin"><a href="busquedaPersonas">BUSCAR</a><br></td>
 				</tr>
 			</table>

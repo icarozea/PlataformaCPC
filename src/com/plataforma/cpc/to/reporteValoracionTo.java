@@ -9,7 +9,14 @@ public class reporteValoracionTo {
 	private String comportamiento;
 	private String hipotesis;
 	private String servicioRemitido;
+	private String encuestador;
 	
+	public String getEncuestador() {
+		return encuestador;
+	}
+	public void setEncuestador(String encuestador) {
+		this.encuestador = encuestador;
+	}
 	public Integer getIdValoracion() {
 		return idValoracion;
 	}

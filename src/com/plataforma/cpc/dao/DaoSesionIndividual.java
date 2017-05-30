@@ -132,8 +132,8 @@ public class DaoSesionIndividual extends ConexionOracle{
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 
-		String sqlReporte = "INSERT INTO REPORTE_VALORACION (ID_VALORACION, ID_CITA, MOTIVO, REPORTA, COMPORTAMIENTO, HIPOTESIS, SERVICIO_REMITIDO) ";
-		sqlReporte+= "VALUES(VALORACION_SEQ.NEXTVAL,?,?,?,?,?,?)";
+		String sqlReporte = "INSERT INTO REPORTE_VALORACION (ID_VALORACION, ID_CITA, MOTIVO, REPORTA, COMPORTAMIENTO, HIPOTESIS, SERVICIO_REMITIDO, ENCUESTADOR) ";
+		sqlReporte+= "VALUES(VALORACION_SEQ.NEXTVAL,?,?,?,?,?,?,?)";
 		
 		String sqlAvance = "UPDATE TRATAMIENTO SET NUM_CITA_ACTUAL = NUM_CITA_ACTUAL + 1, PENDIENTE = 1 WHERE ID_TRATAMIENTO = ? ";
 
@@ -150,6 +150,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.agregarAtributo(4, valoracionTo.getComportamiento());
 			conexionActual.agregarAtributo(5, valoracionTo.getHipotesis());
 			conexionActual.agregarAtributo(6, valoracionTo.getServicioRemitido());
+			conexionActual.agregarAtributo(7, valoracionTo.getEncuestador());
 			conexionActual.ejecutarActualizacion();
 			
 			conexionActual.prepararSentencia(sqlEstado);
