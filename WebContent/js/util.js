@@ -36,6 +36,7 @@ function campoOculto(){
 function administrarSecciones(perfil){
 	if (perfil == 4){
 		document.getElementById('campoEPS').style.display='inline-block';
+		document.getElementById('nuevaEPS').style.display='inline-block';
 		document.getElementById('campoJornada').style.display='inline-block';
 		document.getElementById('campoCodigo').style.display='none';
 //		document.getElementById('campoOculto').style.display='none';
@@ -44,12 +45,14 @@ function administrarSecciones(perfil){
 		document.getElementById('campoCodigo').style.display='inline-block';
 		document.getElementById('campoJornada').style.display='inline-block';
 		document.getElementById('campoEPS').style.display='none';
+		document.getElementById('nuevaEPS').style.display='none';
 //		document.getElementById('campoOculto').style.display='none';
 	}
 	else{
 		document.getElementById('campoOculto').style.display='inline-block';
 		document.getElementById('campoCodigo').style.display='none';
 		document.getElementById('campoEPS').style.display='none';
+		document.getElementById('nuevaEPS').style.display='none';
 		document.getElementById('campoJornada').style.display='none';
 	}
 }

@@ -297,7 +297,21 @@
 									</c:choose>
 								</c:forEach>
 							</select>
-							</div>						
+							</div>			
+						</c:otherwise>
+					</c:choose>
+					
+					
+					<c:choose>
+						<c:when test="${requestScope.perfil == 4}">
+							<div class="fieldgroup" id="nuevaEPS">
+								<a href="FormularioEPS.jsp"><input type="button" value="Agregar EPS" onclick="crearEPS()" class="submit cabin"></a>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="fieldgroup" id="nuevaEPS" style="display: none;">
+								<a href="FormularioEPS.jsp"><input type="button" value="Agregar EPS" onclick="crearEPS()" class="submit cabin"></a>
+							</div>			
 						</c:otherwise>
 					</c:choose>
 					
