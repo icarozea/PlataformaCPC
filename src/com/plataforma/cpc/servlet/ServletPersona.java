@@ -74,11 +74,20 @@ public class ServletPersona extends HttpServlet {
 		case "detallePersona":
 			detallePersona(request,response);
 			break;
+		case "irEPS":
+			irEPS(request,response);
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
 		
 		}
+	}
+	
+	private void irEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		  RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioEPS.jsp");		  
+		  request.setAttribute("idPersona", 101);
+		  dispatcher.forward(request, response);
 	}
 	
 	/**

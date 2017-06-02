@@ -154,6 +154,12 @@ function validarNombreCompleto(nom1,nom2,ape1,ape2) {
     return true;
 }
 
+function crearEPS(){
+	var nomForm = document.getElementById('register-form');
+	document.getElementById('operacion').value = "irEPS";
+	nomForm.submit();
+}
+
 function checkTodo(id){
 	
 	var nomForm = document.getElementById('register-form');

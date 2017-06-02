@@ -518,6 +518,7 @@ fieldset{ border:none; }
  border-radius:3px;
 }
 
+
 #register-form .fieldgroup label.error {
     color: #FB3A3A;
     display: inline-block;

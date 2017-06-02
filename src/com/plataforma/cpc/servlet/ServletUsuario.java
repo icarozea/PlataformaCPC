@@ -31,7 +31,7 @@ public class ServletUsuario extends HttpServlet {
 		case "btnIngresar":
 			personaSesion = usuarioBean.validarUsuario(request.getParameter("user"), request.getParameter("password"));
 
-			if (personaSesion.getIdPersona() != null) {
+			if (null != personaSesion.getIdPersona() && !personaSesion.getPerfil().getIdPerfil().equals(4)) {
 
 				if(personaSesion.getNumeroDocumento().equals("000")){
 					request.setAttribute("mensaje", "3");
