@@ -145,7 +145,7 @@ public class ServletAsesor extends HttpServlet {
 			request.setAttribute("idPracticante", idPracticante);
 			request.setAttribute("nomPracticante", request.getParameter("pNom")+" "+request.getParameter("sNom")+" "
 					+request.getParameter("pApe")+" "+request.getParameter("sApe"));
-			System.out.println(reportesPreview);
+//			System.out.println(reportesPreview);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verReportesPracticantes.jsp");
 			dispatcher.forward(request, response);
 		}catch(Exception e){
@@ -178,29 +178,24 @@ public class ServletAsesor extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-
+	
 	private void guardarComentarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("ISO-8859-1");
 		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
 		ComentariosTo comentarios = new ComentariosTo();
+		String accionAsesor = request.getParameter("accionAsesor");
 
 		try{
-			System.out.println("ServletAsesor recibe params!");
-			System.out.println("accionAsesor: " + request.getParameter("accionAsesor"));
-			System.out.println("idReporte: " + request.getParameter("idReporte"));
-			System.out.println("comObjetivo: " + request.getParameter("campoObjetivo"));
-			System.out.println("comDescripcion: " + request.getParameter("campoDesc"));
-			System.out.println("comTareas: " + request.getParameter("campoTareasAsig"));
-			System.out.println("comActividades: " + request.getParameter("campoActividades"));
 			
 			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
 			comentarios.setComentariosObjetivo(request.getParameter("campoObjetivo"));
 			comentarios.setComentariosDescripcion(request.getParameter("campoDesc"));
 			comentarios.setComentariosTareas(request.getParameter("campoTareasAsig"));
 			comentarios.setComentariosActividades(request.getParameter("campoActividades"));
+			System.out.println("RESULTADO: " + accionAsesor);
 
-			if(daoSesion.guardarComentarios(idReporte, comentarios)){
+			if(daoSesion.guardarComentarios(idReporte, comentarios, accionAsesor)){
 				request.setAttribute("respuesta", "1");
 				request.setAttribute("mensajeRespuestaReporte", "Los comentarios se han guardado exitosamente");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");

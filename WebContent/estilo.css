@@ -205,6 +205,7 @@ input, select{
     margin-bottom: 1%;
     margin-top: 1%;
     border-radius: 5px;
+    width: 10%;
 }
 
 input.text{    

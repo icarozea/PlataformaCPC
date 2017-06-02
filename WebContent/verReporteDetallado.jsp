@@ -22,7 +22,7 @@
 				$('#register-form').attr('action', 'ServletAsesor');
 				$('<input />').attr('type', 'hidden')
 	              .attr('name', 'accionAsesor')
-	              .attr('value', 'aceptarReporte')
+	              .attr('value', 'Aceptado')
 	              .appendTo('#register-form');
 				$('#register-form').submit();
 			});
@@ -31,7 +31,7 @@
 				$('#register-form').attr('action', 'ServletAsesor');
 				$('<input />').attr('type', 'hidden')
 	              .attr('name', 'accionAsesor')
-	              .attr('value', 'rechazarReporte')
+	              .attr('value', 'Rechazado')
 	              .appendTo('#register-form');
 				$('#register-form').submit();
 			});

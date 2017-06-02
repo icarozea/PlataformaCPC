@@ -17,62 +17,74 @@
 		%>
 	<script>
 	$(document).ready(function() {
-		
-		$('#btnObjetivo').click(function() {
-				$('#btnObjetivoCancel').show();
-				$('#campoObjetivo').show();
-				$('#btnObjetivo').hide();
-			});
-		
-		$('#btnObjetivoCancel').click(function() {
-			$('#btnObjetivoCancel').hide();
-			$('#campoObjetivo').hide();
-			$('#btnObjetivo').show();
-			});
 
-		$('#btnDescripcion').click(function() {
-			$('#btnDescripcionCancel').show();
-			$('#campoDescripcion').show();
+		if($('#estadoReporte').val()=='Aceptado'){
+
+			console.log('Reporte aceptado. Se ocultan botones de actualización');
+			$('#btnObjetivo').hide();
 			$('#btnDescripcion').hide();
-		});
-	
-		$('#btnDescripcionCancel').click(function() {
-			$('#btnDescripcionCancel').hide();
-			$('#campoDescripcion').hide();
-			$('#btnDescripcion').show();
-			});
-
-		$('#btnTareas').click(function() {
-			$('#btnTareasCancel').show();
-			$('#campoTareas').show();
 			$('#btnTareas').hide();
-		});
-	
-		$('#btnTareasCancel').click(function() {
-			$('#btnTareasCancel').hide();
-			$('#campoTareas').hide();
-			$('#btnTareas').show();
-			});
-
-		$('#btnActividadesProx').click(function() {
-			$('#btnActividadesProxCancel').show();
-			$('#campoActividades').show();
 			$('#btnActividadesProx').hide();
-		});
-	
-		$('#btnActividadesProxCancel').click(function() {
-			$('#btnActividadesProxCancel').hide();
-			$('#campoActividades').hide();
-			$('#btnActividadesProx').show();
-			});	
 
+			}
+
+		if($('#estadoReporte').val()=='Rechazado' || $('#estadoReporte').val()=='Pendiente'){
+
+			$('#btnObjetivo').click(function() {
+					$('#btnObjetivoCancel').show();
+					$('#campoObjetivo').show();
+					$('#btnObjetivo').hide();
+				});
+			
+			$('#btnObjetivoCancel').click(function() {
+				$('#btnObjetivoCancel').hide();
+				$('#campoObjetivo').hide();
+				$('#btnObjetivo').show();
+				});
+	
+			$('#btnDescripcion').click(function() {
+				$('#btnDescripcionCancel').show();
+				$('#campoDescripcion').show();
+				$('#btnDescripcion').hide();
+			});
+		
+			$('#btnDescripcionCancel').click(function() {
+				$('#btnDescripcionCancel').hide();
+				$('#campoDescripcion').hide();
+				$('#btnDescripcion').show();
+				});
+	
+			$('#btnTareas').click(function() {
+				$('#btnTareasCancel').show();
+				$('#campoTareas').show();
+				$('#btnTareas').hide();
+			});
+		
+			$('#btnTareasCancel').click(function() {
+				$('#btnTareasCancel').hide();
+				$('#campoTareas').hide();
+				$('#btnTareas').show();
+				});
+	
+			$('#btnActividadesProx').click(function() {
+				$('#btnActividadesProxCancel').show();
+				$('#campoActividades').show();
+				$('#btnActividadesProx').hide();
+			});
+		
+			$('#btnActividadesProxCancel').click(function() {
+				$('#btnActividadesProxCancel').hide();
+				$('#campoActividades').hide();
+				$('#btnActividadesProx').show();
+				});	
+			}
 				
 		});
 	</script>
 		
     <body>      
         <!--MEMU SUPERIOR--> 
-         <%@include file="./menuNavegacionAsesor.jsp" %>
+        <%@include file="./menuNavegacionPracticante.jsp" %>
 		<div>
         	<h1 class="cabin">Comentarios de reporte</h1>
         	<h2 class="cabin">Cita número ${requestScope.idCita}</h2>
@@ -82,6 +94,7 @@
         	<form align="center" id="register-form" name="formularioComentariosAsesor" action="ReportesPracticante" method="POST">
         		<input type="hidden" id="operacion" name="operacion" value="guardarMoficiacionesReporteSesion"/>
         		<input type="hidden" id="idReporte" name="idReporte" value="${requestScope.citaSesionReportePracticante.reporte.idSesion}"/>
+        		<input type="hidden" id="estadoReporte" name="estadoReporte" value="${requestScope.citaSesionReportePracticante.estado}"/>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Fecha de la cita:</b></label>
@@ -96,12 +109,20 @@
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Recibo N°:</b></label>
-        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.numRecibo}</label>
+        				<input type="text" id="numRecibo" name="numRecibo" value="${requestScope.citaSesionReportePracticante.reporte.numRecibo}">
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Profesional que atendió la cita:</b></label>
         				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.nombreProfesional}</label>
-        			</div>        		
+        			</div>
+        			<div class="fieldgroupTextArea">
+        				<label class="cabin"><b>Asesor del profesional:</b></label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.reporte.nombreAsesorProfesional}</label>
+        			</div>
+        			<div class="fieldgroupTextArea">
+        				<label class="cabin"><b>Estado del reporte:</b></label>
+        				<label class="cabin">${requestScope.citaSesionReportePracticante.estado}</label>
+        			</div>     		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">

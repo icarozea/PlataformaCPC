@@ -85,7 +85,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		String actualizacion = "UPDATE REPORTE_SESION SET OBJETIVO_SESION = ?, DESCRIPCION_SESION = ?, TAREAS_ASIGNADAS = ?, ACTIVIDADES_PROX_SESION = ? ";
 		actualizacion+= "WHERE ID_SESION = ? "; 
 		
-		String sqlEstado = "UPDATE CITA SET ESTADO = 'pendiente' WHERE ID_REPORTE = ? ";
+		String sqlEstado = "UPDATE CITA SET ESTADO = 'Pendiente' WHERE ID_REPORTE = ? ";
 		
 		Integer idSesion = sesion.getIdSesion();
 		try {
@@ -265,9 +265,15 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
-		String sql = "SELECT CT.ID_CITA, RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, RS.OBJETIVO_SESION, CR.COM_OBJETIVO, RS.DESCRIPCION_SESION, CR.COM_DESCRIPCION, RS.TAREAS_ASIGNADAS, CR.COM_TAREAS, RS.ACTIVIDADES_PROX_SESION, CR.COM_ACTIVIDADES, RS.RECIBO, RS.ES_FALLO ";
-			   sql += "FROM CITA CT, PERSONA PE, REPORTE_SESION RS, COMENTARIOS_REPORTE CR WHERE CT.ID_REPORTE=RS.ID_SESION AND RS.ID_COMENTARIOS=CR.ID_COMENTARIOS AND CT.ID_PACIENTE=PE.ID_PERSONA AND ID_CITA = ?";
-		
+		String sql = "SELECT CT.ID_CITA, CT.ESTADO, RS.ID_SESION, RS.FECHA, RS.NOMBRE_PROFESIONAL, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, ";
+			  sql += "(SELECT PEASE.PRIMER_NOMBRE FROM PERSONA PEASE WHERE PEASE.ID_PERSONA = (SELECT PS.PERSONA_ID_SUPERIOR FROM PERSONA PS WHERE PS.ID_PERSONA = PE.PERSONA_ID_SUPERIOR)) AS P_NOM_ASESOR,";
+			  sql += "(SELECT PEASE.SEGUNDO_NOMBRE FROM PERSONA PEASE WHERE PEASE.ID_PERSONA = (SELECT PS.PERSONA_ID_SUPERIOR FROM PERSONA PS WHERE PS.ID_PERSONA = PE.PERSONA_ID_SUPERIOR)) AS S_NOM_ASESOR,";
+			  sql += "(SELECT PEASE.PRIMER_APELLIDO FROM PERSONA PEASE WHERE PEASE.ID_PERSONA = (SELECT PS.PERSONA_ID_SUPERIOR FROM PERSONA PS WHERE PS.ID_PERSONA = PE.PERSONA_ID_SUPERIOR)) AS P_APE_ASESOR,";
+			  sql += "(SELECT PEASE.SEGUNDO_APELLIDO FROM PERSONA PEASE WHERE PEASE.ID_PERSONA = (SELECT PS.PERSONA_ID_SUPERIOR FROM PERSONA PS WHERE PS.ID_PERSONA = PE.PERSONA_ID_SUPERIOR)) AS S_APE_ASESOR,";
+			  sql += "RS.OBJETIVO_SESION, CR.COM_OBJETIVO, RS.DESCRIPCION_SESION, CR.COM_DESCRIPCION, RS.TAREAS_ASIGNADAS, CR.COM_TAREAS, RS.ACTIVIDADES_PROX_SESION, ";
+			  sql += "CR.COM_ACTIVIDADES, RS.RECIBO, RS.ES_FALLO FROM CITA CT, PERSONA PE, REPORTE_SESION RS, COMENTARIOS_REPORTE CR ";
+			  sql += "WHERE CT.ID_REPORTE=RS.ID_SESION AND RS.ID_COMENTARIOS=CR.ID_COMENTARIOS AND CT.ID_PACIENTE=PE.ID_PERSONA AND ID_CITA = ?";
+			  
 		try{
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -280,7 +286,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				comentario = new ComentariosTo();
 				
 				cita.setIdCita(rs.getInt("ID_CITA"));
-				
+				cita.setEstado(rs.getString("ESTADO"));
 				paciente.setPrimerNombre(rs.getString("PRIMER_NOMBRE"));
 				paciente.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
 				paciente.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
@@ -289,6 +295,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesionComentada.setIdSesion(rs.getInt("ID_SESION"));
 				sesionComentada.setFecha(rs.getString("FECHA"));
 				sesionComentada.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
+				sesionComentada.setNombreAsesorProfesional(rs.getString("P_NOM_ASESOR") + " " + rs.getString("S_NOM_ASESOR") + " " + rs.getString("P_APE_ASESOR") + " " + rs.getString("S_APE_ASESOR"));
 				sesionComentada.setObjetivo(rs.getString("OBJETIVO_SESION"));
 				comentario.setComentariosObjetivo(rs.getString("COM_OBJETIVO"));
 				sesionComentada.setDescripcion(rs.getString("DESCRIPCION_SESION"));
@@ -366,7 +373,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return reportes;
 	}
 	
-	public boolean guardarComentarios(Integer idReporte, ComentariosTo comentarios){
+	public boolean guardarComentarios(Integer idReporte, ComentariosTo comentarios, String accionAsesor){
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 		
@@ -375,7 +382,15 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 		String asociar = "UPDATE REPORTE_SESION SET ID_COMENTARIOS = COMENTARIOS_REPORTE_SEQ.CURRVAL WHERE ID_SESION = ? ";
 		
-		String actualizar = "UPDATE CITA SET ESTADO = 'revision' WHERE ID_REPORTE = ?";
+		String actualizar = "UPDATE CITA SET ESTADO = 'Pendiente' WHERE ID_REPORTE = ?";
+		
+		if (accionAsesor.equals("Aceptado")) {
+			actualizar = "UPDATE CITA SET ESTADO = 'Aceptado' WHERE ID_REPORTE = ?";
+		}else if (accionAsesor.equals("Rechazado")) {
+			actualizar = "UPDATE CITA SET ESTADO = 'Rechazado' WHERE ID_REPORTE = ?";
+		}
+		
+
 		try {
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
@@ -547,4 +562,51 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 		return retorno;
 	}
+	
+	public boolean actualizarModificacionesReporteSesion(Integer idSesion, Integer numRecibo, String estadoActual, 
+														 String objetivo, String descripcion, String tareas, String actividades){
+		conexionActual = new ConexionOracle();
+		
+		String sql = "UPDATE REPORTE_SESION SET RECIBO = ?, OBJETIVO_SESION = ?, DESCRIPCION_SESION = ?, TAREAS_ASIGNADAS = ?, ACTIVIDADES_PROX_SESION = ? WHERE ID_SESION = ?";
+		
+		String sqlStatusReporte = "UPDATE CITA SET ESTADO = 'Pendiente' WHERE ID_REPORTE = ?";
+		
+		try{
+			conexionActual.conectar();
+			conexionActual.iniciarTransaccion();
+			
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, numRecibo);
+			conexionActual.agregarAtributo(2, objetivo);
+			conexionActual.agregarAtributo(3, descripcion);
+			conexionActual.agregarAtributo(4, tareas);
+			conexionActual.agregarAtributo(5, actividades);
+			conexionActual.agregarAtributo(6, idSesion);
+			
+			conexionActual.ejecutarActualizacion();
+			
+			if (!estadoActual.equalsIgnoreCase("Aceptado")) {
+				conexionActual.prepararSentencia(sqlStatusReporte);
+				conexionActual.agregarAtributo(1, idSesion);
+				
+				conexionActual.ejecutarActualizacion();	
+			}
+			
+			
+			conexionActual.commit();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
+		
+	}
+	
 }

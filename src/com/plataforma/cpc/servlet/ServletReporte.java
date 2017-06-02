@@ -74,7 +74,8 @@ public class ServletReporte extends HttpServlet {
 		String nombreArchivo = "attachment; filename="+nombreReporte+".xls";
 		response.setHeader("Content-disposition",nombreArchivo);
 		byte[] buffer = null;
-		Reporte reporte = new Reporte(Propiedades.getInstance().valorPropiedad(Propiedades.RUTA_JASPER));
+//		Reporte reporte = new Reporte(Propiedades.getInstance().valorPropiedad(Propiedades.RUTA_JASPER));
+		Reporte reporte = new Reporte("C:\\RIPS");
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("ID_PERFIL",this.idPerfil);

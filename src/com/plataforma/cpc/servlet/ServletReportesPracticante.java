@@ -98,21 +98,12 @@ public class ServletReportesPracticante extends HttpServlet {
     }
     
     public void guardarMoficiacionesReporteSesion(HttpServletRequest request, HttpServletResponse response){
-    	 
-    	System.out.println("operacion: " + request.getParameter("operacion"));
-    	System.out.println("idReporte: " + request.getParameter("idReporte"));
-    	System.out.println("**************************************************************************************");
-    	System.out.println("**************************************************************************************");
-    	System.out.println("Objetivo sesión: " + request.getParameter("campoObjetivo"));
-    	System.out.println("**************************************************************************************");
-    	System.out.println("**************************************************************************************");
-    	System.out.println("Descripción de sesión: " + request.getParameter("campoDescripcion"));
-    	System.out.println("**************************************************************************************");
-    	System.out.println("**************************************************************************************");
-    	System.out.println("Tareas asignadas: " + request.getParameter("campoTareas"));
-    	System.out.println("**************************************************************************************");
-    	System.out.println("**************************************************************************************");
-    	System.out.println("Actividades próxima sesión: " + request.getParameter("campoActividades"));
+    	
+    	DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+    	daoSesionIndividual.actualizarModificacionesReporteSesion(Integer.valueOf(request.getParameter("idReporte")), Integer.valueOf(request.getParameter("numRecibo")),
+    															  request.getParameter("estadoReporte"), request.getParameter("campoObjetivo"),
+    															  request.getParameter("campoDescripcion"), request.getParameter("campoTareas"),
+    															  request.getParameter("campoActividades"));
 
 		try{
 			request.setAttribute("mensajeRespuestaActualizacionReporte", "Se ha actualizado la información del reporte correctamente");

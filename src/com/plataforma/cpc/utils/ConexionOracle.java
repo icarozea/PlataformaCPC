@@ -17,17 +17,12 @@ import oracle.jdbc.driver.OracleDriver;
  */
 public class ConexionOracle implements Conexion {
 
-//	private final String USUARIO = Propiedades.getInstance().valorPropiedad("USUARIO");
-//	private final String PASSWORD = Propiedades.getInstance().valorPropiedad("PASSWORD");
-//	private final String SID = Propiedades.getInstance().valorPropiedad("SID");
-//	private final String HOST = Propiedades.getInstance().valorPropiedad("HOST");
-//	private final String PUERTO = Propiedades.getInstance().valorPropiedad("PUERTO");
+	private final String usuario = Propiedades.getInstance().valorPropiedad("USUARIO");
+	private final String password = Propiedades.getInstance().valorPropiedad("PASSWORD");
+	private final String sid = Propiedades.getInstance().valorPropiedad("SID");
+	private final String host = Propiedades.getInstance().valorPropiedad("HOST");
+	private final String puerto = Propiedades.getInstance().valorPropiedad("PUERTO");
 	
-	private final String USUARIO = "CPC_DB";
-	private final String PASSWORD = "1234";
-	private final String SID = "xe";
-	private final String HOST = "localhost";
-	private final String PUERTO = "1521";
 	private Connection connection;
 	private PreparedStatement sentenciaActual;
 
@@ -43,12 +38,12 @@ public class ConexionOracle implements Conexion {
 	public void conectar() throws SQLException {
 		if (connection == null || connection.isClosed() == true) {
 			String cadenaCoenexion = "jdbc:oracle:thin:@"
-					+ HOST + ":"
-					+ PUERTO + ":"
-					+ SID;
+					+ host + ":"
+					+ puerto + ":"
+					+ sid;
 
 			registrarDriver();
-			connection = DriverManager.getConnection(cadenaCoenexion, USUARIO, PASSWORD);
+			connection = DriverManager.getConnection(cadenaCoenexion, usuario, password);
 
 		}
 	}
