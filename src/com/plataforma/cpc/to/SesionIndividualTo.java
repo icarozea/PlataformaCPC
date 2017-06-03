@@ -14,6 +14,7 @@ public class SesionIndividualTo {
 	private Integer idSesion;
 	private String fecha;
 	private String nombreProfesional;
+	private String nombreAsesorProfesional;
 	private String objetivo;
 	private String descripcion;
 	private String tareasAsignadas;
@@ -44,6 +45,12 @@ public class SesionIndividualTo {
 	}
 	public void setNombreProfesional(String nombreProfesional) {
 		this.nombreProfesional = nombreProfesional;
+	}
+	public String getNombreAsesorProfesional() {
+		return nombreAsesorProfesional;
+	}
+	public void setNombreAsesorProfesional(String nombreAsesorProfesional) {
+		this.nombreAsesorProfesional = nombreAsesorProfesional;
 	}
 	public String getObjetivo() {
 		return objetivo;

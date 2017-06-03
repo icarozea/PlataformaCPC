@@ -251,17 +251,17 @@ public class DaoPersona {
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
-				tipoDocumentoTo = utils.buscarTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
-				personaTo.setTipoDocumento(tipoDocumentoTo);
-				epsTo = utils.buscarEps((rs.getInt("EPS_ID_EPS")));
-				personaTo.setEps(epsTo);
-				perfilTo = utils.buscarPerfil((rs.getInt("PERFIL_ID_PERFIL")));
 				personaTo.setPerfil(perfilTo);
 				personaTo.setPassword(rs.getString("PASS"));
 				personaTo.setSuperior(rs.getInt("PERSONA_ID_SUPERIOR"));
 				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
 				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
 				personaTo.setJornada(rs.getString("JORNADA"));
+				tipoDocumentoTo = utils.buscarTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
+				personaTo.setTipoDocumento(tipoDocumentoTo);
+				epsTo = utils.buscarEps((rs.getInt("EPS_ID_EPS")));
+				personaTo.setEps(epsTo);
+				perfilTo = utils.buscarPerfil((rs.getInt("PERFIL_ID_PERFIL")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
