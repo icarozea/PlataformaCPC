@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script type='text/javascript'>
 function generarReporteAdmin(operacion){
-	alert('generarReporteZea');
 	idPerfil = 4;
 	document.getElementById('reporteForm').action = "./ServletReporte?operacion="+operacion+"&idPerfil="+idPerfil;
 	document.getElementById('reporteForm').submit();
