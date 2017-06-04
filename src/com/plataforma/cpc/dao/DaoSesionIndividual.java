@@ -129,7 +129,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 	}
 
 	public boolean crearReporteValoracion(reporteValoracionTo valoracionTo, Integer idTratamiento, String estado){
-		boolean retorno;
+		boolean retorno = Boolean.FALSE;
 		conexionActual = new ConexionOracle();
 
 		String sqlReporte = "INSERT INTO REPORTE_VALORACION (ID_VALORACION, ID_CITA, MOTIVO, REPORTA, COMPORTAMIENTO, HIPOTESIS, SERVICIO_REMITIDO, ENCUESTADOR) ";

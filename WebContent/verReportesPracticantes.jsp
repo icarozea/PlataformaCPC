@@ -53,7 +53,7 @@
         
         </div>
     		<div class="btnRegresar">
-				<a href="./ServletAsesor?operacion=practicantes&idAsesor=<%=session.getAttribute("idPersona")%>"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+				<a href="./ServletAsesor?operacion=practicantes&idAsesor=${sessionScope.personaSession.idPersona}"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
 			</div>        
     </body>
 </html>

@@ -14,6 +14,7 @@ import com.plataforma.cpc.dao.DaoUtilidades;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.modelo.PersonaDetalleBean;
 import com.plataforma.cpc.to.EpsTo;
+import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
@@ -92,7 +93,7 @@ public class ServletSesionIndividual extends HttpServlet {
 	}
 	
 	public void reporteValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		
 		PersonaBean personaBean = new PersonaBean();
 		PersonaDetalleBean detalleBean = new PersonaDetalleBean();
@@ -121,6 +122,9 @@ public class ServletSesionIndividual extends HttpServlet {
 			personaTo.setDireccion(request.getParameter("direccion"));
 			Integer idEPS = Integer.parseInt(request.getParameter("aseguradora"));
 			EpsTo epsTo = daoUtilidades.buscarEps(idEPS);
+			PerfilTo perfilTo = new PerfilTo();
+			perfilTo.setIdPerfil(4);
+			personaTo.setPerfil(perfilTo);
 			if(epsTo != null)
 				personaTo.setEps(epsTo);
 			else
@@ -159,8 +163,7 @@ public class ServletSesionIndividual extends HttpServlet {
 					valoracionTo.setEncuestador(request.getParameter("entrevistador"));
 					
 					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "pendiente")){
-						request.setAttribute("respuesta", "1");
-						request.setAttribute("error", "");
+						request.setAttribute("mensajeRespuestaReporte", "Reporte guardado exitosamente");
 						dispatcher.forward(request, response);
 					}
 					else{
@@ -178,8 +181,7 @@ public class ServletSesionIndividual extends HttpServlet {
 		catch(Exception e){
 			System.out.println("Error de formulario: " + e.getMessage());
 			e.printStackTrace();
-			request.setAttribute("respuesta", "2");
-			request.setAttribute("error", e.getMessage());
+			request.setAttribute("mensajeRespuestaReporte", "Error de formulario: " + e.getMessage());
 			dispatcher.forward(request, response);
 		}
 	}
