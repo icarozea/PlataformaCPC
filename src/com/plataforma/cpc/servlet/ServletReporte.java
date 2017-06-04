@@ -84,7 +84,8 @@ public class ServletReporte extends HttpServlet {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("ID_PRACTICANTE",personaSesion.getIdPersona().toString());
 		parametros.put("FECHA_MES",request.getParameter("fechaReporte"));
-		parametros.put("ID_PERFIL",new Integer(request.getParameter("idPerfil")));
+		if(null != request.getParameter("idPerfil"))
+			parametros.put("ID_PERFIL",new Integer(request.getParameter("idPerfil")));
 		
 		try {
 			 buffer = reporte.reporte(nombreReporte, parametros);
