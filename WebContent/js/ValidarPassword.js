@@ -196,3 +196,10 @@ function generarReporte(operacion){
     document.reporteForm.action = "./ServletReporte?operacion="+operacion+"&fechaReporte="+fechaReporte;
     document.reporteForm.submit();
 }
+
+function generarReporteAdmin(operacion){
+	alert('generarReporteAdmin');
+	idPerfil = 4;
+    document.reporteForm.action = "./ServletReporte?operacion="+operacion+"&idPerfil="+idPerfil;
+    document.reporteForm.submit();
+}
