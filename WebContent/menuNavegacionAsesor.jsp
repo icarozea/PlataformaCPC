@@ -24,7 +24,7 @@
 		 	<span class="menu"> </span>
 			 <ul>
 				 <li><a href="VentanaAsesor.jsp">INICIO</a></li>
-				 <li><a href="#">REPORTES</a></li>
+				 <li><a href="./ServletAsesor?operacion=practicantes&idAsesor=${sessionScope.personaSession.idPersona}">REPORTES</a></li>
 				<div class="clearfix"></div>
 			 </ul>
 			 <script>

@@ -50,15 +50,15 @@
 					<th>Inicio</th>
 					<th>Cierre</th>
 				</tr>
-				<tr>
 				<c:forEach items="${requestScope.tratamientos}" var="tratamiento">
+				<tr>		
 					<td><input type="radio" id="grupoTratamiento" name="grupoTratamiento" value="${tratamiento.idTratamiento}"></td>
 					<td>${tratamiento.tipo}</td>
 					<td>${tratamiento.estado}</td>
 					<td>${tratamiento.fechaInicio}</td>
 					<td>${tratamiento.fechaCierre}</td>
-				</c:forEach>
 				</tr>
+				</c:forEach>
 				<tr>
 					<td></td>
 					<td></td>

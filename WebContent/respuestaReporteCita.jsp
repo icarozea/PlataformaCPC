@@ -37,7 +37,14 @@
 		<br>
 		<br>
         <div>
-			<a href="VentanaAsesor.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+        <c:choose>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 2}">
+				<a href="VentanaAsesor.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			</c:when>			
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+				<a href="VentanaPracticante.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			</c:when>
+		</c:choose>
 		</div>		
 </body>
 </html>
