@@ -41,6 +41,20 @@
 					<td class="cabin"><a href="./ServletCita?operacion=cargueIncial">CITAS</a><br></td>
 				</tr>
 			</table>
+			<table class="tablaPrincipal">
+				<tr>
+					<td>
+						<div>
+							<a href="./ReportesAdministrador?operacion=visualizarReportes"><button class="btn-xlarge">
+									<i class="fa fa-file-text fa-4x"></i>
+								</button></a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cabin"><a href="./ReportesAdministrador?operacion=visualizarReportes">REPORTES</a><br></td>
+				</tr>
+			</table>
 		</div>
 		<br>
 		<div>

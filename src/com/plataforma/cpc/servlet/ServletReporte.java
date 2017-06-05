@@ -59,7 +59,10 @@ public class ServletReporte extends HttpServlet {
 			break;
 		case "procedimiento":
 			reporteJasper(request,response,"ripsProcedimiento");
-			break;	
+			break;
+		case "pacientes":
+			reporteJasper(request,response,"ripsAdminPaciente");
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
@@ -82,6 +85,8 @@ public class ServletReporte extends HttpServlet {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("ID_PRACTICANTE",personaSesion.getIdPersona().toString());
 		parametros.put("FECHA_MES",request.getParameter("fechaReporte"));
+		if(null != request.getParameter("idPerfil"))
+			parametros.put("ID_PERFIL",new Integer(request.getParameter("idPerfil")));
 		
 		try {
 			 buffer = reporte.reporte(nombreReporte, parametros);
