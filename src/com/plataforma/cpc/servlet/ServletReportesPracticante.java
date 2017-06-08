@@ -96,9 +96,10 @@ public class ServletReportesPracticante extends HttpServlet {
     		citaTo = daoCitas.consultarCita(citaTo);
     		PersonaTo paciente = daoPersona.consultarPersona(citaTo.getPaciente());
     		request.setAttribute("idCita", idCita);
-    		request.setAttribute("citaSesionReportePracticante", citaSesionReportePracticante);
+    		request.setAttribute("sesionReportePracticante", citaSesionReportePracticante);
     		request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
     		request.setAttribute("paciente", paciente);
+    		request.setAttribute("cita", citaTo);
     		RequestDispatcher dispatcher = request.getRequestDispatcher("verComentariosReporteDetallado.jsp");
 			dispatcher.forward(request, response);
     	}catch(Exception e){
