@@ -63,7 +63,9 @@ public class ServletReportesPracticante extends HttpServlet {
     	
     	try{
     		Integer idPracticante = Integer.parseInt(request.getParameter("idPersona"));
+    		ArrayList<SesionIndividualPreviewTo> valoracionesPreview = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
 			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
+			request.setAttribute("valoracionesPreviewPracticante", valoracionesPreview);
 			request.setAttribute("reportesPreviewPracticante", reportesPreview);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesPracticante.jsp");
 	    	request.setAttribute("idPracticante", request.getParameter("idPersona"));

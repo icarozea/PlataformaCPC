@@ -274,6 +274,49 @@ public class DaoSesionIndividual extends ConexionOracle{
 		}
 		return listaSesionesPracticante;
 	}
+	
+	public ArrayList<SesionIndividualPreviewTo> consultarListaValoracionesPorPracticante(Integer idPracticante){
+		ResultSet rs =null;
+		ArrayList<SesionIndividualPreviewTo> listaSesionesPracticante = new ArrayList<SesionIndividualPreviewTo>();
+		conexionActual = new ConexionOracle();
+
+		String sql = "SELECT CT.ID_CITA, CT.SALON, CT.FECHA_CITA, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, CT.ESTADO, CT.ES_VALORACION, RV.ID_VALORACION ";
+		sql+= "FROM CITA CT, PERSONA PE, REPORTE_VALORACION RV WHERE RV.ID_CITA = CT.ID_CITA AND CT.ID_PACIENTE = PE.ID_PERSONA AND CT.ID_PRACTICANTE = ? ORDER BY CT.ESTADO DESC, CT.FECHA_CITA DESC";
+
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idPracticante);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){
+
+				SesionIndividualPreviewTo previewSesion = new SesionIndividualPreviewTo(); 
+				previewSesion.setIdCita(rs.getInt("ID_CITA"));
+				previewSesion.setSalon(rs.getString("SALON"));
+				previewSesion.setFecha(rs.getString("FECHA_CITA"));
+				previewSesion.setPrimerNombrePaciente(rs.getString("PRIMER_NOMBRE"));
+				previewSesion.setSegundoNombrePaciente(rs.getString("SEGUNDO_NOMBRE"));
+				previewSesion.setPrimerApellidoPaciente(rs.getString("PRIMER_APELLIDO"));
+				previewSesion.setSegundoApellidoPaciente(rs.getString("SEGUNDO_APELLIDO"));
+				previewSesion.setEstado(rs.getString("ESTADO"));
+				previewSesion.setIdReporte(rs.getInt("ID_VALORACION") + "");
+				listaSesionesPracticante.add(previewSesion);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return listaSesionesPracticante;
+	}
 
 	public SesionIndividualTo consultarDetalleSesionPorId(Integer idSesion){
 		ResultSet rs =null;
@@ -325,7 +368,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
 
-		String sql = "SELECT CT.ESTADO, RS.ID_SESION, RS.ID_CITA, RS.FECHA, RS.NOMBRE_PROFESIONAL, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, ";
+		String sql = "SELECT CT.ESTADO, CT.NUM_CITA, RS.ID_SESION, RS.ID_CITA, RS.FECHA, RS.NOMBRE_PROFESIONAL, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, ";
 			  sql += "(SELECT PEASE.PRIMER_NOMBRE FROM PERSONA PEASE WHERE PEASE.ID_PERSONA = (SELECT PS.PERSONA_ID_SUPERIOR FROM PERSONA PS WHERE PS.ID_PERSONA = PE.PERSONA_ID_SUPERIOR)) AS P_NOM_ASESOR,";
 			  sql += "(SELECT PEASE.SEGUNDO_NOMBRE FROM PERSONA PEASE WHERE PEASE.ID_PERSONA = (SELECT PS.PERSONA_ID_SUPERIOR FROM PERSONA PS WHERE PS.ID_PERSONA = PE.PERSONA_ID_SUPERIOR)) AS S_NOM_ASESOR,";
 			  sql += "(SELECT PEASE.PRIMER_APELLIDO FROM PERSONA PEASE WHERE PEASE.ID_PERSONA = (SELECT PS.PERSONA_ID_SUPERIOR FROM PERSONA PS WHERE PS.ID_PERSONA = PE.PERSONA_ID_SUPERIOR)) AS P_APE_ASESOR,";
@@ -346,7 +389,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				comentario = new ComentariosTo();
 
 				cita.setIdCita(rs.getInt("ID_CITA"));
-
+				cita.setNumCita(rs.getInt("NUM_CITA"));
 				cita.setEstado(rs.getString("ESTADO"));
 
 				paciente.setPrimerNombre(rs.getString("PRIMER_NOMBRE"));

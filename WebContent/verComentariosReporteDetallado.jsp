@@ -87,7 +87,7 @@
         <%@include file="./menuNavegacionPracticante.jsp" %>
 		<div>
         	<h1 class="cabin">Comentarios de reporte</h1>
-        	<h2 class="cabin">Cita número ${requestScope.idCita}</h2>
+        	<h2 class="cabin">Cita número ${requestScope.cita.numCita}</h2>
         </div>
         <br>
         <div id="marcoFormularioCupos">

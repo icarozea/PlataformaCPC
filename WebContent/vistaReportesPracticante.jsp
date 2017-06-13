@@ -55,6 +55,16 @@ $( function() {
 					<th>Revisar Evaluación</th>
 				</thead>
 				<tbody>
+						<c:forEach items="${requestScope.valoracionesPreviewPracticante}" var="valoraciones">
+							<tr>
+								<td>${valoraciones.idCita}</td>
+								<td>${valoraciones.salon}</td>
+								<td>${valoraciones.primerNombrePaciente} ${valoraciones.segundoNombrePaciente} ${valoraciones.primerApellidoPaciente} ${valoraciones.segundoApellidoPaciente}</td>
+								<td>${valoraciones.estado}</td>
+								<td>${valoraciones.fecha}</td>
+								<td><a href="ReportesPracticante?operacion=comentariosReporte&idCita=${valoraciones.idCita}"><input type="button" id="btnComentarios" class="btnAsignar"></a></td>
+							</tr>
+						</c:forEach>
 						<c:forEach items="${requestScope.reportesPreviewPracticante}" var="reportePreviewPracticante">
 							<tr>
 								<td>${reportePreviewPracticante.idCita}</td>

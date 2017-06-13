@@ -54,17 +54,15 @@
         			<tr>
 		          		<th scope="col">Nombre</th>
 		          		<th scope="col">Visualizar</th>
-	          			<c:forEach items="${requestScope.listaPersonas}" var="persona">
-	          				<c:if test="${requestScope.valor == 'Paciente'}">
-	          					<th scope="col">Historia clínica</th>
-	          				</c:if>
-	          				<c:if test="${requestScope.valor == 'Practicante'}">
-	          					<th scope="col">Asignación de pacientes</th>
-	          				</c:if>
-	          				<c:if test="${requestScope.valor == 'Supervisor'}">
-	          					<th scope="col" id="colheader">Asignación de </th>
-	          				</c:if>
-	          			</c:forEach>
+	          			<c:if test="${requestScope.valor == 'Paciente'}">
+	          				<th scope="col">Historia clínica</th>
+	          			</c:if>
+	          			<c:if test="${requestScope.valor == 'Practicante'}">
+	          				<th scope="col">Asignación de pacientes</th>
+	          			</c:if>
+	          			<c:if test="${requestScope.valor == 'Supervisor'}">
+	          				<th scope="col" id="colheader">Asignación de Practicantes</th>
+	          			</c:if>
 			         </tr> 		
         		</thead>
         		<tbody>
