@@ -231,6 +231,43 @@ public class DaoSesionIndividual extends ConexionOracle{
 		}	
 		return sesionIndividual;
 	}
+	
+	public reporteValoracionTo consultarValoracionporCita(Integer idCita){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		reporteValoracionTo valoracion = new reporteValoracionTo();
+		String sql = "SELECT RV.ID_VALORACION, RV.MOTIVO, RV.REPORTA, RV.COMPORTAMIENTO, RV.HIPOTESIS, ";
+		sql+= "RV.SERVICIO_REMITIDO, RV.ENCUESTADOR ";
+		sql+= "FROM REPORTE_VALORACION RV ";
+		sql+= "WHERE RV.ID_CITA = ? ";
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idCita);
+
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){			
+				valoracion.setIdValoracion(rs.getInt("ID_VALORACION"));
+				valoracion.setMotivo(rs.getString("MOTIVO"));
+				valoracion.setPersonaReporta(rs.getString("REPORTA"));
+				valoracion.setComportamiento(rs.getString("COMPORTAMIENTO"));
+				valoracion.setHipotesis(rs.getString("HIPOTESIS"));
+				valoracion.setServicioRemitido(rs.getString("SERVICIO_REMITIDO"));
+				valoracion.setEncuestador(rs.getString("ENCUESTADOR"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return valoracion;
+	}
 
 	public ArrayList<SesionIndividualPreviewTo> consultarListaReportesSesionesPorPracticante(Integer idPracticante){
 		ResultSet rs =null;

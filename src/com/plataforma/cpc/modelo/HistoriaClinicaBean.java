@@ -9,6 +9,7 @@ import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TratamientoTo;
+import com.plataforma.cpc.to.reporteValoracionTo;
 
 public class HistoriaClinicaBean {
 	
@@ -47,6 +48,11 @@ public class HistoriaClinicaBean {
 	public SesionIndividualTo consultarReportesSesion(Integer idCita){
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		return dao.consultarReporteSesionporCita(idCita);
+	}
+	
+	public reporteValoracionTo consultarReportesValoracion(Integer idCita){
+		DaoSesionIndividual dao = new DaoSesionIndividual();
+		return dao.consultarValoracionporCita(idCita);
 	}
 	
 	public CitaTo consultarCita(CitaTo cita){

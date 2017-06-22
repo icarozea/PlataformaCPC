@@ -85,6 +85,9 @@
 				<br><br>
 				<textarea id="actividadesProxSesion" name="actividadesProxSesion" rows="10" cols="90" style=" resize: none;" disabled="disabled">${requestScope.sesion.actividadesProximaSesion}</textarea>
 			</div>
+			<div>
+				<a href="./ServletHistoriaClinica?operacion=detalleCitas&idPaciente=<%= paciente.getIdPersona()%>&grupoTratamiento=${requestScope.cita.tratamiento.idTratamiento}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>
+		 	</div>
 		 </form>		
 	</div>
 </body>

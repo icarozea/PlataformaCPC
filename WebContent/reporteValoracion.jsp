@@ -250,7 +250,7 @@
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="hipotesis_label" class="droidSans"><strong>Hipotesis Preliminares</strong></label>
+			<label id="hipotesis_label" class="droidSans"><strong>Hipótesis Preliminares</strong></label>
 		</div>
 		
 		<div class="seccionReporteImpar">

@@ -26,14 +26,14 @@
 				 <li><a href="VentanaAdministrador.jsp">INICIO</a></li>
 				 <li><a href="inicioPersonas.jsp">PERSONAS</a></li>
 				 <li><a href="./ServletCita?operacion=cargueIncial">CITAS</a></li>
-				 <li><a href="#">REPORTES</a></li>
-				<div class="clearfix"></div>
+				 <li><a href="./ReportesAdministrador?operacion=visualizarReportes">REPORTES</a></li>
+				 <div class="clearfix"></div>
 			 </ul>
-			 <script>
+			<!--  <script>
 					$("span.menu").click(function(){
 						$(".top-menu ul").slideToggle(200);
 					});
-				</script>
+			</script> -->
 		</div>
 		<div class="logo">
 	 		<img id="logoK" alt="Logo Konrad" class="logoKonrad" src="resources/LOGO.jpg"/>

@@ -23,7 +23,7 @@
 			 <ul>
 				 <li><a href="VentanaPracticante.jsp">INICIO</a></li>
 				 <li><a href="inicioCita.jsp">CITAS</a></li>
-				 <li><a href="#">REPORTES</a></li>
+				 <li><a href="./ReportesPracticante?operacion=visualizarReportes&idPersona=${sessionScope.personaSession.idPersona}">REPORTES</a></li>
 				<div class="clearfix"></div>
 			 </ul>
 			 <script>

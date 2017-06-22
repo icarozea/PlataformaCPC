@@ -50,10 +50,30 @@ function validarFecha(){
 
 function validarTratamiento(){
 	var form = document.getElementById("FormDatos");
-	form.submit();
+	var tratamientos = document.getElementsByName("grupoTratamiento");
+	var seleccion = false;
+	for(var i = 0; i < tratamientos.length; i++) {
+		if(tratamientos[i].checked == true) {
+			seleccion = true;
+		}
+	}
+	if(seleccion)
+		form.submit();
+	else
+		alert('Seleccione un tratamiento');
 }
 
 function enviarCita(){
 	var form = document.getElementById("FormDatos");
-	form.submit();
+	var citas = document.getElementsByName("grupoCita");
+	var seleccion = false;
+	for(var i = 0; i < citas.length; i++) {
+		if(citas[i].checked == true) {
+			seleccion = true;
+		}
+	}
+	if(seleccion)
+		form.submit();
+	else
+		alert('Seleccione una cita');
 }

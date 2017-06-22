@@ -63,7 +63,8 @@
 			</tr>
 		</table>
 		<br>
-        <input type="button" onclick="enviarCita()" id="btnAceptar" value="Aceptar" class="botones"/>		
+        <input type="button" onclick="enviarCita()" id="btnAceptar" value="Aceptar" class="botones"/>
+        <a href="./ServletHistoriaClinica?operacion=detalleTratamiento&idPersona=${requestScope.idPaciente}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>			
 	</form>
 </body>
 </html>

@@ -16,7 +16,7 @@ function generarReporteAdmin(operacion){
 	document.getElementById('reporteForm').submit();
 }
 </script>
-<title>Reportes practicante</title>
+<title>Reportes Administrador</title>
 </head>
    		<%
 		  if (session.getAttribute("perfil")==null)
@@ -27,7 +27,7 @@ function generarReporteAdmin(operacion){
 		  }
 		%>
 <body>
-	<%@include file="./menuNavegacionPracticante.jsp"%>
+	<%@include file="./menuNavegacionAdmin.jsp"%>
 	<div id="gestioncitas">
 		<h1 class="droidSans">Gestión de Reportes</h1>
 		<form id="reporteForm" action="" method="POST">

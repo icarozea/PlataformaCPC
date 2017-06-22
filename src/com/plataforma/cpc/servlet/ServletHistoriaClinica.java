@@ -21,6 +21,7 @@ import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 import com.plataforma.cpc.to.TratamientoTo;
+import com.plataforma.cpc.to.reporteValoracionTo;
 
 /**
  * Servlet que se ocupa de la creación y edición de personas mediante el formulario correspondiente
@@ -116,6 +117,7 @@ public class ServletHistoriaClinica extends HttpServlet {
 			
 			request.setAttribute("tratamiento", tratamiento);
 			request.setAttribute("listaCitas", citas);
+			request.setAttribute("idPaciente", idPaciente);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleTratamiento.jsp");
 			dispatcher.forward(request, response);
 
@@ -139,19 +141,29 @@ public class ServletHistoriaClinica extends HttpServlet {
 		CitaTo citaFiltro = new CitaTo();
 		CitaTo cita = new CitaTo();
 		citaFiltro.setIdCita(idCita);
-		try {
-			
+		try {			
 			cita = historiaClinica.consultarCita(citaFiltro);
-			SesionIndividualTo sesion = historiaClinica.consultarReportesSesion(idCita);
-
-			if (sesion != null)
-				request.setAttribute("sesion", sesion);
-			else 
-				request.setAttribute("sesion", null);
 			request.setAttribute("cita", cita);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleSesion.jsp");
-			dispatcher.forward(request, response);
-
+			if(cita.isValoracion()){
+				reporteValoracionTo valoracion = historiaClinica.consultarReportesValoracion(idCita);
+				if(valoracion != null)
+					request.setAttribute("valoracion", valoracion);
+				else
+					request.setAttribute("valoracion", null); 
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleValoracion.jsp");
+				dispatcher.forward(request, response);		
+			}
+			else{
+				SesionIndividualTo sesion = historiaClinica.consultarReportesSesion(idCita);
+				if (sesion != null)
+					request.setAttribute("sesion", sesion);
+				else 
+					request.setAttribute("sesion", null);
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleSesion.jsp");
+				dispatcher.forward(request, response);	
+			}
 		} catch (Exception e) {
 			System.out.println("Error de formulario: " + e.getMessage());
 			e.printStackTrace();

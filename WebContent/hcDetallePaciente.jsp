@@ -80,7 +80,8 @@
 			</tr>
 		</table>
 		<br>
-        <input type="button" onclick="validarTratamiento()" id="btnAceptar" value="Aceptar" class="botones"/>		
+        <input type="button" onclick="validarTratamiento()" id="btnAceptar" value="Aceptar" class="botones"/>
+        <a href="busquedaPersonas"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>		
 	</form>
 </body>
 </html>
