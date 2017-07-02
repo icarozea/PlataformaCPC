@@ -90,7 +90,14 @@
 			</div>
 			<br><br>
 			<div>
-				<a href="./ServletHistoriaClinica?operacion=detalleCitas&idPaciente=<%= paciente.getIdPersona()%>&grupoTratamiento=${requestScope.cita.tratamiento.idTratamiento}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>
+			<c:choose>
+				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1 }">
+					<a href="./ServletHistoriaClinica?operacion=detalleCitas&idPaciente=<%= paciente.getIdPersona()%>&grupoTratamiento=${requestScope.cita.tratamiento.idTratamiento}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>
+				</c:when>
+				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+					<a href="./ReportesPracticante?operacion=visualizarReportes&idPersona=${sessionScope.personaSession.idPersona}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>
+				</c:when>
+			</c:choose>
 			</div>	
 		 </form>		
 	</div>

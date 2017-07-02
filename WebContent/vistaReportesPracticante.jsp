@@ -62,7 +62,7 @@ $( function() {
 								<td>${valoraciones.primerNombrePaciente} ${valoraciones.segundoNombrePaciente} ${valoraciones.primerApellidoPaciente} ${valoraciones.segundoApellidoPaciente}</td>
 								<td>${valoraciones.estado}</td>
 								<td>${valoraciones.fecha}</td>
-								<td><a href="ReportesPracticante?operacion=comentariosReporte&idCita=${valoraciones.idCita}"><input type="button" id="btnComentarios" class="btnAsignar"></a></td>
+								<td><a href="ReportesPracticante?operacion=detallesValoracion&idCita=${valoraciones.idCita}"><input type="button" id="btnComentarios" class="btnAsignar"></a></td>
 							</tr>
 						</c:forEach>
 						<c:forEach items="${requestScope.reportesPreviewPracticante}" var="reportePreviewPracticante">

@@ -34,7 +34,8 @@ public class Reporte {
      * Default constructor. 
      */
 	public Reporte(String directorio) {
-		this.directorio = directorio;   	
+		//this.directorio = directorio;
+		this.directorio = "C:/reportes";
     } 
 				
 	/**

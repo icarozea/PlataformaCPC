@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
+import com.plataforma.cpc.modelo.HistoriaClinicaBean;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.ComentariosTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualPreviewTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
+import com.plataforma.cpc.to.reporteValoracionTo;
 
 /**
  * Servlet implementation class ServletReportesEstudiante
@@ -46,6 +48,9 @@ public class ServletReportesPracticante extends HttpServlet {
 				break;
 			case "comentariosReporte":
 				verComentariosDetalladosReporte(request, response);
+				break;
+			case "detallesValoracion":
+				verDetallesValoracion(request, response);
 				break;
 			case "guardarMoficiacionesReporteSesion":
 				guardarMoficiacionesReporteSesion(request, response);
@@ -108,6 +113,29 @@ public class ServletReportesPracticante extends HttpServlet {
     		
     		e.printStackTrace();
     		
+    	}
+    }
+    
+public void verDetallesValoracion(HttpServletRequest request, HttpServletResponse response){
+    	
+		HistoriaClinicaBean historiaClinica = new HistoriaClinicaBean();
+		DaoCitas daoCitas = new DaoCitas();
+		Integer idCita = Integer.parseInt(request.getParameter("idCita"));
+    	try{
+    		CitaTo citaTo = new CitaTo();
+    		citaTo.setIdCita(idCita);
+    		citaTo = daoCitas.consultarCita(citaTo);
+    		request.setAttribute("cita", citaTo);
+    		reporteValoracionTo valoracion = historiaClinica.consultarReportesValoracion(idCita);
+			if(valoracion != null)
+				request.setAttribute("valoracion", valoracion);
+			else
+				request.setAttribute("valoracion", null); 
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleValoracion.jsp");
+			dispatcher.forward(request, response);	
+    	}catch(Exception e){		
+    		e.printStackTrace();  		
     	}
     }
     
