@@ -79,7 +79,8 @@ public class ServletCalendario extends HttpServlet {
 			String horaFin = fin > 9? fin + "" : "0" + fin;
 			String minutos = fecha.getMinute() > 9? fecha.getMinute() + "" : "0" + fecha.getMinute();
 			par += "{id: "+ actual.getIdCita() +", title: '" + paciente + " Salon: " + actual.getSalon() + 
-					"', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + hora + ":" + minutos + "', end: '" + fecha.getYear() +  "-" + mes + "-" + dia + " " + horaFin + ":" + minutos + "'},";
+					"', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + hora + ":" + minutos + "', end: '" + fecha.getYear() +  "-" + mes + "-" + dia + " " + horaFin + ":" + minutos + "'" +
+					",estado:'" + actual.getEstado() + "'},";
 		}
 		return par;
 	}

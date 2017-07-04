@@ -48,6 +48,20 @@ public class ServletCita extends HttpServlet{
 		case "ejecutarCita":
 			ejecutarCita(request, response);
 			break;
+		case "verCita":
+			try{
+				Integer idCita = new Integer(request.getParameter("idCita"));
+				RequestDispatcher dispatcher = request.getRequestDispatcher("./ServletHistoriaClinica?operacion=detalleSesion&grupoCita=" + idCita);
+				dispatcher.forward(request, response);
+			}catch(Exception e){
+				System.out.println("Error de formulario: " + e.getMessage());
+				e.printStackTrace();
+				request.setAttribute("respuesta", "2");
+				request.setAttribute("error", e.getMessage());
+				RequestDispatcher dispatcher = request.getRequestDispatcher("");
+				dispatcher.forward(request, response);
+			}
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;	

@@ -43,12 +43,21 @@
 			eventClick: function(calEvent, jsEvent, view) {
 				
 				if($('#ejecutar').is(':checked')){
-					var ask=confirm("¿Desea ejecutar esta cita?");
-				    if(ask){
-				    	$('#idCita').val(calEvent.id);
-						$('#operacion').val('ejecutarCita');
+					if(calEvent.estado === 'creada'){
+						var ask=confirm("¿Desea ejecutar esta cita?");
+				    	if(ask){
+				    		$('#idCita').val(calEvent.id);
+							$('#operacion').val('ejecutarCita');
+							$('#formDatos').submit();
+				    	}
+					}
+					else
+						var ask = confirm("Ya existe un reporte de esta cita ¿Desea ver el reporte?");
+					if(ask){
+						$('#idCita').val(calEvent.id);
+						$('#operacion').val('verCita');
 						$('#formDatos').submit();
-				    }
+					}
 				}
 				else{
 					var ask=confirm("¿Desea eliminar la cita?");
