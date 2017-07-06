@@ -17,11 +17,14 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript" src="js/manejarAsignacion.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="js/datepick/css/jquery.datepick.css"> 
+<script type="text/javascript" src="js/datepick/js/jquery.plugin.js"></script> 
+<script type="text/javascript" src="js/datepick/js/jquery.datepick.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
   $( function() {
-    $( "#fecha_nacimiento" ).datepicker();
+    $( "#fecha_nacimiento" ).datepick({dateFormat: 'yyyy-mm-dd'});
   } );
   </script>
 <title>Reporte de Valoración</title>
@@ -208,11 +211,15 @@
 		</div>
 		
 		<div class="seccionReportePar">
+			<label id="parientes_indicacion_label" class="droidSans">(Reportar Nombre, Edad, Parentezco y Ocupación)</label><br><br>
+		</div>
+		
+		<div class="seccionReportePar">
 			<textarea id="parientes" name="parientes" rows="10" cols="90" style=" resize: none;"></textarea><br><br>
 		</div>
 		
 		<div>
-			<label id="s2_label" class="droidSans"><strong><h3>2. Motivo de Consulta</h3></strong></label><br><br>
+			<label id="s2_label" class="droidSans"><strong><h3>2. Motivo de Consulta y Descripción de la Valoración</h3></strong></label><br><br>
 		</div>
 		
 		<div class="seccionReporteImpar">

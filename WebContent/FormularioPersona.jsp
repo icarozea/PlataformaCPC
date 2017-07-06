@@ -52,6 +52,48 @@
 			<input type="hidden" name="id" id="id" value="${requestScope.idPersona}" />
 	    	<div id="form-content">
 	        	<fieldset>
+	        	<c:choose>
+						<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+							<div class="fieldgroup">
+								<label class="cabin">Perfil</label>
+								<select id="perfil" name="perfil" onchange="administrarSecciones(this.value)" required>
+									<option value="">Seleccione</option>
+									<c:forEach items="${listaPerfiles}" var="perfilPersona">
+										<c:choose>
+											<c:when
+												test="${requestScope.perfil == perfilPersona.idPerfil}">
+												<option value="${perfilPersona.idPerfil}" selected>${perfilPersona.nombrePerfil}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${perfilPersona.idPerfil}">${perfilPersona.nombrePerfil}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</select>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="fieldgroup">
+								<% String perfil = "0"; %>
+								<label class="cabin">Perfil</label>
+								<select id="perfil" name="perfil" disabled>
+									<option value="">Seleccione</option>
+									<c:forEach items="${listaPerfiles}" var="perfilPersona">
+										<c:choose>
+											<c:when test="${requestScope.perfil == perfilPersona.idPerfil}">
+												<option value="${perfilPersona.idPerfil}" selected>${perfilPersona.nombrePerfil}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${perfilPersona.idPerfil}">${perfilPersona.nombrePerfil}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</select>
+								<input type="hidden" id="perfil" name="perfil" value="${requestScope.perfil}">
+							</div>
+						</c:otherwise>
+					</c:choose>
+					<div class="fliedgroup"></div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Primer Nombre</label>
 		                	<c:choose>
@@ -180,72 +222,62 @@
 						</c:otherwise>
 						</c:choose>
 		            </div>
-		            <div class="fieldgroup">
-		                <label class="cabin">Contraseña</label>
-		                <c:choose>
-							<c:when test="${requestScope.pass != null}">
-								<input type="password" id="password" name="password"
-									value="${requestScope.pass}" required="">
-							</c:when>
-							<c:otherwise>
-								<input type="password" id="password" name="password" required>
-							</c:otherwise>
-							</c:choose>
-		            </div>
-		            <div class="fieldgroup">
-		                <label class="cabin">Confirmar Contraseña</label>
-		                <c:choose>
-							<c:when test="${requestScope.pass != null}">
-								<input type="password" id="password2" name="password2"
-									value="${requestScope.pass}" required="">
-						</c:when>
-						<c:otherwise>
-							<input type="password" id="password2" name="password2" required>
-						</c:otherwise>
-						</c:choose>
-		            </div>
-		            
-					<c:choose>
-						<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
-							<div class="fieldgroup">
-								<label class="cabin">Perfil</label>
-								<select id="perfil" name="perfil" onchange="administrarSecciones(this.value)" required>
-									<option value="">Seleccione</option>
-									<c:forEach items="${listaPerfiles}" var="perfilPersona">
-										<c:choose>
-											<c:when
-												test="${requestScope.perfil == perfilPersona.idPerfil}">
-												<option value="${perfilPersona.idPerfil}" selected>${perfilPersona.nombrePerfil}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${perfilPersona.idPerfil}">${perfilPersona.nombrePerfil}</option>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</select>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="fieldgroup">
-								<% String perfil = "0"; %>
-								<label class="cabin">Perfil</label>
-								<select id="perfil" name="perfil" disabled>
-									<option value="">Seleccione</option>
-									<c:forEach items="${listaPerfiles}" var="perfilPersona">
-										<c:choose>
-											<c:when test="${requestScope.perfil == perfilPersona.idPerfil}">
-												<option value="${perfilPersona.idPerfil}" selected>${perfilPersona.nombrePerfil}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${perfilPersona.idPerfil}">${perfilPersona.nombrePerfil}</option>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</select>
-								<input type="hidden" id="perfil" name="perfil" value="${requestScope.perfil}">
-							</div>
-						</c:otherwise>
-					</c:choose>
+		            <c:choose>
+						<c:when test="${requestScope.perfil != null && requestScope.perfil == 4}">
+		            		<div class="fieldgroup" id="campoPass" style="display:none">
+		                		<label class="cabin">Contraseña</label>
+		                		<c:choose>
+									<c:when test="${requestScope.pass != null}">
+										<input type="password" id="password" name="password"
+											value="${requestScope.pass}" required="">
+									</c:when>
+									<c:otherwise>
+										<input type="password" id="password" name="password" required>
+									</c:otherwise>
+								</c:choose>
+		            		</div>
+		            		
+		            		<div class="fieldgroup" id="campoPass2" style="display:none">
+		                		<label class="cabin">Confirmar Contraseña</label>
+		                		<c:choose>
+									<c:when test="${requestScope.pass != null}">
+										<input type="password" id="password2" name="password2"
+											value="${requestScope.pass}" required="">
+									</c:when>
+									<c:otherwise>
+										<input type="password" id="password2" name="password2" required>
+									</c:otherwise>
+								</c:choose>
+		            		</div>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<div class="fieldgroup" id="campoPass">
+		                		<label class="cabin">Contraseña</label>
+		                		<c:choose>
+									<c:when test="${requestScope.pass != null}">
+										<input type="password" id="password" name="password"
+											value="${requestScope.pass}" required="">
+									</c:when>
+									<c:otherwise>
+										<input type="password" id="password" name="password" required>
+									</c:otherwise>
+								</c:choose>
+		            		</div>
+		            		
+		            		<div class="fieldgroup" id="campoPass2">
+		                		<label class="cabin">Confirmar Contraseña</label>
+		                		<c:choose>
+									<c:when test="${requestScope.pass != null}">
+										<input type="password" id="password2" name="password2"
+											value="${requestScope.pass}" required="">
+									</c:when>
+									<c:otherwise>
+										<input type="password" id="password2" name="password2" required>
+									</c:otherwise>
+								</c:choose>
+		            		</div>
+		            	</c:otherwise>
+		            </c:choose>
 
 					<c:choose>
 						<c:when test="${requestScope.perfil == 3}">

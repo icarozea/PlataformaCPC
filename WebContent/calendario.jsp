@@ -51,12 +51,13 @@
 							$('#formDatos').submit();
 				    	}
 					}
-					else
+					else{
 						var ask = confirm("Ya existe un reporte de esta cita ¿Desea ver el reporte?");
-					if(ask){
-						$('#idCita').val(calEvent.id);
-						$('#operacion').val('verCita');
-						$('#formDatos').submit();
+						if(ask){
+							$('#idCita').val(calEvent.id);
+							$('#operacion').val('verCita');
+							$('#formDatos').submit();
+						}
 					}
 				}
 				else{

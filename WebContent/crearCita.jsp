@@ -99,7 +99,8 @@ function mostrarTipo(){
 							<option value="individual">Individual</option>
 							<option value="pareja">Pareja</option>
 							<option value="familiar">Familiar</option>
-							<option value="infantil">Infantil</option>					
+							<option value="infantil">Infantil</option>
+							<option value="infantil">Orientación Vocacional</option>						
 					</select>
 				</td>
 			</tr>

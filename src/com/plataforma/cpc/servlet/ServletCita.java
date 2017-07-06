@@ -30,7 +30,7 @@ public class ServletCita extends HttpServlet{
 		response.setContentType("text/html;charset=UTF-8");
 
 		String operacion = request.getParameter("operacion");
-
+		System.out.println("ServletCita Recibe: " + operacion);
 		switch (operacion) {
 
 		case "cargueIncial":
