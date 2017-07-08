@@ -36,7 +36,7 @@
         			<tbody>
         				<c:forEach items="${requestScope.reportesPreview}" var="reportePreview">
         					<tr>
-	        					<td>${reportePreview.idCita}</td>
+	        					<td>${reportePreview.numCita}</td>
 	        					<td>${reportePreview.salon}</td>
 	        					<td>${reportePreview.primerNombrePaciente} ${reportePreview.segundoNombrePaciente}
 	        						${reportePreview.primerApellidoPaciente} ${reportePreview.segundoApellidoPaciente}</td>
@@ -45,6 +45,20 @@
 	        					
 	        					<td>${reportePreview.fecha}</td>
 	        					<td class="tdBoton"><a href="./ServletAsesor?operacion=reporteDetallado&idReporte=${reportePreview.idReporte}&pNomPaciente=${reportePreview.primerNombrePaciente}&sNomPaciente=${reportePreview.segundoNombrePaciente}&pApePaciente=${reportePreview.primerApellidoPaciente}&sApePaciente=${reportePreview.segundoApellidoPaciente}"><input type="button" id="btnReportes" class="btnAsignar"></a></td>
+        					</tr>
+        				</c:forEach>
+        				
+        				<c:forEach items="${requestScope.valoracionPreview}" var="valoracionPreview">
+        					<tr>
+	        					<td>0</td>
+	        					<td>${valoracionPreview.salon}</td>
+	        					<td>${valoracionPreview.primerNombrePaciente} ${valoracionPreview.segundoNombrePaciente}
+	        						${valoracionPreview.primerApellidoPaciente} ${valoracionPreview.segundoApellidoPaciente}</td>
+	        					
+	        					<td>${valoracionPreview.estado}</td>
+	        					
+	        					<td>${valoracionPreview.fecha}</td>
+	        					<td class="tdBoton"><a href="ReportesPracticante?operacion=detallesValoracion&idCita=${valoracionPreview.idCita}"><input type="button" id="btnReportes" class="btnAsignar"></a></td>
         					</tr>
         				</c:forEach>
         			</tbody>

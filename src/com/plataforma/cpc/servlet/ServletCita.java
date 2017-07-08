@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.plataforma.cpc.dao.DaoCitas;
+import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
+import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TratamientoTo;
 
 /**
@@ -30,7 +32,7 @@ public class ServletCita extends HttpServlet{
 		response.setContentType("text/html;charset=UTF-8");
 
 		String operacion = request.getParameter("operacion");
-		System.out.println("ServletCita Recibe: " + operacion);
+		
 		switch (operacion) {
 
 		case "cargueIncial":
@@ -240,18 +242,41 @@ public class ServletCita extends HttpServlet{
 	public void eliminarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		DaoCitas daoCitas = new DaoCitas();
+		DaoSesionIndividual daoReportes = new DaoSesionIndividual();
 		CitaTo citaTo = new CitaTo();
 
 		try{
 			Integer idCita = Integer.parseInt(request.getParameter("idCita"));
 			citaTo.setIdCita(idCita);
-
-			if(daoCitas.eliminarCita(citaTo)){
-				RequestDispatcher dispatcher = request.getRequestDispatcher("./Calendario");
+			citaTo = daoCitas.consultarCita(citaTo);
+			TratamientoTo tratamiento = daoCitas.consultarTratamiento(citaTo.getTratamiento().getIdTratamiento());
+			
+			int numCitaActual = tratamiento.getNumCitaActual();
+			int numCitaEliminar = citaTo.getNumCita();
+			
+			SesionIndividualTo reporte = daoReportes.consultarReporteSesionporCita(idCita);
+			
+			if(reporte.getIdSesion() != null){
+				request.setAttribute("mensajeRespuestaReporte", "La cita seleccionada tiene un reporte asociado. No es posible eliminarla");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 				dispatcher.forward(request, response);
 			}
-			else
-				throw new Exception("No fue posible eliminar la cita");
+			else{
+				if(numCitaActual - numCitaEliminar == 1){
+			
+					if(daoCitas.eliminarCita(citaTo)){
+						RequestDispatcher dispatcher = request.getRequestDispatcher("./Calendario");
+						dispatcher.forward(request, response);
+					}
+					else
+						throw new Exception("No fue posible eliminar la cita");
+				}
+				else{
+					request.setAttribute("mensajeRespuestaReporte", "Hay mas citas en el tratamiento despues de esta. No es posible eliminarla");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
+					dispatcher.forward(request, response);
+				}
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();

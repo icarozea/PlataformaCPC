@@ -109,7 +109,7 @@
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Recibo N°:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.numRecibo}</label>
+        				<input type="text" id="numRecibo" name="numRecibo" value="${requestScope.sesionReportePracticante.numRecibo}">
         			</div>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Profesional que atendió la cita:</b></label>

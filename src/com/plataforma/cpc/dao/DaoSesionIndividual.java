@@ -274,7 +274,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		ArrayList<SesionIndividualPreviewTo> listaSesionesPracticante = new ArrayList<SesionIndividualPreviewTo>();
 		conexionActual = new ConexionOracle();
 
-		String sql = "SELECT CT.ID_CITA, CT.SALON, CT.FECHA_CITA, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, CT.ESTADO, CT.ES_VALORACION, RS.ID_SESION ";
+		String sql = "SELECT CT.ID_CITA, CT.SALON, CT.FECHA_CITA, PE.PRIMER_NOMBRE, PE.SEGUNDO_NOMBRE, PE.PRIMER_APELLIDO, PE.SEGUNDO_APELLIDO, CT.ESTADO, CT.ES_VALORACION, CT.NUM_CITA, RS.ID_SESION ";
 		sql+= "FROM CITA CT, PERSONA PE, REPORTE_SESION RS WHERE RS.ID_CITA = CT.ID_CITA AND CT.ID_PACIENTE = PE.ID_PERSONA AND CT.ID_PRACTICANTE = ? ORDER BY CT.ESTADO DESC, CT.FECHA_CITA DESC";
 
 		try {
@@ -296,6 +296,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 				previewSesion.setSegundoApellidoPaciente(rs.getString("SEGUNDO_APELLIDO"));
 				previewSesion.setEstado(rs.getString("ESTADO"));
 				previewSesion.setIdReporte(rs.getInt("ID_SESION") + "");
+				previewSesion.setNumCita(rs.getInt("NUM_CITA"));
 				listaSesionesPracticante.add(previewSesion);
 			}
 

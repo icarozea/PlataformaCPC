@@ -11,6 +11,7 @@ public class SesionIndividualPreviewTo {
 	private String segundoApellidoPaciente;
 	private String idReporte;
 	private String estado;
+	private int numCita;
 	
 	public SesionIndividualPreviewTo(){
 		
@@ -86,6 +87,14 @@ public class SesionIndividualPreviewTo {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	
+	public int getNumCita() {
+		return numCita;
+	}
+
+	public void setNumCita(int numCita) {
+		this.numCita = numCita;
 	}
 
 	@Override

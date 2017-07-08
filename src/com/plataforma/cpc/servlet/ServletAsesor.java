@@ -140,7 +140,9 @@ public class ServletAsesor extends HttpServlet {
 		
 		try{
 			Integer idPracticante = Integer.parseInt(request.getParameter("idPracticante"));
+			ArrayList<SesionIndividualPreviewTo> valoracionPreview = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
 			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
+			request.setAttribute("valoracionPreview", valoracionPreview);
 			request.setAttribute("reportesPreview", reportesPreview);
 			request.setAttribute("idPracticante", idPracticante);
 			request.setAttribute("nomPracticante", request.getParameter("pNom")+" "+request.getParameter("sNom")+" "

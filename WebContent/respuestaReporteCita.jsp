@@ -25,9 +25,7 @@
 				<tr>
 					<td>
 						<div>
-							<a href="#"><button class="respuestaCheck">
-									<i class="fa fa-check fa-4x"></i>
-								</button></a>
+							
 						</div>
 					</td>
 				</tr>

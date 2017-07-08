@@ -57,7 +57,7 @@ $( function() {
 				<tbody>
 						<c:forEach items="${requestScope.valoracionesPreviewPracticante}" var="valoraciones">
 							<tr>
-								<td>${valoraciones.idCita}</td>
+								<td>0</td>
 								<td>${valoraciones.salon}</td>
 								<td>${valoraciones.primerNombrePaciente} ${valoraciones.segundoNombrePaciente} ${valoraciones.primerApellidoPaciente} ${valoraciones.segundoApellidoPaciente}</td>
 								<td>${valoraciones.estado}</td>
@@ -67,7 +67,7 @@ $( function() {
 						</c:forEach>
 						<c:forEach items="${requestScope.reportesPreviewPracticante}" var="reportePreviewPracticante">
 							<tr>
-								<td>${reportePreviewPracticante.idCita}</td>
+								<td>${reportePreviewPracticante.numCita}</td>
 								<td>${reportePreviewPracticante.salon}</td>
 								<td>${reportePreviewPracticante.primerNombrePaciente} ${reportePreviewPracticante.segundoNombrePaciente} ${reportePreviewPracticante.primerApellidoPaciente} ${reportePreviewPracticante.segundoApellidoPaciente}</td>
 								<td>${reportePreviewPracticante.estado}</td>
