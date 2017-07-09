@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
+import com.plataforma.cpc.to.HistoriaClinicaTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
@@ -668,5 +669,69 @@ public class DaoPersona {
 			}
 		}	
     	return personaTo;
+    }
+    
+    public boolean CrearHistoriaClinica(HistoriaClinicaTo nuevaHistoria){
+    	boolean retorno;
+    	
+    	conexionActual = new ConexionOracle();
+    	
+    	String sql = "INSERT INTO HISTORIA_CLINICA (ID_HISTORIA, ID_PACIENTE, CODIGO) ";
+    		sql+= "VALUES (HISTORIA_SEQ.NEXTVAL, ?, ?)";
+    	
+    	try{
+    		conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, nuevaHistoria.getIdPaciente());
+			conexionActual.agregarAtributo(2, nuevaHistoria.getCodigo());
+			
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+    	}
+    	catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	return retorno;
+    }
+    
+    public HistoriaClinicaTo consultarHistoriaClinica(int idPaciente){
+    	ResultSet rs =null;
+    	HistoriaClinicaTo historiaTo = new HistoriaClinicaTo();
+    	conexionActual = new ConexionOracle();
+    	String sql = "SELECT ID_HISTORIA, CODIGO FROM HISTORIA_CLINICA WHERE ID_PACIENTE = ?";
+    	
+    	try{
+    		conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idPaciente);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while(rs.next()){
+				
+				historiaTo.setIdHistoria(rs.getInt("ID_HISTORIA"));
+				historiaTo.setCodigo(rs.getString("CODIGO"));
+				historiaTo.setIdPaciente(idPaciente);
+			}
+			
+    	}
+    	catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	return historiaTo;
     }
 }

@@ -6,6 +6,7 @@ import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.to.CitaTo;
+import com.plataforma.cpc.to.HistoriaClinicaTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TratamientoTo;
@@ -60,5 +61,15 @@ public class HistoriaClinicaBean {
 		DaoCitas dao = new DaoCitas();
 		citaTo = dao.consultarCita(cita);
 		return citaTo;
+	}
+	
+	public boolean crearHistoriaClinica(HistoriaClinicaTo historia){
+		DaoPersona dao = new DaoPersona();
+		return dao.CrearHistoriaClinica(historia);
+	}
+	
+	public HistoriaClinicaTo consultarHistoriaClinica(int idPaciente){
+		DaoPersona dao = new DaoPersona();
+		return dao.consultarHistoriaClinica(idPaciente);
 	}
 }
