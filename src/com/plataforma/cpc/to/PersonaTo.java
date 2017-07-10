@@ -21,6 +21,7 @@ public class PersonaTo {
 	private		String			jornada;
 	private		String			password;
 	private 	PersonaDetalleTo detalle;
+	private		HistoriaClinicaTo historiaClinica;
 	
 	public Integer getCodigoEstudiante() {
 		return codigoEstudiante;
@@ -136,13 +137,10 @@ public class PersonaTo {
 	public void setDetalle(PersonaDetalleTo detalle) {
 		this.detalle = detalle;
 	}
-	@Override
-	public String toString() {
-		return "PersonaTo [idPersona=" + idPersona + ", codigoEstudiante=" + codigoEstudiante + ", primerNombre="
-				+ primerNombre + ", segundoNombre=" + segundoNombre + ", primerApellido=" + primerApellido
-				+ ", segundoApellido=" + segundoApellido + ", numeroDocumento=" + numeroDocumento + ", direccion="
-				+ direccion + ", telefono=" + telefono + ", otroTelefono=" + otroTelefono + ", correo=" + correo
-				+ ", usuario=" + usuario + ", tipoDocumento=" + tipoDocumento + ", eps=" + eps + ", perfil=" + perfil
-				+ ", superior=" + superior + ", jornada=" + jornada + ", password=" + password + "]";
+	public HistoriaClinicaTo getHistoriaClinica() {
+		return historiaClinica;
+	}
+	public void setHistoriaClinica(HistoriaClinicaTo historiaClinica) {
+		this.historiaClinica = historiaClinica;
 	}
 }

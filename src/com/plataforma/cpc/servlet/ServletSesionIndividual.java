@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.dao.DaoUtilidades;
+import com.plataforma.cpc.modelo.HistoriaClinicaBean;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.modelo.PersonaDetalleBean;
 import com.plataforma.cpc.to.EpsTo;
+import com.plataforma.cpc.to.HistoriaClinicaTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
@@ -153,6 +155,23 @@ public class ServletSesionIndividual extends HttpServlet {
 				detalleTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
 				
 				if(detalleBean.modificarPersonaDetalle(detalleTo)){
+					//Verificacion de la historia clinica. La crea si no existe
+					HistoriaClinicaBean bean = new HistoriaClinicaBean();
+					HistoriaClinicaTo historiaClinica = bean.consultarHistoriaClinica(Integer.parseInt(request.getParameter("idPaciente")));
+					if(historiaClinica.getCodigo() == null){
+						DaoUtilidades utilidades = new DaoUtilidades();
+						String codigo = utilidades.consultarConsecutivoHistoria();
+						if(codigo != null){
+							historiaClinica.setIdPaciente(Integer.parseInt(request.getParameter("idPaciente")));
+							historiaClinica.setCodigo(codigo);
+							if(!bean.crearHistoriaClinica(historiaClinica)){
+								throw new Exception("Hubo un error asignar una nueva Historia Clinica");
+							}
+						}
+						else
+							throw new Exception("Hubo un error asignar una nueva Historia Clinica");				
+					}
+				
 					//Creacion del reporte
 					valoracionTo.setIdCita(Integer.parseInt(request.getParameter("idCita")));
 					valoracionTo.setMotivo(request.getParameter("motivo_consulta"));

@@ -52,6 +52,7 @@
         	<table id="tablaUsuarios">
         		<thead>
         			<tr>
+        				<th scope="col">Identificación</th>
 		          		<th scope="col">Nombre</th>
 		          		<th scope="col">Visualizar</th>
 	          			<c:if test="${requestScope.valor == 'Paciente'}">
@@ -68,6 +69,7 @@
         		<tbody>
 	        		<c:forEach items="${requestScope.listaPersonas}" var="persona">
 	                	<tr>
+	                	<td class="tdNombre"><label class="cabin">${persona.numeroDocumento}</label></td>
 	                    <td class="tdNombre"><label class="cabin">${persona.primerNombre} ${persona.segundoNombre} ${persona.primerApellido} ${persona.segundoApellido}</label></td>
 	                    <td class="tdBoton"><a href="./ServletPersona?operacion=listarPersonas&id=${persona.idPersona}"><input type="button" id="btnVer" class="btnVer"></a></td>
 	                    <c:choose>
@@ -75,7 +77,7 @@
 		                    	<td class="tdBoton"><input type="button" id="btnAsignar" class="btnAsignar" onclick="manejarAsignacion('consultar',-1,${persona.idPersona},'${persona.primerNombre}','${persona.segundoNombre}', '${persona.primerApellido}', '${persona.segundoApellido}', '${requestScope.valor}')"></td>
 		                    </c:when>
 	                    	<c:when test="${requestScope.valor == 'Paciente'}">
-	                    		<td class="tdBoton"><a href="./ServletHistoriaClinica?operacion=detalleTratamiento&idPersona=${persona.idPersona}"><input type="button" id="btnHistoria" class="btnHistoria"></a></td>
+	                    		<td class="tdBoton"><a href="./ServletHistoriaClinica?operacion=detalleTratamiento&idPersona=${persona.idPersona}">${persona.historiaClinica.codigo}</a></td>
 	                    	</c:when>
 	                    </c:choose>
 	                </tr> 

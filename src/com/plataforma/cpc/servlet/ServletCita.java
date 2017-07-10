@@ -16,6 +16,7 @@ import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TratamientoTo;
+import com.plataforma.cpc.to.reporteValoracionTo;
 
 /**
  * Atiende las llamadas para la creacion y administracion de citas por parte de administradores y practicantes
@@ -255,8 +256,9 @@ public class ServletCita extends HttpServlet{
 			int numCitaEliminar = citaTo.getNumCita();
 			
 			SesionIndividualTo reporte = daoReportes.consultarReporteSesionporCita(idCita);
+			reporteValoracionTo valoracion = daoReportes.consultarValoracionporCita(idCita);
 			
-			if(reporte.getIdSesion() != null){
+			if(reporte.getIdSesion() != null || valoracion.getIdValoracion() != null){
 				request.setAttribute("mensajeRespuestaReporte", "La cita seleccionada tiene un reporte asociado. No es posible eliminarla");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 				dispatcher.forward(request, response);

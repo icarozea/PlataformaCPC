@@ -239,6 +239,12 @@ public class DaoUtilidades {
     	return cupos;  	
     }
     
+    /**
+     * Actualiza el máximo de cupos de pacientes que se muestra para cada practicante
+     * @param numero Maximo que se desea implementar
+     * @return Si la operación fue exitosa o no
+     * @throws Exception Si hubo algun problema en la conexión con la base de datos
+     */
     public boolean actualizarCupos(Integer numero) throws Exception{
     	conexionActual = new ConexionOracle();
     	boolean actualizado = false;
@@ -264,5 +270,96 @@ public class DaoUtilidades {
 			}
 		}	
     	return actualizado;
+    }
+    
+    /**
+     * Retorna una cadena de caracteres con un nuevo codigo de histora clinica correspondiente al consecutivo actual
+     * @return Cadena de caracteres con el codigo correspondiente o null si hubo algun error en la operacion
+     */
+    public String consultarConsecutivoHistoria() {
+    	conexionActual = new ConexionOracle();
+    	String consecutivo = "";
+    	int ano = 0;
+    	String semestre = "";
+    	int cons = 0;
+    	
+    	String sql = "SELECT ANO, SEMESTRE, CONSECUTIVO FROM CONSECUTIVO_HISTORIA";
+    	String avance = "UPDATE CONSECUTIVO_HISTORIA SET CONSECUTIVO = CONSECUTIVO + 1";
+    			
+    	try {
+    		ResultSet rs = null;
+    		conexionActual.conectar();
+    		conexionActual.iniciarTransaccion();
+    		
+    		conexionActual.prepararSentencia(sql);
+    		rs = conexionActual.ejecutarSentencia();
+    		
+    		while(rs.next()){
+    			ano = rs.getInt("ANO");
+    			semestre = rs.getString("SEMESTRE");
+    			cons = rs.getInt("CONSECUTIVO");	
+    		}
+    		
+    		rs.close();
+    		
+    		conexionActual.prepararSentencia(avance);
+    		conexionActual.ejecutarActualizacion();
+    		
+    		conexionActual.commit();
+			
+    		consecutivo = ano + "-" + semestre + "-" + cons;
+    	}
+    	catch (Exception e) {
+    		consecutivo = null;
+    		e.printStackTrace();
+    		try {
+				conexionActual.rollback();
+			} catch(Exception exep) {
+				exep.printStackTrace();
+			}
+		}finally{	
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	return consecutivo;
+    }
+    
+    /**
+     * Reinicia la generación automatica de consecutivos dado los parametros recibidos
+     * @param ano El año que el nuevo consecutivo va a mostrar
+     * @param semestre El semestre que el consecutivo va a mostrar
+     * @return Verdadero si la operación fue exitosa, falso de lo contrario
+     */
+    public boolean reiniciarConsecutivoHistoriaClinica(int ano, String semestre){
+    	boolean retorno;
+    	conexionActual = new ConexionOracle();
+    	String sql = "UPDATE CONSECUTIVO_HISTORIA SET ANO = ?, SEMESTRE = ?, CONSECUTIVO = 1";
+    	
+    	try {
+    		conexionActual.conectar();
+    		
+    		conexionActual.prepararSentencia(sql);
+    		conexionActual.agregarAtributo(1, ano);
+    		conexionActual.agregarAtributo(2, semestre);
+
+    		conexionActual.ejecutarActualizacion();
+    		
+    		retorno = Boolean.TRUE;
+    	}
+    	catch (Exception e) {
+    		retorno = Boolean.FALSE;
+    		e.printStackTrace();
+		}finally{	
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	return retorno;
     }
 }

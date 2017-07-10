@@ -18,10 +18,6 @@ import com.plataforma.cpc.utils.Propiedades;
 import com.plataforma.cpc.utils.Reporte;
 
 
-
-/**
- * Servlet que se ocupa de la creación y edición de personas mediante el formulario correspondiente
- */
 @WebServlet(name="ServletReporte", urlPatterns = {"/ServletReporte"})
 public class ServletReporte extends HttpServlet {
 
