@@ -22,10 +22,16 @@
 						<div>
 							<a href="./ServletCupos?operacion=Cargar"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
 						</div>
+					</td>
+					<td>
+						<div>
+							<a href="./Consecutivo?operacion=cargar"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
+						</div>
 					</td>	
          		</tr>
          			<td class="cabin"><a href="FormularioEPS.jsp">EPS</a></td>
 					<td class="cabin"><a href="./ServletCupos?operacion=Cargar">Cupos</a><br></td>
+					<td class="cabin"><a href="./Consecutivo?operacion=cargar">Cosecutivos HC</a><br></td>
          		<tr>
          			
          		</tr>

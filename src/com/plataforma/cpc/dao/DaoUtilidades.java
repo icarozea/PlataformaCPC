@@ -274,9 +274,10 @@ public class DaoUtilidades {
     
     /**
      * Retorna una cadena de caracteres con un nuevo codigo de histora clinica correspondiente al consecutivo actual
+     * @param avanzarConsecutivo Determina si el numero de consecutivo debe avanzar tras hacer la consulta
      * @return Cadena de caracteres con el codigo correspondiente o null si hubo algun error en la operacion
      */
-    public String consultarConsecutivoHistoria() {
+    public String consultarConsecutivoHistoria(boolean avanzarConsecutivo) {
     	conexionActual = new ConexionOracle();
     	String consecutivo = "";
     	int ano = 0;
@@ -302,8 +303,10 @@ public class DaoUtilidades {
     		
     		rs.close();
     		
-    		conexionActual.prepararSentencia(avance);
-    		conexionActual.ejecutarActualizacion();
+    		if(avanzarConsecutivo){
+    			conexionActual.prepararSentencia(avance);
+    			conexionActual.ejecutarActualizacion();
+    		}
     		
     		conexionActual.commit();
 			

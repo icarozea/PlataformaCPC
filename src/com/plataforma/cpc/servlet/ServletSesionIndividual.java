@@ -160,7 +160,7 @@ public class ServletSesionIndividual extends HttpServlet {
 					HistoriaClinicaTo historiaClinica = bean.consultarHistoriaClinica(Integer.parseInt(request.getParameter("idPaciente")));
 					if(historiaClinica.getCodigo() == null){
 						DaoUtilidades utilidades = new DaoUtilidades();
-						String codigo = utilidades.consultarConsecutivoHistoria();
+						String codigo = utilidades.consultarConsecutivoHistoria(true);
 						if(codigo != null){
 							historiaClinica.setIdPaciente(Integer.parseInt(request.getParameter("idPaciente")));
 							historiaClinica.setCodigo(codigo);
