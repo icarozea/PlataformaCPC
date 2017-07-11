@@ -11,24 +11,7 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type='text/javascript'>
-function generarReporte(operacion){
-	fechaReporte = document.getElementById('fechaReporte').value;
-	if (fechaReporte){
-		document.getElementById('reporteForm').action = "./ServletReporte?operacion="+operacion+"&fechaReporte="+fechaReporte;
-		document.getElementById('reporteForm').submit();
-	}else{
-		alert("Seleccione un mes")
-	}
-}
-
-$( function() {
-	  $( "#fechaReporte" ).datepicker({ 
-		  dateFormat: 'dd/mm/yy' 
-	  });
-	} );
-</script>
-<title>Reportes practicante</title>
+<title>Reportes Practicante</title>
 </head>
    		<%
 		  if (session.getAttribute("perfil")==null)
@@ -77,56 +60,10 @@ $( function() {
 						</c:forEach>
 				</tbody>
 			</table>
-		</div>
+		</div>	
 		<br>
-		<h2 class="droidSans">Generación mensual de reportes</h2>
-		<label id="hora_label" class="droidSans">Mes:</label>
-		<input id="fechaReporte" name="fechaReporte" type="text" class="field text fn">
-		<form id="reporteForm" action="" method="POST">
-		<div id="generacionReportes">
-			<table class="tablaPrincipal">
-				<tr>
-					<td>
-						<div>
-							<a href="#" onclick="generarReporte('usuarios'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
-						</div>
-					</td>
-					<td>
-						<div>
-							<a href="#" onclick="generarReporte('transacciones'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="cabin"><a href="#" onclick="generarReporte('usuarios'); return false">USUARIOS </a></td>
-					<td class="cabin"><a href="#" onclick="generarReporte('transacciones'); return false">TRANSACCIONES</a><br></td>
-				</tr>
-			</table>
-			
-			<table class="tablaPrincipal">
-				<tr>
-					<td>
-						<div>
-							<a href="#" onclick="generarReporte('consulta'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
-						</div>
-					</td>
-					<td>
-						<div>
-							<a href="#" onclick="generarReporte('procedimiento'); return false"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="cabin"><a href="#" onclick="generarReporte('consulta'); return false">CONSULTA</a></td>
-					<td class="cabin"><a href="#" onclick="generarReporte('procedimiento'); return false">PROCEDIMIENTO</a><br></td>
-				</tr>
-			</table>
-		</div>
-		</form>
-	</div>
-			<br>
 		<div>
-			<a href="VentanaPracticante.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+			<a href="inicioReporte.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
 		</div>
 </body>
 </html>

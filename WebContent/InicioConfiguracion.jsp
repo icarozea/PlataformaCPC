@@ -25,7 +25,7 @@
 					</td>
 					<td>
 						<div>
-							<a href="./Consecutivo?operacion=cargar"><button class="btn-xlarge"><i class="fa fa-users fa-4x" ></i></button></a>
+							<a href="./Consecutivo?operacion=cargar"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 						</div>
 					</td>	
          		</tr>
