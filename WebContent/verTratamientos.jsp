@@ -27,12 +27,6 @@
 		</c:when>
 	</c:choose>
 	
-	<!--MEMU LATERAL-->
-	<c:choose>
-		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
-			<%@include file="./menuPersona.jsp"%>
-		</c:when>
-	</c:choose>
 	<div class="caja">
 		<h2>Seleccione un Tratamiento</h2>
 		<form id="FormTratamiento" name="FormTratamiento" action="./ServletCita" method="POST">
@@ -63,7 +57,7 @@
 					<td></td>
 					<td></td>
 					<td><input type="button" onclick="{document.FormTratamiento.submit();}" id="btnAceptar" value="Aceptar" class="botones"></td>
-					<td><a href="./ServletCita?operacion=crearCita&idPersona=${sessionScope.personaSession.idPersona}"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a></td>
+					<td><a href="./ServletCita?operacion=crearCita&idPersona=${requestScope.cita.practicante.idPersona}"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a></td>
 					<td></td>
 				</tr>
 			</table>

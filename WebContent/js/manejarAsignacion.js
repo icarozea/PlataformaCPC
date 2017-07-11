@@ -14,6 +14,7 @@ function manejarAsignacion(operacion,idAsignado, actualId, pNom, sNom, pApe, sAp
 		document.data.pApe.value = pApe;
 		document.data.sApe.value = sApe;
 		document.data.rol.value = rol;
+		document.data.jornada.value = document.filtro.jornada.value;
 		document.data.submit();
 	}
 }

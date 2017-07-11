@@ -108,21 +108,13 @@ public class ServletCita extends HttpServlet{
 		try {
 			practicante = personaBean.consultarPersona(personaFiltro);
 			listaPacientes = personaBean.consultarAsignados(idPersona);
-
-			if(request.getParameter("idPaciente") != null){
-				idPersona = new Integer(request.getParameter("idPaciente"));
-
-				for(int i=0; i<listaPacientes.size(); i++){
-					if(listaPacientes.get(i).getIdPersona().equals(idPersona)){
-						paciente = listaPacientes.get(i);
-					}
-				}		
-			}
-
 			request.setAttribute("practicante", practicante);
 			request.setAttribute("listaPacientes", listaPacientes);
 			request.setAttribute("fecha", fecha);
-			request.setAttribute("paciente", paciente);
+			request.setAttribute("paciente", request.getParameter("paciente"));	
+			request.setAttribute("salon", request.getParameter("salon"));
+			request.setAttribute("valoracion", request.getParameter("valoracion"));
+			request.setAttribute("tipo", request.getParameter("tipo"));
 			RequestDispatcher dispatcher = request.getRequestDispatcher("crearCita.jsp");
 			dispatcher.forward(request, response);
 

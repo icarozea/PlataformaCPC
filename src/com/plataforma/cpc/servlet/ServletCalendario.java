@@ -39,7 +39,10 @@ public class ServletCalendario extends HttpServlet {
 	public void ResponderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		response.setContentType("text/html;charset=UTF-8");
-		
+		request.setAttribute("paciente", request.getParameter("paciente"));
+		request.setAttribute("salon", request.getParameter("salon"));
+		request.setAttribute("valoracion", request.getParameter("valoracion"));
+		request.setAttribute("tipo", request.getParameter("tipo"));
 		try{
 			DaoCitas daoCitas = new DaoCitas();
 			ArrayList<CitaTo> citas = daoCitas.consultarCitasPracticante(Integer.parseInt(request.getParameter("idPersona")));		

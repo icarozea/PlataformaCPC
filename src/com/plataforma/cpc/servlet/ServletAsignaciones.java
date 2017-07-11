@@ -56,8 +56,9 @@ public class ServletAsignaciones extends HttpServlet {
 			request.setAttribute("sApe", request.getParameter("sApe"));
 			request.setAttribute("valor", request.getParameter("rol"));
 
-			request.setAttribute("posibilidades", CargarPosibilidades(request.getParameter("rol")));
-
+			String jornada = request.getParameter("jornada");
+			request.setAttribute("posibilidades", CargarPosibilidades(request.getParameter("rol"),jornada));
+			request.setAttribute("jornada", jornada);
 			ArrayList<PersonaTo> asignados = CargarAsignados(idActual);
 			request.setAttribute("asignados", asignados);
 			
@@ -81,7 +82,7 @@ public class ServletAsignaciones extends HttpServlet {
 		return personaBean.consultarAsignados(id);
 	}
 
-	public ArrayList<PersonaTo> CargarPosibilidades(String rol) throws Exception {
+	public ArrayList<PersonaTo> CargarPosibilidades(String rol, String jornada) throws Exception {
 
 		PersonaBean personaBean = new PersonaBean();
 		ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
@@ -99,8 +100,9 @@ public class ServletAsignaciones extends HttpServlet {
 		
 		ArrayList<PersonaTo> aEntregar = new ArrayList<PersonaTo>();
 		for(int i = 0; i < resultados.size(); i++){
-			if(resultados.get(i).getSuperior() == 0){
-				aEntregar.add(resultados.get(i));
+			PersonaTo actual = resultados.get(i);
+			if(actual.getSuperior() == 0 && actual.getJornada().equals(jornada)){
+				aEntregar.add(actual);
 			}
 		}
 

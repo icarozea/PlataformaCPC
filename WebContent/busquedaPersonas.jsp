@@ -17,7 +17,7 @@
         	<h1 class="cabin">Búsqueda de personas</h1>
         </div>
         <div id="marcoSeleccionPersona">
-        	<form action="">
+        	<form action="" name="filtro">
         		<div class="fieldgroup">
         			<label class="cabin">Rol</label>
         			<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
@@ -97,6 +97,7 @@
     		<input type="hidden" name="pApe">
     		<input type="hidden" name="sApe">
     		<input type="hidden" name="rol">
+    		<input type="hidden" name="jornada">
 	   </form>
     </body>
 </html>

@@ -24,7 +24,7 @@
 		</c:when>
 	</c:choose>
          
-
+        
 		<div id="datos" class="datosPerfil">
 			<h1 class="cabin">${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}</h1>
             <c:choose>
@@ -36,6 +36,27 @@
             	</c:when>
             </c:choose>
 		</div>
+		
+		<div id="marcoSeleccionPersona">
+        	<form action="./asignaciones" name="filtro">
+        		<input type="hidden" name="operacion" value="filtro">
+        		<div class="fieldgroup">
+        			<label class="cabin">Jornada</label>
+        			<select id ="jornada" name="jornada" onchange="manejarAsignacion('filtro',0,${requestScope.id},'${requestScope.pNom}','${requestScope.sNom}', '${requestScope.pApe}', '${requestScope.sApe}', '${requestScope.valor}', ${requestScope.cupos})">
+                    		<c:forTokens items="manana,tarde,noche" delims="," var="name">
+				                	<c:choose>
+				                		<c:when test="${requestScope.jornada == name}">
+				                			<option value="${name}" selected>${name}</option>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<option value="${name}">${name}</option>
+				                		</c:otherwise>
+									</c:choose>
+                    		</c:forTokens></select>
+        		</div>
+        	</form>
+        </div>
+        
 		<div id="tituloAsignaciones" class="tituloAsignaciones">
 		<p class="cabin">ASIGNACIÓN DE USUARIOS</p>
 		</div>
@@ -87,6 +108,7 @@
     		<input type="hidden" name="pApe">
     		<input type="hidden" name="sApe">
     		<input type="hidden" name="rol">
+    		<input type="hidden" name="jornada">
 	   </form>
      </body>  
 </html>

@@ -19,6 +19,15 @@ function mostrarTipo(){
 		label.style.display='none';
 	}
 }
+
+function saltoCalendario(){
+	document.FormCalendario.paciente.value = document.querySelector("input[name='grupoPaciente']:checked").value;
+	document.FormCalendario.salon.value = document.FormDatos.salon.value;
+	document.FormCalendario.valoracion.value = document.FormDatos.valoracion.checked;
+	var e = document.getElementById('tipoTratamiento');
+	document.FormCalendario.tipo.value = e.options[e.selectedIndex].value;
+	document.FormCalendario.submit();
+}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Crear citas</title>
@@ -65,7 +74,7 @@ function mostrarTipo(){
 					<c:forEach items="${requestScope.listaPacientes}" var="paciente">
 						<tr>
 							<c:choose>
-								<c:when test="${requestScope.paciente.idPersona == paciente.idPersona}">
+								<c:when test="${requestScope.paciente == paciente.idPersona}">
 									<td><input type="radio" id="grupoPaciente" name="grupoPaciente" value="${paciente.idPersona}" checked></td>
 								</c:when>
 								<c:otherwise>
@@ -85,24 +94,52 @@ function mostrarTipo(){
 			<tr>
 				<td></td>
 				<td>Salón: </td>
-				<td><input type="text" id="salon" name="salon" required></td>
+				<td><input type="text" id="salon" name="salon" value="${requestScope.salon}" required></td>
 				<td>Fecha y Hora: </td>
 				<td><input type="text" id="fecha" name="fecha" value="${requestScope.fecha}" required></td>
-				<td><input type="button" id="btnFecha" value="Buscar" class="botones" onclick="{document.FormCalendario.submit();}"></td>
+				<td><input type="button" id="btnFecha" value="Buscar" class="botones" onclick="saltoCalendario()"></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>Valoración </td>
-				<td> <input type="checkbox" name="valoracion" id="valoracion" value="valoracion" onchange="mostrarTipo()"></td>
-				<td><div id="lblTratamiento" style="display: none;">Tipo Tratamiento:</div></td>
-				<td><select id="tipoTratamiento" name="tipoTratamiento" style="display: none;">
-							<option value="individual">Individual</option>
-							<option value="pareja">Pareja</option>
-							<option value="familiar">Familiar</option>
-							<option value="infantil">Infantil</option>
-							<option value="infantil">Orientación Vocacional</option>						
-					</select>
-				</td>
+				<c:choose>
+					<c:when test="${requestScope.valoracion}">
+						<td> <input type="checkbox" name="valoracion" id="valoracion" value="valoracion" onchange="mostrarTipo()" checked></td>
+					</c:when>
+					<c:otherwise>
+						<td> <input type="checkbox" name="valoracion" id="valoracion" value="valoracion" onchange="mostrarTipo()"></td>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${requestScope.valoracion}">
+						<td><div id="lblTratamiento">Tipo Tratamiento:</div></td>
+						<td><select id="tipoTratamiento" name="tipoTratamiento">
+						<c:forTokens items="individual,pareja,familiar,infantil,orientacion vocacional" delims="," var="name">
+				        	<c:choose>
+				            	<c:when test="${requestScope.tipo == name}">
+				                	<option value="${name}" selected>${name}</option>
+				                </c:when>
+				                <c:otherwise>
+				                	<option value="${name}">${name}</option>
+				                </c:otherwise>
+							</c:choose>
+				        </c:forTokens></select></td>							
+					</c:when>
+					<c:otherwise>
+						<td><div id="lblTratamiento" style="display: none;">Tipo Tratamiento:</div></td>
+						<td><select id="tipoTratamiento" name="tipoTratamiento" style="display: none;">
+						<c:forTokens items="individual,pareja,familiar,infantil,orientacion vocacional" delims="," var="name">
+				        	<c:choose>
+				            	<c:when test="${requestScope.tipo == name}">
+				                	<option value="${name}" selected>${name}</option>
+				                </c:when>
+				                <c:otherwise>
+				                	<option value="${name}">${name}</option>
+				                </c:otherwise>
+							</c:choose>
+				        </c:forTokens></select></td>	
+					</c:otherwise>
+				</c:choose>
 			</tr>
 		</table>
 		<br>
@@ -110,6 +147,10 @@ function mostrarTipo(){
 	</form>
 	<form id="FormCalendario" name="FormCalendario" action="./Calendario"  method="GET">
 		<input type="hidden" id="idPersona" name="idPersona" value="${requestScope.practicante.idPersona}">
+		<input type="hidden" id="paciente" name="paciente">
+		<input type="hidden" id="salon" name="salon">
+		<input type="hidden" id="valoracion" name="valoracion">
+		<input type="hidden" id="tipo" name="tipo">
 	</form>
 </body>
 </html>

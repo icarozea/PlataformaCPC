@@ -138,6 +138,11 @@
 		<input type="hidden" name="idPersona"  id="idPersona" value="<%= request.getParameter("idPersona") %>"/>
 		<input type="hidden" name="operacion"  id="operacion"/>
 		<input type="hidden" name="idCita"  id="idCita"/>
+		
+		<input type="hidden" id="paciente" name="paciente" value="${requestScope.paciente}">
+		<input type="hidden" id="salon" name="salon" value="${requestScope.salon}">
+		<input type="hidden" id="valoracion" name="valoracion" value="${requestScope.valoracion}">
+		<input type="hidden" id="tipo" name="tipo" value="${requestScope.tipo}">
 	</form>
 </body>
 </html>

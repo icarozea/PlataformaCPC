@@ -25,10 +25,6 @@
 				<%@include file="./menuNavegacionPracticante.jsp"%>
 			</c:when>
 		</c:choose>
-        <!--MEMU LATERAL-->
-        <c:if test="${sessionScope.personaSession.perfil.idPerfil == 1}" >
-        	<%@include file="./menuPersona.jsp" %> 
-        </c:if>
              
         <div id="marcoRespuesta" class="caja">
             &nbsp;&nbsp;&nbsp;
