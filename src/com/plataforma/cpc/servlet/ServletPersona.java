@@ -95,8 +95,9 @@ public class ServletPersona extends HttpServlet {
 	 * Redirige a la pagina de respuestaEliminarPersona con el mensaje apropiado
 	 */
 	private void detallePersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		  RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioPersonaDetalle.jsp");		  
-		  request.setAttribute("idPersona", 101);
+		  RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");		  
+		  request.setAttribute("idPersona", 0);
+		  request.setAttribute("personaDetalle", new PersonaDetalleTo());
 		  dispatcher.forward(request, response);
 	}
 //-----------------------------------------------------------------------------------------------------
@@ -240,7 +241,7 @@ public class ServletPersona extends HttpServlet {
 	 * Redirige a la pagina de respuestaAgregarPersona
 	 */
 	private void guardarPersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioPersonaDetalle.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
 		
 		PersonaBean personaBean = new PersonaBean();
 		try{

@@ -31,12 +31,6 @@
 		</c:when>
 	</c:choose>
 	
-	<!--MEMU LATERAL-->
-	<c:choose>
-		<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
-<%-- 			<%@include file="./menuPersona.jsp"%> --%>
-		</c:when>
-	</c:choose>
 	<div>
 		<c:choose>
 			<c:when test="${requestScope.pNom != null}">
