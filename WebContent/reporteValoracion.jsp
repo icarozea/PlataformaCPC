@@ -1,3 +1,5 @@
+<%@page import="com.plataforma.cpc.modelo.PersonaDetalleBean"%>
+<%@page import="com.plataforma.cpc.to.PersonaDetalleTo"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@ page import="java.util.ArrayList" %>
 <%@page import="com.plataforma.cpc.dao.DaoPersona"%>
@@ -32,6 +34,9 @@
 <% CitaTo citaRecibida = (CitaTo) request.getAttribute("cita"); %>
 <% PersonaTo practicante = new DaoPersona().consultarPersona(citaRecibida.getPracticante()); %>
 <% PersonaTo paciente =  new DaoPersona().consultarPersona(citaRecibida.getPaciente());%>
+<% PersonaDetalleTo detallePaciente = new PersonaDetalleTo(); %>
+<% detallePaciente.setPersonaId(paciente.getIdPersona()); %>
+<% detallePaciente =  new PersonaDetalleBean().consultarPersonaDetalle(detallePaciente);%>
 <% LocalDateTime hoy = LocalDateTime.now(); %>
 <% String dia = hoy.getDayOfMonth() > 9? hoy.getDayOfMonth() + "" : "0" + hoy.getDayOfMonth(); %>
 <% String mes = hoy.getMonthValue() > 9? hoy.getMonthValue() + "" : "0" + hoy.getMonthValue(); %>
@@ -45,6 +50,7 @@
 <% pageContext.setAttribute("listaEps", listaEps); %>
 <% pageContext.setAttribute("practicante", practicante); %>
 <% pageContext.setAttribute("paciente", paciente); %>
+<% pageContext.setAttribute("detallePaciente", detallePaciente); %>
 <body>
 	<!--MEMU SUPERIOR-->
         <c:choose>
@@ -100,63 +106,87 @@
 					</c:choose>
 				</c:forEach>
 			</select>
-			<label id="nun_documento_label" class="droidSans"><strong>Número</strong></label><input id="num_documento" name="num_documento" type="text" class="field text fn" size="8" tabindex="1" value="<%= paciente.getNumeroDocumento()%> ">
+			<label id="nun_documento_label" class="droidSans"><strong>Número</strong></label><input id="num_documento" name="num_documento" type="text" class="field text fn" size="8" tabindex="1" value="<%= paciente.getNumeroDocumento()%>">
 		</div>
 		
 		<div class="seccionReportePar">
 			<label id="sexo_label" class="droidSans"><strong>Sexo</strong></label>
 			<select id="sexo" name="sexo" class="droidSans">
-				<option value="M">Hombre</option>
-				<option value="F">Femenino</option>
+				<c:choose>
+					<c:when test="${pageScope.detallePaciente.sexo == 'M'}"><option value="M" selected>Masculino</option></c:when>
+					<c:otherwise><option value="M">Masculino</option></c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${pageScope.detallePaciente.sexo == 'F'}"><option value="F" selected>Femenino</option></c:when>
+					<c:otherwise><option value="F">Femenino</option></c:otherwise>
+				</c:choose>
 			</select>
 			<label id="estado_civil_label" class="droidSans"><strong>Estado Civil</strong></label>
 			<select id="estado_civil" name="estado_civil" class="droidSans">
-				<option value="soltero">Soltero(a)</option>
-				<option value="casado">Casado(a)</option>
-				<option value="divorciado">Divorciado(a)</option>
-				<option value="viudo">Viudo(a)</option>
-				<option value="union">Union Libre</option>
+				<c:forTokens items="Soltero,Casado,Divorciado,Viudo" delims="," var="name">
+					<c:choose>
+				    	<c:when test="${pageScope.detallePaciente.estadoCivil == name}">
+				        	<option value="${name}" selected>${name}(a)</option>
+				         </c:when>
+				         <c:otherwise>
+				            <option value="${name}">${name}(a)</option>
+				         </c:otherwise>
+					</c:choose>
+				</c:forTokens>
+				<c:choose>
+					<c:when test="${pageScope.detallePaciente.estadoCivil == 'Union Libre'}">
+						<option value="Union Libre" selected>Union Libre</option>
+					</c:when>
+				    <c:otherwise>
+				    	<option value="Union Libre">Union Libre</option>
+				    </c:otherwise>
+				</c:choose>
 			</select>
-			<label id="edad_label" class="droidSans"><strong>Edad Actual</strong></label><input id="edad" name="edad" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="edad_label" class="droidSans"><strong>Edad Actual</strong></label><input id="edad" name="edad" type="text" class="field text fn" value="${pageScope.detallePaciente.edad}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReporteImpar">
 			<label id="fecha_nacimiento_label" class="droidSans"><strong>Fecha de Nacimiento:</strong></label>
-			<input id="fecha_nacimiento" name="fecha_nacimiento" type="text" class="field text fn" value="" size="8" tabindex="1">
-			<label id="lugar_nacimiento_label" class="droidSans"><strong>Lugar de Nacimiento:</strong></label><input id="lugar_nacimiento" name="lugar_nacimiento" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<input id="fecha_nacimiento" name="fecha_nacimiento" type="text" class="field text fn" value="${pageScope.detallePaciente.fechaNacimiento}" size="8" tabindex="1">
+			<label id="lugar_nacimiento_label" class="droidSans"><strong>Lugar de Nacimiento:</strong></label><input id="lugar_nacimiento" name="lugar_nacimiento" type="text" class="field text fn" value="${pageScope.detallePaciente.lugarNacimiento}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReportePar">
 			<label id="escolaridad_label" class="droidSans"><strong>Nivel de Escolaridad:</strong></label>
 			<select id="escolaridad" name="escolaridad" class="droidSans">
-				<option value="ninguna">Ninguna</option>
-				<option value="primaria">Primaria</option>
-				<option value="bachillerato">Bachillerato</option>
-				<option value="tecnica">Técnica/Tecnológica</option>
-				<option value="profesional">Profesional</option>
-				<option value="especializacion">Especialización</option>
-				<option value="maestria">Maestría</option>
-				<option value="doctorado">Doctorado</option>
-				<option value="postdoctorado">Post-Doctorado</option>
+				<c:forTokens items="Ninguna,Primaria,Bachillerato,Tecnica,Profesional,Especializacion,Maestria,Doctorado,Post-Doctorado" delims="," var="name">
+					<c:choose>
+				    	<c:when test="${pageScope.detallePaciente.escolaridad == name}">
+				        	<option value="${name}" selected>${name}</option>
+				        </c:when>
+				        <c:otherwise>
+				        	<option value="${name}">${name}</option>
+				        </c:otherwise>
+					</c:choose>
+				</c:forTokens>
 			</select>
-			<label id="ocupacion_label" class="droidSans"><strong>Ocupación:</label></strong><input id="ocupacion" name="ocupacion" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="ocupacion_label" class="droidSans"><strong>Ocupación:</label></strong><input id="ocupacion" name="ocupacion" type="text" class="field text fn" value="${pageScope.detallePaciente.ocupacion}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="dirección_label" class="droidSans"><strong>Dirección de Residencia:</strong></label><input id="direccion" name="direccion" type="text" class="field text fn" tabindex="1" value=<%= paciente.getDireccion() %>>
+			<label id="dirección_label" class="droidSans"><strong>Dirección de Residencia:</strong></label><input id="direccion" name="direccion" type="text" class="field text fn" tabindex="1" value="<%=paciente.getDireccion() %>">
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="localidad_label" class="droidSans"><strong>Localidad:</strong></label><input id="localidad" name="localidad" type="text" class="field text fn" value="" size="8" tabindex="1">
-			<label id="barrio_label" class="droidSans"><strong>Barrio:</strong></label><input id="barrio" name="barrio" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="localidad_label" class="droidSans"><strong>Localidad:</strong></label><input id="localidad" name="localidad" type="text" class="field text fn" value="${pageScope.detallePaciente.localidad}" size="8" tabindex="1">
+			<label id="barrio_label" class="droidSans"><strong>Barrio:</strong></label><input id="barrio" name="barrio" type="text" class="field text fn" value="${pageScope.detallePaciente.barrio}" size="8" tabindex="1">
 			<label id="estrato_label" class="droidSans"><strong>Estrato:</strong></label>
 			<select id="estrato" name="estrato" class="droidSans">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
+				<c:forTokens items="1,2,3,4,5,6" delims="," var="name">
+					<c:choose>
+				    	<c:when test="${pageScope.detallePaciente.estrato == name}">
+				        	<option value="${name}" selected>${name}</option>
+				        </c:when>
+				        <c:otherwise>
+				        	<option value="${name}">${name}</option>
+				      	</c:otherwise>
+					</c:choose>
+				</c:forTokens>
 			</select>
 		</div>
 		
@@ -177,33 +207,41 @@
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="emergencia_label" class="droidSans"><strong>En Caso de Emergencia Llamar A:</strong></label><input id="emergencia" name="emergencia" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="emergencia_label" class="droidSans"><strong>En Caso de Emergencia Llamar A:</strong></label><input id="emergencia" name="emergencia" type="text" class="field text fn" value="${pageScope.detallePaciente.personaEmergencia}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="telefonos_emergencia_label" class="droidSans"><strong>A los Teléfonos:</strong></label><input id="telefonos_emergencia" name="telefonos_emergencia" type="text" class="field text fn" value="" size="8" tabindex="1">
-			<label id="parentesco_label" class="droidSans"><strong>Parentesco:</strong></label><input id="parentesco" name="parentesco" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="telefonos_emergencia_label" class="droidSans"><strong>A los Teléfonos:</strong></label><input id="telefonos_emergencia" name="telefonos_emergencia" type="text" class="field text fn" value="${pageScope.detallePaciente.telefonoEmergencia}" size="8" tabindex="1">
+			<label id="parentesco_label" class="droidSans"><strong>Parentesco:</strong></label><input id="parentesco" name="parentesco" type="text" class="field text fn" value="${pageScope.detallePaciente.parentescoEmergencia}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReportePar">
 			<label id="solicitud_label" class="droidSans"><strong>Formato de Solicitud del Servicio:</strong></label>
 			<select id="solicitud" name="solicitud" class="droidSans">
-				<option value="voluntaria">Voluntaria</option>
-				<option value="remision">Remisión</option>
+				<c:forTokens items="Voluntaria,Remision" delims="," var="name">
+					<c:choose>
+				    	<c:when test="${pageScope.detallePaciente.formatoSolicitud == name}">
+				        	<option value="${name}" selected>${name}</option>
+				        </c:when>
+				        <c:otherwise>
+				        	<option value="${name}">${name}</option>
+				        </c:otherwise>
+					</c:choose>
+				</c:forTokens>
 			</select>
 		</div>
 		
 		<div class="seccionReportePar">
-			<label id="institucion_label" class="droidSans"><strong>Si es Remisión por Cual Institución:</strong></label><input id="institucion" name="institucion" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="institucion_label" class="droidSans"><strong>Si es Remisión por Cual Institución:</strong></label><input id="institucion" name="institucion" type="text" class="field text fn" value="${pageScope.detallePaciente.institucionRemision}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="acudiente_label" class="droidSans"><strong>Nombre del Acudiente</strong> <em>(si es menor de edad):</em></label><input id="acudiente" name="acudiente" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="acudiente_label" class="droidSans"><strong>Nombre del Acudiente</strong> <em>(si es menor de edad):</em></label><input id="acudiente" name="acudiente" type="text" class="field text fn" value="${pageScope.detallePaciente.acudiente}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="parentesco_acudiente_label" class="droidSans"><strong>Parentesco:</strong></label><input id="parentesco_acudiente" name="parentesco_acudiente" type="text" class="field text fn" value="" size="8" tabindex="1">
-			<label id="telefonos_acudiente_label" class="droidSans"><strong>Telefonos:</strong></label><input id="telefonos_acudiente" name="telefonos_acudiente" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="parentesco_acudiente_label" class="droidSans"><strong>Parentesco:</strong></label><input id="parentesco_acudiente" name="parentesco_acudiente" type="text" class="field text fn" value="${pageScope.detallePaciente.parentescoAcudiente}" size="8" tabindex="1">
+			<label id="telefonos_acudiente_label" class="droidSans"><strong>Telefonos:</strong></label><input id="telefonos_acudiente" name="telefonos_acudiente" type="text" class="field text fn" value="${pageScope.detallePaciente.telefonoAcudiente}" size="8" tabindex="1">
 		</div>
 		
 		<div class="seccionReportePar">
@@ -215,7 +253,7 @@
 		</div>
 		
 		<div class="seccionReportePar">
-			<textarea id="parientes" name="parientes" rows="10" cols="90" style=" resize: none;"></textarea><br><br>
+			<textarea id="parientes" name="parientes" rows="10" cols="90" style=" resize: none;">${pageScope.detallePaciente.personasReside}</textarea><br><br>
 		</div>
 		
 		<div>
