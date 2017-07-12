@@ -78,13 +78,29 @@ public class ServletPersonaDetalle extends HttpServlet {
 			personaTo.setSexo(request.getParameter("sexo")); 
 			personaTo.setEdad( request.getParameter("edad"));
 			personaTo.setAcudiente(request.getParameter("acudiente"));
+			personaTo.setParentescoAcudiente(request.getParameter("parentesco_acudiente"));
+			personaTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
 			personaTo.setProceso(request.getParameter("proceso"));
 			personaTo.setPerteneceU(request.getParameter("perteneceU"));
 			personaTo.setFacultad(request.getParameter("facultad"));
 			personaTo.setSemestre(request.getParameter("semestre"));
-			personaTo.setProblematica(request.getParameter("nombre"));
-			personaTo.setObservación(request.getParameter("problematica"));
-			personaTo.setNombreModifica(request.getParameter("observaciones"));
+			personaTo.setProblematica(request.getParameter("problematica"));
+			personaTo.setObservación(request.getParameter("observaciones"));
+			personaTo.setEstadoCivil(request.getParameter("estado_civil"));
+			personaTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
+			personaTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
+			personaTo.setEscolaridad(request.getParameter("escolaridad"));
+			personaTo.setOcupacion(request.getParameter("ocupacion"));
+			personaTo.setLocalidad(request.getParameter("localidad"));
+			personaTo.setBarrio(request.getParameter("barrio"));
+			personaTo.setEstrato(request.getParameter("estrato"));
+			personaTo.setPersonaEmergencia(request.getParameter("emergencia"));
+			personaTo.setTelefonoEmergencia(request.getParameter("telefonos_emergencia"));
+			personaTo.setParentescoEmergencia(request.getParameter("parentesco"));
+			personaTo.setFormatoSolicitud(request.getParameter("solicitud"));
+			personaTo.setInstitucionRemision(request.getParameter("institucion"));
+			personaTo.setPersonasReside(request.getParameter("parientes"));
+			personaTo.setProceso(request.getParameter("proceso"));
 			
 			if(personaBean.modificarPersonaDetalle(personaTo)){
 				request.setAttribute("respuesta", "1");
@@ -119,13 +135,29 @@ public class ServletPersonaDetalle extends HttpServlet {
 			personaTo.setSexo(request.getParameter("sexo")); 
 			personaTo.setEdad( request.getParameter("edad"));
 			personaTo.setAcudiente(request.getParameter("acudiente"));
+			personaTo.setParentescoAcudiente(request.getParameter("parentesco_acudiente"));
+			personaTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
 			personaTo.setProceso(request.getParameter("proceso"));
 			personaTo.setPerteneceU(request.getParameter("perteneceU"));
 			personaTo.setFacultad(request.getParameter("facultad"));
 			personaTo.setSemestre(request.getParameter("semestre"));
-			personaTo.setProblematica(request.getParameter("nombre"));
-			personaTo.setObservación(request.getParameter("problematica"));
-			personaTo.setNombreModifica(request.getParameter("observaciones"));
+			personaTo.setProblematica(request.getParameter("problematica"));
+			personaTo.setObservación(request.getParameter("observaciones"));
+			personaTo.setEstadoCivil(request.getParameter("estado_civil"));
+			personaTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
+			personaTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
+			personaTo.setEscolaridad(request.getParameter("escolaridad"));
+			personaTo.setOcupacion(request.getParameter("ocupacion"));
+			personaTo.setLocalidad(request.getParameter("localidad"));
+			personaTo.setBarrio(request.getParameter("barrio"));
+			personaTo.setEstrato(request.getParameter("estrato"));
+			personaTo.setPersonaEmergencia(request.getParameter("emergencia"));
+			personaTo.setTelefonoEmergencia(request.getParameter("telefonos_emergencia"));
+			personaTo.setParentescoEmergencia(request.getParameter("parentesco"));
+			personaTo.setFormatoSolicitud(request.getParameter("solicitud"));
+			personaTo.setInstitucionRemision(request.getParameter("institucion"));
+			personaTo.setPersonasReside(request.getParameter("parientes"));
+			personaTo.setProceso(request.getParameter("proceso"));
 			
 			if(personaBean.ingresarDetallePersona(personaTo)){
 				request.setAttribute("respuesta", "1");

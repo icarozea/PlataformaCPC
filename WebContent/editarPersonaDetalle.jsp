@@ -49,11 +49,24 @@
 		            <div class="fieldgroup">
 		            	<label class="cabin">Estado Civil</label>
 						<select id="estado_civil" name="estado_civil">
-							<option value="soltero">Soltero(a)</option>
-							<option value="casado">Casado(a)</option>
-							<option value="divorciado">Divorciado(a)</option>
-							<option value="viudo">Viudo(a)</option>
-							<option value="union">Union Libre</option>
+							<c:forTokens items="Soltero,Casado,Divorciado,Viudo" delims="," var="name">
+				            	<c:choose>
+				                	<c:when test="${requestScope.personaDetalle.estadoCivil == name}">
+				                		<option value="${name}" selected>${name}(a)</option>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<option value="${name}">${name}(a)</option>
+				                	</c:otherwise>
+								</c:choose>
+				            </c:forTokens>
+				            <c:choose>
+				            	<c:when test="${requestScope.personaDetalle.estadoCivil == 'Union Libre'}">
+									<option value="Union Libre" selected>Union Libre</option>
+								</c:when>
+				                <c:otherwise>
+				                	<option value="Union Libre">Union Libre</option>
+				                </c:otherwise>
+				            </c:choose>
 						</select>
 		            </div>	
 		            <div class="fieldgroup">
@@ -62,71 +75,84 @@
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Fecha de Nacimiento</label>
-						<input id="fecha_nacimiento" name="fecha_nacimiento" type="text"  value="" placeholder="Fecha de Nacimiento">
+						<input id="fecha_nacimiento" name="fecha_nacimiento" type="text"  value="${requestScope.personaDetalle.fechaNacimiento}" placeholder="Fecha de Nacimiento">
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Lugar de Nacimiento</label>
-		            	<input id="lugar_nacimiento" name="lugar_nacimiento" type="text"  value="" placeholder="Lugar de Nacimiento">
+		            	<input id="lugar_nacimiento" name="lugar_nacimiento" type="text"  value="${requestScope.personaDetalle.lugarNacimiento}" placeholder="Lugar de Nacimiento">
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Nivel de Escolaridad</label>
 						<select id="escolaridad" name="escolaridad">
-							<option value="ninguna">Ninguna</option>
-							<option value="primaria">Primaria</option>
-							<option value="bachillerato">Bachillerato</option>
-							<option value="tecnica">Técnica/Tecnológica</option>
-							<option value="profesional">Profesional</option>
-							<option value="especializacion">Especialización</option>
-							<option value="maestria">Maestría</option>
-							<option value="doctorado">Doctorado</option>
-							<option value="postdoctorado">Post-Doctorado</option>
+							<c:forTokens items="Ninguna,Primaria,Bachillerato,Tecnica,Profesional,Especializacion,Maestria,Doctorado,Post-Doctorado" delims="," var="name">
+				            	<c:choose>
+				                	<c:when test="${requestScope.personaDetalle.escolaridad == name}">
+				                		<option value="${name}" selected>${name}</option>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<option value="${name}">${name}</option>
+				                	</c:otherwise>
+								</c:choose>
+				            </c:forTokens>
 						</select>
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Ocupación</label>
-		            	<input id="ocupacion" name="ocupacion" type="text"  value="" placeholder="Ocupación">
+		            	<input id="ocupacion" name="ocupacion" type="text"  value="${requestScope.personaDetalle.ocupacion}" placeholder="Ocupación">
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Localidad</label>
-		            	<input id="localidad" name="localidad" type="text" value="" placeholder="Localidad">
+		            	<input id="localidad" name="localidad" type="text" value="${requestScope.personaDetalle.localidad}" placeholder="Localidad">
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Barrio</label>
-		            	<input id="barrio" name="barrio" type="text" value="" placeholder="Barrio">
+		            	<input id="barrio" name="barrio" type="text" value="${requestScope.personaDetalle.barrio}" placeholder="Barrio">
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Estrato</label>
 						<select id="estrato" name="estrato">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
+							<c:forTokens items="1,2,3,4,5,6" delims="," var="name">
+				            	<c:choose>
+				                	<c:when test="${requestScope.personaDetalle.estrato == name}">
+				                		<option value="${name}" selected>${name}</option>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<option value="${name}">${name}</option>
+				                	</c:otherwise>
+								</c:choose>
+				            </c:forTokens>
 						</select>
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">En Caso de Emergencia Llamar A</label>
-		                <input id="emergencia" name="emergencia" type="text" value="" placeholder="Emergencia">
+		                <input id="emergencia" name="emergencia" type="text" value="${requestScope.personaDetalle.personaEmergencia}" placeholder="Emergencia">
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">A los Teléfonos</label>
-		                <input id="telefonos_emergencia" name="telefonos_emergencia" type="text" value="" placeholder="Telefonos Emergencia">
+		                <input id="telefonos_emergencia" name="telefonos_emergencia" type="text" value="${requestScope.personaDetalle.telefonoEmergencia}" placeholder="Telefonos Emergencia">
 		            </div>
 		             <div class="fieldgroup">
 		                <label class="cabin">Parentesco</label>
-		                <input id="parentesco" name="parentesco" type="text" value="" placeholder="Parentesco">
+		                <input id="parentesco" name="parentesco" type="text" value="${requestScope.personaDetalle.parentescoEmergencia}" placeholder="Parentesco">
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Formato de Solicitud del Servicio</label>
 						<select id="solicitud" name="solicitud" >
-							<option value="voluntaria">Voluntaria</option>
-							<option value="remision">Remisión</option>
+							<c:forTokens items="Voluntaria,Remision" delims="," var="name">
+				            	<c:choose>
+				                	<c:when test="${requestScope.personaDetalle.formatoSolicitud == name}">
+				                		<option value="${name}" selected>${name}</option>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<option value="${name}">${name}</option>
+				                	</c:otherwise>
+								</c:choose>
+				            </c:forTokens>
 						</select>
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Institución que Remite</strong></label>
-		                <input id="institucion" name="institucion" type="text" value="" placeholder="Institución">
+		                <input id="institucion" name="institucion" type="text" value="${requestScope.personaDetalle.institucionRemision}" placeholder="Institución">
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Acudiente</label>
@@ -134,21 +160,19 @@
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Parentesco del Acudiente</label>
-						<input id="parentesco_acudiente" name="parentesco_acudiente" type="text" value="" placeholder="Parentesco Acudiente">
+						<input id="parentesco_acudiente" name="parentesco_acudiente" type="text" value="${requestScope.personaDetalle.parentescoAcudiente}" placeholder="Parentesco Acudiente">
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Telefonos del Acudiente</label>
-						<input id="telefonos_acudiente" name="telefonos_acudiente" type="text" value="" placeholder="Telefonos Acudiente">
+						<input id="telefonos_acudiente" name="telefonos_acudiente" type="text" value="${requestScope.personaDetalle.telefonoAcudiente}" placeholder="Telefonos Acudiente">
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Personas con las que vive actualmente</label>
-						<textarea id="parientes" name="parientes" rows="10" value=""  cols="46" style="resize: none;">
-						</textarea>
+						<textarea id="parientes" name="parientes" rows="10" cols="46" style="resize: none;">${requestScope.personaDetalle.personasReside}</textarea>
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Problematica</label>
-						<textarea id="problematica" name="problematica" rows="10" value="${requestScope.personaDetalle.problematica}"  cols="46" style=" resize: none;">
-						</textarea>
+						<textarea id="problematica" name="problematica" rows="10" cols="46" style=" resize: none;">${requestScope.personaDetalle.problematica}</textarea>
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Proceso</label>
@@ -177,13 +201,19 @@
 		            </div>
 		            <div class="fieldgroup">
 		                <label class="cabin">Observaciones</label>
-						<textarea id=observaciones" name="observaciones" rows="10" value="${requestScope.personaDetalle.observación}" cols="46" style=" resize: none;">
-						</textarea>
+						<textarea id="observaciones" name="observaciones" rows="10" cols="46" style=" resize: none;">${requestScope.personaDetalle.observación}</textarea>
 		            </div>
 		            <div class="fieldgroup">
 		            </div>
 		            <div class="fieldgroup">
-		                <input type="button" value="Registrar" onclick="modificarDetalle()" class="submit cabin"/>
+		            <c:choose>
+		            	<c:when test="${requestScope.personaDetalle.personaId != null}">
+		                	<input type="button" value="Registrar" onclick="modificarDetalle()" class="submit cabin"/>
+		                </c:when>
+		                <c:otherwise>
+		                	<input type="button" value="Registrar" onclick="guardarDetalle()" class="submit cabin"/>
+		                </c:otherwise>
+		            </c:choose>
 		            </div>
 		            <c:choose>
 		            	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">

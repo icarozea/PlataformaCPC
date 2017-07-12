@@ -86,14 +86,10 @@ public class ServletPersona extends HttpServlet {
 	
 	private void irEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		  RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioEPS.jsp");		  
-		  request.setAttribute("idPersona", 101);
+		  request.setAttribute("idPersona", 0);
 		  dispatcher.forward(request, response);
 	}
 	
-	/**
-	 * Responde a una petición de eliminar una persona con el id presente en el request
-	 * Redirige a la pagina de respuestaEliminarPersona con el mensaje apropiado
-	 */
 	private void detallePersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		  RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");		  
 		  request.setAttribute("idPersona", 0);
@@ -240,9 +236,7 @@ public class ServletPersona extends HttpServlet {
 	 * Responde a la peticion de guardar una nueva persona en la base de datos con la informacion capturada en el formulario
 	 * Redirige a la pagina de respuestaAgregarPersona
 	 */
-	private void guardarPersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
-		
+	private void guardarPersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		PersonaBean personaBean = new PersonaBean();
 		try{
 			DaoUtilidades daoUtilidades = new DaoUtilidades();
@@ -297,17 +291,27 @@ public class ServletPersona extends HttpServlet {
 			int idPersona = personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, jornada, codigo);
 			
 			if(idPersona != -1){
-				PersonaDetalleTo detalleTo = new PersonaDetalleTo();
-				detalleTo.setPersonaId(idPersona);
-				PersonaDetalleBean detalleBean = new PersonaDetalleBean();
-				if(detalleBean.ingresarDetallePersona(detalleTo)){
-					request.setAttribute("respuesta", "1");
-					request.setAttribute("idPersona", idPersona);
-					request.setAttribute("error", "");
-					dispatcher.forward(request, response);
+				if(idPerfil == 4){
+					PersonaDetalleTo detalleTo = new PersonaDetalleTo();
+					detalleTo.setPersonaId(idPersona);
+					PersonaDetalleBean detalleBean = new PersonaDetalleBean();
+					if(detalleBean.ingresarDetallePersona(detalleTo)){
+						request.setAttribute("respuesta", "1");
+						request.setAttribute("idPersona", idPersona);
+						request.setAttribute("personaDetalle", detalleTo);
+						request.setAttribute("error", "");
+						RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
+						dispatcher.forward(request, response);	
+					}
+					else{
+						throw new Exception("Hubo un error al intentar crear el detalle del paciente");
+					}
 				}
 				else{
-					throw new Exception("Hubo un error al intentar guardar la información");
+					request.setAttribute("respuesta", "1");
+					request.setAttribute("error", "");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+					dispatcher.forward(request, response);
 				}
 			}
 			else{
@@ -319,7 +323,7 @@ public class ServletPersona extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
-			dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
 			dispatcher.forward(request, response);
 		}		
 	}
@@ -329,8 +333,6 @@ public class ServletPersona extends HttpServlet {
 	 * Redirige a la pagina de respuestaAgregarPersona
 	 */
 	private void actualizarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
 		
 		PersonaBean personaBean = new PersonaBean();
 		try{
@@ -389,16 +391,25 @@ public class ServletPersona extends HttpServlet {
 			String superior = request.getParameter("superior");
 			Integer idSuperior = superior.equals("") ? 0 : Integer.parseInt(superior); 
 			if(personaBean.modificarPersona(id, nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, idSuperior, jornada, codigo)){
-				PersonaDetalleBean personaDetalle = new PersonaDetalleBean();
-				PersonaDetalleTo personaDetalleTo = new PersonaDetalleTo();
-				personaDetalleTo.setPersonaId(id);
-				personaDetalleTo = personaDetalle.consultarPersonaDetalle(personaDetalleTo);
-				personaDetalleTo.setPersonaId(id);
-				request.setAttribute("personaDetalle", personaDetalleTo);
-				request.setAttribute("respuesta", "1");
+				if(idPerfil == 4){
+					PersonaDetalleBean personaDetalle = new PersonaDetalleBean();
+					PersonaDetalleTo personaDetalleTo = new PersonaDetalleTo();
+					personaDetalleTo.setPersonaId(id);
+					personaDetalleTo = personaDetalle.consultarPersonaDetalle(personaDetalleTo);
+					personaDetalleTo.setPersonaId(id);
+					request.setAttribute("personaDetalle", personaDetalleTo);
+					request.setAttribute("respuesta", "1");
 				
-				request.setAttribute("error", "");
-				dispatcher.forward(request, response);
+					request.setAttribute("error", "");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
+					dispatcher.forward(request, response);
+				}
+				else{
+					request.setAttribute("respuesta", "1");
+					request.setAttribute("error", "");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
+					dispatcher.forward(request, response);
+				}
 			}
 			else{
 				throw new Exception("Hubo un error al intentar guardar la información");
@@ -409,6 +420,7 @@ public class ServletPersona extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
