@@ -14,7 +14,6 @@ import com.plataforma.cpc.modelo.HistoriaClinicaBean;
 
 /**
  * Implementación de un servlet para manejar los servicios asociados a reiniciar el consecutivo de las historia clinicas
- * @author sebastian.gilp
  */
 @WebServlet(name = "ServletConsecutivo", urlPatterns = { "/Consecutivo" })
 public class ServletConsecutivo extends HttpServlet {
@@ -87,8 +86,9 @@ public class ServletConsecutivo extends HttpServlet {
 		
 			int ano = Integer.parseInt(request.getParameter("ano"));
 			String semestre = request.getParameter("semestre");
+			int consecutivo = Integer.parseInt(request.getParameter("consecutivo"));
 			
-			if(utilidades.reiniciarConsecutivoHistoriaClinica(ano, semestre)){
+			if(utilidades.reiniciarConsecutivoHistoriaClinica(ano, semestre, consecutivo)){
 				request.setAttribute("mensaje", "Reinicio Exitoso");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("./Consecutivo?operacion=cargar");
 				dispatcher.forward(request, response);

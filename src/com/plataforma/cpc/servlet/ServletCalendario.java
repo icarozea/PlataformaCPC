@@ -78,11 +78,26 @@ public class ServletCalendario extends HttpServlet {
 			String mes = fecha.getMonthValue() > 9? fecha.getMonthValue() + "" : "0" + fecha.getMonthValue();
 			String dia = fecha.getDayOfMonth() > 9? fecha.getDayOfMonth() + "" : "0" + fecha.getDayOfMonth();
 			String hora = fecha.getHour() > 9? fecha.getHour() + "" : "0" + fecha.getHour();
-			int fin = fecha.getHour() + 1;
-			String horaFin = fin > 9? fin + "" : "0" + fin;
+			String horaFin = "";
+			
+			if(actual.isValoracion()){
+				if(fecha.getMinute() > 0){
+					int h = fecha.getHour() +1;
+					horaFin = h > 9? h + ":00" : "0" + h + ":00";
+				}
+				else
+					horaFin = hora + ":30";
+			}
+			else{
+				int fin = fecha.getHour() + 1;
+				horaFin = fin > 9? fin + "" : "0" + fin;
+				String minutos = fecha.getMinute() > 9? fecha.getMinute() + "" : "0" + fecha.getMinute();
+				horaFin += ":" + minutos;	
+			}
+			
 			String minutos = fecha.getMinute() > 9? fecha.getMinute() + "" : "0" + fecha.getMinute();
 			par += "{id: "+ actual.getIdCita() +", title: '" + paciente + " Salon: " + actual.getSalon() + 
-					"', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + hora + ":" + minutos + "', end: '" + fecha.getYear() +  "-" + mes + "-" + dia + " " + horaFin + ":" + minutos + "'" +
+					"', start: '"+ fecha.getYear() +  "-" + mes + "-" + dia + " " + hora + ":" + minutos + "', end: '" + fecha.getYear() +  "-" + mes + "-" + dia + " " + horaFin + "'" +
 					",estado:'" + actual.getEstado() + "'},";
 		}
 		return par;

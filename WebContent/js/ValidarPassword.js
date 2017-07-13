@@ -109,7 +109,7 @@ function validarMail(){
 }
 
 function validarTexto(texto){
-    expr = /^[A-Z][a-zñÑáéíóúÁÉÍÓÚÄËÏÖÜäëïöüàèìòùÀÈÌÔÙ, ]{2,}$/;
+    expr = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚÄËÏÖÜäëïöüàèìòùÀÈÌÔÙ, ]{2,}$/;
     valueForm = texto;
     if(valueForm.search(expr) === 0){
         return true;
@@ -132,6 +132,11 @@ function validarNumero(){
         return false;
     }
     
+    numero = document.getElementById('codigo').value
+    if (numero != null && numero != "" && !/^([0-9])*$/.test(numero)){
+        alert("El codigo digitado no es valido");
+        return false;
+    }
     return true;
   }
 

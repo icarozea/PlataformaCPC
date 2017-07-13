@@ -98,10 +98,10 @@
         		</fieldset>	
         		<fieldset>	
         			<div class="fieldgroup">
-        				<input type="button" name="btnAceptar" id="btnAceptar" value="Aceptar" class="botones"/>
+        				<input type="button" name="btnAceptar" id="btnAceptar" value="Aprobar Reporte" class="botones"/>
         			</div>
         			<div class="fieldgroup">
-        				<input type="button" name="btnRechazar" id="btnRechazar" value="Rechazar" class="botones"/>
+        				<input type="button" name="btnRechazar" id="btnRechazar" value="Rechazar Reporte" class="botones"/>
         			</div>
         		</fieldset>
         		

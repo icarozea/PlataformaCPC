@@ -21,7 +21,8 @@ function mostrarTipo(){
 }
 
 function saltoCalendario(){
-	document.FormCalendario.paciente.value = document.querySelector("input[name='grupoPaciente']:checked").value;
+	var p = document.querySelector("input[name='grupoPaciente']:checked");
+	document.FormCalendario.paciente.value = p != null? p.value : 0;
 	document.FormCalendario.salon.value = document.FormDatos.salon.value;
 	document.FormCalendario.valoracion.value = document.FormDatos.valoracion.checked;
 	var e = document.getElementById('tipoTratamiento');

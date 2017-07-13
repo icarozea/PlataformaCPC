@@ -337,10 +337,10 @@ public class DaoUtilidades {
      * @param semestre El semestre que el consecutivo va a mostrar
      * @return Verdadero si la operación fue exitosa, falso de lo contrario
      */
-    public boolean reiniciarConsecutivoHistoriaClinica(int ano, String semestre){
+    public boolean reiniciarConsecutivoHistoriaClinica(int ano, String semestre, int consecutivo){
     	boolean retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE CONSECUTIVO_HISTORIA SET ANO = ?, SEMESTRE = ?, CONSECUTIVO = 1";
+    	String sql = "UPDATE CONSECUTIVO_HISTORIA SET ANO = ?, SEMESTRE = ?, CONSECUTIVO = ?";
     	
     	try {
     		conexionActual.conectar();
@@ -348,6 +348,7 @@ public class DaoUtilidades {
     		conexionActual.prepararSentencia(sql);
     		conexionActual.agregarAtributo(1, ano);
     		conexionActual.agregarAtributo(2, semestre);
+    		conexionActual.agregarAtributo(3, consecutivo);
 
     		conexionActual.ejecutarActualizacion();
     		

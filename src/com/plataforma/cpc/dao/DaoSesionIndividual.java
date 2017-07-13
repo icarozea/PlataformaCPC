@@ -12,22 +12,40 @@ import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.reporteValoracionTo;
 import com.plataforma.cpc.utils.ConexionOracle;
 
+/**
+ * DAO para las operaciones relacionadas con crear y manejar los reportes de sesion y los de valoracion
+ */
 public class DaoSesionIndividual extends ConexionOracle{
 
-	public Conexion conexionActual;
+	//----------------------------------------------------------------------------------------------------------------------
+	// Atributos
+	//----------------------------------------------------------------------------------------------------------------------
+	
+	public Conexion conexionActual;  //Interfaz de conexion con la base de datos
 
 	public DaoSesionIndividual(){
 
 	}
 
+	//----------------------------------------------------------------------------------------------------------------------
+	// Operaciones
+	//----------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Transaccion que crea un nuevo reporte de sesion y actualiza el estado de la cita relacionada
+	 * @param sesion Datos del reporte de sesion
+	 * @param idTratamiento Tratamiento relacionado a la cita
+	 * @param idCita Cita relacionada al reporte
+	 * @param estado Estado que se asigna a la cita una vez se complete la creacion
+	 * @param fallo Determina si una cita fue una inasistencia o no
+	 * @return Verdadero o Falso si el reporte puede crearse efectivamente
+	 */
 	public boolean crearReporteSesionIndividual(SesionIndividualTo sesion, Integer idTratamiento, Integer idCita, String estado, boolean fallo){
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 
 		String sqlReporte = "INSERT INTO REPORTE_SESION (ID_SESION,ID_CITA,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION,ES_FALLO,RECIBO) ";
 		sqlReporte +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,?,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?,?,?)";
-
-		String sqlAvance = "UPDATE TRATAMIENTO SET NUM_CITA_ACTUAL = NUM_CITA_ACTUAL + 1, PENDIENTE = 1 WHERE ID_TRATAMIENTO = ? ";
 
 		String sqlEstado = "UPDATE CITA SET ESTADO = ? WHERE ID_CITA = ? ";
 
@@ -52,12 +70,6 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.agregarAtributo(2, idCita); 
 			conexionActual.ejecutarActualizacion();
 
-			if(!fallo){
-				conexionActual.prepararSentencia(sqlAvance);
-				conexionActual.agregarAtributo(1, idTratamiento);
-				conexionActual.ejecutarActualizacion();
-			}
-
 			conexionActual.commit();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
@@ -80,6 +92,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 
+	/**
+	 * Actualiza la información de un reporte de sesión
+	 * @param sesion Datos actializados del reporte
+	 * @return Verdadero o Falso dependiendo del resultado de la operacion
+	 */
 	public boolean actualizarReporteSesionIndividual(SesionIndividualTo sesion){
 		boolean retorno;
 		conexionActual = new ConexionOracle();
@@ -128,6 +145,13 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 
+	/**
+	 * Crea un nuevo reporte de valoracion y actualiza el estado de la cita asociada
+	 * @param valoracionTo Datos del reporte de valoracion
+	 * @param idTratamiento Tratamiento asociado a la cita
+	 * @param estado Estado que se asigna a la cita una vez se complete la creacion
+	 * @return Verdadero o Falso dependiendo del resultado de la operacion
+	 */
 	public boolean crearReporteValoracion(reporteValoracionTo valoracionTo, Integer idTratamiento, String estado){
 		boolean retorno = Boolean.FALSE;
 		conexionActual = new ConexionOracle();
@@ -185,6 +209,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 
+	/**
+	 * Retorna el reporte de sesión de una cita en particular
+	 * @param idCita Cita a consultar
+	 * @return SesionIndividualTo con los datos del reporte si existe, SesionIndividualTo vacio si el reporte no existe
+	 */
 	public SesionIndividualTo consultarReporteSesionporCita(Integer idCita){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
@@ -232,6 +261,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return sesionIndividual;
 	}
 	
+	/**
+	 * Consulta el reporte de valoracion de una cita particualar
+	 * @param idCita Cita a consultar
+	 * @return ReporteValoracionTo con los datos del reporte si existe, ReporteValoracionTo vacio si el reporte no existe
+	 */
 	public reporteValoracionTo consultarValoracionporCita(Integer idCita){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
@@ -269,6 +303,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return valoracion;
 	}
 
+	/**
+	 * Consulta todos los reportes de sesión asociados a un practicante en particular
+	 * @param idPracticante Practicante a consultar
+	 * @return Lista de SesionIndividualPreviewTo con solo los datos basicos de cada reporte, es necesario consultar el reporte individual para obtener todos los datos
+	 */
 	public ArrayList<SesionIndividualPreviewTo> consultarListaReportesSesionesPorPracticante(Integer idPracticante){
 		ResultSet rs =null;
 		ArrayList<SesionIndividualPreviewTo> listaSesionesPracticante = new ArrayList<SesionIndividualPreviewTo>();
@@ -313,6 +352,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return listaSesionesPracticante;
 	}
 	
+	/**
+	 * Consulta todos los reportes de valoracion asociados a un practicante en particular
+	 * @param idPracticante Practicante a consultar
+	 * @return Lista de SesionIndividualPreviewTo con solo los datos basicos de cada reporte, es necesario consultar el reporte individual para obtener todos los datos
+	 */
 	public ArrayList<SesionIndividualPreviewTo> consultarListaValoracionesPorPracticante(Integer idPracticante){
 		ResultSet rs =null;
 		ArrayList<SesionIndividualPreviewTo> listaSesionesPracticante = new ArrayList<SesionIndividualPreviewTo>();
@@ -356,6 +400,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return listaSesionesPracticante;
 	}
 
+	/**
+	 * Consulta la informacion de un reporte en particualr dado su ID
+	 * @param idSesion Reporte a consultar
+	 * @return SesionIndividualTo con los datos del reporte. Objeto vacio si no exite
+	 */
 	public SesionIndividualTo consultarDetalleSesionPorId(Integer idSesion){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
@@ -396,6 +445,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return sesion;
 	}
 
+	/**
+	 * Consulta los comentario asociados a un reporte de sesion en particular
+	 * @param idCita Cita a la que esta asociado el reporte
+	 * @return SesionIndividualTo con los datos del reporte, incluyendo los comentarios si existen. Objeto vacio si no exite el reporte
+	 */
 	public SesionIndividualTo consultarDetalleComentariosSesionPorIdCita(Integer idCita){
 
 		CitaTo cita = new CitaTo();
@@ -468,6 +522,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return sesionComentada;
 	}
 
+	/**
+	 * Esto es un duplicado de otro metodo. Tiene jerarquia de llamados, por tanto esta pendiente de correcion y depuracion
+	 * @param idPracticante
+	 * @return
+	 */
 	public ArrayList<SesionIndividualTo> consultarReporteSesionporPracticante(Integer idPracticante){
 		ResultSet rs =null;
 		ArrayList<SesionIndividualTo> reportes = new ArrayList<SesionIndividualTo>();
@@ -516,6 +575,13 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return reportes;
 	}
 	
+	/**
+	 * Guarda la información de comentarios asociados a un reporte particular
+	 * @param idReporte Reporte asociado
+	 * @param comentarios Informacion de los comentarios
+	 * @param accionAsesor Determina si el asesor a aceptado o rechazado el reporte
+	 * @return Vewrdadero o Falso dependiendo del exito de la operacion
+	 */
 	public boolean guardarComentarios(Integer idReporte, ComentariosTo comentarios, String accionAsesor){
 
 		boolean retorno;
@@ -580,6 +646,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 
+	/**
+	 * Actualiza la informacion de comentarios de un reporte particular
+	 * @param comentarios Datos de lso comentarios
+	 * @return Verdadero o Falso dependiendo del exito de la operacion
+	 */
 	public boolean actualizarComentarios(ComentariosTo comentarios){
 		boolean retorno;
 		conexionActual = new ConexionOracle();
@@ -612,6 +683,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 
+	/**
+	 * Consulta un conjunto de comentarios dado su identificador
+	 * @param idComentarios Identificador de los comentarios
+	 * @return ComentariosTo con la infromación recuperada, objeto vacio de lo contario
+	 */
 	public ComentariosTo consultarComentarios(Integer idComentarios){
 
 		ResultSet rs =null;
@@ -649,6 +725,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return comentarios;
 	}
 
+	/**
+	 * Hace las actualizaciones necesarias para dar un reporte como aceptado
+	 * @param idReporte Reporte a aceptar
+	 * @return Verdadero o Falso segun el exito de la operacion
+	 */
 	public boolean aceptarReporte(Integer idReporte){
 		boolean retorno = false;
 		ResultSet rs = null;
@@ -708,6 +789,17 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return retorno;
 	}
 	
+	/**
+	 * Actualiza la informacion de un reporte que previamente ha sido rechazado
+	 * @param idSesion Identificador del reporte
+	 * @param numRecibo Numero de recibo reportado
+	 * @param estadoActual estado actual del reporte
+	 * @param objetivo Datos del reporte
+	 * @param descripcion Datos del reporte
+	 * @param tareas Datos del reporte
+	 * @param actividades Datos del reporte
+	 * @return Verdadero o Falso segun el exito de la operacion
+	 */
 	public boolean actualizarModificacionesReporteSesion(Integer idSesion, Integer numRecibo, String estadoActual, 
 														 String objetivo, String descripcion, String tareas, String actividades){
 		conexionActual = new ConexionOracle();
@@ -753,5 +845,4 @@ public class DaoSesionIndividual extends ConexionOracle{
 		return true;
 		
 	}
-	
 }

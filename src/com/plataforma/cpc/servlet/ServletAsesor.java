@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
+import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.ComentariosTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualPreviewTo;
@@ -137,6 +138,7 @@ public class ServletAsesor extends HttpServlet {
 	private void verPreviewReportes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+		PersonaBean personaBean = new PersonaBean();
 		
 		try{
 			Integer idPracticante = Integer.parseInt(request.getParameter("idPracticante"));
@@ -147,7 +149,8 @@ public class ServletAsesor extends HttpServlet {
 			request.setAttribute("idPracticante", idPracticante);
 			request.setAttribute("nomPracticante", request.getParameter("pNom")+" "+request.getParameter("sNom")+" "
 					+request.getParameter("pApe")+" "+request.getParameter("sApe"));
-//			System.out.println(reportesPreview);
+			ArrayList<PersonaTo> listaPacientes = personaBean.consultarAsignados(idPracticante);
+			request.setAttribute("listaPacientes", listaPacientes);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verReportesPracticantes.jsp");
 			dispatcher.forward(request, response);
 		}catch(Exception e){

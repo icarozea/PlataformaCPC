@@ -27,10 +27,10 @@ import com.plataforma.cpc.to.TipoDocumentoTo;
 @WebServlet(name="ServletPersona", urlPatterns = {"/ServletPersona"})
 public class ServletPersona extends HttpServlet {
 
-//-----------------------------------------------------------------------------------------------------
-// Proceso de la peticion
-//-----------------------------------------------------------------------------------------------------
-	
+	//-----------------------------------------------------------------------------------------------------
+	// Proceso de la peticion
+	//-----------------------------------------------------------------------------------------------------
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,14 +42,14 @@ public class ServletPersona extends HttpServlet {
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-	
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		
+
 		String operacion = request.getParameter("operacion");
-		
+
 		switch (operacion) {
-		
+
 		case "cargueIncial":
 			cargueInicial(request,response);
 			break;
@@ -77,39 +77,30 @@ public class ServletPersona extends HttpServlet {
 		case "irEPS":
 			irEPS(request,response);
 			break;
+		case "volverEPS":
+			volverEPS(request,response);
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
-		
+
 		}
 	}
-	
-	private void irEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		  RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioEPS.jsp");		  
-		  request.setAttribute("idPersona", 0);
-		  dispatcher.forward(request, response);
-	}
-	
-	private void detallePersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		  RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");		  
-		  request.setAttribute("idPersona", 0);
-		  request.setAttribute("personaDetalle", new PersonaDetalleTo());
-		  dispatcher.forward(request, response);
-	}
-//-----------------------------------------------------------------------------------------------------
-// Funciones
-//-----------------------------------------------------------------------------------------------------
-	
+
+	//-----------------------------------------------------------------------------------------------------
+	// Funciones
+	//-----------------------------------------------------------------------------------------------------
+
 	/**
 	 * Responde a una petición de eliminar una persona con el id presente en el request
 	 * Redirige a la pagina de respuestaEliminarPersona con el mensaje apropiado
 	 */
 	private void eliminarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		PersonaBean personaBean = new PersonaBean();
 		PersonaTo persona = new PersonaTo();
 		persona.setIdPersona(new Integer(request.getParameter("idPersona")));
-		
+
 		if(personaBean.elminarPersona(persona)){
 			request.setAttribute("respuesta", "1");
 			request.setAttribute("error", "");
@@ -121,23 +112,23 @@ public class ServletPersona extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaEliminarPersona.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Responde a una petición de ediciones de persona y puebla el formulario de personas con la informacion
 	 * de la persona cuyo ID está presente en el request.
 	 * Redirige al formulario de personas
 	 */
 	private void editarPersonas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		PersonaBean personaBean = new PersonaBean();
 		PersonaTo personaTo = new PersonaTo();
 		personaTo.setIdPersona(new Integer(request.getParameter("idPersona")));
-		
+
 		PersonaTo persona = new PersonaTo();
 		persona = personaBean.consultarPersona(personaTo);
-		
+
 		request.setAttribute("idPersona", persona.getIdPersona());
 		request.setAttribute("pNom", persona.getPrimerNombre());
 		request.setAttribute("sNom", persona.getSegundoNombre());
@@ -154,16 +145,16 @@ public class ServletPersona extends HttpServlet {
 		request.setAttribute("pass", persona.getPassword());
 		request.setAttribute("jornada", persona.getJornada());
 		request.setAttribute("sup", persona.getSuperior());
-		
+
 		if (persona.getPerfil().getIdPerfil().equals("Practicante")) {
 			request.setAttribute("cod", persona.getCodigoEstudiante());
 		}else if(persona.getPerfil().getIdPerfil().equals("Paciente")){
 			request.setAttribute("eps", persona.getEps().getNombreEPS());
 		}
-		
+
 		cargueInicial(request,response);
 	}
-	
+
 	/**
 	 * Responde a la petición de ver el detalle de una persona
 	 * Redirige a la pagina verPersonas  que consecuentemente ofrece la opción de editar o eliminar una persona
@@ -174,7 +165,7 @@ public class ServletPersona extends HttpServlet {
 			PersonaTo consulta = new PersonaTo();
 			consulta.setIdPersona(Integer.parseInt(request.getParameter("id")));
 			PersonaTo persona = personaBean.consultarPersona(consulta);
-			
+
 			request.setAttribute("pNom", persona.getPrimerNombre());
 			request.setAttribute("sNom", persona.getSegundoNombre());
 			request.setAttribute("pApe", persona.getPrimerApellido());
@@ -188,13 +179,13 @@ public class ServletPersona extends HttpServlet {
 			request.setAttribute("perfil", persona.getPerfil().getNombrePerfil());
 			request.setAttribute("idPersona", persona.getIdPersona());
 			request.setAttribute("jornada", persona.getJornada());
-			
+
 			if (persona.getPerfil().getNombrePerfil().equals("Practicante")) {
 				request.setAttribute("cod", persona.getCodigoEstudiante());
 			}else if(persona.getPerfil().getNombrePerfil().equals("Paciente")){
 				request.setAttribute("eps", persona.getEps().getNombreEPS());
 			}
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas2.jsp");
 			dispatcher.forward(request, response);
 		}
@@ -205,9 +196,9 @@ public class ServletPersona extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verPersonas2.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Responde a la peticion de listar todos los pacientes de un practicante especifico, cuyo id esta en el request
 	 * Redirige a la pagina de verPacientes, que consecuentemente redirige a la creación de citas
@@ -216,10 +207,10 @@ public class ServletPersona extends HttpServlet {
 		try{		
 			PersonaBean personaBean = new PersonaBean();
 			ArrayList<PersonaTo> listaPacientes = new ArrayList<PersonaTo>();
-			
+
 			PersonaTo practicante = (PersonaTo)request.getSession().getAttribute("personaSession");
 			listaPacientes = personaBean.consultarAsignados(practicante.getIdPersona());
-			
+
 			request.setAttribute("listaPacientes", listaPacientes);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verPacientes.jsp");
 			dispatcher.forward(request, response);
@@ -231,7 +222,7 @@ public class ServletPersona extends HttpServlet {
 			dispatcher.forward(request, response);
 		}	
 	}
-	
+
 	/**
 	 * Responde a la peticion de guardar una nueva persona en la base de datos con la informacion capturada en el formulario
 	 * Redirige a la pagina de respuestaAgregarPersona
@@ -240,7 +231,7 @@ public class ServletPersona extends HttpServlet {
 		PersonaBean personaBean = new PersonaBean();
 		try{
 			DaoUtilidades daoUtilidades = new DaoUtilidades();
-			
+
 			String nom1 = request.getParameter("nombre1");
 			String nom2 = request.getParameter("nombre2");
 			String ap1 = request.getParameter("apellido1");
@@ -256,7 +247,7 @@ public class ServletPersona extends HttpServlet {
 
 			String numDoc = request.getParameter("numeroDocumento");
 			String dir = request.getParameter("direccion");
-			
+
 			Long tel = (!request.getParameter("telefono").equals(""))? new Long(request.getParameter("telefono")) : 0;
 			String otroTel = request.getParameter("telefono2");
 			Long tel2 = !otroTel.equals("")? new Long(otroTel) : 0;
@@ -270,12 +261,12 @@ public class ServletPersona extends HttpServlet {
 				System.out.println("Texto: " + idPerfil + " Busqueda: " + perfilTo);
 				throw new Exception("El perfil seleccionado no es valido o no se encontró");
 			}
-			
+
 			String password = request.getParameter("password");
 			String jornada = request.getParameter("jornada");
 			String cod = request.getParameter("codigo");
 			Integer codigo = !cod.equals("")? Integer.parseInt(cod) : 0;
-			
+
 			Integer eps;
 			Integer idEPS = Integer.parseInt(request.getParameter("eps"));
 			if(idEPS < 0)
@@ -287,9 +278,9 @@ public class ServletPersona extends HttpServlet {
 				else
 					throw new Exception("La EPS no es válida o no se encontró");
 			}
-			
+
 			int idPersona = personaBean.ingresarPersona(nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, jornada, codigo);
-			
+
 			if(idPersona != -1){
 				if(idPerfil == 4){
 					PersonaDetalleTo detalleTo = new PersonaDetalleTo();
@@ -327,17 +318,17 @@ public class ServletPersona extends HttpServlet {
 			dispatcher.forward(request, response);
 		}		
 	}
-	
+
 	/**
 	 * Responde a una funcion de actualizar los datos de una persona ya existente en la base de datos
 	 * Redirige a la pagina de respuestaAgregarPersona
 	 */
 	private void actualizarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		PersonaBean personaBean = new PersonaBean();
 		try{
 			DaoUtilidades daoUtilidades = new DaoUtilidades();
-			
+
 			Integer id = Integer.parseInt(request.getParameter("id"));
 			String nom1 = request.getParameter("nombre1");
 			String nom2 = request.getParameter("nombre2");
@@ -354,7 +345,7 @@ public class ServletPersona extends HttpServlet {
 
 			String numDoc = request.getParameter("numeroDocumento");
 			String dir = request.getParameter("direccion");
-	
+
 			Long tel = (!request.getParameter("telefono").equals(""))? new Long(request.getParameter("telefono")) : 0;
 
 			Long tel2 = (!request.getParameter("telefono2").equals(""))? new Long(request.getParameter("telefono2")) : 0;
@@ -368,10 +359,10 @@ public class ServletPersona extends HttpServlet {
 				System.out.println("Texto: " + idPerfil + " Busqueda: " + perfilTo);
 				throw new Exception("El perfil seleccionado no es valido o no se encontró");
 			}
-			
+
 			String password = request.getParameter("password");
 			String jornada = request.getParameter("jornada");
-			
+
 			Integer codigo = 0;
 			if(!request.getParameter("codigo").equals("")){
 				codigo = new Integer(request.getParameter("codigo"));
@@ -387,7 +378,7 @@ public class ServletPersona extends HttpServlet {
 				else
 					throw new Exception("La EPS no es válida o no se encontró");
 			}
-			
+
 			String superior = request.getParameter("superior");
 			Integer idSuperior = superior.equals("") ? 0 : Integer.parseInt(superior); 
 			if(personaBean.modificarPersona(id, nom1, nom2, ap1, ap2, tipoDoc, numDoc, dir, tel, tel2, correo, idPerfil, password, eps, idSuperior, jornada, codigo)){
@@ -399,7 +390,7 @@ public class ServletPersona extends HttpServlet {
 					personaDetalleTo.setPersonaId(id);
 					request.setAttribute("personaDetalle", personaDetalleTo);
 					request.setAttribute("respuesta", "1");
-				
+
 					request.setAttribute("error", "");
 					RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
 					dispatcher.forward(request, response);
@@ -424,6 +415,58 @@ public class ServletPersona extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
+	
+	private void irEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioEPS.jsp");		  
+
+		request.setAttribute("formulario", "si");
+		System.out.println(request.getParameter("nombre1"));
+		request.setAttribute("pNom", request.getParameter("nombre1"));
+		request.setAttribute("sNom", request.getParameter("nombre2"));
+		request.setAttribute("pApe", request.getParameter("apellido1"));
+		request.setAttribute("sApe", request.getParameter("apellido2"));
+		request.setAttribute("doc", request.getParameter("tipoDocumento"));
+		request.setAttribute("num", request.getParameter("numeroDocumento"));
+		request.setAttribute("dir", request.getParameter("direccion"));
+		request.setAttribute("tel", request.getParameter("telefono"));
+		request.setAttribute("tel2", request.getParameter("telefono2"));
+		request.setAttribute("mail", request.getParameter("correo"));
+		request.setAttribute("perfil", request.getParameter("perfil"));
+		request.setAttribute("pass", request.getParameter("password"));
+		request.setAttribute("jornada", request.getParameter("jornada"));
+		request.setAttribute("cod", request.getParameter("codigo"));
+		request.setAttribute("eps", request.getParameter("eps"));
+
+		dispatcher.forward(request, response);
+	}
+	
+	private void volverEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {			  
+	
+		request.setAttribute("pNom", request.getParameter("nombre1"));
+		request.setAttribute("sNom", request.getParameter("nombre2"));
+		request.setAttribute("pApe", request.getParameter("apellido1"));
+		request.setAttribute("sApe", request.getParameter("apellido2"));
+		request.setAttribute("doc", request.getParameter("tipoDocumento"));
+		request.setAttribute("num", request.getParameter("numeroDocumento"));
+		request.setAttribute("dir", request.getParameter("direccion"));
+		request.setAttribute("tel", request.getParameter("telefono"));
+		request.setAttribute("tel2", request.getParameter("telefono2"));
+		request.setAttribute("mail", request.getParameter("correo"));
+		request.setAttribute("perfil", request.getParameter("perfil"));
+		request.setAttribute("pass", request.getParameter("password"));
+		request.setAttribute("jornada", request.getParameter("jornada"));
+		request.setAttribute("cod", request.getParameter("codigo"));
+		request.setAttribute("eps", request.getParameter("eps"));
+
+		cargueInicial(request, response);
+	}
+
+	private void detallePersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");		  
+		request.setAttribute("idPersona", 0);
+		request.setAttribute("personaDetalle", new PersonaDetalleTo());
+		dispatcher.forward(request, response);
+	}
 
 	/**
 	 * Carga la información de los campos desplegables del formulario (eps, tipos de documentos y perfiles)
@@ -437,11 +480,11 @@ public class ServletPersona extends HttpServlet {
 		ArrayList<EpsTo> epss = new ArrayList<EpsTo>();
 		try {
 			perfiles = util.consultarPerfiles();
-			
+
 			if (perfiles != null && perfiles.size() > 0){
 				request.setAttribute("listaPerfiles", perfiles);
 			}
-			
+
 			listaDocumentos = util.consultarTiposDocumento();
 			if (listaDocumentos != null && listaDocumentos.size() > 0){
 				request.setAttribute("listaDocumentos", listaDocumentos);
@@ -451,10 +494,10 @@ public class ServletPersona extends HttpServlet {
 			if (epss != null && epss.size() > 0){
 				request.setAttribute("listaEPS", epss);
 			}
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioPersona.jsp");
 			dispatcher.forward(request, response);
-			
+
 		} catch (Exception e) {
 			System.out.println("Error de formulario: " + e.getMessage());
 			e.printStackTrace();

@@ -181,7 +181,7 @@ public class ServletSesionIndividual extends HttpServlet {
 					valoracionTo.setServicioRemitido(request.getParameter("remitido"));
 					valoracionTo.setEncuestador(request.getParameter("entrevistador"));
 					
-					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "pendiente")){
+					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "Aceptado")){
 						request.setAttribute("mensajeRespuestaReporte", "Reporte guardado exitosamente");
 						dispatcher.forward(request, response);
 					}

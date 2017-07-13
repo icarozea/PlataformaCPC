@@ -13,9 +13,18 @@
 	function modCamposTexto(){
 		var estado = document.getElementById('objetivoSesion').disabled;
 		document.getElementById('objetivoSesion').disabled = !estado;
-		document.getElementById('descripcionSesion').disabled = !estado;
 		document.getElementById('tareasSesion').disabled = !estado;
 		document.getElementById('actividadesProxSesion').disabled = !estado;
+	}
+	
+	function verificarDatos(){
+		var recibo = document.getElementById('numeroRecibo').value;
+		
+		if(recibo != null && recibo != ""){
+			document.getElementById('reporteSesionForm').submit();
+		}
+		else
+			alert("Indique el numero de recibo");
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -85,13 +94,12 @@
 				
 	</div>
 
-			<div>
+		</form>
+					<div>
 				<div>
-					<input id="saveForm" name="saveForm" type="submit" value="Guardar">
+					<button id="saveForm" name="saveForm" onClick="verificarDatos()">Guardar</button>
 				</div>
 			</div>
-
-		</form>
 	</div>
 </body>
 </html>

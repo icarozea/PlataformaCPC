@@ -27,7 +27,7 @@
         			</div>
         			<div class="fieldgroup">
         				<label class="cabin">Consecutivo:</label>
-        				<input type="text" id="consecutivo" name="consecutivo" value='${requestScope.consecutivo}' disabled>
+        				<input type="text" id="consecutivo" name="consecutivo" value='${requestScope.consecutivo}'>
         			</div>
         			<div class="fieldgroup">
         				<input type="submit" name="btnConsecutivo" id="btnConsecutivo" value="Reiniciar Consecutivo" class="submit cabin" onclick="{document.registerForm.operacion.value='reiniciar';document.registerForm.submit();}"/>

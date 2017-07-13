@@ -19,10 +19,38 @@
 		%>
 <body>
         <%@include file="./menuNavegacionAsesor.jsp" %>
+        
         <div id="gestioncitas" class="">
         	<h1 class="cabin">Reportes del practicante</h1>
 			<h2 class="cabin">${requestScope.nomPracticante}</h2>
-			<br>        
+			<br>
+			<div id="marcoSeleccionPersona">
+        	<form action="" name="filtro">
+        		<div class="fieldgroup">
+        			<label class="cabin">Paciente</label>
+        			<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
+                    	<c:forEach items="${requestScope.listaPacientes}" var="paciente">
+				        	<option value="${paciente.idPersona}" selected>${paciente.primerNombre}</option>
+				        </c:forEach>
+				    </select>
+        		</div>
+        		<div class="fieldgroup">
+        			<label class="cabin">Tratamiento</label>
+        			<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
+                    	<c:forTokens items="Practicante,Supervisor,Paciente,Administrador" delims="," var="name">
+				        	<c:choose>
+				            	<c:when test="${requestScope.valor == name}">
+				               		<option value="${name}" selected>${name}</option>
+				                </c:when>
+				                <c:otherwise>
+				                	<option value="${name}">${name}</option>
+				                </c:otherwise>
+							</c:choose>
+				        </c:forTokens>
+				    </select>
+        		</div>
+        	</form>
+        	</div>        
         	<div id="reportes">
         		<table id="tablaUsuarios">
         			<thead>
