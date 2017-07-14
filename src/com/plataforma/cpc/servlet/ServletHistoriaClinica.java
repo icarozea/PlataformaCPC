@@ -84,7 +84,7 @@ public class ServletHistoriaClinica extends HttpServlet {
 
 		try {
 			paciente = personaBean.consultarPersona(personaFiltro);
-			tratamientos = historiaClinica.concultarTratamientosxPaciente(idPaciente);
+			tratamientos = historiaClinica.consultarTratamientosxPaciente(idPaciente);
 			
 			request.setAttribute("paciente", paciente);
 			request.setAttribute("tratamientos", tratamientos);

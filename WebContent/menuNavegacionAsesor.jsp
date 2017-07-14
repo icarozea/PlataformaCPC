@@ -27,11 +27,11 @@
 				 <li><a href="./ServletAsesor?operacion=practicantes&idAsesor=${sessionScope.personaSession.idPersona}">REPORTES</a></li>
 				<div class="clearfix"></div>
 			 </ul>
-			 <script>
+			<!--  <script>
 					$("span.menu").click(function(){
 						$(".top-menu ul").slideToggle(200);
 					});
-				</script>
+				</script> -->
 		</div>
 		<div class="logo">
 	 		<img id="logoK" alt="Logo Konrad" class="logoKonrad" src="resources/LOGO.jpg"/>

@@ -12,14 +12,27 @@ import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TratamientoTo;
 import com.plataforma.cpc.to.reporteValoracionTo;
 
+/**
+ * Clase que aglomera diferentes funciones para consultar la informacion de historia clinica de un paciente
+ */
 public class HistoriaClinicaBean {
+	//--------------------------------------------------------------------------------------------------
+	// Funciones
+	//--------------------------------------------------------------------------------------------------
 	
-	public ArrayList<TratamientoTo> concultarTratamientosxPaciente (Integer idPaciente){		
+	/**
+	 * Consulta todos los tratamientos asociados a un paciente en particular
+	 * @param idPaciente Paciente que se desea consultar
+	 * @return Lista de TratamientoTo con la informacion encontrada. Lista vacia de lo contrario
+	 */
+	public ArrayList<TratamientoTo> consultarTratamientosxPaciente (Integer idPaciente){		
 		DaoCitas dao = new DaoCitas();
 		ArrayList<TratamientoTo> tratamientos = new ArrayList<TratamientoTo>();
 		tratamientos = dao.concultarTratamientosPaciente(idPaciente);
 		return tratamientos;
 	}
+	
+	
 	public ArrayList<CitaTo> consultarCitasxTratamiento(Integer idPaciente, Integer idTratamiento){
 		ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
 		DaoCitas dao = new DaoCitas();

@@ -8,6 +8,12 @@
         <link rel="stylesheet" href="estiloAsignaciones.css"></link>
         <script type="text/javascript" src="js/manejarAsignacion.js"></script>
         <title>Ver Practicantes</title>
+        <script>
+        	function filtrar(cambio){
+        		document.filtro.tipoCambio.value = cambio;
+        		document.filtro.submit();
+        	}
+        </script>
     </head>
 		<%
 		  if (session.getAttribute("perfil")==null)
@@ -17,36 +23,48 @@
 		    dispatcher.forward(request,response);
 		  }
 		%>
+		
 <body>
         <%@include file="./menuNavegacionAsesor.jsp" %>
         
         <div id="gestioncitas" class="">
         	<h1 class="cabin">Reportes del practicante</h1>
-			<h2 class="cabin">${requestScope.nomPracticante}</h2>
+			<h2 class="cabin">${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}</h2>
 			<br>
 			<div id="marcoSeleccionPersona">
-        	<form action="" name="filtro">
+        	<form action="" name="filtro" id="filtro">
+        		<input type="hidden" name="operacion" id="operacion" value="reportesPreview">
+        		<input type="hidden" name="idPracticante" id="idPracticante" value="${requestScope.idPracticante}">
+        		<input type="hidden" name="tipoCambio" id="tipoCambio">
+        		
         		<div class="fieldgroup">
         			<label class="cabin">Paciente</label>
-        			<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
+        			<select id ="pacienteActual" name="pacienteActual" onchange="filtrar('paciente')">
                     	<c:forEach items="${requestScope.listaPacientes}" var="paciente">
-				        	<option value="${paciente.idPersona}" selected>${paciente.primerNombre}</option>
+                    		<c:choose>
+                    			<c:when test="${requestScope.pacienteActual == paciente.idPersona}">
+				        			<option value="${paciente.idPersona}" selected>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</option>
+				        		</c:when>
+				        		<c:otherwise>
+				        			<option value="${paciente.idPersona}">${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</option>
+				        		</c:otherwise>
+				        	</c:choose>
 				        </c:forEach>
 				    </select>
         		</div>
         		<div class="fieldgroup">
         			<label class="cabin">Tratamiento</label>
-        			<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
-                    	<c:forTokens items="Practicante,Supervisor,Paciente,Administrador" delims="," var="name">
-				        	<c:choose>
-				            	<c:when test="${requestScope.valor == name}">
-				               		<option value="${name}" selected>${name}</option>
-				                </c:when>
-				                <c:otherwise>
-				                	<option value="${name}">${name}</option>
-				                </c:otherwise>
-							</c:choose>
-				        </c:forTokens>
+        			<select id ="tratamientoActual" name="tratamientoActual" onchange="filtrar('tratamiento')">
+                    	<c:forEach items="${requestScope.listaTratamientos}" var="tratamiento">
+                    		<c:choose>
+                    			<c:when test="${requestScope.tratamientoActual == tratamiento.idTratamiento}">
+				        			<option value="${tratamiento.idTratamiento}" selected>${tratamiento.idTratamiento}. ${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
+				        		</c:when>
+				        		<c:otherwise>
+				        			<option value="${tratamiento.idTratamiento}">${tratamiento.idTratamiento}. ${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
+				        		</c:otherwise>
+				        	</c:choose>
+				        </c:forEach>
 				    </select>
         		</div>
         	</form>
