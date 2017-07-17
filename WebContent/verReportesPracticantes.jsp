@@ -32,7 +32,7 @@
 			<h2 class="cabin">${requestScope.pNom} ${requestScope.sNom} ${requestScope.pApe} ${requestScope.sApe}</h2>
 			<br>
 			<div id="marcoSeleccionPersona">
-        	<form action="" name="filtro" id="filtro">
+        	<form action="" name="filtro" id="filtro" method="post">
         		<input type="hidden" name="operacion" id="operacion" value="reportesPreview">
         		<input type="hidden" name="idPracticante" id="idPracticante" value="${requestScope.idPracticante}">
         		<input type="hidden" name="tipoCambio" id="tipoCambio">

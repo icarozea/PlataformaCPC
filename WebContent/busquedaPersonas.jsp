@@ -17,7 +17,7 @@
         	<h1 class="cabin">Búsqueda de personas</h1>
         </div>
         <div id="marcoSeleccionPersona">
-        	<form action="" name="filtro">
+        	<form action="" name="filtro" method="post">
         		<div class="fieldgroup">
         			<label class="cabin">Rol</label>
         			<select id ="busqueda" name="busqueda" onchange="this.form.submit()">
@@ -88,7 +88,7 @@
         <div>
 			<a href="inicioPersonas.jsp"><button id="logoutBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
 		</div>
-       <form name="data" action="./ServletAsignaciones" method="get">
+       <form name="data" action="./ServletAsignaciones" method="post">
        		<input type="hidden" name="operacion">
        		<input type="hidden" name="asignado">
     		<input type="hidden" name="id">

@@ -14,69 +14,155 @@ import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.modelo.HistoriaClinicaBean;
+import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.ComentariosTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualPreviewTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
+import com.plataforma.cpc.to.TratamientoTo;
 import com.plataforma.cpc.to.reporteValoracionTo;
 
 /**
- * Servlet implementation class ServletReportesEstudiante
+ * Implementacion del servlet para responder a las peticiones de consulta de los reportes hechos por un practicante especifico
  */
 @WebServlet("/ReportesPracticante")
 public class ServletReportesPracticante extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletReportesPracticante() {
-        super();
-    }
-    
-    private void responderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    	
-    	response.setContentType("text/html;charset=ISO-8859-1");
+
+	//------------------------------------------------------------------------------------------------------
+	// Implementacion
+	//------------------------------------------------------------------------------------------------------  
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ServletReportesPracticante() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		responderPeticion(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		responderPeticion(request, response);
+	}
+
+	private void responderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+		response.setContentType("text/html;charset=ISO-8859-1");
 
 		String operacion = request.getParameter("operacion");
-		
+
 		switch (operacion) {
-			
-			case "visualizarReportes":
-				verReportesPreviewPracticante(request, response);
-				break;
-			case "comentariosReporte":
-				verComentariosDetalladosReporte(request, response);
-				break;
-			case "detallesValoracion":
-				verDetallesValoracion(request, response);
-				break;
-			case "guardarMoficiacionesReporteSesion":
-				guardarMoficiacionesReporteSesion(request, response);
-				break;				
-			default:
-				System.out.println("Opción no existe");
-				break;
+
+		case "visualizarReportes":
+			verReportesPreviewPracticante(request, response);
+			break;
+		case "comentariosReporte":
+			verComentariosDetalladosReporte(request, response);
+			break;
+		case "detallesValoracion":
+			verDetallesValoracion(request, response);
+			break;
+		case "guardarMoficiacionesReporteSesion":
+			guardarMoficiacionesReporteSesion(request, response);
+			break;				
+		default:
+			System.out.println("Opción no existe");
+			break;
 		}
-    	
-    }
-    
-    public void verReportesPreviewPracticante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    	
-    	DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
-    	
-    	try{
-    		Integer idPracticante = Integer.parseInt(request.getParameter("idPersona"));
-    		ArrayList<SesionIndividualPreviewTo> valoracionesPreview = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
+
+	}
+
+	//--------------------------------------------------------------------------------------------------
+	// Funciones
+	//--------------------------------------------------------------------------------------------------
+
+	/**
+	 * Redirige a la pagina correspondiente con la información resumida de los reportes filtrados que el practicante ha generado
+	 * Redirige a vistaReportesPracticante.jsp
+	 */
+	public void verReportesPreviewPracticante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+		PersonaBean personaBean = new PersonaBean();
+		HistoriaClinicaBean historiaBean = new HistoriaClinicaBean();
+
+		try{
+			//Consigue los reportes del practicante
+			Integer idPracticante = Integer.parseInt(request.getParameter("idPersona"));
+			ArrayList<SesionIndividualPreviewTo> valoracionesPreview = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
 			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
-			request.setAttribute("valoracionesPreviewPracticante", valoracionesPreview);
-			request.setAttribute("reportesPreviewPracticante", reportesPreview);
+
+			//Consigue los pacientes asignados al practicante
+			ArrayList<PersonaTo> listaPacientes = personaBean.consultarAsignados(idPracticante);
+			request.setAttribute("listaPacientes", listaPacientes);
+
+			String pacienteActual = request.getParameter("pacienteActual");
+			String tratamientoActual = request.getParameter("tratamientoActual");
+			String tipoCambio = request.getParameter("tipoCambio");
+			int filtroPaciente = 0;
+			int filtroTratamiento = 0;			
+			ArrayList<TratamientoTo> tratamientos = new ArrayList<TratamientoTo>();
+
+			// Consigue los datos asociados al paciente actual si existe, o al primero encontrado de lo contrario
+			if(pacienteActual != null){
+				filtroPaciente = Integer.parseInt(pacienteActual);
+				filtroTratamiento = Integer.parseInt(tratamientoActual);
+				tratamientos = historiaBean.consultarTratamientosxPaciente(filtroPaciente);
+			}
+			else{
+				filtroPaciente = listaPacientes.get(0).getIdPersona();
+				tratamientos = historiaBean.consultarTratamientosxPaciente(listaPacientes.get(0).getIdPersona());
+				filtroTratamiento = tratamientos.get(0).getIdTratamiento();
+				tipoCambio = "vacio";
+			}
+
+			request.setAttribute("listaTratamientos", tratamientos);
+			request.setAttribute("pacienteActual", pacienteActual);
+			request.setAttribute("tratamientoActual", tratamientoActual);
+
+			// Se filtran los reportes dependiendo del tipo de cambio (paciente o tratamiento)
+
+			if(tipoCambio.equals("paciente")){
+				filtroTratamiento = tratamientos.get(0).getIdTratamiento();
+			}
+
+			// Filtra los reportes de sesion
+			ArrayList<SesionIndividualPreviewTo> reportesFiltrados = new ArrayList<SesionIndividualPreviewTo>();
+			for(int i = 0; i < reportesPreview.size(); i++){
+				SesionIndividualPreviewTo actual = reportesPreview.get(i);
+				CitaTo citaTo = new CitaTo();
+				citaTo.setIdCita(actual.getIdCita());
+				citaTo = historiaBean.consultarCita(citaTo);
+				if(citaTo.getTratamiento().getIdTratamiento() == filtroTratamiento && citaTo.getPaciente().getIdPersona() == filtroPaciente){
+					reportesFiltrados.add(actual);
+				}
+			}
+			request.setAttribute("reportesPreviewPracticante", reportesFiltrados);
+
+			// Filtra los reportes de valoracion
+			ArrayList<SesionIndividualPreviewTo> valoracionesFiltrados = new ArrayList<SesionIndividualPreviewTo>();
+			for(int i = 0; i < valoracionesPreview.size(); i++){
+				SesionIndividualPreviewTo actual = valoracionesPreview.get(i);
+				CitaTo citaTo = new CitaTo();
+				citaTo.setIdCita(actual.getIdCita());
+				citaTo = historiaBean.consultarCita(citaTo);
+				if(citaTo.getTratamiento().getIdTratamiento() == filtroTratamiento && citaTo.getPaciente().getIdPersona() == filtroPaciente){
+					valoracionesFiltrados.add(actual);
+				}
+			}
+			request.setAttribute("valoracionesPreviewPracticante", valoracionesFiltrados);
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("vistaReportesPracticante.jsp");
-	    	request.setAttribute("idPracticante", request.getParameter("idPersona"));
+			request.setAttribute("idPersona", idPracticante);
 			dispatcher.forward(request, response);
-			
-    	}catch(Exception e){
+
+		}catch(Exception e){
 			System.out.println("Busqueda fallida: " + e.getMessage());
 			e.printStackTrace();
 			request.setAttribute("respuesta", "2");
@@ -84,92 +170,85 @@ public class ServletReportesPracticante extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("");
 			dispatcher.forward(request, response);			
 		}
-    	
-    	
-    }
-    
-    public void verComentariosDetalladosReporte(HttpServletRequest request, HttpServletResponse response){
-    	
-    	DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
-    	DaoCitas daoCitas = new DaoCitas();
-    	DaoPersona daoPersona = new DaoPersona();
-    	
-    	try{
-    		Integer idCita = Integer.parseInt(request.getParameter("idCita"));
-    		SesionIndividualTo citaSesionReportePracticante = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(idCita);
-    		ComentariosTo comentarioReportePracticante = citaSesionReportePracticante.getComentarios();
-    		CitaTo citaTo = new CitaTo();
-    		citaTo.setIdCita(idCita);
-    		citaTo = daoCitas.consultarCita(citaTo);
-    		PersonaTo paciente = daoPersona.consultarPersona(citaTo.getPaciente());
-    		request.setAttribute("idCita", idCita);
-    		request.setAttribute("sesionReportePracticante", citaSesionReportePracticante);
-    		request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
-    		request.setAttribute("paciente", paciente);
-    		request.setAttribute("cita", citaTo);
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("verComentariosReporteDetallado.jsp");
+	}
+
+	/**
+	 * Redirige a la vista de comentarios de un reporte en particular
+	 * redirige a verComentariosReporteDetallado.jsp
+	 */
+	public void verComentariosDetalladosReporte(HttpServletRequest request, HttpServletResponse response){
+
+		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+		DaoCitas daoCitas = new DaoCitas();
+		DaoPersona daoPersona = new DaoPersona();
+
+		try{
+			Integer idCita = Integer.parseInt(request.getParameter("idCita"));
+			SesionIndividualTo citaSesionReportePracticante = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(idCita);
+			ComentariosTo comentarioReportePracticante = citaSesionReportePracticante.getComentarios();
+			CitaTo citaTo = new CitaTo();
+			citaTo.setIdCita(idCita);
+			citaTo = daoCitas.consultarCita(citaTo);
+			PersonaTo paciente = daoPersona.consultarPersona(citaTo.getPaciente());
+			request.setAttribute("idCita", idCita);
+			request.setAttribute("sesionReportePracticante", citaSesionReportePracticante);
+			request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
+			request.setAttribute("paciente", paciente);
+			request.setAttribute("cita", citaTo);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("verComentariosReporteDetallado.jsp");
 			dispatcher.forward(request, response);
-    	}catch(Exception e){
-    		
-    		e.printStackTrace();
-    		
-    	}
-    }
-    
-public void verDetallesValoracion(HttpServletRequest request, HttpServletResponse response){
-    	
+		}catch(Exception e){
+
+			e.printStackTrace();
+
+		}
+	}
+
+	/**
+	 * Redirige a la vista de detalle de un reporte de valoracion particular
+	 * Redirige a hcDetalleValoracion.jsp  
+	 */
+	public void verDetallesValoracion(HttpServletRequest request, HttpServletResponse response){
+
 		HistoriaClinicaBean historiaClinica = new HistoriaClinicaBean();
 		DaoCitas daoCitas = new DaoCitas();
 		Integer idCita = Integer.parseInt(request.getParameter("idCita"));
-    	try{
-    		CitaTo citaTo = new CitaTo();
-    		citaTo.setIdCita(idCita);
-    		citaTo = daoCitas.consultarCita(citaTo);
-    		request.setAttribute("cita", citaTo);
-    		reporteValoracionTo valoracion = historiaClinica.consultarReportesValoracion(idCita);
+		try{
+			CitaTo citaTo = new CitaTo();
+			citaTo.setIdCita(idCita);
+			citaTo = daoCitas.consultarCita(citaTo);
+			request.setAttribute("cita", citaTo);
+			reporteValoracionTo valoracion = historiaClinica.consultarReportesValoracion(idCita);
 			if(valoracion != null)
 				request.setAttribute("valoracion", valoracion);
 			else
 				request.setAttribute("valoracion", null); 
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleValoracion.jsp");
 			dispatcher.forward(request, response);	
-    	}catch(Exception e){		
-    		e.printStackTrace();  		
-    	}
-    }
-    
-    public void guardarMoficiacionesReporteSesion(HttpServletRequest request, HttpServletResponse response){
-    	
-    	DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
-    	daoSesionIndividual.actualizarModificacionesReporteSesion(Integer.valueOf(request.getParameter("idReporte")), Integer.valueOf(request.getParameter("numRecibo")),
-    															  request.getParameter("estadoReporte"), request.getParameter("campoObjetivo"),
-    															  request.getParameter("campoDescripcion"), request.getParameter("campoTareas"),
-    															  request.getParameter("campoActividades"));
+		}catch(Exception e){		
+			e.printStackTrace();  		
+		}
+	}
+
+	/**
+	 * Guarda las modificaciones que un practicante hace a un reporte de sesión particular que no ha sido aceptado
+	 * Redirige a la respuesta con el resultado correspondiente de la operación
+	 */
+	public void guardarMoficiacionesReporteSesion(HttpServletRequest request, HttpServletResponse response){
+
+		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
+		daoSesionIndividual.actualizarModificacionesReporteSesion(Integer.valueOf(request.getParameter("idReporte")), Integer.valueOf(request.getParameter("numRecibo")),
+				request.getParameter("estadoReporte"), request.getParameter("campoObjetivo"),
+				request.getParameter("campoDescripcion"), request.getParameter("campoTareas"),
+				request.getParameter("campoActividades"));
 
 		try{
 			request.setAttribute("mensajeRespuestaActualizacionReporte", "Se ha actualizado la información del reporte correctamente");
-	    	RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaActualizarReporteCita.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaActualizarReporteCita.jsp");
 			dispatcher.forward(request, response);    				
 		}catch(Exception e){
 			e.getLocalizedMessage();
 		}
-
-    	
-    }
-    
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		responderPeticion(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		responderPeticion(request, response);
-	}
-
 }

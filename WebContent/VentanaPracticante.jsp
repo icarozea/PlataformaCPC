@@ -21,7 +21,7 @@
 	<%@include file="./menuNavegacionPracticante.jsp"%>
 	<div id="gestioncitas">
 		<h1 class="droidSans">INICIO</h1>
-		<h2 class="droidSans">Bienvenido
+		<h2 class="droidSans">Bienvenido(a)
 			${sessionScope.personaSession.primerNombre}</h2>
 		<div id="gestionContenido">
 			<table class="tablaPrincipal">

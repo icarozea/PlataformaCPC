@@ -12,6 +12,12 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <title>Reportes Practicante</title>
+<script>
+        	function filtrar(cambio){
+        		document.filtro.tipoCambio.value = cambio;
+        		document.filtro.submit();
+        	}
+        </script>
 </head>
    		<%
 		  if (session.getAttribute("perfil")==null)
@@ -27,6 +33,46 @@
 		<h1 class="droidSans">Gestión de Reportes</h1>
 		<br>
 		<h2 class="droidSans">Verificación de reportes de Sesión Individual emitidos por el practicante</h2>
+		
+		<div id="marcoSeleccionPersona">
+        	<form action="" name="filtro" id="filtro" method="post">
+        		<input type="hidden" name="operacion" id="operacion" value="visualizarReportes">
+        		<input type="hidden" name="idPersona" id="idPersona" value="${requestScope.idPersona}">
+        		<input type="hidden" name="tipoCambio" id="tipoCambio">
+        		
+        		<div class="fieldgroup">
+        			<label class="cabin">Paciente</label>
+        			<select id ="pacienteActual" name="pacienteActual" onchange="filtrar('paciente')">
+                    	<c:forEach items="${requestScope.listaPacientes}" var="paciente">
+                    		<c:choose>
+                    			<c:when test="${requestScope.pacienteActual == paciente.idPersona}">
+				        			<option value="${paciente.idPersona}" selected>${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</option>
+				        		</c:when>
+				        		<c:otherwise>
+				        			<option value="${paciente.idPersona}">${paciente.primerNombre} ${paciente.segundoNombre} ${paciente.primerApellido} ${paciente.segundoApellido}</option>
+				        		</c:otherwise>
+				        	</c:choose>
+				        </c:forEach>
+				    </select>
+        		</div>
+        		<div class="fieldgroup">
+        			<label class="cabin">Tratamiento</label>
+        			<select id ="tratamientoActual" name="tratamientoActual" onchange="filtrar('tratamiento')">
+                    	<c:forEach items="${requestScope.listaTratamientos}" var="tratamiento">
+                    		<c:choose>
+                    			<c:when test="${requestScope.tratamientoActual == tratamiento.idTratamiento}">
+				        			<option value="${tratamiento.idTratamiento}" selected>${tratamiento.idTratamiento}. ${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
+				        		</c:when>
+				        		<c:otherwise>
+				        			<option value="${tratamiento.idTratamiento}">${tratamiento.idTratamiento}. ${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
+				        		</c:otherwise>
+				        	</c:choose>
+				        </c:forEach>
+				    </select>
+        		</div>
+        	</form>
+        	</div>  
+        	
 		<div id="gestionContenido">
 			<table id="tablaUsuarios">
 				<thead>

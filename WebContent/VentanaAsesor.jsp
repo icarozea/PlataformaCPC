@@ -20,7 +20,7 @@
         <%@include file="./menuNavegacionAsesor.jsp" %>
         <div id="gestioncitas">
         	<h1 class="cabin">INICIO</h1>
-			<h2 class="cabin">Bienvenido ${sessionScope.personaSession.primerNombre}</h2>
+			<h2 class="cabin">Bienvenido(a) ${sessionScope.personaSession.primerNombre}</h2>
 			<div id="gestionContenido">
 				<table class="tablaPrincipal">
 					<tr>

@@ -38,7 +38,7 @@
 		</div>
 		
 		<div id="marcoSeleccionPersona">
-        	<form action="./asignaciones" name="filtro">
+        	<form action="./asignaciones" name="filtro" method="post">
         		<input type="hidden" name="operacion" value="filtro">
         		<div class="fieldgroup">
         			<label class="cabin">Jornada</label>
