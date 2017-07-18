@@ -806,7 +806,9 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 		String sql = "UPDATE REPORTE_SESION SET RECIBO = ?, OBJETIVO_SESION = ?, DESCRIPCION_SESION = ?, TAREAS_ASIGNADAS = ?, ACTIVIDADES_PROX_SESION = ? WHERE ID_SESION = ?";
 		
-		String sqlStatusReporte = "UPDATE CITA SET ESTADO = 'Pendiente' WHERE ID_REPORTE = ?";
+		String cita = "SELECT ID_CITA FROM REPORTE_SESION WHERE ID_SESION = ?";
+		
+		String sqlStatusReporte = "UPDATE CITA SET ESTADO = 'Pendiente' WHERE ID_CITA = ?";
 		
 		try{
 			conexionActual.conectar();
@@ -822,13 +824,19 @@ public class DaoSesionIndividual extends ConexionOracle{
 			
 			conexionActual.ejecutarActualizacion();
 			
-			if (!estadoActual.equalsIgnoreCase("Aceptado")) {
-				conexionActual.prepararSentencia(sqlStatusReporte);
-				conexionActual.agregarAtributo(1, idSesion);
+			conexionActual.prepararSentencia(cita);
+			conexionActual.agregarAtributo(1, idSesion);
+			ResultSet rs = conexionActual.ejecutarSentencia();
+			while(rs.next()) {
+				int idCita = rs.getInt("ID_CITA");
 				
-				conexionActual.ejecutarActualizacion();	
+				if (!estadoActual.equalsIgnoreCase("Aceptado")) {
+					conexionActual.prepararSentencia(sqlStatusReporte);
+					conexionActual.agregarAtributo(1, idCita);
+					
+					conexionActual.ejecutarActualizacion();	
+				}
 			}
-			
 			
 			conexionActual.commit();
 			

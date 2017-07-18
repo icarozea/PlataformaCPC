@@ -122,55 +122,55 @@
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Objetivo sesión:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.objetivo}</label>
-        				<input type="button" name="btnObjetivo" id="btnObjetivo" value="Actualizar" class="botones"/>
-        				<input type="button" name="btnObjetivoCancel" id="btnObjetivoCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.objetivo}</textarea>
+        				<label class="cabin"><b>Objetivo sesión:</b></label><br>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.objetivo}</p><br>
+        				<input type="button" name="btnObjetivo" id="btnObjetivo" value="Actualizar" class="botones"/><br>
+        				<input type="button" name="btnObjetivoCancel" id="btnObjetivoCancel" value="Cancelar" class="botones" hidden="true"/><br>
+						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.objetivo}</textarea><br>
         			</div>
         		</fieldset>
         		<fieldset>
-        				<label class="cabin"><b>Comentario sobre objetivo:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.comentarios.comentariosObjetivo}</label>        		
+        				<label class="cabin"><b>Comentario sobre objetivo:</b></label><br>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.comentarios.comentariosObjetivo}</p><br>    		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Descripción de sesión:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.descripcion}</label>
-        				<input type="button" name="btnDescripcion" id="btnDescripcion" value="Actualizar" class="botones"/>
-        				<input type="button" name="btnDescripcionCancel" id="btnDescripcionCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoDescripcion" name="campoDescripcion" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.descripcion}</textarea>
+        				<label class="cabin"><b>Descripción de sesión:</b></label><br>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.descripcion}</p><br>
+        				<input type="button" name="btnDescripcion" id="btnDescripcion" value="Actualizar" class="botones"/><br>
+        				<input type="button" name="btnDescripcionCancel" id="btnDescripcionCancel" value="Cancelar" class="botones" hidden="true"/><br>
+						<textarea id="campoDescripcion" name="campoDescripcion" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.descripcion}</textarea><br>
         			</div>
         		</fieldset>
         		<fieldset>
-        				<label class="cabin"><b>Comentario sobre descripción:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.comentarios.comentariosDescripcion}</label>        		
+        				<label class="cabin"><b>Comentario sobre descripción:</b></label><br>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.comentarios.comentariosDescripcion}</p><br>        		
         		</fieldset>        		
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Tareas asignadas:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.tareasAsignadas}</label>
-        				<input type="button" name="btnTareas" id="btnTareas" value="Actualizar" class="botones"/>
-        				<input type="button" name="btnTareasCancel" id="btnTareasCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoTareas" name="campoTareas" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.tareasAsignadas}</textarea>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.tareasAsignadas}</p>
+        				<input type="button" name="btnTareas" id="btnTareas" value="Actualizar" class="botones"/><br>
+        				<input type="button" name="btnTareasCancel" id="btnTareasCancel" value="Cancelar" class="botones" hidden="true"/><br>
+						<textarea id="campoTareas" name="campoTareas" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.tareasAsignadas}</textarea><br>
         			</div>
         		</fieldset>
         		<fieldset>
-        				<label class="cabin"><b>Comentario sobre tareas asignadas:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.comentarios.comentariosTareas}</label>        		
+        				<label class="cabin"><b>Comentario sobre tareas asignadas:</b></label><br>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.comentarios.comentariosTareas}</p><br>	
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Actividades próxima sesión:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.actividadesProximaSesion}</label>
-        				<input type="button" name="btnActividadesProx" id="btnActividadesProx" value="Actualizar" class="botones"/>
-        				<input type="button" name="btnActividadesProxCancel" id="btnActividadesProxCancel" value="Cancelar" class="botones" hidden="true"/>
-						<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.actividadesProximaSesion}</textarea>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.actividadesProximaSesion}</p>
+        				<input type="button" name="btnActividadesProx" id="btnActividadesProx" value="Actualizar" class="botones"/><br>
+        				<input type="button" name="btnActividadesProxCancel" id="btnActividadesProxCancel" value="Cancelar" class="botones" hidden="true"/><br>
+						<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea" hidden="true">${requestScope.sesionReportePracticante.actividadesProximaSesion}</textarea><br>
         			</div>
         		</fieldset>        		
         		<fieldset>
-        				<label class="cabin"><b>Comentario sobre actividades próxima sesión:</b></label>
-        				<label class="cabin">${requestScope.sesionReportePracticante.comentarios.comentariosActividades}</label>        		
+        				<label class="cabin"><b>Comentario sobre actividades próxima sesión:</b></label><br>
+        				<p class="pReporte">${requestScope.sesionReportePracticante.comentarios.comentariosActividades}</p><br>       		
         		</fieldset>
         		<fieldset>	
         			<div class="fieldgroup">

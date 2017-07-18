@@ -74,13 +74,6 @@ body{
     border-radius: 100%;
 }
 
-
-/*.btn-xlarge:active {
-  top: 2px;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}*/
 .btn-xlarge:hover {
   background: #CCC914;
 }
@@ -90,15 +83,6 @@ body{
     margin-right: 10%;
     color:#fff;
 }
-
-/*#titleForm{
-    margin-top: 10%;
-    padding: 0px;
-    font-size: 24px;
-    color: #006699;
-    width: 100%;
-    border: #006699 double medium;
-}*/
 
 .agrupar{
     width:30%;
@@ -127,11 +111,9 @@ body{
     width:30%;
     height:40%;
     margin: 20% auto;    
-    /*border: 2px solid #084B8A;*/
     margin-top: 10%;
     padding: 2% 10% 2% 10%;
     font-size: 20px;
-    /*border-radius: 2%;*/
     background-color: #fff;
 }
 
@@ -182,17 +164,6 @@ body{
     color: #cccccc;
     margin-top: 2%;
 }
-/*footer{
-    width: 100%; 
-    height: 50px; 
-    /*    background: #006699; 
-    /*    color: #fff;
-    color: #006699;
-    text-align: center;
-    border-top: 2px;
-    position: absolute;
-    bottom: 0;    
-}*/
 
 header{
     width: 100%;
@@ -240,7 +211,6 @@ input.radio{
     list-style: none;
     padding: 15px;        
     font: bold 14px verdana, sans-serif;
-    /*font-family: 'Droid Sans', sans-serif;*/
     background-color:#ffffff;
     border-left-color:#006699; 
     border: #006699 groove 3px;
@@ -335,7 +305,6 @@ input.radio{
     margin-left: 1%;
     margin-right: 10%;
     background-color:#006699;
-    /*background: linear-gradient(left #084B8A, #032f2e3, #2fa43d);*/
     padding: 1%;
     color: #fff;
     text-decoration: none;
@@ -381,15 +350,6 @@ input.radio{
     border-radius: 10px;
 
 }
-
-/*h3{
-    width: 100%;
-    text-align: center;
-    background: #006699;
-    border: #006699 double 2px;
-    color: #006699; 
-    border-radius: 5px;
-}*/
 
 .btnLogout {
     display: inline-block;
@@ -463,14 +423,12 @@ input.radio{
 }
 
 #register-form .fieldgroup {
-    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
     display: inline-block;
     padding: 8px 10px;
     width: 340px;
 }
 
 #register-form .fieldgroupTextArea {
-    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
     display: inline-block;
     padding: 8px 10px;
     width: 94%;
@@ -535,7 +493,6 @@ fieldset{ border:none; }
     margin-bottom: 30px;
     margin-left: 20px;
     margin-top: 10px;
-    /*padding: 25px 50px 10px;*/
     padding-left: 10px;
     padding-right: 55px;
     width: 60%;
@@ -543,12 +500,14 @@ fieldset{ border:none; }
 }
 
 #registerForm .fieldgroup {
-    /*background: url("form-divider.gif") repeat-x scroll left top transparent;*/
     display: inline-block;
     padding: 8px 10px;
     width: 340px;
 }
-fieldset{ border:none; }
+
+fieldset{ 
+	border:none; 
+}
 
 #registerForm .fieldgroup input{
     margin: 10px 0;
@@ -645,7 +604,6 @@ fieldset{ border:none; }
     margin: 0 auto;
     margin-top: 5%;
     background: #ffffff;
-    /*width: 80%;*/
 }
 
 .numero{
@@ -676,13 +634,6 @@ fieldset{ border:none; }
     line-height: 4;
     text-height: auto;
 }
-
-/*.campoTexto{
-    width: 90%;
-    height: 80px;
-    line-height: 4;
-    text-height: auto;
-}*/
 
 .tablaReporte{
     padding: 1%;
@@ -747,13 +698,6 @@ fieldset{ border:none; }
     border-radius: 100%;
     color: #fff;
     icon: url('resources/lapiz.png'); 
-
-
-    /*    width: 25px;
-        height: 25px;
-        border-radius: 250px; 
-        background: url('resources/bloc.png');
-        font-size: 1px;*/
 }
 
 .btnAsignar, .btnHistorial, .btnVer, .btnNuevaSesion{
@@ -787,11 +731,10 @@ fieldset{ border:none; }
     text-align: left;
     width: 60%;
     border-radius: 50px;
-/*    border-bottom-right-radius: 50px;*/
     border-left: #006699 groove 3px;
     border-right: #006699 groove 3px;
     border-bottom: #000 double 3px;
-     padding-bottom: 2%;
+    padding-bottom: 2%;
 }
 
 .cajaDeAsignados h2{
@@ -844,4 +787,11 @@ fieldset{ border:none; }
 	width: 35px;
     height: 35px;
     background-image: url("resources/calendarNew.png");
+}
+
+.pReporte{
+	text-align:justify;
+	padding-right:5%;
+	padding-left:5%;
+	word-break: break-all;
 }

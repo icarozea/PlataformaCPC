@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="estilo.css"></link>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-        <title>Cupos Practicantes</title>
+        <title>Detalle Reporte</title>
     </head>
 		<%
 		  if (session.getAttribute("perfil")==null)
@@ -70,29 +70,29 @@
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Objetivo sesión:</b></label>
-        				<label class="cabin">${requestScope.objetivoSesion}</label>
+        				<label class="cabin"><b>Objetivo sesión:</b></label><br>
+        				<p class="pReporte">${requestScope.objetivoSesion}</p><br>
 						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea"></textarea>
         			</div>
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Descripción de la sesión:</b></label>
-        				<label class="cabin">${requestScope.descripcionSesion}</label>
+        				<label class="cabin"><b>Descripción de la sesión:</b></label><br>
+        				<p class="pReporte">${requestScope.descripcionSesion}</p><br>
         				<textarea id="campoDesc" name="campoDesc" class="marginTextArea sizeTextArea"></textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Tareas asignadas:</b></label>
-        				<label class="cabin">${requestScope.tareasAsignadasSesion}</label>
+        				<label class="cabin"><b>Tareas asignadas:</b></label><br>
+        				<p class="pReporte"">${requestScope.tareasAsignadasSesion}</p><br>
         				<textarea id="campoTareasAsig" name="campoTareasAsig" class="marginTextArea sizeTextArea"></textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Actividades para la próxima sesión:</b></label>
-        				<label class="cabin">${requestScope.actividadesProxSesion}</label>
+        				<label class="cabin"><b>Actividades para la próxima sesión:</b></label><br>
+        				<p class="pReporte"">${requestScope.actividadesProxSesion}</p><br>
         				<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea"></textarea>
         			</div>
         		</fieldset>	
@@ -101,7 +101,7 @@
         				<input type="button" name="btnAceptar" id="btnAceptar" value="Aprobar Reporte" class="botones"/>
         			</div>
         			<div class="fieldgroup">
-        				<input type="button" name="btnRechazar" id="btnRechazar" value="Rechazar Reporte" class="botones"/>
+        				<input type="button" name="btnRechazar" id="btnRechazar" value="Reporte por Ajustar" class="botones"/>
         			</div>
         		</fieldset>
         		
