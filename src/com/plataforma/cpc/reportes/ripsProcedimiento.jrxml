@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-04-19T23:04:34 -->
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rips1" pageWidth="800" pageHeight="200" columnWidth="760" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="267bbc45-f662-494b-a266-a91ce6aaad93">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapterOracle.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -16,12 +15,18 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="ID_PERFIL" class="java.lang.Integer"/>
+	<parameter name="ID_PRACTICANTE" class="java.lang.Integer"/>
+	<parameter name="FECHA_INICIO" class="java.lang.String"/>
+	<parameter name="FECHA_FIN" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT cita.num_cita, cita.fecha_cita, tip.SIGLA, per.NUMERO_DOCUMENTO
-FROM cita cita, persona per, tipo_documento tip
-WHERE cita.ES_VALORACION = 0
-AND cita.ID_PACIENTE = per.ID_PERSONA
-AND per.tipo_documento_id_documento = tip.id_documento]]>
+		<![CDATA[SELECT CITA.NUM_CITA, CITA.FECHA_CITA, TIP.SIGLA, PERS.NUMERO_DOCUMENTO
+FROM CITA CITA, PERSONA PERS, TIPO_DOCUMENTO TIP
+WHERE CITA.ES_VALORACION = 0
+AND CITA.ID_PACIENTE = PERS.ID_PERSONA
+AND PERS.TIPO_DOCUMENTO_ID_DOCUMENTO = TIP.ID_DOCUMENTO
+AND CITA.ID_PRACTICANTE = $P{ID_PRACTICANTE}
+AND CITA.FECHA_CITA >= $P{FECHA_INICIO}
+AND CITA.FECHA_CITA < $P{FECHA_FIN}]]>
 	</queryString>
 	<field name="NUM_CITA" class="java.math.BigDecimal"/>
 	<field name="FECHA_CITA" class="java.util.Date"/>

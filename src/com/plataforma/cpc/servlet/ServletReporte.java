@@ -3,6 +3,8 @@ package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,8 +81,18 @@ public class ServletReporte extends HttpServlet {
 		Reporte reporte = new Reporte("C:\\RIPS");
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("ID_PRACTICANTE",personaSesion.getIdPersona().toString());
-		parametros.put("FECHA_MES",request.getParameter("fechaReporte"));
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate fechaRaw = LocalDate.parse(request.getParameter("fechaReporte"), formatter);
+		String month = fechaRaw.getMonthValue() > 10 ? fechaRaw.getMonthValue() + "" : "0" + fechaRaw.getMonthValue();
+		String year = fechaRaw.getYear() + "";
+		String fechaInicio = "01/" + month + "/" + year + " 01:00:00,000000000 AM";
+		month = (fechaRaw.getMonthValue() + 1) > 10 ? (fechaRaw.getMonthValue() + 1) + "" : "0" + (fechaRaw.getMonthValue() + 1);
+		String fechaFin = "01/" + month + "/" + year + " 01:00:00,000000000 AM";
+		parametros.put("ID_PRACTICANTE",personaSesion.getIdPersona());
+		parametros.put("FECHA_INICIO",fechaInicio);
+		parametros.put("FECHA_FIN",fechaFin);
+		System.out.println(fechaInicio);
+		System.out.println(fechaFin);
 		if(null != request.getParameter("idPerfil"))
 			parametros.put("ID_PERFIL",new Integer(request.getParameter("idPerfil")));
 		

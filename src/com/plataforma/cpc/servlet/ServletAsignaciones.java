@@ -16,11 +16,15 @@ import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.to.PersonaTo;
 
 /**
- * Servlet implementation class ServletAsignaciones
+ * Implementacion de Servlet para manejar las peticiones de asignacion de personas a Practicantes y Asesores
  */
 @WebServlet(name="/ServletAsignaciones", urlPatterns = {"/asignaciones","/ServletAsignaciones"})
 public class ServletAsignaciones extends HttpServlet {
 
+	//----------------------------------------------------------------------------------------------------------------------------
+	// Implementacion
+	//----------------------------------------------------------------------------------------------------------------------------
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ResponderPeticion(request, response);
