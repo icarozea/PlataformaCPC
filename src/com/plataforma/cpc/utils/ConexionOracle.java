@@ -23,15 +23,15 @@ public class ConexionOracle implements Conexion {
 //	private final String puerto = Propiedades.getInstance().valorPropiedad("PUERTO");
 	
 
-//	private final String usuario = "CPC_DB";
-//	private final String password = "CPC2017KL";
-//	private final String sid = "test";
-//	private final String host = "192.168.98.12";
+	private final String usuario = "CPC_DB";
+	private final String password = "CPC2017KL";
+	private final String sid = "test";
+	private final String host = "192.168.98.12";
 
-	private final String usuario = "cpcdb";
-	private final String password = "1234";
-	private final String sid = "xe";
-	private final String host = "localhost";
+//	private final String usuario = "cpcdb";
+//	private final String password = "1234";
+//	private final String sid = "xe";
+//	private final String host = "localhost";
 
 	private final String puerto = "1521";
 	

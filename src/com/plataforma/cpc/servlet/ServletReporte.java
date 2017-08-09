@@ -43,7 +43,6 @@ public class ServletReporte extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		String operacion = request.getParameter("operacion");
-		System.out.println("Operacion: "+operacion);
 		switch (operacion) {
 		
 		case "usuarios":
@@ -91,8 +90,6 @@ public class ServletReporte extends HttpServlet {
 		parametros.put("ID_PRACTICANTE",personaSesion.getIdPersona());
 		parametros.put("FECHA_INICIO",fechaInicio);
 		parametros.put("FECHA_FIN",fechaFin);
-		System.out.println(fechaInicio);
-		System.out.println(fechaFin);
 		if(null != request.getParameter("idPerfil"))
 			parametros.put("ID_PERFIL",new Integer(request.getParameter("idPerfil")));
 		
