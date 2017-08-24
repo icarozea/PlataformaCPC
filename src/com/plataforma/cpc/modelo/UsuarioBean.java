@@ -2,6 +2,7 @@ package com.plataforma.cpc.modelo;
 
 import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.to.PersonaTo;
+import com.plataforma.cpc.utils.BCrypt;
 
 /**
  * Modelo que maneja la sesión de usuario dentro del sistema
@@ -24,9 +25,9 @@ public class UsuarioBean {
 		DaoPersona daoPersona= new DaoPersona();
 		PersonaTo persona = new PersonaTo();
 		persona = daoPersona.consultarPersonaUsuario(nombreUsuario);
-		String pass = persona.getPassword();
-		
-		if(pass != null && !pass.equals(contrasenia))
+		String hashedPass = persona.getPassword();
+
+		if(!BCrypt.checkpw(contrasenia, hashedPass))
 			persona.setNumeroDocumento("000");
 		
 		persona.setPassword("");

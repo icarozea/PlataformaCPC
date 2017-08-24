@@ -14,6 +14,7 @@ import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 import com.plataforma.cpc.to.UsuarioTo;
+import com.plataforma.cpc.utils.BCrypt;
 import com.plataforma.cpc.utils.ConexionOracle;
 
 public class DaoPersona {
@@ -358,7 +359,10 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
 			conexionActual.agregarAtributo(12, 0);
-			conexionActual.agregarAtributo(13, persona.getPassword());
+			
+			String hashed = BCrypt.hashpw(persona.getPassword(), BCrypt.gensalt(12));	
+			conexionActual.agregarAtributo(13, hashed);
+			
 			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
 			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
 			conexionActual.agregarAtributo(16, persona.getJornada());
@@ -401,7 +405,10 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
 			conexionActual.agregarAtributo(12, 0);
-			conexionActual.agregarAtributo(13, persona.getPassword());
+			
+			String hashed = BCrypt.hashpw(persona.getPassword(), BCrypt.gensalt(12));	
+			conexionActual.agregarAtributo(13, hashed);
+
 			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
 			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
 			conexionActual.agregarAtributo(16, persona.getJornada());
