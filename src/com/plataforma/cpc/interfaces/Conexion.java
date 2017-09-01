@@ -1,5 +1,6 @@
 package com.plataforma.cpc.interfaces;
 
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,6 +75,8 @@ public interface Conexion {
 	
 	public void agregarAtributo(int numAtributo, Long atributo) throws SQLException;
 	
+	public void agregarAtributo(int numAtributo, Clob atributo) throws SQLException;
+	
 	/**
 	 * Define el contrato para ejecutar una sententica sql previamente preparada 
 	 * @return ResultSet con los resultados de la sentencia
@@ -94,6 +97,8 @@ public interface Conexion {
 	public void commit() throws Exception;
 	
 	public void rollback() throws Exception;
+	
+	public Clob crearClob() throws Exception;
 	
 	public void cerrarTransaccion() throws Exception;
 	

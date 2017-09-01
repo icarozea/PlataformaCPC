@@ -1,5 +1,7 @@
 package com.plataforma.cpc.modelo;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.utils.BCrypt;
@@ -9,10 +11,10 @@ import com.plataforma.cpc.utils.BCrypt;
  */
 public class UsuarioBean {
 
-//-------------------------------------------------------------------------------------------
-// Funciones
-//-------------------------------------------------------------------------------------------
-	
+	//-------------------------------------------------------------------------------------------
+	// Funciones
+	//-------------------------------------------------------------------------------------------
+
 	/**
 	 * Valida un usuario dado el numero de documento y la clave capturadas en el formulario del index
 	 * @param nombreUsuario Numero de documento del usuario
@@ -25,11 +27,14 @@ public class UsuarioBean {
 		DaoPersona daoPersona= new DaoPersona();
 		PersonaTo persona = new PersonaTo();
 		persona = daoPersona.consultarPersonaUsuario(nombreUsuario);
-		String hashedPass = persona.getPassword();
+		String encryptedPass = persona.getPassword();
 
-		if(!BCrypt.checkpw(contrasenia, hashedPass))
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+
+		if(!passwordEncryptor.checkPassword(contrasenia, encryptedPass))
 			persona.setNumeroDocumento("000");
-		
+
+
 		persona.setPassword("");
 		return persona;
 	}

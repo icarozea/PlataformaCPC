@@ -1,5 +1,6 @@
 package com.plataforma.cpc.utils;
 
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -85,6 +86,11 @@ public class ConexionOracle implements Conexion {
 	public void agregarAtributo(int numAtributo, Long atributo) throws SQLException {
 		sentenciaActual.setLong(numAtributo, atributo);	
 	}
+	
+	@Override
+	public void agregarAtributo(int numAtributo, Clob atributo) throws SQLException {
+		sentenciaActual.setClob(numAtributo, atributo);	
+	}
 
 	public ResultSet ejecutarSentencia() throws Exception {
 		if(sentenciaActual != null){
@@ -135,6 +141,14 @@ public class ConexionOracle implements Conexion {
 		if (connection != null && connection.isClosed() == false) {
 			connection.rollback();
 		}
+	}
+	
+	public Clob crearClob() throws SQLException{
+		if (connection != null && connection.isClosed() == false) {
+			return connection.createClob();
+		}
+		
+		return null;
 	}
 
 	public void cerrarTransaccion() throws Exception{

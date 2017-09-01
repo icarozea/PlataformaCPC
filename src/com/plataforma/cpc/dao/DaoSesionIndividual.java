@@ -1,5 +1,6 @@
 package com.plataforma.cpc.dao;
 
+import java.sql.Clob;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import com.plataforma.cpc.to.SesionIndividualPreviewTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.reporteValoracionTo;
 import com.plataforma.cpc.utils.ConexionOracle;
+import com.plataforma.cpc.utils.TextAdmin;
 
 /**
  * DAO para las operaciones relacionadas con crear y manejar los reportes de sesion y los de valoracion
@@ -44,6 +46,7 @@ public class DaoSesionIndividual extends ConexionOracle{
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 
+		
 		String sqlReporte = "INSERT INTO REPORTE_SESION (ID_SESION,ID_CITA,FECHA,NOMBRE_PROFESIONAL,OBJETIVO_SESION,DESCRIPCION_SESION,TAREAS_ASIGNADAS,ACTIVIDADES_PROX_SESION,ES_FALLO,RECIBO) ";
 		sqlReporte +="VALUES (REPORTE_SESION_SEQ.NEXTVAL,?,TO_TIMESTAMP(?,'YYYY-MM-DD HH24:MI'),?,?,?,?,?,?,?)";
 
@@ -57,10 +60,19 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.agregarAtributo(1, idCita);
 			conexionActual.agregarAtributo(2, sesion.getFecha());
 			conexionActual.agregarAtributo(3, sesion.getNombreProfesional());
-			conexionActual.agregarAtributo(4, sesion.getObjetivo());
-			conexionActual.agregarAtributo(5, sesion.getDescripcion());
-			conexionActual.agregarAtributo(6, sesion.getTareasAsignadas());
-			conexionActual.agregarAtributo(7, sesion.getActividadesProximaSesion());
+			
+			Clob objetivo = TextAdmin.generarClob(sesion.getObjetivo(), conexionActual);
+			conexionActual.agregarAtributo(4, objetivo);
+			
+			Clob descripcion = TextAdmin.generarClob(sesion.getDescripcion(), conexionActual);
+			conexionActual.agregarAtributo(5, descripcion);
+
+			Clob tareas = TextAdmin.generarClob(sesion.getTareasAsignadas(), conexionActual);
+			conexionActual.agregarAtributo(6, tareas);
+			
+			Clob actividades = TextAdmin.generarClob(sesion.getActividadesProximaSesion(), conexionActual);
+			conexionActual.agregarAtributo(7, actividades);
+			
 			conexionActual.agregarAtributo(8,sesion.isFallo()?1:0);
 			conexionActual.agregarAtributo(9,sesion.getNumRecibo());
 			conexionActual.ejecutarActualizacion();
@@ -71,6 +83,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.ejecutarActualizacion();
 
 			conexionActual.commit();
+			
+			objetivo.free();
+			descripcion.free();
+			tareas.free();
+			actividades.free();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,10 +129,18 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.iniciarTransaccion();
 
 			conexionActual.prepararSentencia(actualizacion);	
-			conexionActual.agregarAtributo(1, sesion.getObjetivo());
-			conexionActual.agregarAtributo(2, sesion.getDescripcion());
-			conexionActual.agregarAtributo(3, sesion.getTareasAsignadas());
-			conexionActual.agregarAtributo(4, sesion.getActividadesProximaSesion());
+			Clob objetivo = TextAdmin.generarClob(sesion.getObjetivo(), conexionActual);
+			conexionActual.agregarAtributo(1, objetivo);
+			
+			Clob descripcion = TextAdmin.generarClob(sesion.getDescripcion(), conexionActual);
+			conexionActual.agregarAtributo(2, descripcion);
+
+			Clob tareas = TextAdmin.generarClob(sesion.getTareasAsignadas(), conexionActual);
+			conexionActual.agregarAtributo(3, tareas);
+			
+			Clob actividades = TextAdmin.generarClob(sesion.getActividadesProximaSesion(), conexionActual);
+			conexionActual.agregarAtributo(4, actividades);
+			
 			conexionActual.agregarAtributo(5, idSesion);
 			conexionActual.ejecutarActualizacion();
 
@@ -124,6 +149,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.ejecutarActualizacion();
 
 			conexionActual.commit();
+			
+			objetivo.free();
+			descripcion.free();
+			tareas.free();
+			actividades.free();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -163,16 +193,25 @@ public class DaoSesionIndividual extends ConexionOracle{
 
 		String sqlEstado = "UPDATE CITA SET ESTADO = ? WHERE ID_CITA = ? ";
 
+		
 		try{
-			conexionActual.conectar();
+			conexionActual.conectar();	
 			conexionActual.iniciarTransaccion();
 
 			conexionActual.prepararSentencia(sqlReporte);
 			conexionActual.agregarAtributo(1, valoracionTo.getIdCita());
-			conexionActual.agregarAtributo(2, valoracionTo.getMotivo());
+			
+			Clob motivo = TextAdmin.generarClob(valoracionTo.getMotivo(), conexionActual);
+			conexionActual.agregarAtributo(2, motivo);
+			
 			conexionActual.agregarAtributo(3, valoracionTo.getPersonaReporta());
-			conexionActual.agregarAtributo(4, valoracionTo.getComportamiento());
-			conexionActual.agregarAtributo(5, valoracionTo.getHipotesis());
+			
+			Clob comportamiento = TextAdmin.generarClob(valoracionTo.getComportamiento(), conexionActual);
+			conexionActual.agregarAtributo(4, comportamiento);
+			
+			Clob hipotesis = TextAdmin.generarClob(valoracionTo.getHipotesis(), conexionActual);
+			conexionActual.agregarAtributo(5, hipotesis);
+		
 			conexionActual.agregarAtributo(6, valoracionTo.getServicioRemitido());
 			conexionActual.agregarAtributo(7, valoracionTo.getEncuestador());
 			conexionActual.ejecutarActualizacion();
@@ -187,6 +226,10 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.ejecutarActualizacion();
 
 			conexionActual.commit();
+			
+			motivo.free();
+			comportamiento.free();
+			hipotesis.free();
 			retorno = Boolean.TRUE;
 			
 		} catch (Exception e) {
@@ -233,10 +276,19 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesionIndividual.setIdSesion(rs.getInt("ID_SESION"));
 				sesionIndividual.setFecha(rs.getString("FECHA"));
 				sesionIndividual.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
-				sesionIndividual.setObjetivo(rs.getString("OBJETIVO_SESION"));
-				sesionIndividual.setDescripcion(rs.getString("DESCRIPCION_SESION"));
-				sesionIndividual.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
-				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
+				
+				String objetivo = TextAdmin.getTexto(rs.getClob("OBJETIVO_SESION"));
+				sesionIndividual.setObjetivo(objetivo);
+				
+				String descripcion = TextAdmin.getTexto(rs.getClob("DESCRIPCION_SESION"));
+				sesionIndividual.setDescripcion(descripcion);
+				
+				String tareas = TextAdmin.getTexto(rs.getClob("TAREAS_ASIGNADAS"));
+				sesionIndividual.setTareasAsignadas(tareas);
+				
+				String actividades = TextAdmin.getTexto(rs.getClob("ACTIVIDADES_PROX_SESION"));
+				sesionIndividual.setActividadesProximaSesion(actividades);
+				
 				sesionIndividual.setFallo(rs.getInt("ES_FALLO")>0?true:false);
 				sesionIndividual.setNumRecibo(rs.getInt("RECIBO"));
 				sesionIndividual.setIdCita(idCita);
@@ -246,7 +298,6 @@ public class DaoSesionIndividual extends ConexionOracle{
 					comentarios.setIdComentarios(idComentarios);
 					sesionIndividual.setComentarios(comentarios);
 				}
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -283,10 +334,18 @@ public class DaoSesionIndividual extends ConexionOracle{
 
 			while (rs.next()){			
 				valoracion.setIdValoracion(rs.getInt("ID_VALORACION"));
-				valoracion.setMotivo(rs.getString("MOTIVO"));
+				
+				String motivo = TextAdmin.getTexto(rs.getClob("MOTIVO"));
+				valoracion.setMotivo(motivo);
+				
 				valoracion.setPersonaReporta(rs.getString("REPORTA"));
-				valoracion.setComportamiento(rs.getString("COMPORTAMIENTO"));
-				valoracion.setHipotesis(rs.getString("HIPOTESIS"));
+				
+				String comportamiento = TextAdmin.getTexto(rs.getClob("COMPORTAMIENTO"));
+				valoracion.setComportamiento(comportamiento);
+
+				String hipotesis = TextAdmin.getTexto(rs.getClob("HIPOTESIS"));
+				valoracion.setHipotesis(hipotesis);
+
 				valoracion.setServicioRemitido(rs.getString("SERVICIO_REMITIDO"));
 				valoracion.setEncuestador(rs.getString("ENCUESTADOR"));
 			}
@@ -423,10 +482,19 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesion.setFecha(rs.getString("FECHA"));
 				sesion.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
 				sesion.setNumRecibo(Integer.parseInt(rs.getString("RECIBO")));
-				sesion.setObjetivo(rs.getString("OBJETIVO_SESION"));
-				sesion.setDescripcion(rs.getString("DESCRIPCION_SESION"));
-				sesion.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
-				sesion.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
+				
+				String objetivo = TextAdmin.getTexto(rs.getClob("OBJETIVO_SESION"));
+				sesion.setObjetivo(objetivo);
+				
+				String descripcion = TextAdmin.getTexto(rs.getClob("DESCRIPCION_SESION"));
+				sesion.setDescripcion(descripcion);
+				
+				String tareas = TextAdmin.getTexto(rs.getClob("TAREAS_ASIGNADAS"));
+				sesion.setTareasAsignadas(tareas);
+				
+				String actividades = TextAdmin.getTexto(rs.getClob("ACTIVIDADES_PROX_SESION"));
+				sesion.setActividadesProximaSesion(actividades);
+				
 				boolean fallo;
 				if (rs.getInt("ES_FALLO")==1) {
 					fallo=true;
@@ -494,14 +562,31 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesionComentada.setFecha(rs.getString("FECHA"));
 				sesionComentada.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
 				sesionComentada.setNombreAsesorProfesional(rs.getString("P_NOM_ASESOR") + " " + rs.getString("S_NOM_ASESOR") + " " + rs.getString("P_APE_ASESOR") + " " + rs.getString("S_APE_ASESOR"));
-				sesionComentada.setObjetivo(rs.getString("OBJETIVO_SESION"));
-				comentario.setComentariosObjetivo(rs.getString("COM_OBJETIVO"));
-				sesionComentada.setDescripcion(rs.getString("DESCRIPCION_SESION"));
-				comentario.setComentariosDescripcion(rs.getString("COM_DESCRIPCION"));
-				sesionComentada.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
-				comentario.setComentariosTareas(rs.getString("COM_TAREAS"));
-				sesionComentada.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
-				comentario.setComentariosActividades(rs.getString("COM_ACTIVIDADES"));
+				
+				String objetivo = TextAdmin.getTexto(rs.getClob("OBJETIVO_SESION"));
+				sesionComentada.setObjetivo(objetivo);
+				
+				String descripcion = TextAdmin.getTexto(rs.getClob("DESCRIPCION_SESION"));
+				sesionComentada.setDescripcion(descripcion);
+				
+				String tareas = TextAdmin.getTexto(rs.getClob("TAREAS_ASIGNADAS"));
+				sesionComentada.setTareasAsignadas(tareas);
+				
+				String actividades = TextAdmin.getTexto(rs.getClob("ACTIVIDADES_PROX_SESION"));
+				sesionComentada.setActividadesProximaSesion(actividades);
+				
+				String com_objetivo = TextAdmin.getTexto(rs.getClob("COM_OBJETIVO"));
+				comentario.setComentariosObjetivo(com_objetivo);
+				
+				String com_descripcion = TextAdmin.getTexto(rs.getClob("COM_DESCRIPCION"));
+				comentario.setComentariosDescripcion(com_descripcion);
+
+				String com_tareas = TextAdmin.getTexto(rs.getClob("COM_TAREAS"));
+				comentario.setComentariosTareas(com_tareas);
+				
+				String com_actividades = TextAdmin.getTexto(rs.getClob("COM_ACTIVIDADES"));
+				comentario.setComentariosActividades(com_actividades);
+				
 				sesionComentada.setNumRecibo(rs.getInt("RECIBO"));
 				sesionComentada.setComentarios(comentario);
 				boolean fallo;
@@ -548,10 +633,19 @@ public class DaoSesionIndividual extends ConexionOracle{
 				sesionIndividual.setIdSesion(rs.getInt("ID_SESION"));
 				sesionIndividual.setFecha(rs.getString("FECHA"));
 				sesionIndividual.setNombreProfesional(rs.getString("NOMBRE_PROFESIONAL"));
-				sesionIndividual.setObjetivo(rs.getString("OBJETIVO_SESION"));
-				sesionIndividual.setDescripcion(rs.getString("DESCRIPCION_SESION"));
-				sesionIndividual.setTareasAsignadas(rs.getString("TAREAS_ASIGNADAS"));
-				sesionIndividual.setActividadesProximaSesion(rs.getString("ACTIVIDADES_PROX_SESION"));
+				
+				String objetivo = TextAdmin.getTexto(rs.getClob("OBJETIVO_SESION"));
+				sesionIndividual.setObjetivo(objetivo);
+				
+				String descripcion = TextAdmin.getTexto(rs.getClob("DESCRIPCION_SESION"));
+				sesionIndividual.setDescripcion(descripcion);
+				
+				String tareas = TextAdmin.getTexto(rs.getClob("TAREAS_ASIGNADAS"));
+				sesionIndividual.setTareasAsignadas(tareas);
+				
+				String actividades = TextAdmin.getTexto(rs.getClob("ACTIVIDADES_PROX_SESION"));
+				sesionIndividual.setActividadesProximaSesion(actividades);
+				
 				sesionIndividual.setFallo(rs.getInt("ES_FALLO")>0?true:false);
 				sesionIndividual.setNumRecibo(rs.getInt("RECIBO"));
 				Integer idComentarios = rs.getInt("ID_COMENTARIOS");
@@ -606,11 +700,19 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
 
-			conexionActual.prepararSentencia(guardar);	
-			conexionActual.agregarAtributo(1, comentarios.getComentariosObjetivo());
-			conexionActual.agregarAtributo(2, comentarios.getComentariosDescripcion());
-			conexionActual.agregarAtributo(3, comentarios.getComentariosTareas());
-			conexionActual.agregarAtributo(4, comentarios.getComentariosActividades());
+			conexionActual.prepararSentencia(guardar);
+			
+			Clob objetivo = TextAdmin.generarClob(comentarios.getComentariosObjetivo(), conexionActual);
+			conexionActual.agregarAtributo(1, objetivo);
+			
+			Clob descripcion = TextAdmin.generarClob(comentarios.getComentariosDescripcion(), conexionActual);
+			conexionActual.agregarAtributo(2, descripcion);
+		
+			Clob tareas = TextAdmin.generarClob(comentarios.getComentariosTareas(), conexionActual);
+			conexionActual.agregarAtributo(3, tareas);
+			
+			Clob actividades = TextAdmin.generarClob(comentarios.getComentariosActividades(), conexionActual);
+			conexionActual.agregarAtributo(4, actividades);
 
 			conexionActual.ejecutarActualizacion();
 
@@ -625,6 +727,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 			conexionActual.ejecutarActualizacion();
 
 			conexionActual.commit();
+			
+			objetivo.free();
+			descripcion.free();
+			tareas.free();
+			actividades.free();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -661,13 +768,26 @@ public class DaoSesionIndividual extends ConexionOracle{
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(actualizar);	
-			conexionActual.agregarAtributo(1, comentarios.getComentariosObjetivo());
-			conexionActual.agregarAtributo(2, comentarios.getComentariosDescripcion());
-			conexionActual.agregarAtributo(3, comentarios.getComentariosTareas());
-			conexionActual.agregarAtributo(4, comentarios.getComentariosActividades());
+			Clob objetivo = TextAdmin.generarClob(comentarios.getComentariosObjetivo(), conexionActual);
+			conexionActual.agregarAtributo(1, objetivo);
+			
+			Clob descripcion = TextAdmin.generarClob(comentarios.getComentariosDescripcion(), conexionActual);
+			conexionActual.agregarAtributo(2, descripcion);
+		
+			Clob tareas = TextAdmin.generarClob(comentarios.getComentariosTareas(), conexionActual);
+			conexionActual.agregarAtributo(3, tareas);
+			
+			Clob actividades = TextAdmin.generarClob(comentarios.getComentariosActividades(), conexionActual);
+			conexionActual.agregarAtributo(4, actividades);
+			
 			conexionActual.agregarAtributo(5, comentarios.getIdComentarios());
 
 			conexionActual.ejecutarActualizacion();
+			
+			objetivo.free();
+			descripcion.free();
+			tareas.free();
+			actividades.free();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -706,10 +826,18 @@ public class DaoSesionIndividual extends ConexionOracle{
 
 			while (rs.next()){
 				comentarios.setIdComentarios(idComentarios);
-				comentarios.setComentariosObjetivo(rs.getString("COM_OBJETIVO"));
-				comentarios.setComentariosDescripcion("COM_DESCRIPCION");
-				comentarios.setComentariosTareas("COM_TAREAS");
-				comentarios.setComentariosActividades("COM_ACTIVIDADES");
+				
+				String objetivo = TextAdmin.getTexto(rs.getClob("COM_OBJETIVO"));
+				comentarios.setComentariosObjetivo(objetivo);
+				
+				String descripcion = TextAdmin.getTexto(rs.getClob("COM_DESCRIPCION"));
+				comentarios.setComentariosDescripcion(descripcion);
+
+				String tareas = TextAdmin.getTexto(rs.getClob("COM_TAREAS"));
+				comentarios.setComentariosTareas(tareas);
+				
+				String actividades = TextAdmin.getTexto(rs.getClob("COM_ACTIVIDADES"));
+				comentarios.setComentariosActividades(actividades);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -816,10 +944,19 @@ public class DaoSesionIndividual extends ConexionOracle{
 			
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, numRecibo);
-			conexionActual.agregarAtributo(2, objetivo);
-			conexionActual.agregarAtributo(3, descripcion);
-			conexionActual.agregarAtributo(4, tareas);
-			conexionActual.agregarAtributo(5, actividades);
+			
+			Clob clob_objetivo = TextAdmin.generarClob(objetivo, conexionActual);
+			conexionActual.agregarAtributo(2, clob_objetivo);
+			
+			Clob clob_descripcion = TextAdmin.generarClob(descripcion, conexionActual);
+			conexionActual.agregarAtributo(3, clob_descripcion);
+
+			Clob clob_tareas = TextAdmin.generarClob(tareas, conexionActual);
+			conexionActual.agregarAtributo(4, clob_tareas);
+			
+			Clob clob_actividades = TextAdmin.generarClob(actividades, conexionActual);
+			conexionActual.agregarAtributo(5, clob_actividades);
+			
 			conexionActual.agregarAtributo(6, idSesion);
 			
 			conexionActual.ejecutarActualizacion();
@@ -840,6 +977,11 @@ public class DaoSesionIndividual extends ConexionOracle{
 			
 			conexionActual.commit();
 			
+			clob_objetivo.free();
+			clob_descripcion.free();
+			clob_tareas.free();
+			clob_actividades.free();
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
@@ -850,7 +992,6 @@ public class DaoSesionIndividual extends ConexionOracle{
 			}
 		}
 		
-		return true;
-		
+		return true;	
 	}
 }

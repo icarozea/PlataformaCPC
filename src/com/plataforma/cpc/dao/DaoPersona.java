@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
@@ -225,7 +227,7 @@ public class DaoPersona {
     	ResultSet rs =null;
     	conexionActual = new ConexionOracle();
     	PersonaTo personaTo = new PersonaTo();
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PASS, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE ID_PERSONA = ?";
+    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE ID_PERSONA = ?";
     	 	
 		try {
 			DaoUtilidades utils = new DaoUtilidades();
@@ -255,7 +257,6 @@ public class DaoPersona {
 				personaTo.setCorreo(rs.getString("CORREO"));
 				perfilTo = utils.buscarPerfil((rs.getInt("PERFIL_ID_PERFIL")));
 				personaTo.setPerfil(perfilTo);
-				personaTo.setPassword(rs.getString("PASS"));
 				personaTo.setSuperior(rs.getInt("PERSONA_ID_SUPERIOR"));
 				personaTo.setOtroTelefono(rs.getLong("OTRO_TEL"));
 				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
@@ -264,6 +265,7 @@ public class DaoPersona {
 				personaTo.setTipoDocumento(tipoDocumentoTo);
 				epsTo = utils.buscarEps((rs.getInt("EPS_ID_EPS")));
 				personaTo.setEps(epsTo);
+				personaTo.setPassword("dummytext");
 				
 			}
 		} catch (Exception e) {
@@ -341,8 +343,8 @@ public class DaoPersona {
     	
     	int retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PERSONA_ID_SUPERIOR,PASS,OTRO_TEL,CODIGO,JORNADA)"
-    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PASS,OTRO_TEL,CODIGO,JORNADA)"
+    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     	 	
 		try {
 			conexionActual.conectar();
@@ -358,14 +360,14 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
-			conexionActual.agregarAtributo(12, 0);
 			
-			String hashed = BCrypt.hashpw(persona.getPassword(), BCrypt.gensalt(12));	
-			conexionActual.agregarAtributo(13, hashed);
+			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+			String encryptedPassword = passwordEncryptor.encryptPassword(persona.getPassword());
+			conexionActual.agregarAtributo(12, encryptedPassword);
 			
-			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
-			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
-			conexionActual.agregarAtributo(16, persona.getJornada());
+			conexionActual.agregarAtributo(13, persona.getOtroTelefono());
+			conexionActual.agregarAtributo(14, persona.getCodigoEstudiante());
+			conexionActual.agregarAtributo(15, persona.getJornada());
 			
 			conexionActual.ejecutarActualizacion();
 			retorno = 1;
@@ -387,8 +389,8 @@ public class DaoPersona {
     	String generatedColumns[] = { "ID_PERSONA" };
     	int retorno;
     	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PERSONA_ID_SUPERIOR,PASS,OTRO_TEL,CODIGO,JORNADA)"
-    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PASS,OTRO_TEL,CODIGO,JORNADA)"
+    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     	 	
 		try {
 			conexionActual.conectar();
@@ -404,14 +406,14 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
-			conexionActual.agregarAtributo(12, 0);
 			
-			String hashed = BCrypt.hashpw(persona.getPassword(), BCrypt.gensalt(12));	
-			conexionActual.agregarAtributo(13, hashed);
+			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+			String encryptedPassword = passwordEncryptor.encryptPassword(persona.getPassword());
+			conexionActual.agregarAtributo(12, encryptedPassword);
 
-			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
-			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
-			conexionActual.agregarAtributo(16, persona.getJornada());
+			conexionActual.agregarAtributo(13, persona.getOtroTelefono());
+			conexionActual.agregarAtributo(14, persona.getCodigoEstudiante());
+			conexionActual.agregarAtributo(15, persona.getJornada());
 			
 			conexionActual.ejecutarActualizacion();
 			
@@ -433,8 +435,16 @@ public class DaoPersona {
     	
     	boolean retorno =  Boolean.FALSE;
     	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE PERSONA SET PRIMER_NOMBRE = ?, SEGUNDO_NOMBRE = ?, PRIMER_APELLIDO = ?, SEGUNDO_APELLIDO = ?,NUMERO_DOCUMENTO = ?,DIRECCION = ?,TELEFONO = ?,CORREO = ?,TIPO_DOCUMENTO_ID_DOCUMENTO = ?, EPS_ID_EPS = ?, PERFIL_ID_PERFIL = ?, PERSONA_ID_SUPERIOR = ?, PASS = ?, OTRO_TEL = ?, CODIGO = ?, JORNADA = ? WHERE ID_PERSONA = ?";
-    	 	
+    	boolean passFlag = false;
+    	String sql = "UPDATE PERSONA SET PRIMER_NOMBRE = ?, SEGUNDO_NOMBRE = ?, PRIMER_APELLIDO = ?, SEGUNDO_APELLIDO = ?,NUMERO_DOCUMENTO = ?,DIRECCION = ?,TELEFONO = ?,CORREO = ?,TIPO_DOCUMENTO_ID_DOCUMENTO = ?, EPS_ID_EPS = ?, PERFIL_ID_PERFIL = ?, PERSONA_ID_SUPERIOR = ?, OTRO_TEL = ?, CODIGO = ?, JORNADA = ?";
+    	
+    	if(!(persona.getPassword() == null || persona.getPassword().equals("") || persona.getPassword().equals("dummytext"))) {
+    		sql += ", PASS = ?";
+    		passFlag = true;
+    	}
+    	
+    	sql += " WHERE ID_PERSONA = ?";
+    	
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -449,12 +459,20 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
-			conexionActual.agregarAtributo(12, persona.getSuperior());		
-			conexionActual.agregarAtributo(13, persona.getPassword());
-			conexionActual.agregarAtributo(14, persona.getOtroTelefono());
-			conexionActual.agregarAtributo(15, persona.getCodigoEstudiante());
-			conexionActual.agregarAtributo(16, persona.getJornada());
-			conexionActual.agregarAtributo(17, persona.getIdPersona());
+			conexionActual.agregarAtributo(12, persona.getSuperior());
+			conexionActual.agregarAtributo(13, persona.getOtroTelefono());
+			conexionActual.agregarAtributo(14, persona.getCodigoEstudiante());
+			conexionActual.agregarAtributo(15, persona.getJornada());
+			
+			if(passFlag) {
+				StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+				String encryptedPassword = passwordEncryptor.encryptPassword(persona.getPassword());
+				conexionActual.agregarAtributo(16, encryptedPassword);
+				conexionActual.agregarAtributo(17, persona.getIdPersona());
+			}
+			else
+				conexionActual.agregarAtributo(16, persona.getIdPersona());
+			
 			
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
