@@ -14,9 +14,7 @@
     </head>
     <body>
     	<!--MENU SUPERIOR--> 
-         <%@include file="./menuNavegacionAdmin.jsp" %>
-        <!--MEMU LATERAL--> 
-        <%@include file="./menuPersona.jsp" %>      
+         <%@include file="./menuNavegacionAdmin.jsp" %>     
         <div id="marcoRespuesta" class="caja">
             &nbsp;&nbsp;&nbsp;
             
@@ -32,7 +30,7 @@
             
             <h2><%= mensaje %></h2>
             <h4><%= error %></h4>
-            <a href="./ServletPersona?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Continuar" class="botones"></a>     
+            <a href="VentanaAdministrador.jsp"><input type="button" id="btnContinuar" value="Continuar" class="botones"></a>     
        </div>
     </body>
 </html>

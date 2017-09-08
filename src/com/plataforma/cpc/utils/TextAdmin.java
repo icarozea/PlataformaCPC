@@ -72,12 +72,27 @@ public class TextAdmin {
 	        StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
 			textEncryptor.setPassword(ENC_KEY);
 			String plainText = textEncryptor.decrypt(encText);
-			byte[] ptext = plainText.getBytes(ISO_8859_1); 
-			returnText = new String(ptext, UTF_8); 
+			returnText = parseUTF(plainText);
 	        
 	    } catch (Exception e) {
 	        throw new Exception("Error al convertir los datos recuperados de la BD");
 	    }
 	    return returnText;
+	}
+	
+	/**
+	 * Formatea una cadena de texto a UTF-8 para su correcta visualización
+	 * @param text Cadena de texto original
+	 * @return Cadena de texto formateada a UTF-8
+	 */
+	public static String parseUTF(String text) {
+		if(!(text == null)) {
+			if(!text.equals("")) {
+				byte[] ptext = text.getBytes(ISO_8859_1); 
+				String returnText = new String(ptext, UTF_8); 
+				return returnText;
+			}
+		}
+		return "";
 	}
 }

@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,7 +43,7 @@
          <%@include file="./menuNavegacionAsesor.jsp" %>
 		<div>
         	<h1 class="cabin">Detalle de reporte</h1>
-        	<h2 class="cabin">Cita número ${requestScope.cita.numCita}</h2>
+        	<h2 class="cabin">Cita nÃºmero ${requestScope.cita.numCita}</h2>
         </div>
         <br>
         <div id="marcoFormularioCupos">
@@ -60,39 +60,39 @@
         				<label class="cabin">${requestScope.nomPaciente}</label>
         			</div>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Recibo N°:</b></label>
+        				<label class="cabin"><b>Recibo NÂ°:</b></label>
         				<label class="cabin">${requestScope.reciboNum}</label>
         			</div>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Profesional que atendió la cita:</b></label>
+        				<label class="cabin"><b>Profesional que atendiÃ³ la cita:</b></label>
         				<label class="cabin">${requestScope.profesionalNom}</label>
         			</div>
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Objetivo sesión:</b></label><br>
-        				<p class="pReporte">${requestScope.objetivoSesion}</p><br>
+        				<label class="cabin"><b>Objetivo de la sesiÃ³n:</b></label><br>
+        				<textarea id="txtObjetivo" name="txtObjetivo" class="marginTextArea sizeTextArea" disabled>${requestScope.objetivoSesion}</textarea>
 						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea"></textarea>
         			</div>
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Descripción de la sesión:</b></label><br>
-        				<p class="pReporte">${requestScope.descripcionSesion}</p><br>
+        				<label class="cabin"><b>DescripciÃ³n de la sesiÃ³n:</b></label><br>
+        				<textarea id="txtDescripcion" name="txtDescripcion" class="marginTextArea sizeTextArea" disabled>${requestScope.descripcionSesion}</textarea>
         				<textarea id="campoDesc" name="campoDesc" class="marginTextArea sizeTextArea"></textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Tareas asignadas:</b></label><br>
-        				<p class="pReporte"">${requestScope.tareasAsignadasSesion}</p><br>
+        				<textarea id="txtTareas" name="txtTareas" class="marginTextArea sizeTextArea" disabled>${requestScope.tareasAsignadasSesion}</textarea>
         				<textarea id="campoTareasAsig" name="campoTareasAsig" class="marginTextArea sizeTextArea"></textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
-        				<label class="cabin"><b>Actividades para la próxima sesión:</b></label><br>
-        				<p class="pReporte"">${requestScope.actividadesProxSesion}</p><br>
+        				<label class="cabin"><b>Actividades para la prÃ³xima sesiÃ³n:</b></label><br>
+        				<textarea id="txtActividades" name="txtActividades" class="marginTextArea sizeTextArea" disabled>${requestScope.actividadesProxSesion}</textarea>
         				<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea"></textarea>
         			</div>
         		</fieldset>	

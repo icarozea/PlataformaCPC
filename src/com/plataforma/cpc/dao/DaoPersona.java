@@ -1,12 +1,9 @@
 package com.plataforma.cpc.dao;
 
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import org.jasypt.util.password.StrongPasswordEncryptor;
-
 import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
@@ -16,8 +13,8 @@ import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 import com.plataforma.cpc.to.UsuarioTo;
-import com.plataforma.cpc.utils.BCrypt;
 import com.plataforma.cpc.utils.ConexionOracle;
+import com.plataforma.cpc.utils.TextAdmin;
 
 public class DaoPersona {
 	
@@ -65,10 +62,16 @@ public class DaoPersona {
 				PerfilTo perfilTo = new PerfilTo();
 				
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
-				personaTo.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
-				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
-				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
+				
+				String rawText = rs.getString("PRIMER_NOMBRE");
+				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_NOMBRE");
+				personaTo.setSegundoNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("PRIMER_APELLIDO");
+				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_APELLIDO");
+				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
+				
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
@@ -123,10 +126,16 @@ public class DaoPersona {
 				PerfilTo perfilTo = new PerfilTo();
 				
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
-				personaTo.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
-				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
-				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
+				
+				String rawText = rs.getString("PRIMER_NOMBRE");
+				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_NOMBRE");
+				personaTo.setSegundoNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("PRIMER_APELLIDO");
+				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_APELLIDO");
+				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
+				
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
@@ -177,15 +186,20 @@ public class DaoPersona {
 
 			while (rs.next()){
 				PersonaTo personaTo = new PersonaTo();	
-				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
 				
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
-				personaTo.setSegundoNombre(rs.getString("SEGUNDO_NOMBRE"));
-				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
-				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
+				
+				String rawText = rs.getString("PRIMER_NOMBRE");
+				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_NOMBRE");
+				personaTo.setSegundoNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("PRIMER_APELLIDO");
+				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_APELLIDO");
+				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
+				
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
@@ -243,14 +257,16 @@ public class DaoPersona {
 				PerfilTo perfilTo = new PerfilTo();
 				
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
-				String segNom = rs.getString("SEGUNDO_NOMBRE");
-				if(segNom == null)
-					personaTo.setSegundoNombre(""); 
-				else
-					personaTo.setSegundoNombre(segNom);
-				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
-				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
+				
+				String rawText = rs.getString("PRIMER_NOMBRE");
+				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_NOMBRE");
+				personaTo.setSegundoNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("PRIMER_APELLIDO");
+				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_APELLIDO");
+				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
+
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
@@ -302,14 +318,16 @@ public class DaoPersona {
 				PerfilTo perfilTo = new PerfilTo();
 				
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				personaTo.setPrimerNombre(rs.getString("PRIMER_NOMBRE")); 
-				String segNom = rs.getString("SEGUNDO_NOMBRE");
-				if(segNom == null)
-					personaTo.setSegundoNombre(""); 
-				else
-					personaTo.setSegundoNombre(segNom);
-				personaTo.setPrimerApellido(rs.getString("PRIMER_APELLIDO"));
-				personaTo.setSegundoApellido(rs.getString("SEGUNDO_APELLIDO"));
+				
+				String rawText = rs.getString("PRIMER_NOMBRE");
+				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_NOMBRE");
+				personaTo.setSegundoNombre(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("PRIMER_APELLIDO");
+				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("SEGUNDO_APELLIDO");
+				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
+				
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
@@ -654,34 +672,47 @@ public class DaoPersona {
 			rs = conexionActual.ejecutarSentencia();
 			
 			while (rs.next()){
-
 				personaTo.setPersonaId(rs.getInt("ID_PERSONA"));
 				personaTo.setSexo(rs.getString("SEXO")); 
 				personaTo.setEdad(rs.getString("EDAD"));
-				personaTo.setAcudiente(rs.getString("ACUDIENTE"));
-				personaTo.setProceso(rs.getString("PROCESO"));
+				String rawText = rs.getString("ACUDIENTE");
+				personaTo.setAcudiente(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("PROCESO");
+				personaTo.setProceso(TextAdmin.parseUTF(rawText));
 				personaTo.setPerteneceU(rs.getString("PERTENECE_U"));
-				personaTo.setFacultad(rs.getString("FACULTAD"));
+				rawText = rs.getString("FACULTAD");
+				personaTo.setFacultad(TextAdmin.parseUTF(rawText));
 				personaTo.setSemestre(rs.getString("SEMESTRE"));
-				personaTo.setProblematica(rs.getString("PROBLEMATICA"));
-				personaTo.setObservación(rs.getString("OBSERVACIONES"));
+				rawText = rs.getString("PROBLEMATICA");
+				personaTo.setProblematica(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("OBSERVACIONES");
+				personaTo.setObservación(TextAdmin.parseUTF(rawText));
 				personaTo.setNombreModifica(rs.getString("PERSONA_MODIFICA_DATOS"));
 				personaTo.setEstadoCivil(rs.getString("ESTADO_CIVIL"));
 				personaTo.setFechaNacimiento(rs.getString("FECHA_NACIMIENTO"));
-				personaTo.setLugarNacimiento(rs.getString("LUGAR_NACIMIENTO"));
+				rawText = rs.getString("LUGAR_NACIMIENTO");
+				personaTo.setLugarNacimiento(TextAdmin.parseUTF(rawText));
 				personaTo.setEscolaridad(rs.getString("ESCOLARIDAD"));
-				personaTo.setOcupacion(rs.getString("OCUPACION"));
-				personaTo.setLocalidad(rs.getString("LOCALIDAD"));
-				personaTo.setBarrio(rs.getString("BARRIO"));
+				rawText = rs.getString("OCUPACION");
+				personaTo.setOcupacion(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("LOCALIDAD");
+				personaTo.setLocalidad(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("BARRIO");
+				personaTo.setBarrio(TextAdmin.parseUTF(rawText));
 				personaTo.setEstrato(rs.getString("ESTRATO"));
-				personaTo.setPersonaEmergencia(rs.getString("PERSONA_EMERGENCIA"));
+				rawText = rs.getString("PERSONA_EMERGENCIA");
+				personaTo.setPersonaEmergencia(TextAdmin.parseUTF(rawText));
 				personaTo.setTelefonoEmergencia(rs.getString("TELEFONO_EMERGENCIA"));
-				personaTo.setParentescoEmergencia(rs.getString("PARENTESCO_EMERGENCIA"));
+				rawText = rs.getString("PARENTESCO_EMERGENCIA");
+				personaTo.setParentescoEmergencia(TextAdmin.parseUTF(rawText));
 				personaTo.setFormatoSolicitud(rs.getString("FORMATO_SOLICITUD"));
-				personaTo.setInstitucionRemision(rs.getString("INSTITUCION_REMISION"));
-				personaTo.setParentescoAcudiente(rs.getString("PARENTESCO_ACUDIENTE"));
+				rawText = rs.getString("INSTITUCION_REMISION");
+				personaTo.setInstitucionRemision(TextAdmin.parseUTF(rawText));
+				rawText = rs.getString("PARENTESCO_ACUDIENTE");
+				personaTo.setParentescoAcudiente(TextAdmin.parseUTF(rawText));
 				personaTo.setTelefonoAcudiente(rs.getString("TELEFONO_ACUDIENTE"));
-				personaTo.setPersonasReside(rs.getString("PERSONAS_RESIDE"));
+				rawText = rs.getString("PERSONAS_RESIDE");
+				personaTo.setPersonasReside(TextAdmin.parseUTF(rawText));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

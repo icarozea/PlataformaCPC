@@ -293,7 +293,7 @@
 							<div class="fieldgroup" id="campoEPS">
 								<label class="cabin">EPS</label>
 								<select id="eps" name="eps" required>
-								<option value="">Seleccione</option>
+								<option value="0">Seleccione</option>
 								<c:forEach items="${listaEPS}" var="varEPS">
 									<c:choose>
 										<c:when test="${requestScope.eps == varEPS.nombreEPS}">
@@ -311,7 +311,7 @@
 							<div class="fieldgroup" id="campoEPS" style="display: none;">
 								<label class="cabin">EPS</label>
 								<select id="eps" name="eps" required>
-								<option value="-1">Seleccione</option>
+								<option value="0">Seleccione</option>
 								<c:forEach items="${listaEPS}" var="varEPS">
 									<c:choose>
 										<c:when test="${requestScope.eps == varEPS.nombreEPS}">
