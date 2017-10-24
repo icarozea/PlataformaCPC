@@ -17,11 +17,10 @@ public class PropertiesController implements ServletContextListener{
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		
-//		System.out.println("Se ha iniciado el contexto de PlataformaCPC\nBase de datos:");
-//		Propiedades cargue = Propiedades.getInstance();
-//		System.out.println("Host:" + cargue.valorPropiedad("HOST"));
-//		System.out.println("SID: " + cargue.valorPropiedad("SID"));
-//		System.out.println("Port: " + cargue.valorPropiedad("PUERTO"));
-		
+		System.out.println("Se ha iniciado el contexto de PlataformaCPC\nBase de datos:");
+		Propiedades cargue = Propiedades.getInstance();
+		System.out.println("Host:" + cargue.valorPropiedad("HOST"));
+		System.out.println("SID: " + cargue.valorPropiedad("SID"));
+		System.out.println("Port: " + cargue.valorPropiedad("PUERTO"));
 	}
 }

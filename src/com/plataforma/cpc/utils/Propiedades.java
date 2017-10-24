@@ -8,9 +8,7 @@ public class Propiedades {
 	private static Propiedades propiedades;
 	public static final String RUTA_JASPER ="RUTA_JASPER";
 	private Properties properti = null;
-	
-	
-	
+		
 	private Propiedades(){	
 		
 		/**Creamos un Objeto de tipo Properties*/
@@ -34,6 +32,4 @@ public class Propiedades {
 		String valor = properti.getProperty(llave);
 		return valor;
 	}
-	
-
 }

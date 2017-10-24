@@ -17,24 +17,24 @@ import oracle.jdbc.driver.OracleDriver;
  */
 public class ConexionOracle implements Conexion {
 
-//	private final String usuario = Propiedades.getInstance().valorPropiedad("USUARIO");
-//	private final String password = Propiedades.getInstance().valorPropiedad("PASSWORD");
-//	private final String sid = Propiedades.getInstance().valorPropiedad("SID");
-//	private final String host = Propiedades.getInstance().valorPropiedad("HOST");
-//	private final String puerto = Propiedades.getInstance().valorPropiedad("PUERTO");
+	private final String usuario = Propiedades.getInstance().valorPropiedad("USUARIO");
+	private final String password = Propiedades.getInstance().valorPropiedad("PASSWORD");
+	private final String sid = Propiedades.getInstance().valorPropiedad("SID");
+	private final String host = Propiedades.getInstance().valorPropiedad("HOST");
+	private final String puerto = Propiedades.getInstance().valorPropiedad("PUERTO");
 	
 
-	private final String usuario = "CPC_DB";
-	private final String password = "CPC2017KL";
-	private final String sid = "test";
-	private final String host = "192.168.98.12";
+//	private final String usuario = "CPC_DB";
+//	private final String password = "CPC2017KL";
+//	private final String sid = "test";
+//	private final String host = "192.168.98.12";
+//
+////	private final String usuario = "cpcdb";
+////	private final String password = "1234";
+////	private final String sid = "xe";
+////	private final String host = "localhost";
 
-//	private final String usuario = "cpcdb";
-//	private final String password = "1234";
-//	private final String sid = "xe";
-//	private final String host = "localhost";
-
-	private final String puerto = "1521";
+//	private final String puerto = "1521";
 	
 	private Connection connection;
 	private PreparedStatement sentenciaActual;
