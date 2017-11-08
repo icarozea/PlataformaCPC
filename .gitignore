@@ -48,5 +48,3 @@ Temporary Items
 /*target*/**
 /*m2e-wtp*/**
 target/m2e-wtp/web-resources/META-INF/maven/PlataformaCPC/PlataformaCPC/pom.properties
-src/com/plataforma/cpc/utils/ConexionOracle.java
-src/config.properties

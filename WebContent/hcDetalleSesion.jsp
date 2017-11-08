@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
 <script type="text/javascript" src="js/validarCita.js"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+<script type="text/javascript" src="js/toPDF.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Historia Clínica - Sesión</title>
 </head>
@@ -31,21 +33,21 @@
 		</c:when>
 	</c:choose>
 	
-	<div style="height: 50px;"></div>
+	<div style="height: 50px;" id="ignorePDF"></div>
 	<h1 class="droidSans">Reporte de Sesión</h1>
 		<div id="div-form-reporte-cita">
 			
 			<form id="reporteSesionForm" action="./ServletHistoriaClinica" method="POST">				
 			<br><br>
 				<label class="droidSans">Fecha:</label>
-				<p class="droidSans"><b>${requestScope.sesion.fecha}</b></p>
+				<p class="droidSans"><b id="h_Fecha">${requestScope.sesion.fecha}</b></p>
 			<br><br>
 				<label class="droidSans">Cita No:</label>
-				<p class="droidSans"><b><%=citaRecibida.getNumCita()%></b></p>
+				<p class="droidSans"><b id="h_Numero"><%=citaRecibida.getNumCita()%></b></p>
 			<br><br>
 			<div>
 				<label id="nombrePaciente_label" class="droidSans">Nombre del paciente:</label>
-				<p class="droidSans"><b><%=paciente.getPrimerNombre()+" "+(paciente.getSegundoNombre()==null?"":paciente.getSegundoNombre())+" "+paciente.getPrimerApellido()+" "+paciente.getSegundoApellido()%></b></p>
+				<p class="droidSans"><b id="h_NomPaciente"><%=paciente.getPrimerNombre()+" "+(paciente.getSegundoNombre()==null?"":paciente.getSegundoNombre())+" "+paciente.getPrimerApellido()+" "+paciente.getSegundoApellido()%></b></p>
 				<br><br>
 				<label id="numeroRecibo_label" class="droidSans">Recibo No:</label>
 				<p class="droidSans"><b>${requestScope.sesion.numRecibo}</b></p>
@@ -53,7 +55,7 @@
 			<br><br>
 			<div>
 				<label id="profesional_label" class="droidSans">Profesional en formación del área clínica:</label>
-				<p class="droidSans"><b>${requestScope.sesion.nombreProfesional}</b></p>
+				<p class="droidSans"><b id="h_Profesional">${requestScope.sesion.nombreProfesional}</b></p>
 			</div>
 			<br><br>
 			<c:choose>
@@ -85,6 +87,7 @@
 				<br><br>
 				<textarea id="actividadesProxSesion" name="actividadesProxSesion" rows="10" cols="90" style=" resize: none;" disabled="disabled">${requestScope.sesion.actividadesProximaSesion}</textarea>
 			</div>
+			<input type="button" id="btnImprimir" value="Imprimir" class="botones" onclick="toPDF()">
 			<c:choose>
 				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1 }">
 					<a href="./ServletHistoriaClinica?operacion=detalleCitas&idPaciente=<%= paciente.getIdPersona()%>&grupoTratamiento=${requestScope.cita.tratamiento.idTratamiento}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>
