@@ -87,7 +87,7 @@
 				<br><br>
 				<textarea id="actividadesProxSesion" name="actividadesProxSesion" rows="10" cols="90" style=" resize: none;" disabled="disabled">${requestScope.sesion.actividadesProximaSesion}</textarea>
 			</div>
-			<input type="button" id="btnImprimir" value="Imprimir" class="botones" onclick="toPDF()">
+			<input type="button" id="btnImprimir" value="Imprimir" class="botones" onclick="toPDF(1)">
 			<c:choose>
 				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1 }">
 					<a href="./ServletHistoriaClinica?operacion=detalleCitas&idPaciente=<%= paciente.getIdPersona()%>&grupoTratamiento=${requestScope.cita.tratamiento.idTratamiento}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>

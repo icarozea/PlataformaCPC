@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
 <script type="text/javascript" src="js/validarCita.js"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+<script type="text/javascript" src="js/toPDF.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Historia Clínica - Valoración</title>
 </head>
@@ -36,15 +38,15 @@
 			
 			<form id="reporteSesionForm" action="./ServletHistoriaClinica" method="POST">				
 			<br><br>
-				<label class="droidSans">Fecha:</label>
-				<p class="droidSans"><b><%=citaRecibida.getFechaCita()%></b></p>
+				<label class="droidSans" >Fecha:</label>
+				<p class="droidSans"><b id="h_Fecha"><%=citaRecibida.getFechaCita()%></b></p>
 			<br><br>
 				<label class="droidSans">Cita No:</label>
 				<p class="droidSans"><b>0</b></p>
 			<br><br>
 			<div>
 				<label id="nombrePaciente_label" class="droidSans">Nombre del paciente:</label>
-				<p class="droidSans"><b><%=paciente.getPrimerNombre()+" "+(paciente.getSegundoNombre()==null?"":paciente.getSegundoNombre())+" "+paciente.getPrimerApellido()+" "+paciente.getSegundoApellido()%></b></p>
+				<p class="droidSans"><b id="h_NomPaciente"><%=paciente.getPrimerNombre()+" "+(paciente.getSegundoNombre()==null?"":paciente.getSegundoNombre())+" "+paciente.getPrimerApellido()+" "+paciente.getSegundoApellido()%></b></p>
 			</div>
 			<br><br>
 			<div>
@@ -93,6 +95,7 @@
 			</div>
 			<br><br>
 			<div>
+			<input type="button" id="btnImprimir" value="Imprimir" class="botones" onclick="toPDF(2)">
 			<c:choose>
 				<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1 }">
 					<a href="./ServletHistoriaClinica?operacion=detalleCitas&idPaciente=<%= paciente.getIdPersona()%>&grupoTratamiento=${requestScope.cita.tratamiento.idTratamiento}"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>
