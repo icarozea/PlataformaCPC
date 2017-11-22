@@ -90,7 +90,19 @@
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Lugar de Nacimiento</label>
-		            	<input id="lugar_nacimiento" name="lugar_nacimiento" type="text"  value="${requestScope.personaDetalle.lugarNacimiento}" placeholder="Lugar de Nacimiento">
+		            	<select id="lugar_nacimiento" name="lugar_nacimiento">
+		            		<option value="-1">Seleccione</option>
+		            		<c:forEach items="${municipios}" var="municipio">
+				            	<c:choose>
+				                	<c:when test="${requestScope.personaDetalle.lugarNacimiento == municipio.codigo}">
+				                		<option value="${municipio.codigo}" selected>${municipio.nombre}</option>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<option value="${municipio.codigo}">${municipio.nombre}</option>
+				                	</c:otherwise>
+								</c:choose>		                	
+				            </c:forEach>
+				        </select>
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Nivel de Escolaridad</label>
@@ -113,7 +125,19 @@
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Localidad</label>
-		            	<input id="localidad" name="localidad" type="text" value="${requestScope.personaDetalle.localidad}" placeholder="Localidad">
+		            	<select id="localidad" name="localidad">
+		            		<option value="-1">Seleccione</option>
+		            		<c:forEach items="${localidades}" var="localidad">
+				            	<c:choose>
+				                	<c:when test="${requestScope.personaDetalle.localidad == localidad.codigo}">
+				                		<option value="${localidad.codigo}" selected>${localidad.nombre}</option>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<option value="${localidad.codigo}">${localidad.nombre}</option>
+				                	</c:otherwise>
+								</c:choose>		                	
+				            </c:forEach>
+				        </select>
 		            </div>
 		            <div class="fieldgroup">
 		            	<label class="cabin">Barrio</label>

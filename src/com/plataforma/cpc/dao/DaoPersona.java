@@ -8,6 +8,8 @@ import com.plataforma.cpc.interfaces.Conexion;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.HistoriaClinicaTo;
+import com.plataforma.cpc.to.LocalidadTo;
+import com.plataforma.cpc.to.MunicipioTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
@@ -789,5 +791,67 @@ public class DaoPersona {
 		}
     	
     	return historiaTo;
+    }
+    
+    public ArrayList<MunicipioTo> ConsultarMunicipios(){
+    	ResultSet rs =null;
+    	ArrayList<MunicipioTo> municipios = new ArrayList<MunicipioTo>();
+    	conexionActual = new ConexionOracle();
+    	String sql = "SELECT CODIGO, NOMBRE FROM MUNICIPIO ";
+    	
+    	try{
+    		conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while(rs.next()){
+				MunicipioTo municipio = new MunicipioTo();
+				municipio.setCodigo(rs.getInt("CODIGO"));
+				municipio.setNombre(rs.getString("NOMBRE"));
+				municipios.add(municipio);
+			}		
+    	}
+    	catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	return municipios;
+    }
+    
+    public ArrayList<LocalidadTo> ConsultarLocalidades(){
+    	ResultSet rs =null;
+    	ArrayList<LocalidadTo> localidades = new ArrayList<LocalidadTo>();
+    	conexionActual = new ConexionOracle();
+    	String sql = "SELECT CODIGO, NOMBRE FROM LOCALIDAD ";
+    	
+    	try{
+    		conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while(rs.next()){
+				LocalidadTo localidad = new LocalidadTo();
+				localidad.setCodigo(rs.getInt("CODIGO"));
+				localidad.setNombre(rs.getString("NOMBRE"));
+				localidades.add(localidad);
+			}		
+    	}
+    	catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	return localidades;
     }
 }

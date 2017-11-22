@@ -287,9 +287,13 @@ public class ServletPersona extends HttpServlet {
 					detalleTo.setPersonaId(idPersona);
 					PersonaDetalleBean detalleBean = new PersonaDetalleBean();
 					if(detalleBean.ingresarDetallePersona(detalleTo)){
+						
 						request.setAttribute("respuesta", "1");
 						request.setAttribute("idPersona", idPersona);
 						request.setAttribute("personaDetalle", detalleTo);
+						UtilBean util = new UtilBean();
+						request.setAttribute("municipios", util.consultarMunicipios());
+						request.setAttribute("localidades", util.consultarLocalidades());
 						request.setAttribute("error", "");
 						RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
 						dispatcher.forward(request, response);	
@@ -390,7 +394,9 @@ public class ServletPersona extends HttpServlet {
 					personaDetalleTo.setPersonaId(id);
 					request.setAttribute("personaDetalle", personaDetalleTo);
 					request.setAttribute("respuesta", "1");
-
+					UtilBean util = new UtilBean();
+					request.setAttribute("municipios",util.consultarMunicipios());
+					request.setAttribute("localidades", util.consultarLocalidades());
 					request.setAttribute("error", "");
 					RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
 					dispatcher.forward(request, response);
@@ -462,9 +468,12 @@ public class ServletPersona extends HttpServlet {
 	}
 
 	private void detallePersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		UtilBean util = new UtilBean();
 		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");		  
 		request.setAttribute("idPersona", 0);
 		request.setAttribute("personaDetalle", new PersonaDetalleTo());
+		request.setAttribute("municipios", util.consultarMunicipios());
+		request.setAttribute("localidades", util.consultarLocalidades());
 		dispatcher.forward(request, response);
 	}
 

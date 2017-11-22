@@ -2,7 +2,10 @@ package com.plataforma.cpc.modelo;
 
 import java.util.ArrayList;
 
+import com.plataforma.cpc.dao.DaoPersona;
 import com.plataforma.cpc.dao.DaoUtilidades;
+import com.plataforma.cpc.to.LocalidadTo;
+import com.plataforma.cpc.to.MunicipioTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
 
@@ -22,5 +25,15 @@ public class UtilBean {
 		ArrayList<TipoDocumentoTo> listaDocumentos = new ArrayList<TipoDocumentoTo>();
 		listaDocumentos = daoUtilidades.consultarTipoDocumentos(tipoDocumento);
 		return listaDocumentos;
+	}
+	
+	public ArrayList<MunicipioTo> consultarMunicipios(){
+		DaoPersona persona = new DaoPersona();
+		return persona.ConsultarMunicipios();
+	}
+	
+	public ArrayList<LocalidadTo> consultarLocalidades(){
+		DaoPersona persona = new DaoPersona();
+		return persona.ConsultarLocalidades();
 	}
 }
