@@ -11,6 +11,8 @@
 <%@ page import="com.plataforma.cpc.to.TipoDocumentoTo" %>
 <%@ page import="com.plataforma.cpc.modelo.UtilBean" %>
 <%@ page import="com.plataforma.cpc.modelo.EpsBean" %>
+<%@ page import="com.plataforma.cpc.to.MunicipioTo" %>
+<%@ page import="com.plataforma.cpc.to.LocalidadTo" %>
 
 <!DOCTYPE html>
 <html>
@@ -46,11 +48,15 @@
 <% UtilBean util = new UtilBean(); %>
 <% ArrayList<TipoDocumentoTo> listaDocumentos = util.consultarTiposDocumento(); %>
 <% ArrayList<EpsTo> listaEps = new EpsBean().consultarEPS(new EpsTo()); %>
+<% ArrayList<MunicipioTo> municipios = util.consultarMunicipios(); %>
+<% ArrayList<LocalidadTo> localidades = util.consultarLocalidades(); %>
 <% pageContext.setAttribute("listaDocumentos", listaDocumentos); %>
 <% pageContext.setAttribute("listaEps", listaEps); %>
 <% pageContext.setAttribute("practicante", practicante); %>
 <% pageContext.setAttribute("paciente", paciente); %>
 <% pageContext.setAttribute("detallePaciente", detallePaciente); %>
+<% pageContext.setAttribute("municipios", municipios); %>
+<% pageContext.setAttribute("localidades", localidades); %>
 <body>
 	<!--MEMU SUPERIOR-->
         <c:choose>
@@ -148,7 +154,20 @@
 		<div class="seccionReporteImpar">
 			<label id="fecha_nacimiento_label" class="droidSans"><strong>Fecha de Nacimiento:</strong></label>
 			<input id="fecha_nacimiento" name="fecha_nacimiento" type="text" class="field text fn" value="${pageScope.detallePaciente.fechaNacimiento}" size="8" tabindex="1">
-			<label id="lugar_nacimiento_label" class="droidSans"><strong>Lugar de Nacimiento:</strong></label><input id="lugar_nacimiento" name="lugar_nacimiento" type="text" class="field text fn" value="${pageScope.detallePaciente.lugarNacimiento}" size="8" tabindex="1">
+			<label id="lugar_nacimiento_label" class="droidSans"><strong>Lugar de Nacimiento:</strong></label>
+			<select id="lugar_nacimiento" name="lugar_nacimiento">
+		    	<option value="-1">Seleccione</option>
+		        <c:forEach items="${municipios}" var="municipio">
+					<c:choose>
+				    	<c:when test="${pageScope.detallePaciente.lugarNacimiento == municipio.codigo}">
+				        	<option value="${municipio.codigo}" selected>${municipio.nombre}</option>
+				        </c:when>
+				        <c:otherwise>
+				        	<option value="${municipio.codigo}">${municipio.nombre}</option>
+				        </c:otherwise>
+					</c:choose>		                	
+				</c:forEach>
+			</select>
 		</div>
 		
 		<div class="seccionReportePar">
@@ -173,7 +192,20 @@
 		</div>
 		
 		<div class="seccionReporteImpar">
-			<label id="localidad_label" class="droidSans"><strong>Localidad:</strong></label><input id="localidad" name="localidad" type="text" class="field text fn" value="${pageScope.detallePaciente.localidad}" size="8" tabindex="1">
+			<label id="localidad_label" class="droidSans"><strong>Localidad:</strong></label>
+			<select id="localidad" name="localidad">
+		    	<option value="-1">Seleccione</option>
+		        <c:forEach items="${localidades}" var="localidad">
+					<c:choose>
+						<c:when test="${pageScope.detallePaciente.localidad == localidad.codigo}">
+					    	<option value="${localidad.codigo}" selected>${localidad.nombre}</option>
+					    </c:when>
+					    <c:otherwise>
+					    	<option value="${localidad.codigo}">${localidad.nombre}</option>
+					    </c:otherwise>
+					</c:choose>		                	
+				</c:forEach>
+			</select>
 			<label id="barrio_label" class="droidSans"><strong>Barrio:</strong></label><input id="barrio" name="barrio" type="text" class="field text fn" value="${pageScope.detallePaciente.barrio}" size="8" tabindex="1">
 			<label id="estrato_label" class="droidSans"><strong>Estrato:</strong></label>
 			<select id="estrato" name="estrato" class="droidSans">

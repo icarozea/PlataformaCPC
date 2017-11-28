@@ -54,7 +54,8 @@ public class ConexionOracle implements Conexion {
 					+ host + ":"
 					+ puerto + ":"
 					+ sid;
-
+			System.out.println("Solicitud Conexion: " + cadenaCoenexion);
+			System.out.println("Usuario Solicitud: " + usuario);
 			registrarDriver();
 			connection = DriverManager.getConnection(cadenaCoenexion, usuario, password);
 
