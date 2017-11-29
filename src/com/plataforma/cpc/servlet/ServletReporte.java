@@ -76,8 +76,7 @@ public class ServletReporte extends HttpServlet {
 		personaSesion = (PersonaTo) session.getAttribute("personaSession");
 		
 		byte[] buffer = null;
-//		Reporte reporte = new Reporte(Propiedades.getInstance().valorPropiedad(Propiedades.RUTA_JASPER));
-		Reporte reporte = new Reporte("C:\\RIPS");
+		Reporte reporte = new Reporte();
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

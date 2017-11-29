@@ -28,14 +28,13 @@ public class Reporte {
 	/**
 	 * Variable donde se encuentran el directorio de los reportes
 	 */
-	private String directorio;
+	private final String directorio = Propiedades.getInstance().valorPropiedad("RUTA_JASPER");
 
     /**
      * Default constructor. 
      */
-	public Reporte(String directorio) {
-		//this.directorio = directorio;
-		this.directorio = "C:/reportes";
+	public Reporte() {
+		
     } 
 				
 	/**
