@@ -45,7 +45,6 @@ function generarReporteAdmin(operacion){
 				</tr>
 			</table>
 		</div>
-		<input type="hidden" id="fechaReporte" name="fechaReporte" value="01/01/2000">
 		</form>
 	</div>
 			<br>
