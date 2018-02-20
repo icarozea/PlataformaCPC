@@ -24,7 +24,7 @@
             if(respuesta.equals("1"))
             	mensaje = "Se elimino la persona de forma exitosa";
             else{
-            	mensaje = "No fue posible eliminar la nueva persona";
+            	mensaje = "Proceso Fallido: Es probable que la persona a eliminar tenga alguna dependencia (pacientes, practicantes, reportes)";
             	error = (String)request.getAttribute("error");
             }%>
             

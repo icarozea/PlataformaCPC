@@ -17,9 +17,10 @@
 		  }
 		%>
 <script type="text/javascript">
-	function enviarFormulario(operacion, idPersona){
+	function enviarFormulario(operacion, idPersona, esPaciente){
 		document.getElementById('operacion').value=operacion;
 		document.getElementById('idPersona').value=idPersona;
+		document.getElementById('esPaciente').value=esPaciente;
 		document.getElementById("FormDatos").submit();
 	}
 	
@@ -38,6 +39,7 @@
 	<form id="FormDatos" name="FormDatos" action="./ServletPersona" method="POST">
 		<input type="hidden" name="operacion" id="operacion" />
 		<input type="hidden" name="idPersona" id="idPersona"/>
+		<input type="hidden" name="esPaciente" id="esPaciente"/>
 		<table class="rwd-table-noBorder">
 			<tr>
 				<td>
@@ -87,11 +89,20 @@
 					<td>${persona.numeroDocumento}</td>
 					<td>${persona.direccion}</td>
 					<td>${persona.telefono}</td>
-					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona"
-							 onclick="enviarFormulario(this.id,${persona.idPersona})"/></td>
-					<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminarPersona"
-						onclick="enviarFormulario(this.id,${persona.idPersona})"/>
-					</td>
+					<c:choose>
+						<c:when test="${requestScope.perfil == 'Paciente'}">
+							<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona"
+							 	onclick="enviarFormulario(this.id,${persona.idPersona},1)"/></td>
+							<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminarPersona"
+								onclick="enviarFormulario(this.id,${persona.idPersona},1)"/></td>
+						</c:when>
+						<c:otherwise>
+							<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona"
+							 onclick="enviarFormulario(this.id,${persona.idPersona},0)"/></td>
+							<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminarPersona"
+								onclick="enviarFormulario(this.id,${persona.idPersona},0)"/></td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 			</c:forEach>
 		</table>

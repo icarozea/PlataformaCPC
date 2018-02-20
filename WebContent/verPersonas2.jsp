@@ -18,9 +18,10 @@
 		  }
 		%>
 <script type="text/javascript">
-	function enviarFormulario(operacion, idPersona){
+	function enviarFormulario(operacion, idPersona, esPaciente){
 		document.getElementById('operacion').value=operacion;
 		document.getElementById('idPersona').value=idPersona;
+		document.getElementById('esPaciente').value=esPaciente;
 		document.getElementById("FormDatos").submit();
 	}
 	
@@ -50,6 +51,7 @@
     	<form id="FormDatos" name="FormDatos" action="./ServletPersona" method="POST">
 			<input type="hidden" name="operacion" id="operacion" />
 			<input type="hidden" name="idPersona" id="idPersona"/>
+			<input type="hidden" name="esPaciente" id="esPaciente"/>
 			<table id="tablaDetallePersona">
 				<thead>
         			<tr>
@@ -87,8 +89,16 @@
 					<td>${requestScope.cod}</td>
 				</c:if>
 				<c:if test="${sessionScope.personaSession.perfil.idPerfil != 2}">
-					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditar" onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
-					<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminar" onclick="enviarFormulario(this.id,${requestScope.idPersona})"/></td>
+				<c:choose>
+					<c:when test="${requestScope.perfil == 'Paciente'}">
+						<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditar" onclick="enviarFormulario(this.id,${requestScope.idPersona},1)"/></td>
+						<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminar" onclick="enviarFormulario(this.id,${requestScope.idPersona},1)"/></td>
+					</c:when>
+					<c:otherwise>
+						<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditar" onclick="enviarFormulario(this.id,${requestScope.idPersona},0)"/></td>
+						<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminar" onclick="enviarFormulario(this.id,${requestScope.idPersona},0)"/></td>
+					</c:otherwise>
+				</c:choose>
 				</c:if>		
 			</tr>
         		</tbody>

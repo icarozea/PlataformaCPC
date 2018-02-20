@@ -100,8 +100,8 @@ public class ServletPersona extends HttpServlet {
 		PersonaBean personaBean = new PersonaBean();
 		PersonaTo persona = new PersonaTo();
 		persona.setIdPersona(new Integer(request.getParameter("idPersona")));
-
-		if(personaBean.elminarPersona(persona)){
+		boolean esPaciente = request.getParameter("esPaciente").equals("1") ? true : false;
+		if(personaBean.elminarPersona(persona, esPaciente)){
 			request.setAttribute("respuesta", "1");
 			request.setAttribute("error", "");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaEliminarPersona.jsp");
@@ -112,7 +112,6 @@ public class ServletPersona extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaEliminarPersona.jsp");
 			dispatcher.forward(request, response);
 		}
-
 	}
 
 	/**

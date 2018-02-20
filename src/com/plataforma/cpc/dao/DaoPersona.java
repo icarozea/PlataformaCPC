@@ -19,52 +19,52 @@ import com.plataforma.cpc.utils.ConexionOracle;
 import com.plataforma.cpc.utils.TextAdmin;
 
 public class DaoPersona {
-	
+
 	public Conexion conexionActual;
-    
-    public ArrayList<PersonaTo> consultarPersonasFiltro(PersonaTo persona){
-    	
-    	ResultSet rs =null;
-    	conexionActual = new ConexionOracle();
-    	ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
-    	int numeroParametros = 0;
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,USUARIO_ID_USUARIO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE 1 = 1 ";
-    	 	
+
+	public ArrayList<PersonaTo> consultarPersonasFiltro(PersonaTo persona){
+
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
+		int numeroParametros = 0;
+		String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,USUARIO_ID_USUARIO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE 1 = 1 ";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
-			
+
 			if(persona.getTipoDocumento().getIdTipoDocumento()!= null){
-	 			sql+= "AND TIPO_DOCUMENTO_ID_DOCUMENTO = ? AND NUMERO_DOCUMENTO = ? ";
-	 			numeroParametros++;
-	 			conexionActual.agregarAtributo(numeroParametros, persona.getTipoDocumento().getIdTipoDocumento());
-	 			numeroParametros++;
-	 			conexionActual.agregarAtributo(numeroParametros, persona.getNumeroDocumento()); 			
-	 		}
-	 		if (persona.getPrimerNombre()!= null){
-	 			sql+= "AND PRIMER_NOMBRE = ? ";
-	 			numeroParametros++;
-	 			conexionActual.agregarAtributo(numeroParametros, persona.getPrimerNombre()); 
-	 		}
-	 		
-	 		if (persona.getPrimerApellido()!= null){
-	 			sql+= "AND PRIMER_APELLIDO = ? ";
-	 			numeroParametros++;
-	 			conexionActual.agregarAtributo(numeroParametros, persona.getPrimerApellido()); 
-	 		}
-					
-	 		conexionActual.agregarAtributo(1, persona.getPerfil().getIdPerfil()); 
+				sql+= "AND TIPO_DOCUMENTO_ID_DOCUMENTO = ? AND NUMERO_DOCUMENTO = ? ";
+				numeroParametros++;
+				conexionActual.agregarAtributo(numeroParametros, persona.getTipoDocumento().getIdTipoDocumento());
+				numeroParametros++;
+				conexionActual.agregarAtributo(numeroParametros, persona.getNumeroDocumento()); 			
+			}
+			if (persona.getPrimerNombre()!= null){
+				sql+= "AND PRIMER_NOMBRE = ? ";
+				numeroParametros++;
+				conexionActual.agregarAtributo(numeroParametros, persona.getPrimerNombre()); 
+			}
+
+			if (persona.getPrimerApellido()!= null){
+				sql+= "AND PRIMER_APELLIDO = ? ";
+				numeroParametros++;
+				conexionActual.agregarAtributo(numeroParametros, persona.getPrimerApellido()); 
+			}
+
+			conexionActual.agregarAtributo(1, persona.getPerfil().getIdPerfil()); 
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while (rs.next()){
 				PersonaTo personaTo = new PersonaTo();	
 				UsuarioTo usuarioTo = new UsuarioTo();
 				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
-				
+
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				
+
 				String rawText = rs.getString("PRIMER_NOMBRE");
 				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_NOMBRE");
@@ -73,12 +73,12 @@ public class DaoPersona {
 				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_APELLIDO");
 				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
-				
+
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
-				
+
 				usuarioTo.setIdUsuario(rs.getInt("USUARIO_ID_USUARIO"));
 				personaTo.setUsuario(usuarioTo);
 				tipoDocumentoTo.setIdTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
@@ -103,32 +103,32 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return personas;
-    }
+		return personas;
+	}
 
-    public ArrayList<PersonaTo> consultarPersonasPerfil(PersonaTo persona){
-    	
-    	ResultSet rs =null;
-    	conexionActual = new ConexionOracle();
-    	ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
-    	
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE PERFIL_ID_PERFIL = ? ";
-    	 	
+	public ArrayList<PersonaTo> consultarPersonasPerfil(PersonaTo persona){
+
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
+
+		String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE PERFIL_ID_PERFIL = ? ";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, persona.getPerfil().getIdPerfil()); 
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while (rs.next()){
 				PersonaTo personaTo = new PersonaTo();	
 				//UsuarioTo usuarioTo = new UsuarioTo();
 				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
-				
+
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				
+
 				String rawText = rs.getString("PRIMER_NOMBRE");
 				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_NOMBRE");
@@ -137,12 +137,12 @@ public class DaoPersona {
 				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_APELLIDO");
 				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
-				
+
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
-				
+
 				tipoDocumentoTo.setIdTipoDocumento(rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"));
 				personaTo.setTipoDocumento(tipoDocumentoTo);
 				epsTo.setIdEPS(rs.getInt("EPS_ID_EPS"));
@@ -166,33 +166,33 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return personas;
-    }
-    
-    public ArrayList<PersonaTo> consultarAsignados(Integer idSuperior){
-    	ResultSet rs =null;
-    	conexionActual = new ConexionOracle();
-    	ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
-    	
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE PERSONA_ID_SUPERIOR = ? ";
-    	
-    	try {
-    		UtilBean util = new UtilBean();
-        	ArrayList<TipoDocumentoTo> documentos = util.consultarTiposDocumento();
-        	
+		return personas;
+	}
+
+	public ArrayList<PersonaTo> consultarAsignados(Integer idSuperior){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		ArrayList<PersonaTo> personas = new ArrayList<PersonaTo>();
+
+		String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE PERSONA_ID_SUPERIOR = ? ";
+
+		try {
+			UtilBean util = new UtilBean();
+			ArrayList<TipoDocumentoTo> documentos = util.consultarTiposDocumento();
+
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, idSuperior); 
 			rs = conexionActual.ejecutarSentencia();
-			
+
 
 			while (rs.next()){
 				PersonaTo personaTo = new PersonaTo();	
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
-				
+
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				
+
 				String rawText = rs.getString("PRIMER_NOMBRE");
 				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_NOMBRE");
@@ -201,17 +201,17 @@ public class DaoPersona {
 				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_APELLIDO");
 				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
-				
+
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
 				personaTo.setCorreo(rs.getString("CORREO"));
-				
+
 				for(int i=0; i < documentos.size(); i++){
 					if(documentos.get(i).getIdTipoDocumento() == rs.getInt("TIPO_DOCUMENTO_ID_DOCUMENTO"))
 						personaTo.setTipoDocumento(documentos.get(i));
 				}
-				
+
 				epsTo.setIdEPS(rs.getInt("EPS_ID_EPS"));
 				personaTo.setEps(epsTo);
 				perfilTo.setIdPerfil(rs.getInt("PERFIL_ID_PERFIL"));
@@ -222,44 +222,44 @@ public class DaoPersona {
 				personaTo.setJornada(rs.getString("JORNADA"));
 				personas.add(personaTo);
 			}
-    	}
-    	catch (Exception e) {
-    		e.printStackTrace();
 		}
-    	finally{
-    		try {
-    			conexionActual.cerrar();
-    			rs.close();
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	
-    	return personas;
-    }
-    
-    public PersonaTo consultarPersona (PersonaTo persona){
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
-    	ResultSet rs =null;
-    	conexionActual = new ConexionOracle();
-    	PersonaTo personaTo = new PersonaTo();
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE ID_PERSONA = ?";
-    	 	
+		return personas;
+	}
+
+	public PersonaTo consultarPersona (PersonaTo persona){
+
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		PersonaTo personaTo = new PersonaTo();
+		String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA FROM PERSONA WHERE ID_PERSONA = ?";
+
 		try {
 			DaoUtilidades utils = new DaoUtilidades();
-			
+
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, persona.getIdPersona()); 		
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while (rs.next()){
 				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
-				
+
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				
+
 				String rawText = rs.getString("PRIMER_NOMBRE");
 				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_NOMBRE");
@@ -284,7 +284,7 @@ public class DaoPersona {
 				epsTo = utils.buscarEps((rs.getInt("EPS_ID_EPS")));
 				personaTo.setEps(epsTo);
 				personaTo.setPassword("dummytext");
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -296,31 +296,31 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return personaTo;
-    }
-    
-    public PersonaTo consultarPersonaUsuario (String numeroDocumento){
+		return personaTo;
+	}
 
-    	ResultSet rs =null;
-    	conexionActual = new ConexionOracle();
-    	PersonaTo personaTo = new PersonaTo();
-    	String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA, PASS FROM PERSONA WHERE NUMERO_DOCUMENTO = ?";
-    	 	
+	public PersonaTo consultarPersonaUsuario (String numeroDocumento){
+
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		PersonaTo personaTo = new PersonaTo();
+		String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA, PASS FROM PERSONA WHERE NUMERO_DOCUMENTO = ?";
+
 		try {
 			DaoUtilidades utils = new DaoUtilidades();
-			
+
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, numeroDocumento);
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while (rs.next()){
 				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
-				
+
 				personaTo.setIdPersona(rs.getInt("ID_PERSONA"));
-				
+
 				String rawText = rs.getString("PRIMER_NOMBRE");
 				personaTo.setPrimerNombre(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_NOMBRE");
@@ -329,7 +329,7 @@ public class DaoPersona {
 				personaTo.setPrimerApellido(TextAdmin.parseUTF(rawText));
 				rawText = rs.getString("SEGUNDO_APELLIDO");
 				personaTo.setSegundoApellido(TextAdmin.parseUTF(rawText));
-				
+
 				personaTo.setNumeroDocumento(rs.getString("NUMERO_DOCUMENTO"));
 				personaTo.setDireccion(rs.getString("DIRECCION"));
 				personaTo.setTelefono(rs.getLong("TELEFONO"));
@@ -347,6 +347,7 @@ public class DaoPersona {
 				personaTo.setPassword(rs.getString("PASS"));
 			}
 		} catch (Exception e) {
+			System.out.println("Error en la consulta de usuarios");
 			e.printStackTrace();
 		}finally{
 			try {
@@ -356,16 +357,16 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return personaTo;
-    }
-    
-    public int crearPersona(PersonaTo persona){
-    	
-    	int retorno;
-    	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PASS,OTRO_TEL,CODIGO,JORNADA)"
-    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    	 	
+		return personaTo;
+	}
+
+	public int crearPersona(PersonaTo persona){
+
+		int retorno;
+		conexionActual = new ConexionOracle();
+		String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PASS,OTRO_TEL,CODIGO,JORNADA)"
+				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -380,15 +381,15 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
-			
+
 			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 			String encryptedPassword = passwordEncryptor.encryptPassword(persona.getPassword());
 			conexionActual.agregarAtributo(12, encryptedPassword);
-			
+
 			conexionActual.agregarAtributo(13, persona.getOtroTelefono());
 			conexionActual.agregarAtributo(14, persona.getCodigoEstudiante());
 			conexionActual.agregarAtributo(15, persona.getJornada());
-			
+
 			conexionActual.ejecutarActualizacion();
 			retorno = 1;
 		} catch (Exception e) {
@@ -401,17 +402,17 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return retorno;
-    }
-    
-    public int crearPersona2(PersonaTo persona){
-    	
-    	String generatedColumns[] = { "ID_PERSONA" };
-    	int retorno;
-    	conexionActual = new ConexionOracle();
-    	String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PASS,OTRO_TEL,CODIGO,JORNADA)"
-    				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    	 	
+		return retorno;
+	}
+
+	public int crearPersona2(PersonaTo persona){
+
+		String generatedColumns[] = { "ID_PERSONA" };
+		int retorno;
+		conexionActual = new ConexionOracle();
+		String sql = "INSERT INTO PERSONA (ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL,PASS,OTRO_TEL,CODIGO,JORNADA)"
+				+ "VALUES (PERSONA_SEQ.NEXTVAL, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql,generatedColumns);
@@ -426,7 +427,7 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(9, persona.getTipoDocumento().getIdTipoDocumento());
 			conexionActual.agregarAtributo(10, persona.getEps().getIdEPS());
 			conexionActual.agregarAtributo(11, persona.getPerfil().getIdPerfil());
-			
+
 			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 			String encryptedPassword = passwordEncryptor.encryptPassword(persona.getPassword());
 			conexionActual.agregarAtributo(12, encryptedPassword);
@@ -434,9 +435,9 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(13, persona.getOtroTelefono());
 			conexionActual.agregarAtributo(14, persona.getCodigoEstudiante());
 			conexionActual.agregarAtributo(15, persona.getJornada());
-			
+
 			conexionActual.ejecutarActualizacion();
-			
+
 			retorno = conexionActual.recuperarLlavePrimaria();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -448,23 +449,23 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return retorno;
-    }
-    
-    public boolean actualizarPersona(PersonaTo persona){
-    	
-    	boolean retorno =  Boolean.FALSE;
-    	conexionActual = new ConexionOracle();
-    	boolean passFlag = false;
-    	String sql = "UPDATE PERSONA SET PRIMER_NOMBRE = ?, SEGUNDO_NOMBRE = ?, PRIMER_APELLIDO = ?, SEGUNDO_APELLIDO = ?,NUMERO_DOCUMENTO = ?,DIRECCION = ?,TELEFONO = ?,CORREO = ?,TIPO_DOCUMENTO_ID_DOCUMENTO = ?, EPS_ID_EPS = ?, PERFIL_ID_PERFIL = ?, PERSONA_ID_SUPERIOR = ?, OTRO_TEL = ?, CODIGO = ?, JORNADA = ?";
-    	
-    	if(!(persona.getPassword() == null || persona.getPassword().equals("") || persona.getPassword().equals("dummytext"))) {
-    		sql += ", PASS = ?";
-    		passFlag = true;
-    	}
-    	
-    	sql += " WHERE ID_PERSONA = ?";
-    	
+		return retorno;
+	}
+
+	public boolean actualizarPersona(PersonaTo persona){
+
+		boolean retorno =  Boolean.FALSE;
+		conexionActual = new ConexionOracle();
+		boolean passFlag = false;
+		String sql = "UPDATE PERSONA SET PRIMER_NOMBRE = ?, SEGUNDO_NOMBRE = ?, PRIMER_APELLIDO = ?, SEGUNDO_APELLIDO = ?,NUMERO_DOCUMENTO = ?,DIRECCION = ?,TELEFONO = ?,CORREO = ?,TIPO_DOCUMENTO_ID_DOCUMENTO = ?, EPS_ID_EPS = ?, PERFIL_ID_PERFIL = ?, PERSONA_ID_SUPERIOR = ?, OTRO_TEL = ?, CODIGO = ?, JORNADA = ?";
+
+		if(!(persona.getPassword() == null || persona.getPassword().equals("") || persona.getPassword().equals("dummytext"))) {
+			sql += ", PASS = ?";
+			passFlag = true;
+		}
+
+		sql += " WHERE ID_PERSONA = ?";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -483,7 +484,7 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(13, persona.getOtroTelefono());
 			conexionActual.agregarAtributo(14, persona.getCodigoEstudiante());
 			conexionActual.agregarAtributo(15, persona.getJornada());
-			
+
 			if(passFlag) {
 				StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 				String encryptedPassword = passwordEncryptor.encryptPassword(persona.getPassword());
@@ -492,8 +493,8 @@ public class DaoPersona {
 			}
 			else
 				conexionActual.agregarAtributo(16, persona.getIdPersona());
-			
-			
+
+
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
@@ -502,49 +503,64 @@ public class DaoPersona {
 		}finally{
 			try {
 				conexionActual.cerrar();
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				retorno = Boolean.FALSE;
 				return retorno;
 			}
 		}	
-    	return retorno;
-    }
-    
-    public boolean eliminarPersona(PersonaTo persona){
-    	
-    	boolean retorno;
-    	conexionActual = new ConexionOracle();
-    	String sql = "DELETE FROM PERSONA WHERE ID_PERSONA = ?";
-    	 	
+		return retorno;
+	}
+
+	public boolean eliminarPersona(PersonaTo persona, boolean esPaciente){
+
+		boolean retorno;
+		conexionActual = new ConexionOracle();
+		String sqlDetalle = "DELETE FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
+		String sqlPersona = "DELETE FROM PERSONA WHERE ID_PERSONA = ?";
+
 		try {
 			conexionActual.conectar();
-			conexionActual.prepararSentencia(sql);
+			conexionActual.iniciarTransaccion();
+			if(esPaciente) {
+				conexionActual.prepararSentencia(sqlDetalle);
+				conexionActual.agregarAtributo(1, persona.getIdPersona());
+				conexionActual.ejecutarActualizacion();
+			}
+
+			conexionActual.prepararSentencia(sqlPersona);
 			conexionActual.agregarAtributo(1, persona.getIdPersona());
-			
 			conexionActual.ejecutarActualizacion();
+
+			conexionActual.commit();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
+			try {
+				conexionActual.rollback();
+			} catch(Exception exep) {
+				exep.printStackTrace();
+			}
 		}finally{
 			try {
+				conexionActual.cerrarTransaccion();
 				conexionActual.cerrar();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}	
-    	return retorno;
-    }
-    
-    public boolean crearPersonaDetalle(PersonaDetalleTo persona){
-    	
-    	boolean retorno;
-    	conexionActual = new ConexionOracle();
-    	String sql = "Insert into DETALLE_PERSONA (ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS)"
-    				+ "values (?,?,?,?,?,?,?,?,?,?,?)";
-    	 	
+		return retorno;
+	}
+
+	public boolean crearPersonaDetalle(PersonaDetalleTo persona){
+
+		boolean retorno;
+		conexionActual = new ConexionOracle();
+		String sql = "Insert into DETALLE_PERSONA (ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS)"
+				+ "values (?,?,?,?,?,?,?,?,?,?,?)";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -559,7 +575,7 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(9, persona.getProblematica());
 			conexionActual.agregarAtributo(10, persona.getObservación());
 			conexionActual.agregarAtributo(11, persona.getNombreModifica());
-			
+
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
@@ -572,17 +588,17 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return retorno;
-    }
-    
-    public boolean actualizarPersonaDetalle(PersonaDetalleTo persona){
-    	
-    	boolean retorno =  Boolean.FALSE;
-    	conexionActual = new ConexionOracle();
-    	String sql = "UPDATE DETALLE_PERSONA SET SEXO = ?, EDAD = ?, ACUDIENTE = ?, PROCESO = ?, PERTENECE_U = ?, FACULTAD = ?, SEMESTRE = ?, PROBLEMATICA = ?, OBSERVACIONES = ?, PERSONA_MODIFICA_DATOS = ?, ";
-    	sql += "ESTADO_CIVIL = ?, FECHA_NACIMIENTO = ?, LUGAR_NACIMIENTO = ?, ESCOLARIDAD = ?, OCUPACION = ?, LOCALIDAD = ?, BARRIO = ?, ESTRATO = ?, PERSONA_EMERGENCIA = ?, TELEFONO_EMERGENCIA = ?, PARENTESCO_EMERGENCIA = ?, ";
-    	sql += "FORMATO_SOLICITUD = ?, INSTITUCION_REMISION = ?, PARENTESCO_ACUDIENTE = ?, TELEFONO_ACUDIENTE = ?, PERSONAS_RESIDE = ? WHERE ID_PERSONA = ?";
-    	 	
+		return retorno;
+	}
+
+	public boolean actualizarPersonaDetalle(PersonaDetalleTo persona){
+
+		boolean retorno =  Boolean.FALSE;
+		conexionActual = new ConexionOracle();
+		String sql = "UPDATE DETALLE_PERSONA SET SEXO = ?, EDAD = ?, ACUDIENTE = ?, PROCESO = ?, PERTENECE_U = ?, FACULTAD = ?, SEMESTRE = ?, PROBLEMATICA = ?, OBSERVACIONES = ?, PERSONA_MODIFICA_DATOS = ?, ";
+		sql += "ESTADO_CIVIL = ?, FECHA_NACIMIENTO = ?, LUGAR_NACIMIENTO = ?, ESCOLARIDAD = ?, OCUPACION = ?, LOCALIDAD = ?, BARRIO = ?, ESTRATO = ?, PERSONA_EMERGENCIA = ?, TELEFONO_EMERGENCIA = ?, PARENTESCO_EMERGENCIA = ?, ";
+		sql += "FORMATO_SOLICITUD = ?, INSTITUCION_REMISION = ?, PARENTESCO_ACUDIENTE = ?, TELEFONO_ACUDIENTE = ?, PERSONAS_RESIDE = ? WHERE ID_PERSONA = ?";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -613,7 +629,7 @@ public class DaoPersona {
 			conexionActual.agregarAtributo(25, persona.getTelefonoAcudiente());
 			conexionActual.agregarAtributo(26, persona.getPersonasReside());
 			conexionActual.agregarAtributo(27, persona.getPersonaId());
-			
+
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
@@ -622,57 +638,31 @@ public class DaoPersona {
 		}finally{
 			try {
 				conexionActual.cerrar();
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				retorno = Boolean.FALSE;
 				return retorno;
 			}
 		}	
-    	return retorno;
-    }
-    
-    public boolean eliminarPersonaDetalle(PersonaDetalleTo persona){
-    	
-    	boolean retorno;
-    	conexionActual = new ConexionOracle();
-    	String sql = "DELETE FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
-    	 	
-		try {
-			conexionActual.conectar();
-			conexionActual.prepararSentencia(sql);
-			conexionActual.agregarAtributo(1, persona.getPersonaId());
-			
-			conexionActual.ejecutarActualizacion();
-			retorno = Boolean.TRUE;
-		} catch (Exception e) {
-			e.printStackTrace();
-			retorno = Boolean.FALSE;
-		}finally{
-			try {
-				conexionActual.cerrar();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}	
-    	return retorno;
-    }
-    
-    public PersonaDetalleTo consultarPersonaDetalle (PersonaDetalleTo persona){
+		return retorno;
+	}
 
-    	ResultSet rs =null;
-    	conexionActual = new ConexionOracle();
-    	PersonaDetalleTo personaTo = new PersonaDetalleTo();
-    	String sql = "SELECT ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS, ";
-    	sql += "ESTADO_CIVIL, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, ESCOLARIDAD, OCUPACION, LOCALIDAD, BARRIO, ESTRATO, PERSONA_EMERGENCIA, TELEFONO_EMERGENCIA, PARENTESCO_EMERGENCIA, ";
-    	sql+= "FORMATO_SOLICITUD, INSTITUCION_REMISION, PARENTESCO_ACUDIENTE, TELEFONO_ACUDIENTE, PERSONAS_RESIDE FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
-    	 	
+	public PersonaDetalleTo consultarPersonaDetalle (PersonaDetalleTo persona){
+
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		PersonaDetalleTo personaTo = new PersonaDetalleTo();
+		String sql = "SELECT ID_PERSONA,SEXO,EDAD,ACUDIENTE,PROCESO,PERTENECE_U,FACULTAD,SEMESTRE,PROBLEMATICA,OBSERVACIONES,PERSONA_MODIFICA_DATOS, ";
+		sql += "ESTADO_CIVIL, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, ESCOLARIDAD, OCUPACION, LOCALIDAD, BARRIO, ESTRATO, PERSONA_EMERGENCIA, TELEFONO_EMERGENCIA, PARENTESCO_EMERGENCIA, ";
+		sql+= "FORMATO_SOLICITUD, INSTITUCION_REMISION, PARENTESCO_ACUDIENTE, TELEFONO_ACUDIENTE, PERSONAS_RESIDE FROM DETALLE_PERSONA WHERE ID_PERSONA = ?";
+
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, persona.getPersonaId()); 		
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while (rs.next()){
 				personaTo.setPersonaId(rs.getInt("ID_PERSONA"));
 				personaTo.setSexo(rs.getString("SEXO")); 
@@ -726,27 +716,27 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-    	return personaTo;
-    }
-    
-    public boolean CrearHistoriaClinica(HistoriaClinicaTo nuevaHistoria){
-    	boolean retorno;
-    	
-    	conexionActual = new ConexionOracle();
-    	
-    	String sql = "INSERT INTO HISTORIA_CLINICA (ID_HISTORIA, ID_PACIENTE, CODIGO) ";
-    		sql+= "VALUES (HISTORIA_SEQ.NEXTVAL, ?, ?)";
-    	
-    	try{
-    		conexionActual.conectar();
+		return personaTo;
+	}
+
+	public boolean CrearHistoriaClinica(HistoriaClinicaTo nuevaHistoria){
+		boolean retorno;
+
+		conexionActual = new ConexionOracle();
+
+		String sql = "INSERT INTO HISTORIA_CLINICA (ID_HISTORIA, ID_PACIENTE, CODIGO) ";
+		sql+= "VALUES (HISTORIA_SEQ.NEXTVAL, ?, ?)";
+
+		try{
+			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, nuevaHistoria.getIdPaciente());
 			conexionActual.agregarAtributo(2, nuevaHistoria.getCodigo());
-			
+
 			conexionActual.ejecutarActualizacion();
 			retorno = Boolean.TRUE;
-    	}
-    	catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			retorno = Boolean.FALSE;
 		}finally{
@@ -756,31 +746,31 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}
-    	
-    	return retorno;
-    }
-    
-    public HistoriaClinicaTo consultarHistoriaClinica(int idPaciente){
-    	ResultSet rs =null;
-    	HistoriaClinicaTo historiaTo = new HistoriaClinicaTo();
-    	conexionActual = new ConexionOracle();
-    	String sql = "SELECT ID_HISTORIA, CODIGO FROM HISTORIA_CLINICA WHERE ID_PACIENTE = ?";
-    	
-    	try{
-    		conexionActual.conectar();
+
+		return retorno;
+	}
+
+	public HistoriaClinicaTo consultarHistoriaClinica(int idPaciente){
+		ResultSet rs =null;
+		HistoriaClinicaTo historiaTo = new HistoriaClinicaTo();
+		conexionActual = new ConexionOracle();
+		String sql = "SELECT ID_HISTORIA, CODIGO FROM HISTORIA_CLINICA WHERE ID_PACIENTE = ?";
+
+		try{
+			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, idPaciente);
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while(rs.next()){
-				
+
 				historiaTo.setIdHistoria(rs.getInt("ID_HISTORIA"));
 				historiaTo.setCodigo(rs.getString("CODIGO"));
 				historiaTo.setIdPaciente(idPaciente);
 			}
-			
-    	}
-    	catch (Exception e) {
+
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			try {
@@ -789,29 +779,29 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}
-    	
-    	return historiaTo;
-    }
-    
-    public ArrayList<MunicipioTo> ConsultarMunicipios(){
-    	ResultSet rs =null;
-    	ArrayList<MunicipioTo> municipios = new ArrayList<MunicipioTo>();
-    	conexionActual = new ConexionOracle();
-    	String sql = "SELECT CODIGO, NOMBRE FROM MUNICIPIO ";
-    	
-    	try{
-    		conexionActual.conectar();
+
+		return historiaTo;
+	}
+
+	public ArrayList<MunicipioTo> ConsultarMunicipios(){
+		ResultSet rs =null;
+		ArrayList<MunicipioTo> municipios = new ArrayList<MunicipioTo>();
+		conexionActual = new ConexionOracle();
+		String sql = "SELECT CODIGO, NOMBRE FROM MUNICIPIO ";
+
+		try{
+			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while(rs.next()){
 				MunicipioTo municipio = new MunicipioTo();
 				municipio.setCodigo(rs.getInt("CODIGO"));
 				municipio.setNombre(rs.getString("NOMBRE"));
 				municipios.add(municipio);
 			}		
-    	}
-    	catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			try {
@@ -820,29 +810,29 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}
-    	
-    	return municipios;
-    }
-    
-    public ArrayList<LocalidadTo> ConsultarLocalidades(){
-    	ResultSet rs =null;
-    	ArrayList<LocalidadTo> localidades = new ArrayList<LocalidadTo>();
-    	conexionActual = new ConexionOracle();
-    	String sql = "SELECT CODIGO, NOMBRE FROM LOCALIDAD ";
-    	
-    	try{
-    		conexionActual.conectar();
+
+		return municipios;
+	}
+
+	public ArrayList<LocalidadTo> ConsultarLocalidades(){
+		ResultSet rs =null;
+		ArrayList<LocalidadTo> localidades = new ArrayList<LocalidadTo>();
+		conexionActual = new ConexionOracle();
+		String sql = "SELECT CODIGO, NOMBRE FROM LOCALIDAD ";
+
+		try{
+			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
 			rs = conexionActual.ejecutarSentencia();
-			
+
 			while(rs.next()){
 				LocalidadTo localidad = new LocalidadTo();
 				localidad.setCodigo(rs.getInt("CODIGO"));
 				localidad.setNombre(rs.getString("NOMBRE"));
 				localidades.add(localidad);
 			}		
-    	}
-    	catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			try {
@@ -851,7 +841,7 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}
-    	
-    	return localidades;
-    }
+
+		return localidades;
+	}
 }

@@ -91,7 +91,6 @@
 		            <div class="fieldgroup">
 		            	<label class="cabin">Lugar de Nacimiento</label>
 		            	<select id="lugar_nacimiento" name="lugar_nacimiento">
-		            		<option value="-1">Seleccione</option>
 		            		<c:forEach items="${municipios}" var="municipio">
 				            	<c:choose>
 				                	<c:when test="${requestScope.personaDetalle.lugarNacimiento == municipio.codigo}">
@@ -126,7 +125,6 @@
 		            <div class="fieldgroup">
 		            	<label class="cabin">Localidad</label>
 		            	<select id="localidad" name="localidad">
-		            		<option value="-1">Seleccione</option>
 		            		<c:forEach items="${localidades}" var="localidad">
 				            	<c:choose>
 				                	<c:when test="${requestScope.personaDetalle.localidad == localidad.codigo}">

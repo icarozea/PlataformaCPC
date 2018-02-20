@@ -73,7 +73,7 @@ public class DaoUtilidades {
 				conexionActual.cerrar();
 				rs.close();
 			} catch (Exception e) {
-				throw new Exception("Error en la conexión con la base de datos");
+				throw new Exception("Error en la conexión con la base de datos: " + e.getMessage());
 			}
 		}	
     	return perfiles;

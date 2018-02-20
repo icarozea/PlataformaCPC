@@ -146,8 +146,8 @@ public class PersonaBean {
 		return daoPersona.actualizarPersona(persona);
 	}
 	
-	public boolean elminarPersona(PersonaTo persona){
+	public boolean elminarPersona(PersonaTo persona, boolean esPaciente){
 		DaoPersona daoPersona = new DaoPersona();
-		return daoPersona.eliminarPersona(persona);
+		return daoPersona.eliminarPersona(persona, esPaciente);
 	}
 }
