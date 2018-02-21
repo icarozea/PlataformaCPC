@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -423,19 +424,18 @@ public class ServletPersona extends HttpServlet {
 	
 	private void irEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioEPS.jsp");		  
-
+		request.setCharacterEncoding("UTF-8");
 		request.setAttribute("formulario", "si");
-		System.out.println(request.getParameter("nombre1"));
-		request.setAttribute("pNom", request.getParameter("nombre1"));
-		request.setAttribute("sNom", request.getParameter("nombre2"));
-		request.setAttribute("pApe", request.getParameter("apellido1"));
-		request.setAttribute("sApe", request.getParameter("apellido2"));
+		request.setAttribute("pNom", obtenerParametroCondificado(request, "nombre1"));
+		request.setAttribute("sNom", obtenerParametroCondificado(request, "nombre2"));
+		request.setAttribute("pApe", obtenerParametroCondificado(request, "apellido1"));
+		request.setAttribute("sApe", obtenerParametroCondificado(request, "apellido2"));
 		request.setAttribute("doc", request.getParameter("tipoDocumento"));
 		request.setAttribute("num", request.getParameter("numeroDocumento"));
-		request.setAttribute("dir", request.getParameter("direccion"));
+		request.setAttribute("dir", obtenerParametroCondificado(request, "direccion"));
 		request.setAttribute("tel", request.getParameter("telefono"));
 		request.setAttribute("tel2", request.getParameter("telefono2"));
-		request.setAttribute("mail", request.getParameter("correo"));
+		request.setAttribute("mail", obtenerParametroCondificado(request, "correo"));
 		request.setAttribute("perfil", request.getParameter("perfil"));
 		request.setAttribute("pass", request.getParameter("password"));
 		request.setAttribute("jornada", request.getParameter("jornada"));
@@ -446,17 +446,18 @@ public class ServletPersona extends HttpServlet {
 	}
 	
 	private void volverEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {			  
-	
-		request.setAttribute("pNom", request.getParameter("nombre1"));
-		request.setAttribute("sNom", request.getParameter("nombre2"));
-		request.setAttribute("pApe", request.getParameter("apellido1"));
-		request.setAttribute("sApe", request.getParameter("apellido2"));
+		
+		request.setCharacterEncoding("UTF-8");
+		request.setAttribute("pNom", obtenerParametroCondificado(request, "nombre1"));
+		request.setAttribute("sNom", obtenerParametroCondificado(request, "nombre2"));
+		request.setAttribute("pApe", obtenerParametroCondificado(request, "apellido1"));
+		request.setAttribute("sApe", obtenerParametroCondificado(request, "apellido2"));
 		request.setAttribute("doc", request.getParameter("tipoDocumento"));
 		request.setAttribute("num", request.getParameter("numeroDocumento"));
-		request.setAttribute("dir", request.getParameter("direccion"));
+		request.setAttribute("dir", obtenerParametroCondificado(request, "direccion"));
 		request.setAttribute("tel", request.getParameter("telefono"));
 		request.setAttribute("tel2", request.getParameter("telefono2"));
-		request.setAttribute("mail", request.getParameter("correo"));
+		request.setAttribute("mail", obtenerParametroCondificado(request, "correo"));
 		request.setAttribute("perfil", request.getParameter("perfil"));
 		request.setAttribute("pass", request.getParameter("password"));
 		request.setAttribute("jornada", request.getParameter("jornada"));
@@ -514,5 +515,11 @@ public class ServletPersona extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaAgregarPersona.jsp");
 			dispatcher.forward(request, response);
 		}	
+	}
+	
+	private String obtenerParametroCondificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
+		String cadena = request.getParameter(valor);
+		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
+		return cadena;
 	}
 }

@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -40,7 +39,7 @@
 				<h1 id="titleForm" class="cabin">Nueva Persona</h1>
 			</c:otherwise>
 		</c:choose>
-		<form id="register-form" action="./ServletPersona" method="POST">
+		<form id="register-form" action="./ServletPersona" method="post" accept-charset="UTF-8">
 			<input type="hidden" name="operacion" id="operacion" />
 			<input type="hidden" name="superior" id="superior" value="${requestScope.sup}" />
 			<input type="hidden" name="id" id="id" value="${requestScope.idPersona}" />
@@ -150,7 +149,7 @@
 		                </select>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">NÃºmero de Documento</label>
+		                <label class="cabin">Número de Documento</label>
 		                <c:choose>
 							<c:when test="${requestScope.num != null}">
 								<input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Numero Documento" value="${requestScope.num}" required>
@@ -161,57 +160,57 @@
 						</c:choose>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">DirecciÃ³n</label>
+		                <label class="cabin">Dirección</label>
 		                <c:choose>
 							<c:when test="${requestScope.dir != null}">
 								<input type="text" id="direccion" name="direccion"
-									placeholder="DirecciÃ³n Residencia" value="${requestScope.dir}"
+									placeholder="Dirección Residencia" value="${requestScope.dir}"
 									required="">
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="direccion" name="direccion"
-								placeholder="DirecciÃ³n Residencia" required="">
+								placeholder="Dirección Residencia" required="">
 						</c:otherwise>
 						</c:choose>
 		            </div>
 		            <div class="fieldgroup">
-		                <label class="cabin">TelÃ©fono</label>
+		                <label class="cabin">Teléfono</label>
 		                <c:choose>
 							<c:when test="${requestScope.tel != null}">
 								<input type="text" id="telefono" name="telefono"
-									placeholder="TelÃ©fono" value="${requestScope.tel}" required="">
+									placeholder="Teléfono" value="${requestScope.tel}" required="">
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="telefono" name="telefono"
-								placeholder="TelÃ©fono" required="">
+								placeholder="Teléfono" required="">
 						</c:otherwise>
 						</c:choose>
 		            </div>
 					<div class="fieldgroup">
-		                <label class="cabin">Otro TelÃ©fono</label>
+		                <label class="cabin">Otro Teléfono</label>
 		                <c:choose>
 							<c:when test="${requestScope.tel2 != null}">
 								<input type="text" id="telefono2" name="telefono2"
-									placeholder="Otro TelÃ©fono" value="${requestScope.tel2}">
+									placeholder="Otro Teléfono" value="${requestScope.tel2}">
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="telefono2" name="telefono2"
-								placeholder="Otro TelÃ©fono">
+								placeholder="Otro Teléfono">
 							
 						</c:otherwise>
 						</c:choose>
 		            </div>
 					<div class="fieldgroup">
-		                <label class="cabin">Correo ElectrÃ³nico</label>
+		                <label class="cabin">Correo Electrónico</label>
 		                <c:choose>
 							<c:when test="${requestScope.mail != null}">
 								<input type="text" id="correo" name="correo"
-									placeholder="Correo ElectrÃ³nico" value="${requestScope.mail}"
+									placeholder="Correo Electrónico" value="${requestScope.mail}"
 									required>
 						</c:when>
 						<c:otherwise>
 							<input type="text" id="correo" name="correo"
-								placeholder="Correo ElectrÃ³nico" required="">
+								placeholder="Correo Electrónico" required="">
 							
 						</c:otherwise>
 						</c:choose>
@@ -219,7 +218,7 @@
 		            <c:choose>
 						<c:when test="${requestScope.perfil != null && requestScope.perfil == 4}">
 		            		<div class="fieldgroup" id="campoPass" style="display:none">
-		                		<label class="cabin">ContraseÃ±a</label>
+		                		<label class="cabin">Contraseña</label>
 		                		<c:choose>
 									<c:when test="${requestScope.pass != null}">
 										<input type="password" id="password" name="password"
@@ -232,7 +231,7 @@
 		            		</div>
 		            		
 		            		<div class="fieldgroup" id="campoPass2" style="display:none">
-		                		<label class="cabin">Confirmar ContraseÃ±a</label>
+		                		<label class="cabin">Confirmar Contraseña</label>
 		                		<c:choose>
 									<c:when test="${requestScope.pass != null}">
 										<input type="password" id="password2" name="password2"
@@ -246,7 +245,7 @@
 		            	</c:when>
 		            	<c:otherwise>
 		            		<div class="fieldgroup" id="campoPass">
-		                		<label class="cabin">ContraseÃ±a</label>
+		                		<label class="cabin">Contraseña</label>
 		                		<c:choose>
 									<c:when test="${requestScope.pass != null}">
 										<input type="password" id="password" name="password"
@@ -259,7 +258,7 @@
 		            		</div>
 		            		
 		            		<div class="fieldgroup" id="campoPass2">
-		                		<label class="cabin">Confirmar ContraseÃ±a</label>
+		                		<label class="cabin">Confirmar Contraseña</label>
 		                		<c:choose>
 									<c:when test="${requestScope.pass != null}">
 										<input type="password" id="password2" name="password2"
@@ -276,13 +275,13 @@
 					<c:choose>
 						<c:when test="${requestScope.perfil == 3}">
 							<div class="fieldgroup" id="campoCodigo">
-		                		<label class="cabin">CÃ³digo</label>
+		                		<label class="cabin">Código</label>
 		                		<input type="text" id="codigo" name="codigo" value="${requestScope.cod}" required>
 		            		</div>
 						</c:when>
 						<c:otherwise>
 							<div class="fieldgroup" id="campoCodigo" style="display: none;">
-		                		<label class="cabin">CÃ³digo</label>
+		                		<label class="cabin">Código</label>
 		                		<input type="text" id="codigo" name="codigo" value="${requestScope.cod}">
 		            		</div>
 						</c:otherwise>
@@ -347,8 +346,8 @@
 				                <label class="cabin">Jornada</label>
 				                <select id="jornada" name="jornada" required>
 					                <c:choose>
-										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>MaÃ±ana L-V</option></c:when>
-										<c:otherwise><option value="manana">MaÃ±ana L-V</option></c:otherwise>
+										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Mañana L-V</option></c:when>
+										<c:otherwise><option value="manana">Mañana L-V</option></c:otherwise>
 									</c:choose>
 									<c:choose>
 										<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>
@@ -368,8 +367,8 @@
 				                <label class="cabin">Jornada</label>
 				                <select id="jornada" name="jornada">
 					                <c:choose>
-										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>MaÃ±ana L-V</option></c:when>
-										<c:otherwise><option value="manana">MaÃ±ana L-V</option></c:otherwise>
+										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Mañana L-V</option></c:when>
+										<c:otherwise><option value="manana">Mañana L-V</option></c:otherwise>
 									</c:choose>
 									<c:choose>
 										<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>
