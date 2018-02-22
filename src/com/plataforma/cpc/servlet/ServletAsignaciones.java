@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.Permissions;
 import java.util.ArrayList;
 
@@ -52,12 +53,12 @@ public class ServletAsignaciones extends HttpServlet {
 			else if(operacion.equals("eliminar"))
 				asignarPersona(0, idAsignado);
 
+			request.setCharacterEncoding("UTF-8");
 			request.setAttribute("id", request.getParameter("id"));
-			request.setAttribute("pNom", request.getParameter("pNom"));
-			request.setAttribute("sNom", request.getParameter("sNom"));
-			request.setAttribute("pApe", request.getParameter("pApe"));
-			request.setAttribute("sApe", request.getParameter("sApe"));
-			request.setAttribute("sApe", request.getParameter("sApe"));
+			request.setAttribute("pNom", obtenerParametroCondificado(request, "pNom"));
+			request.setAttribute("sNom", obtenerParametroCondificado(request, "sNom"));
+			request.setAttribute("pApe", obtenerParametroCondificado(request, "pApe"));
+			request.setAttribute("sApe", obtenerParametroCondificado(request, "sApe"));
 			request.setAttribute("valor", request.getParameter("rol"));
 
 			String jornada = request.getParameter("jornada");
@@ -127,5 +128,11 @@ public class ServletAsignaciones extends HttpServlet {
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	private String obtenerParametroCondificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
+		String cadena = request.getParameter(valor);
+		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
+		return cadena;
 	}
 }

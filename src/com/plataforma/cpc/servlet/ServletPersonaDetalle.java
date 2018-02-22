@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -74,33 +75,34 @@ public class ServletPersonaDetalle extends HttpServlet {
 		PersonaDetalleBean personaBean = new PersonaDetalleBean();
 		PersonaDetalleTo personaTo = new PersonaDetalleTo();
 		try{
+			request.setCharacterEncoding("UTF-8");
 			personaTo.setPersonaId(Integer.parseInt(request.getParameter("idPersona")));
 			personaTo.setSexo(request.getParameter("sexo")); 
 			personaTo.setEdad( request.getParameter("edad"));
-			personaTo.setAcudiente(request.getParameter("acudiente"));
-			personaTo.setParentescoAcudiente(request.getParameter("parentesco_acudiente"));
+			personaTo.setAcudiente(obtenerParametroCodificado(request, "acudiente"));
+			personaTo.setParentescoAcudiente(obtenerParametroCodificado(request, "parentesco_acudiente"));
 			personaTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
-			personaTo.setProceso(request.getParameter("proceso"));
+			personaTo.setProceso(obtenerParametroCodificado(request, "proceso"));
 			personaTo.setPerteneceU(request.getParameter("perteneceU"));
-			personaTo.setFacultad(request.getParameter("facultad"));
-			personaTo.setSemestre(request.getParameter("semestre"));
-			personaTo.setProblematica(request.getParameter("problematica"));
-			personaTo.setObservación(request.getParameter("observaciones"));
+			personaTo.setFacultad(obtenerParametroCodificado(request, "facultad"));
+			personaTo.setSemestre(request.getParameter("semestre"));	
+			personaTo.setProblematica(obtenerParametroCodificado(request, "problematica"));
+			personaTo.setObservación(obtenerParametroCodificado(request, "observaciones"));
 			personaTo.setEstadoCivil(request.getParameter("estado_civil"));
 			personaTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
 			personaTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
 			personaTo.setEscolaridad(request.getParameter("escolaridad"));
 			personaTo.setOcupacion(request.getParameter("ocupacion"));
-			personaTo.setLocalidad(request.getParameter("localidad"));
-			personaTo.setBarrio(request.getParameter("barrio"));
-			personaTo.setEstrato(request.getParameter("estrato"));
-			personaTo.setPersonaEmergencia(request.getParameter("emergencia"));
+			personaTo.setLocalidad(request.getParameter("localidad"));	
+			personaTo.setBarrio(obtenerParametroCodificado(request, "barrio"));
+			personaTo.setEstrato(request.getParameter("estrato"));	
+			personaTo.setPersonaEmergencia(obtenerParametroCodificado(request, "emergencia"));
 			personaTo.setTelefonoEmergencia(request.getParameter("telefonos_emergencia"));
-			personaTo.setParentescoEmergencia(request.getParameter("parentesco"));
-			personaTo.setFormatoSolicitud(request.getParameter("solicitud"));
-			personaTo.setInstitucionRemision(request.getParameter("institucion"));
-			personaTo.setPersonasReside(request.getParameter("parientes"));
-			personaTo.setProceso(request.getParameter("proceso"));
+			personaTo.setParentescoEmergencia(obtenerParametroCodificado(request, "parentesco"));
+			personaTo.setFormatoSolicitud(request.getParameter("solicitud"));	
+			personaTo.setInstitucionRemision(obtenerParametroCodificado(request, "institucion"));
+			personaTo.setPersonasReside(obtenerParametroCodificado(request, "institucion"));		
+			personaTo.setProceso(obtenerParametroCodificado(request, "proceso"));
 			
 			if(personaBean.modificarPersonaDetalle(personaTo)){
 				request.setAttribute("respuesta", "1");
@@ -131,33 +133,34 @@ public class ServletPersonaDetalle extends HttpServlet {
 		PersonaDetalleBean personaBean = new PersonaDetalleBean();
 		PersonaDetalleTo personaTo = new PersonaDetalleTo();
 		try{
+			request.setCharacterEncoding("UTF-8");
 			personaTo.setPersonaId(Integer.parseInt(request.getParameter("idPersona")));
 			personaTo.setSexo(request.getParameter("sexo")); 
 			personaTo.setEdad( request.getParameter("edad"));
-			personaTo.setAcudiente(request.getParameter("acudiente"));
-			personaTo.setParentescoAcudiente(request.getParameter("parentesco_acudiente"));
+			personaTo.setAcudiente(obtenerParametroCodificado(request, "acudiente"));
+			personaTo.setParentescoAcudiente(obtenerParametroCodificado(request, "parentesco_acudiente"));
 			personaTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
-			personaTo.setProceso(request.getParameter("proceso"));
+			personaTo.setProceso(obtenerParametroCodificado(request, "proceso"));
 			personaTo.setPerteneceU(request.getParameter("perteneceU"));
-			personaTo.setFacultad(request.getParameter("facultad"));
-			personaTo.setSemestre(request.getParameter("semestre"));
-			personaTo.setProblematica(request.getParameter("problematica"));
-			personaTo.setObservación(request.getParameter("observaciones"));
+			personaTo.setFacultad(obtenerParametroCodificado(request, "facultad"));
+			personaTo.setSemestre(request.getParameter("semestre"));	
+			personaTo.setProblematica(obtenerParametroCodificado(request, "problematica"));
+			personaTo.setObservación(obtenerParametroCodificado(request, "observaciones"));
 			personaTo.setEstadoCivil(request.getParameter("estado_civil"));
 			personaTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
 			personaTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
 			personaTo.setEscolaridad(request.getParameter("escolaridad"));
 			personaTo.setOcupacion(request.getParameter("ocupacion"));
-			personaTo.setLocalidad(request.getParameter("localidad"));
-			personaTo.setBarrio(request.getParameter("barrio"));
-			personaTo.setEstrato(request.getParameter("estrato"));
-			personaTo.setPersonaEmergencia(request.getParameter("emergencia"));
+			personaTo.setLocalidad(request.getParameter("localidad"));	
+			personaTo.setBarrio(obtenerParametroCodificado(request, "barrio"));
+			personaTo.setEstrato(request.getParameter("estrato"));	
+			personaTo.setPersonaEmergencia(obtenerParametroCodificado(request, "emergencia"));
 			personaTo.setTelefonoEmergencia(request.getParameter("telefonos_emergencia"));
-			personaTo.setParentescoEmergencia(request.getParameter("parentesco"));
-			personaTo.setFormatoSolicitud(request.getParameter("solicitud"));
-			personaTo.setInstitucionRemision(request.getParameter("institucion"));
-			personaTo.setPersonasReside(request.getParameter("parientes"));
-			personaTo.setProceso(request.getParameter("proceso"));
+			personaTo.setParentescoEmergencia(obtenerParametroCodificado(request, "parentesco"));
+			personaTo.setFormatoSolicitud(request.getParameter("solicitud"));	
+			personaTo.setInstitucionRemision(obtenerParametroCodificado(request, "institucion"));
+			personaTo.setPersonasReside(obtenerParametroCodificado(request, "parientes"));		
+			personaTo.setProceso(obtenerParametroCodificado(request, "proceso"));
 			
 			if(personaBean.ingresarDetallePersona(personaTo)){
 				request.setAttribute("respuesta", "1");
@@ -176,5 +179,10 @@ public class ServletPersonaDetalle extends HttpServlet {
 			dispatcher.forward(request, response);
 		}		
 	}
-
+	
+	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
+		String cadena = request.getParameter(valor);
+		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
+		return cadena;
+	}
 }

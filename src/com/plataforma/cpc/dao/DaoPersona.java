@@ -370,7 +370,9 @@ public class DaoPersona {
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
-			conexionActual.agregarAtributo(1, persona.getPrimerNombre()); 	
+			System.out.println("Nombre que llega: " + persona.getPrimerNombre());
+			String cadena = new String(persona.getPrimerNombre().getBytes(), "UTF-8");
+			conexionActual.agregarAtributo(1, cadena); 	
 			conexionActual.agregarAtributo(2, persona.getSegundoNombre()); 
 			conexionActual.agregarAtributo(3, persona.getPrimerApellido()); 
 			conexionActual.agregarAtributo(4, persona.getSegundoApellido()); 

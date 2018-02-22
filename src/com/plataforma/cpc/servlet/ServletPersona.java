@@ -128,7 +128,7 @@ public class ServletPersona extends HttpServlet {
 
 		PersonaTo persona = new PersonaTo();
 		persona = personaBean.consultarPersona(personaTo);
-
+		
 		request.setAttribute("idPersona", persona.getIdPersona());
 		request.setAttribute("pNom", persona.getPrimerNombre());
 		request.setAttribute("sNom", persona.getSegundoNombre());
@@ -231,11 +231,12 @@ public class ServletPersona extends HttpServlet {
 		PersonaBean personaBean = new PersonaBean();
 		try{
 			DaoUtilidades daoUtilidades = new DaoUtilidades();
-
-			String nom1 = request.getParameter("nombre1");
-			String nom2 = request.getParameter("nombre2");
-			String ap1 = request.getParameter("apellido1");
-			String ap2 = request.getParameter("apellido2");
+			
+			request.setCharacterEncoding("UTF-8");
+			String nom1 = obtenerParametroCodificado(request, "nombre1");
+			String nom2 = obtenerParametroCodificado(request, "nombre2");
+			String ap1 = obtenerParametroCodificado(request, "apellido1");
+			String ap2 = obtenerParametroCodificado(request, "apellido2");
 
 			Integer tipoDoc;
 			String sigla = request.getParameter("tipoDocumento");
@@ -251,7 +252,7 @@ public class ServletPersona extends HttpServlet {
 			Long tel = (!request.getParameter("telefono").equals(""))? new Long(request.getParameter("telefono")) : 0;
 			String otroTel = request.getParameter("telefono2");
 			Long tel2 = !otroTel.equals("")? new Long(otroTel) : 0;
-			String correo = request.getParameter("correo");
+			String correo = obtenerParametroCodificado(request, "correo");
 
 			Integer idPerfil = (!request.getParameter("perfil").equals(""))? new Integer(request.getParameter("perfil")) : 0;
 			PerfilTo perfilTo = daoUtilidades.buscarPerfil(idPerfil);
@@ -262,7 +263,7 @@ public class ServletPersona extends HttpServlet {
 				throw new Exception("El perfil seleccionado no es valido o no se encontró");
 			}
 
-			String password = request.getParameter("password");
+			String password = obtenerParametroCodificado(request, "password");
 			String jornada = request.getParameter("jornada");
 			String cod = request.getParameter("codigo");
 			Integer codigo = !cod.equals("")? Integer.parseInt(cod) : 0;
@@ -334,10 +335,11 @@ public class ServletPersona extends HttpServlet {
 			DaoUtilidades daoUtilidades = new DaoUtilidades();
 
 			Integer id = Integer.parseInt(request.getParameter("id"));
-			String nom1 = request.getParameter("nombre1");
-			String nom2 = request.getParameter("nombre2");
-			String ap1 = request.getParameter("apellido1");
-			String ap2 = request.getParameter("apellido2");
+			request.setCharacterEncoding("UTF-8");
+			String nom1 = obtenerParametroCodificado(request, "nombre1");
+			String nom2 = obtenerParametroCodificado(request, "nombre2");
+			String ap1 = obtenerParametroCodificado(request, "apellido1");
+			String ap2 = obtenerParametroCodificado(request, "apellido2");
 
 			Integer tipoDoc;
 			String sigla = request.getParameter("tipoDocumento");
@@ -353,7 +355,7 @@ public class ServletPersona extends HttpServlet {
 			Long tel = (!request.getParameter("telefono").equals(""))? new Long(request.getParameter("telefono")) : 0;
 
 			Long tel2 = (!request.getParameter("telefono2").equals(""))? new Long(request.getParameter("telefono2")) : 0;
-			String correo = request.getParameter("correo");
+			String correo = obtenerParametroCodificado(request, "correo");
 
 			Integer idPerfil = (!request.getParameter("perfil").equals(""))? new Integer(request.getParameter("perfil")) : 0;
 			PerfilTo perfilTo = daoUtilidades.buscarPerfil(idPerfil);
@@ -364,7 +366,7 @@ public class ServletPersona extends HttpServlet {
 				throw new Exception("El perfil seleccionado no es valido o no se encontró");
 			}
 
-			String password = request.getParameter("password");
+			String password = obtenerParametroCodificado(request, "password");
 			String jornada = request.getParameter("jornada");
 
 			Integer codigo = 0;
@@ -426,16 +428,16 @@ public class ServletPersona extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("FormularioEPS.jsp");		  
 		request.setCharacterEncoding("UTF-8");
 		request.setAttribute("formulario", "si");
-		request.setAttribute("pNom", obtenerParametroCondificado(request, "nombre1"));
-		request.setAttribute("sNom", obtenerParametroCondificado(request, "nombre2"));
-		request.setAttribute("pApe", obtenerParametroCondificado(request, "apellido1"));
-		request.setAttribute("sApe", obtenerParametroCondificado(request, "apellido2"));
+		request.setAttribute("pNom", obtenerParametroCodificado(request, "nombre1"));
+		request.setAttribute("sNom", obtenerParametroCodificado(request, "nombre2"));
+		request.setAttribute("pApe", obtenerParametroCodificado(request, "apellido1"));
+		request.setAttribute("sApe", obtenerParametroCodificado(request, "apellido2"));
 		request.setAttribute("doc", request.getParameter("tipoDocumento"));
 		request.setAttribute("num", request.getParameter("numeroDocumento"));
-		request.setAttribute("dir", obtenerParametroCondificado(request, "direccion"));
+		request.setAttribute("dir", obtenerParametroCodificado(request, "direccion"));
 		request.setAttribute("tel", request.getParameter("telefono"));
 		request.setAttribute("tel2", request.getParameter("telefono2"));
-		request.setAttribute("mail", obtenerParametroCondificado(request, "correo"));
+		request.setAttribute("mail", obtenerParametroCodificado(request, "correo"));
 		request.setAttribute("perfil", request.getParameter("perfil"));
 		request.setAttribute("pass", request.getParameter("password"));
 		request.setAttribute("jornada", request.getParameter("jornada"));
@@ -448,16 +450,16 @@ public class ServletPersona extends HttpServlet {
 	private void volverEPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {			  
 		
 		request.setCharacterEncoding("UTF-8");
-		request.setAttribute("pNom", obtenerParametroCondificado(request, "nombre1"));
-		request.setAttribute("sNom", obtenerParametroCondificado(request, "nombre2"));
-		request.setAttribute("pApe", obtenerParametroCondificado(request, "apellido1"));
-		request.setAttribute("sApe", obtenerParametroCondificado(request, "apellido2"));
+		request.setAttribute("pNom", obtenerParametroCodificado(request, "nombre1"));
+		request.setAttribute("sNom", obtenerParametroCodificado(request, "nombre2"));
+		request.setAttribute("pApe", obtenerParametroCodificado(request, "apellido1"));
+		request.setAttribute("sApe", obtenerParametroCodificado(request, "apellido2"));
 		request.setAttribute("doc", request.getParameter("tipoDocumento"));
 		request.setAttribute("num", request.getParameter("numeroDocumento"));
-		request.setAttribute("dir", obtenerParametroCondificado(request, "direccion"));
+		request.setAttribute("dir", obtenerParametroCodificado(request, "direccion"));
 		request.setAttribute("tel", request.getParameter("telefono"));
 		request.setAttribute("tel2", request.getParameter("telefono2"));
-		request.setAttribute("mail", obtenerParametroCondificado(request, "correo"));
+		request.setAttribute("mail", obtenerParametroCodificado(request, "correo"));
 		request.setAttribute("perfil", request.getParameter("perfil"));
 		request.setAttribute("pass", request.getParameter("password"));
 		request.setAttribute("jornada", request.getParameter("jornada"));
@@ -517,7 +519,7 @@ public class ServletPersona extends HttpServlet {
 		}	
 	}
 	
-	private String obtenerParametroCondificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
+	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
 		String cadena = request.getParameter(valor);
 		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
 		return cadena;

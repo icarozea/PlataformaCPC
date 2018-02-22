@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
 import javax.servlet.RequestDispatcher;
@@ -54,12 +55,13 @@ public class ServletSesionIndividual extends HttpServlet {
 	public void crearReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		SesionIndividualTo sesion = new SesionIndividualTo();
+		request.setCharacterEncoding("UTF-8");
 		sesion.setFecha(request.getParameter("fecha") +" "+ request.getParameter("hora"));
-		sesion.setNombreProfesional(request.getParameter("profesional"));
-		sesion.setObjetivo(request.getParameter("objetivoSesion"));
-		sesion.setDescripcion(request.getParameter("descripcionSesion"));
-		sesion.setTareasAsignadas(request.getParameter("tareasSesion"));
-		sesion.setActividadesProximaSesion(request.getParameter("actividadesProxSesion"));
+		sesion.setNombreProfesional(obtenerParametroCodificado(request, "profesional"));	
+		sesion.setObjetivo(obtenerParametroCodificado(request, "objetivoSesion"));	
+		sesion.setDescripcion(obtenerParametroCodificado(request, "descripcionSesion"));	
+		sesion.setTareasAsignadas(obtenerParametroCodificado(request, "tareasSesion"));	
+		sesion.setActividadesProximaSesion(obtenerParametroCodificado(request, "actividadesProxSesion"));
 		String fallo = request.getParameter("fallo");
 		sesion.setFallo(fallo != null?true:false);
 		sesion.setNumRecibo(Integer.parseInt(request.getParameter("numeroRecibo")));
@@ -79,11 +81,12 @@ public class ServletSesionIndividual extends HttpServlet {
 	public void actualizarReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		SesionIndividualTo sesion = new SesionIndividualTo();
+		request.setCharacterEncoding("UTF-8");
 		sesion.setIdSesion(Integer.parseInt(request.getParameter("idSesion")));
-		sesion.setObjetivo(request.getParameter("objetivoSesion"));
-		sesion.setDescripcion(request.getParameter("descripcionSesion"));
-		sesion.setTareasAsignadas(request.getParameter("tareasSesion"));
-		sesion.setActividadesProximaSesion(request.getParameter("actividadesProxSesion"));
+		sesion.setObjetivo(obtenerParametroCodificado(request, "objetivoSesion"));	
+		sesion.setDescripcion(obtenerParametroCodificado(request, "descripcionSesion"));	
+		sesion.setTareasAsignadas(obtenerParametroCodificado(request, "tareasSesion"));	
+		sesion.setActividadesProximaSesion(obtenerParametroCodificado(request, "actividadesProxSesion"));
 		boolean resultado = dao.actualizarReporteSesionIndividual(sesion);
 		if (resultado) 	
 			request.setAttribute("mensajeRespuestaReporte", "Se ha actualizado exitosamente el reporte de la sesión.");
@@ -110,10 +113,11 @@ public class ServletSesionIndividual extends HttpServlet {
 			Integer idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
 			personaTo.setIdPersona(idPaciente);
 			personaTo = personaBean.consultarPersona(personaTo);
-			personaTo.setPrimerNombre(request.getParameter("nombre1"));
-			personaTo.setSegundoNombre(request.getParameter("nombre2"));
-			personaTo.setPrimerApellido(request.getParameter("apellido1"));
-			personaTo.setSegundoApellido(request.getParameter("apellido2"));
+			request.setCharacterEncoding("UTF-8");
+			personaTo.setPrimerNombre(obtenerParametroCodificado(request, "nombre1"));
+			personaTo.setSegundoNombre(obtenerParametroCodificado(request, "nombre2"));
+			personaTo.setPrimerApellido(obtenerParametroCodificado(request, "apellido1"));
+			personaTo.setSegundoApellido(obtenerParametroCodificado(request, "apellido2"));
 			String sigla = request.getParameter("tipoDocumento");
 			TipoDocumentoTo tipoDocumentoTo = daoUtilidades.buscarTipoDocumento(sigla);
 			if(!sigla.equals("-1") || tipoDocumentoTo != null)
@@ -143,15 +147,15 @@ public class ServletSesionIndividual extends HttpServlet {
 				detalleTo.setEscolaridad(request.getParameter("escolaridad"));
 				detalleTo.setOcupacion(request.getParameter("ocupacion"));
 				detalleTo.setLocalidad(request.getParameter("localidad"));
-				detalleTo.setBarrio(request.getParameter("barrio"));
+				detalleTo.setBarrio(obtenerParametroCodificado(request, "barrio"));
 				detalleTo.setEstrato(request.getParameter("estrato"));
 				detalleTo.setPersonaEmergencia(request.getParameter("emergencia"));
-				detalleTo.setParentescoEmergencia(request.getParameter("parentesco"));
+				detalleTo.setParentescoEmergencia(obtenerParametroCodificado(request, "parentesco"));
 				detalleTo.setTelefonoEmergencia(request.getParameter("telefonos_emergencia"));
 				detalleTo.setFormatoSolicitud(request.getParameter("solicitud"));
-				detalleTo.setInstitucionRemision(request.getParameter("institucion"));
-				detalleTo.setAcudiente(request.getParameter("acudiente"));
-				detalleTo.setParentescoAcudiente(request.getParameter("parentesco_acudiente"));
+				detalleTo.setInstitucionRemision(obtenerParametroCodificado(request, "institucion"));
+				detalleTo.setAcudiente(obtenerParametroCodificado(request, "acudiente"));
+				detalleTo.setParentescoAcudiente(obtenerParametroCodificado(request, "parentesco_acudiente"));
 				detalleTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
 				
 				if(detalleBean.modificarPersonaDetalle(detalleTo)){
@@ -173,13 +177,14 @@ public class ServletSesionIndividual extends HttpServlet {
 					}
 				
 					//Creacion del reporte
-					valoracionTo.setIdCita(Integer.parseInt(request.getParameter("idCita")));
-					valoracionTo.setMotivo(request.getParameter("motivo_consulta"));
+					valoracionTo.setIdCita(Integer.parseInt(request.getParameter("idCita")));		
+					valoracionTo.setMotivo(obtenerParametroCodificado(request, "motivo_consulta"));
 					valoracionTo.setPersonaReporta(request.getParameter("persona_reporta"));
-					valoracionTo.setComportamiento(request.getParameter("aspectos"));
-					valoracionTo.setHipotesis(request.getParameter("hipotesis"));
-					valoracionTo.setServicioRemitido(request.getParameter("remitido"));
-					valoracionTo.setEncuestador(request.getParameter("entrevistador"));
+					valoracionTo.setComportamiento(obtenerParametroCodificado(request, "aspectos"));		
+					valoracionTo.setHipotesis(obtenerParametroCodificado(request, "hipotesis"));
+					
+					valoracionTo.setServicioRemitido(obtenerParametroCodificado(request, "remitido"));
+					valoracionTo.setEncuestador(obtenerParametroCodificado(request, "entrevistador"));
 					
 					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "Aceptado")){
 						request.setAttribute("mensajeRespuestaReporte", "Reporte guardado exitosamente");
@@ -203,6 +208,12 @@ public class ServletSesionIndividual extends HttpServlet {
 			request.setAttribute("mensajeRespuestaReporte", "Error de formulario: " + e.getMessage());
 			dispatcher.forward(request, response);
 		}
+	}
+	
+	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
+		String cadena = request.getParameter(valor);
+		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
+		return cadena;
 	}
 
 	/**

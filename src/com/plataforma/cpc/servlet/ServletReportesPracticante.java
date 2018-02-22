@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -115,10 +116,13 @@ public class ServletReportesPracticante extends HttpServlet {
 				filtroTratamiento = Integer.parseInt(tratamientoActual);
 				tratamientos = historiaBean.consultarTratamientosxPaciente(filtroPaciente);
 			}
-			else{
+			else if(listaPacientes.size() > 0){
 				filtroPaciente = listaPacientes.get(0).getIdPersona();
 				tratamientos = historiaBean.consultarTratamientosxPaciente(listaPacientes.get(0).getIdPersona());
 				filtroTratamiento = tratamientos.get(0).getIdTratamiento();
+				tipoCambio = "vacio";
+			}
+			else {
 				tipoCambio = "vacio";
 			}
 
@@ -237,18 +241,24 @@ public class ServletReportesPracticante extends HttpServlet {
 	 */
 	public void guardarMoficiacionesReporteSesion(HttpServletRequest request, HttpServletResponse response){
 
-		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();
-		daoSesionIndividual.actualizarModificacionesReporteSesion(Integer.valueOf(request.getParameter("idReporte")), Integer.valueOf(request.getParameter("numRecibo")),
-				request.getParameter("estadoReporte"), request.getParameter("campoObjetivo"),
-				request.getParameter("campoDescripcion"), request.getParameter("campoTareas"),
-				request.getParameter("campoActividades"));
+		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();	
 
 		try{
+			daoSesionIndividual.actualizarModificacionesReporteSesion(Integer.valueOf(request.getParameter("idReporte")), Integer.valueOf(request.getParameter("numRecibo")),
+					request.getParameter("estadoReporte"), obtenerParametroCodificado(request, "campoObjetivo"),
+					obtenerParametroCodificado(request, "campoDescripcion"), obtenerParametroCodificado(request, "campoTareas"),
+					obtenerParametroCodificado(request, "campoActividades"));
 			request.setAttribute("mensajeRespuestaActualizacionReporte", "Se ha actualizado la información del reporte correctamente");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaActualizarReporteCita.jsp");
 			dispatcher.forward(request, response);    				
 		}catch(Exception e){
 			e.getLocalizedMessage();
 		}
+	}
+	
+	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
+		String cadena = request.getParameter(valor);
+		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
+		return cadena;
 	}
 }

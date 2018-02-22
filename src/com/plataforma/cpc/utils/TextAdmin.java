@@ -88,7 +88,7 @@ public class TextAdmin {
 	public static String parseUTF(String text) {
 		if(!(text == null)) {
 			if(!text.equals("")) {
-				byte[] ptext = text.getBytes(ISO_8859_1); 
+				byte[] ptext = text.getBytes(UTF_8); 
 				String returnText = new String(ptext, UTF_8); 
 				return returnText;
 			}
