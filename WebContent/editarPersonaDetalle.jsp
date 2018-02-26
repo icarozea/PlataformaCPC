@@ -241,10 +241,10 @@
 		            <div class="fieldgroup">
 		            <c:choose>
 		            	<c:when test="${requestScope.personaDetalle.personaId != null}">
-		                	<input type="button" value="Registrar" onclick="modificarDetalle()" class="submit cabin"/>
+		                	<input type="button" value="Guardar" onclick="modificarDetalle()" class="submit cabin"/>
 		                </c:when>
 		                <c:otherwise>
-		                	<input type="button" value="Registrar" onclick="guardarDetalle()" class="submit cabin"/>
+		                	<input type="button" value="Guardar" onclick="guardarDetalle()" class="submit cabin"/>
 		                </c:otherwise>
 		            </c:choose>
 		            </div>

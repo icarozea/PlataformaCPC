@@ -64,11 +64,12 @@
 		          		
 		          		<c:if test="${requestScope.perfil == 'Paciente'}">
 							<th>EPS</th>
+							<th>Detalle</th>
 						</c:if>
 						<c:if test="${requestScope.perfil == 'Practicante'}">
 							<th>Código</th>
 						</c:if>
-						<c:if test="${sessionScope.personaSession.perfil.idPerfil != 2}">
+						<c:if test="${sessionScope.personaSession.perfil.idPerfil != 2}">	
 							<th>Editar</th>
 							<th>Eliminar</th>
 						</c:if>
@@ -91,6 +92,7 @@
 				<c:if test="${sessionScope.personaSession.perfil.idPerfil != 2}">
 				<c:choose>
 					<c:when test="${requestScope.perfil == 'Paciente'}">
+						<td><input type="submit" name="detallePersona" id="detallePersona" value="" class="btnVer" onclick="enviarFormulario(this.id,${requestScope.idPersona},1)"/></td>
 						<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditar" onclick="enviarFormulario(this.id,${requestScope.idPersona},1)"/></td>
 						<td><input type="submit" name="eliminarPersona" id="eliminarPersona" value="" class="btnEliminar" onclick="enviarFormulario(this.id,${requestScope.idPersona},1)"/></td>
 					</c:when>

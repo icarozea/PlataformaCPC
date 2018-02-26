@@ -101,7 +101,7 @@ public class ServletPersonaDetalle extends HttpServlet {
 			personaTo.setParentescoEmergencia(obtenerParametroCodificado(request, "parentesco"));
 			personaTo.setFormatoSolicitud(request.getParameter("solicitud"));	
 			personaTo.setInstitucionRemision(obtenerParametroCodificado(request, "institucion"));
-			personaTo.setPersonasReside(obtenerParametroCodificado(request, "institucion"));		
+			personaTo.setPersonasReside(obtenerParametroCodificado(request, "parientes"));		
 			personaTo.setProceso(obtenerParametroCodificado(request, "proceso"));
 			
 			if(personaBean.modificarPersonaDetalle(personaTo)){

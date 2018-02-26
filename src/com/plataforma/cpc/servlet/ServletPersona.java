@@ -82,7 +82,7 @@ public class ServletPersona extends HttpServlet {
 			volverEPS(request,response);
 			break;
 		default:
-			System.out.println("Opción no existe");
+			System.out.println("Operacion no existe: " + operacion);
 			break;
 
 		}
@@ -146,9 +146,9 @@ public class ServletPersona extends HttpServlet {
 		request.setAttribute("jornada", persona.getJornada());
 		request.setAttribute("sup", persona.getSuperior());
 
-		if (persona.getPerfil().getIdPerfil().equals("Practicante")) {
+		if (persona.getPerfil().getIdPerfil() == 3) {
 			request.setAttribute("cod", persona.getCodigoEstudiante());
-		}else if(persona.getPerfil().getIdPerfil().equals("Paciente")){
+		}else if(persona.getPerfil().getIdPerfil() == 4){
 			request.setAttribute("eps", persona.getEps().getNombreEPS());
 		}
 
@@ -471,9 +471,21 @@ public class ServletPersona extends HttpServlet {
 
 	private void detallePersona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		UtilBean util = new UtilBean();
-		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");		  
-		request.setAttribute("idPersona", 0);
-		request.setAttribute("personaDetalle", new PersonaDetalleTo());
+		PersonaDetalleBean detalleBean = new PersonaDetalleBean();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("editarPersonaDetalle.jsp");
+		
+		if(request.getParameter("idPersona") != null) {
+			request.setAttribute("idPersona", request.getParameter("idPersona"));
+			PersonaDetalleTo detalleTo = new PersonaDetalleTo();
+			detalleTo.setPersonaId(Integer.parseInt(request.getParameter("idPersona")));
+			detalleTo = detalleBean.consultarPersonaDetalle(detalleTo);
+			request.setAttribute("personaDetalle", detalleTo);		
+		}
+		else {
+			request.setAttribute("idPersona", 0);
+			request.setAttribute("personaDetalle", new PersonaDetalleTo());		
+		}
+		
 		request.setAttribute("municipios", util.consultarMunicipios());
 		request.setAttribute("localidades", util.consultarLocalidades());
 		dispatcher.forward(request, response);

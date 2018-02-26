@@ -66,7 +66,7 @@ public class ServletCita extends HttpServlet{
 			}
 			break;
 		default:
-			System.out.println("Opción no existe");
+			System.out.println("Opción no existe: " + operacion);
 			break;	
 		}
 	}
@@ -98,7 +98,7 @@ public class ServletCita extends HttpServlet{
 		PersonaTo practicante = new PersonaTo();
 		PersonaTo paciente = new PersonaTo();
 
-		Integer idPersona = new Integer(request.getParameter("idPersona"));
+		Integer idPersona = new Integer(request.getParameter("idPracticante"));
 
 		String fecha = parsearFecha(request.getParameter("fecha"));
 
@@ -111,7 +111,7 @@ public class ServletCita extends HttpServlet{
 			request.setAttribute("practicante", practicante);
 			request.setAttribute("listaPacientes", listaPacientes);
 			request.setAttribute("fecha", fecha);
-			request.setAttribute("paciente", request.getParameter("paciente"));	
+			request.setAttribute("paciente", request.getParameter("idPaciente"));	
 			request.setAttribute("salon", request.getParameter("salon"));
 			request.setAttribute("valoracion", request.getParameter("valoracion"));
 			request.setAttribute("tipo", request.getParameter("tipo"));

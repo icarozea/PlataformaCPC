@@ -61,7 +61,7 @@
                     	<c:forEach items="${requestScope.listaTratamientos}" var="tratamiento">
                     		<c:choose>
                     			<c:when test="${requestScope.tratamientoActual == tratamiento.idTratamiento}">
-				        			<option value="${tratamiento.idTratamiento}" selected>${tratamiento.idTratamiento}. ${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
+				        			<option value="${tratamiento.idTratamiento}" selected>${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
 				        		</c:when>
 				        		<c:otherwise>
 				        			<option value="${tratamiento.idTratamiento}">${tratamiento.idTratamiento}. ${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>

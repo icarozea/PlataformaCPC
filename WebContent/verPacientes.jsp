@@ -10,11 +10,17 @@
 <title>Pacientes</title>
 </head>
 <script type="text/javascript">
-	function enviarFormulario(idPersona, idPaciente){
-		document.getElementById('operacion').value="crearCita";
-		document.getElementById('idPersona').value=idPersona;
+	function enviarFormulario(tipo, idPersona, idPaciente){
+		document.getElementById('operacion').value=tipo;
+		document.getElementById('idPracticante').value=idPersona;
 		document.getElementById('idPaciente').value=idPaciente;
 		document.getElementById("FormDatos").submit();
+	}
+	
+	function verPaciente(idPaciente){
+		console.log("formVer");
+		document.getElementById('idPersona').value=idPaciente;
+		document.getElementById('FormVer').submit();
 	}
 </script>
 <body>
@@ -24,7 +30,7 @@
 		<h1 class="cabin">MIS PACIENTES</h1>
 		<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
 			<input type="hidden" name="operacion" id="operacion" />
-			<input type="hidden" name="idPersona" id="idPersona"/>
+			<input type="hidden" name="idPracticante" id="idPracticante"/>
 			<input type="hidden" name="idPaciente" id="idPaciente"/>
 		<table id="tablaUsuarios">
 			<thead>
@@ -34,6 +40,7 @@
 				<th>Dirección</th>
 				<th>Teléfono</th>
 				<th>Correo</th>
+				<th>Ver</th>
 				<th>Acción</th>
 			</thead>
 			<tbody>
@@ -45,15 +52,20 @@
 					<td>${persona.direccion}</td>
 					<td>${persona.telefono}</td>
 					<td>${persona.correo}</td>
-					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona" onclick="enviarFormulario(${sessionScope.personaSession.idPersona},${persona.idPersona})"/></td>
+					<td><input type="button" name="verPersona" id="verPersona" value="" class="btnVer" onclick="verPaciente(${persona.idPersona})"/></td>
+					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona" onclick="enviarFormulario('crearCita',${sessionScope.personaSession.idPersona},${persona.idPersona})"/></td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 		</form>
 	</div>
-		<div>
-			<a href="inicioCita.jsp"><button id="returnBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
-		</div>  
+	<div>
+		<a href="inicioCita.jsp"><button id="returnBtn" class="btnReturn btnReturn-warning">Regresar</button></a>
+	</div>
+	<form id="FormVer" name="FormVer" action="./ServletPersona" method="POST">
+		<input type="hidden" name="operacion" id="operacion" value="detallePersona"/>
+		<input type="hidden" name="idPersona" id="idPersona"/>
+	</form> 
 </body>
 </html>
