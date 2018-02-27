@@ -1,6 +1,7 @@
 package com.plataforma.cpc.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -70,6 +71,9 @@ public class ServletAsesor extends HttpServlet {
 			break;
 		case "aceptar":
 			aceptarReporte(request,response);
+			break;
+		case "aceptarValoracion":
+			aceptarValoracion(request,response);
 			break;
 		default:
 			System.out.println("Opción no existe");
@@ -183,12 +187,12 @@ public class ServletAsesor extends HttpServlet {
 			ArrayList<SesionIndividualPreviewTo> valoracionPreview = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
 			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
 			
-			
+			request.setCharacterEncoding("UTF-8");
 			request.setAttribute("idPracticante", idPracticante);
-			request.setAttribute("pNom", request.getParameter("pNom"));
-			request.setAttribute("sNom", request.getParameter("sNom"));
-			request.setAttribute("pApe", request.getParameter("pApe"));
-			request.setAttribute("sApe", request.getParameter("sApe"));
+			request.setAttribute("pNom", obtenerParametroCodificado(request, "pNom"));
+			request.setAttribute("sNom", obtenerParametroCodificado(request, "sNom"));		
+			request.setAttribute("pApe", obtenerParametroCodificado(request, "pApe"));		
+			request.setAttribute("sApe", obtenerParametroCodificado(request, "sApe"));
 
 			//Consigue los pacientes asignados al practicante
 			ArrayList<PersonaTo> listaPacientes = personaBean.consultarAsignados(idPracticante);
@@ -385,5 +389,33 @@ public class ServletAsesor extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("");
 			dispatcher.forward(request, response);
 		}
+	}
+	
+	private void aceptarValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
+
+		try{
+			Integer idValoracion = Integer.parseInt(request.getParameter("idValoracion"));
+			if(daoSesion.aceptarValoracion(idValoracion)){
+				request.setAttribute("respuesta", "1");
+				request.setAttribute("mensajeRespuestaReporte", "Reporte actualizado correctamente");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
+				dispatcher.forward(request, response);
+			}
+		}
+		catch(Exception e){
+			System.out.println("Operacion fallida: " + e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("respuesta", "2");
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
+			dispatcher.forward(request, response);
+		}
+	}
+	
+	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
+		String cadena = request.getParameter(valor);
+		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
+		return cadena;
 	}
 }

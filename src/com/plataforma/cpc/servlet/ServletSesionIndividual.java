@@ -43,6 +43,9 @@ public class ServletSesionIndividual extends HttpServlet {
 		case "actualizar":
 			actualizarReporte(request, response);
 			break;
+		case "actualizarValoracion":
+			actualizarValoracion(request, response);
+			break;
 		case "valoracion":
 			reporteValoracion(request, response);
 			break;
@@ -90,6 +93,28 @@ public class ServletSesionIndividual extends HttpServlet {
 		boolean resultado = dao.actualizarReporteSesionIndividual(sesion);
 		if (resultado) 	
 			request.setAttribute("mensajeRespuestaReporte", "Se ha actualizado exitosamente el reporte de la sesión.");
+		else
+			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la actualizacion del reporte.");
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	public void actualizarValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		DaoSesionIndividual dao = new DaoSesionIndividual();
+		reporteValoracionTo valoracionTo = new reporteValoracionTo();
+		request.setCharacterEncoding("UTF-8");
+		valoracionTo.setIdValoracion(Integer.parseInt(request.getParameter("id")));
+		valoracionTo.setEncuestador(obtenerParametroCodificado(request, "entrevistador"));
+		valoracionTo.setPersonaReporta(obtenerParametroCodificado(request, "persona_reporta"));	
+		valoracionTo.setMotivo(obtenerParametroCodificado(request, "motivo_consulta"));
+		valoracionTo.setComportamiento(obtenerParametroCodificado(request, "aspectos"));
+		valoracionTo.setHipotesis(obtenerParametroCodificado(request, "hipotesis"));
+		valoracionTo.setServicioRemitido(obtenerParametroCodificado(request, "remitido"));
+		
+		boolean resultado = dao.actualizarReporteValoracion(valoracionTo);
+		if (resultado) 	
+			request.setAttribute("mensajeRespuestaReporte", "Se ha actualizado exitosamente el reporte.");
 		else
 			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la actualizacion del reporte.");
 		
@@ -186,7 +211,7 @@ public class ServletSesionIndividual extends HttpServlet {
 					valoracionTo.setServicioRemitido(obtenerParametroCodificado(request, "remitido"));
 					valoracionTo.setEncuestador(obtenerParametroCodificado(request, "entrevistador"));
 					
-					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "Aceptado")){
+					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "pendiente")){
 						request.setAttribute("mensajeRespuestaReporte", "Reporte guardado exitosamente");
 						dispatcher.forward(request, response);
 					}

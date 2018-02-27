@@ -98,7 +98,7 @@ public class ServletCita extends HttpServlet{
 		PersonaTo practicante = new PersonaTo();
 		PersonaTo paciente = new PersonaTo();
 
-		Integer idPersona = new Integer(request.getParameter("idPracticante"));
+		Integer idPersona = new Integer(request.getParameter("idPersona"));
 
 		String fecha = parsearFecha(request.getParameter("fecha"));
 

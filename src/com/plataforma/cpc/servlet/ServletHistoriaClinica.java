@@ -49,7 +49,6 @@ public class ServletHistoriaClinica extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		String operacion = request.getParameter("operacion");
-		System.out.println("Operacion: "+operacion);
 		switch (operacion) {
 		
 		case "detalleTratamiento":

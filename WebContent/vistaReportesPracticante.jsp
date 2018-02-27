@@ -64,7 +64,7 @@
 				        			<option value="${tratamiento.idTratamiento}" selected>${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
 				        		</c:when>
 				        		<c:otherwise>
-				        			<option value="${tratamiento.idTratamiento}">${tratamiento.idTratamiento}. ${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
+				        			<option value="${tratamiento.idTratamiento}">${tratamiento.tipo} - ${tratamiento.fechaInicio.year}</option>
 				        		</c:otherwise>
 				        	</c:choose>
 				        </c:forEach>

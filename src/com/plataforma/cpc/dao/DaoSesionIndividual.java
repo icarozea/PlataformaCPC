@@ -251,6 +251,63 @@ public class DaoSesionIndividual extends ConexionOracle{
 		
 		return retorno;
 	}
+	
+	public boolean actualizarReporteValoracion(reporteValoracionTo valoracionTo) {
+		boolean retorno;
+		conexionActual = new ConexionOracle();
+
+		String actualizacion = "UPDATE REPORTE_VALORACION SET REPORTA = ?, SERVICIO_REMITIDO = ?, ENCUESTADOR = ?, MOTIVO = ?, COMPORTAMIENTO = ?, HIPOTESIS = ? ";
+		actualizacion+= "WHERE ID_VALORACION = ? "; 
+
+		String sqlEstado = "UPDATE CITA SET ESTADO = 'pendiente' WHERE ID_CITA = (SELECT ID_CITA FROM REPORTE_VALORACION WHERE ID_VALORACION = ?) ";
+
+		Integer idValoracion = valoracionTo.getIdValoracion();
+		try {
+			conexionActual.conectar();
+			conexionActual.iniciarTransaccion();
+
+			conexionActual.prepararSentencia(actualizacion);
+			conexionActual.agregarAtributo(1, valoracionTo.getPersonaReporta());
+			conexionActual.agregarAtributo(2, valoracionTo.getServicioRemitido());
+			conexionActual.agregarAtributo(3, valoracionTo.getEncuestador());
+			Clob motivo = TextAdmin.generarClob(valoracionTo.getMotivo(), conexionActual);
+			conexionActual.agregarAtributo(4, motivo);					
+			Clob comportamiento = TextAdmin.generarClob(valoracionTo.getComportamiento(), conexionActual);
+			conexionActual.agregarAtributo(5, comportamiento);
+			Clob hipotesis = TextAdmin.generarClob(valoracionTo.getHipotesis(), conexionActual);
+			conexionActual.agregarAtributo(6, hipotesis);
+			conexionActual.agregarAtributo(7, idValoracion);		
+			conexionActual.ejecutarActualizacion();
+
+			conexionActual.prepararSentencia(sqlEstado);
+			conexionActual.agregarAtributo(1, idValoracion); 
+			conexionActual.ejecutarActualizacion();
+
+			conexionActual.commit();
+			
+			motivo.free();
+			comportamiento.free();
+			hipotesis.free();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+			try {
+				conexionActual.rollback();
+			} catch(Exception exep) {
+				exep.printStackTrace();
+			}
+		}finally{
+			try {
+				conexionActual.cerrarTransaccion();
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return retorno;
+	}
 
 	/**
 	 * Retorna el reporte de sesión de una cita en particular
@@ -914,6 +971,38 @@ public class DaoSesionIndividual extends ConexionOracle{
 			}
 		}
 
+		return retorno;
+	}
+	
+	public boolean aceptarValoracion(Integer idReporte){
+		boolean retorno = false;
+		conexionActual = new ConexionOracle();
+		
+		String actualizar = "UPDATE CITA SET ESTADO = 'Aceptado' WHERE ID_CITA = (SELECT ID_CITA FROM REPORTE_VALORACION WHERE ID_VALORACION = ?) ";
+		
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(actualizar);	
+			conexionActual.agregarAtributo(1, idReporte);
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+			try {
+				conexionActual.rollback();
+			} catch(Exception exep) {
+				exep.printStackTrace();
+			}
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return retorno;
 	}
 	
