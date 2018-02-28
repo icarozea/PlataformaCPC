@@ -25,7 +25,7 @@
 <script type="text/javascript">
 	function enviarFormulario(operacion, idPersona){
 		document.getElementById('operacion').value=operacion;
-		document.getElementById('idPersona').value=idPersona;
+		document.getElementById('idPracticante').value=idPersona;
 		document.getElementById("FormDatos").submit();
 	}
 
@@ -37,7 +37,7 @@
 	<h1>LISTA DE PRACTICANTES</h1>
 	<form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="operacion" id="operacion" />
-		<input type="hidden" name="idPersona" id="idPersona"/>
+		<input type="hidden" name="idPracticante" id="idPracticante"/>
 
 		<table class="rwd-table">
 			<tr>

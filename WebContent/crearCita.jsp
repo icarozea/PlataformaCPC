@@ -49,6 +49,7 @@ function saltoCalendario(){
 		<input type="hidden" name="operacion" id="operacion" />
 		<input type="hidden" name="idPracticante" id="idPracticante" value="${requestScope.practicante.idPersona}"/>
 		<input type="hidden" name="idPaciente" id="idPaciente"/>
+		<input type="hidden" name="flagValoracion" id="flagValoracion" value="valorar"/>
 		<table class="rwd-table-noBorder">
 			<tr>
 				<th>Practicante: </th>
@@ -147,7 +148,7 @@ function saltoCalendario(){
         <input type="button" onclick="validarCita()" id="btnAceptar" value="Aceptar" class="botones">		
 	</form>
 	<form id="FormCalendario" name="FormCalendario" action="./Calendario"  method="GET">
-		<input type="hidden" id="idPersona" name="idPersona" value="${requestScope.practicante.idPersona}">
+		<input type="hidden" id="idPracticante" name="idPracticante" value="${requestScope.practicante.idPersona}">
 		<input type="hidden" id="paciente" name="paciente">
 		<input type="hidden" id="salon" name="salon">
 		<input type="hidden" id="valoracion" name="valoracion">

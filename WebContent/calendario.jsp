@@ -135,7 +135,7 @@
 	
 	<form id="formDatos" name="formDatos" action="./ServletCita" method="POST">
 		<input type="hidden" name="fecha"  id="fecha"/>
-		<input type="hidden" name="idPersona"  id="idPersona" value="<%= request.getParameter("idPersona") %>"/>
+		<input type="hidden" name="idPracticante"  id="idPracticante" value="<%= request.getParameter("idPracticante") %>"/>
 		<input type="hidden" name="operacion"  id="operacion"/>
 		<input type="hidden" name="idCita"  id="idCita"/>
 		

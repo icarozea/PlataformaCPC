@@ -45,7 +45,7 @@ public class ServletCalendario extends HttpServlet {
 		request.setAttribute("tipo", request.getParameter("tipo"));
 		try{
 			DaoCitas daoCitas = new DaoCitas();
-			ArrayList<CitaTo> citas = daoCitas.consultarCitasPracticante(Integer.parseInt(request.getParameter("idPersona")));		
+			ArrayList<CitaTo> citas = daoCitas.consultarCitasPracticante(Integer.parseInt(request.getParameter("idPracticante")));		
 			request.setAttribute("citas", parsearCitas(citas));
 			RequestDispatcher dispatcher = request.getRequestDispatcher("calendario.jsp");
 			dispatcher.forward(request, response);

@@ -22,13 +22,13 @@
 						</td>
 						<td>
 							<div>
-								<a href="./Calendario?idPersona=${sessionScope.personaSession.idPersona}"><button class="btn-xlarge"><i class="fa fa-calendar fa-4x" ></i></button></a>
+								<a href="./Calendario?idPracticante=${sessionScope.personaSession.idPersona}"><button class="btn-xlarge"><i class="fa fa-calendar fa-4x" ></i></button></a>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="cabin"><a href="./ServletPersona?operacion=listarPacientes">MIS PACIENTES</a></td>
-						<td class="cabin"><a href="./Calendario?idPersona=${sessionScope.personaSession.idPersona}">MI AGENDA</a><br></td>
+						<td class="cabin"><a href="./Calendario?idPracticante=${sessionScope.personaSession.idPersona}">MI AGENDA</a><br></td>
 					</tr>						        	
 	        	</table>
 				<table class="tablaPrincipal">
