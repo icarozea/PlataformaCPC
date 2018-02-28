@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="estilo.css"></link>
 <link rel="stylesheet" href="listas.css"></link>
 <script type="text/javascript" src="js/validarCita.js"></script>
+<script>
+	function cerrarTratamiento(idTratamiento){
+		document.getElementById("idTratamiento").value = idTratamiento;
+		document.getElementById("FormCerrar").submit();
+	}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Historia Clínica - Paciente</title>
 </head>
@@ -65,6 +71,7 @@
 							<th>Fecha Inicio</th>
 							<th>Fecha cierre</th>
 							<th>Tipo</th>
+							<th></th>
 						</tr>
 					<c:forEach items="${requestScope.tratamientos}" var="tratamiento">
 						<tr>
@@ -73,6 +80,7 @@
 							<td>${tratamiento.fechaInicio}</td>
 							<td>${tratamiento.fechaCierre}</td>
 							<td>${tratamiento.tipo}</td>
+							<td><input type=button value="Cerrar" class="btnLogout" onClick="cerrarTratamiento(${tratamiento.idTratamiento})"></td>
 						</tr>
 					</c:forEach>
 					</table>				
@@ -82,6 +90,12 @@
 		<br>
         <input type="button" onclick="validarTratamiento()" id="btnAceptar" value="Aceptar" class="botones"/>
         <a href="busquedaPersonas"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>		
+	</form>
+	
+	<form id="FormCerrar" name="FormCerrar" action="./ServletCita" method="POST">
+		<input type="hidden" name="operacion" id="operacion" value="cerrarTratamiento"/>
+		<input type="hidden" name="idPaciente" id="idPaciente" value="${requestScope.paciente.idPersona}"/>
+		<input type="hidden" name="idTratamiento" id="idTratamiento"/>
 	</form>
 </body>
 </html>

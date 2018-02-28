@@ -498,4 +498,25 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return citas;
 	}
+	
+	public boolean CerrarTratamiento(int idTratamiento) {
+		conexionActual = new ConexionOracle();
+		boolean retorno = Boolean.FALSE;
+		
+		String sql = "UPDATE TRATAMIENTO SET ESTADO = 'Cerrado' WHERE ID_TRATAMIENTO = ?";
+		
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idTratamiento);
+
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}	
+		
+		return retorno;
+	}
 }
