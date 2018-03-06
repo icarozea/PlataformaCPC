@@ -46,7 +46,7 @@
             		<a href="./ServletCita?operacion=cargueIncial"><input type="button" id="btnContinuar" value="Volver" class="botones"></a>   
             	</c:when>
             	<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
-            		<a href="./ServletCita?operacion=crearCita&idPersona=${sessionScope.personaSession.idPersona}"><input type="button" id="btnContinuar" value="Volver" class="botones"></a>  
+            		<a href="./ServletCita?operacion=crearCita&idPracticante=${sessionScope.personaSession.idPersona}"><input type="button" id="btnContinuar" value="Volver" class="botones"></a>  
             	</c:when>
             </c:choose>
        </div>

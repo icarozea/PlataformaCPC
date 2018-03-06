@@ -91,7 +91,7 @@
         </div>
         <br>
         <div id="marcoFormularioCupos">
-        	<form align="center" id="register-form" name="formularioComentariosAsesor" action="./ReportesPracticante" method="POST">
+        	<form align="center" id="register-form" name="formularioComentariosAsesor" action="ReportesPracticante" method="POST">
         		<input type="hidden" id="operacion" name="operacion" value="guardarMoficiacionesReporteSesion"/>
         		<input type="hidden" id="idReporte" name="idReporte" value="${requestScope.sesionReportePracticante.idSesion}"/>
         		<input type="hidden" id="estadoReporte" name="estadoReporte" value="${requestScope.cita.estado}"/>
@@ -174,7 +174,7 @@
         		</fieldset>
         		<fieldset>	
         			<div class="fieldgroup">
-        				<input type="submit" name="btnAceptar" id="btnAceptar" value="Guardar Cambios" class="botones"/>
+        				<input type="submit" name="btnAceptar" id="btnAceptar" value="Guardar" class="botones"/>
         			</div>
         		</fieldset>        		        		
         	</form>

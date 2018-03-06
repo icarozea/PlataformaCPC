@@ -240,7 +240,7 @@ public class ServletReportesPracticante extends HttpServlet {
 	 * Redirige a la respuesta con el resultado correspondiente de la operación
 	 */
 	public void guardarMoficiacionesReporteSesion(HttpServletRequest request, HttpServletResponse response){
-		System.out.println("Entro operacion");
+
 		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();	
 
 		try{

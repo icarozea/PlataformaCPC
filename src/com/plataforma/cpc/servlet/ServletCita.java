@@ -28,12 +28,12 @@ public class ServletCita extends HttpServlet{
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------
 	// Procesamiento del Request HTTP
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 
 		String operacion = request.getParameter("operacion");
-		
+
 		switch (operacion) {
 
 		case "cargueIncial":
@@ -85,11 +85,11 @@ public class ServletCita extends HttpServlet{
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-	
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------
 	// Funciones
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Responde a la peticion para el menu de creacion de cita. Consulta y retorna todos los pracientes de un practicante en especifico
 	 * Puede o no tener en el request una fecha ya establecida para la creación de la cita
@@ -99,9 +99,8 @@ public class ServletCita extends HttpServlet{
 		PersonaBean personaBean = new PersonaBean();
 		PersonaTo personaFiltro = new PersonaTo();
 		PersonaTo practicante = new PersonaTo();
-		PersonaTo paciente = new PersonaTo();
 
-		Integer idPersona = new Integer(request.getParameter("idPersona"));
+		Integer idPersona = new Integer(request.getParameter("idPracticante"));
 
 		String fecha = parsearFecha(request.getParameter("fecha"));
 
@@ -111,13 +110,17 @@ public class ServletCita extends HttpServlet{
 		try {
 			practicante = personaBean.consultarPersona(personaFiltro);
 			listaPacientes = personaBean.consultarAsignados(idPersona);
+
+
 			request.setAttribute("practicante", practicante);
 			request.setAttribute("listaPacientes", listaPacientes);
 			request.setAttribute("fecha", fecha);
+
 			request.setAttribute("paciente", request.getParameter("idPaciente"));	
 			request.setAttribute("salon", request.getParameter("salon"));
 			request.setAttribute("valoracion", request.getParameter("valoracion"));
 			request.setAttribute("tipo", request.getParameter("tipo"));
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("crearCita.jsp");
 			dispatcher.forward(request, response);
 
@@ -155,7 +158,7 @@ public class ServletCita extends HttpServlet{
 	}
 
 	public void guardarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
+		
 		DaoCitas dao = new DaoCitas();
 		CitaTo citaTo = new CitaTo();
 		PersonaTo paciente = new PersonaTo();
@@ -171,8 +174,26 @@ public class ServletCita extends HttpServlet{
 			citaTo.setFechaCita(date);
 			String valoracion = request.getParameter("valoracion");
 			String tipoTratamiento = request.getParameter("tipoTratamiento");
+			String flagValoracion = request.getParameter("flagValoracion");
+
+			ArrayList<TratamientoTo> tratamientos = dao.concultarTratamientosPaciente(paciente.getIdPersona());
 
 			if(valoracion != null){
+				if(flagValoracion.equals("valorar")){
+					for(int i = 0; i < tratamientos.size(); i++){
+						if(tratamientos.get(i).getTipo().equals(tipoTratamiento)){
+							RequestDispatcher advertencia = request.getRequestDispatcher("advertenciaTratamiento.jsp");
+							request.setAttribute("idPracticante", practicante.getIdPersona());
+							request.setAttribute("idPaciente", paciente.getIdPersona());
+							request.setAttribute("salon", citaTo.getSalon());
+							request.setAttribute("valoracion", valoracion);
+							request.setAttribute("fecha", request.getParameter("fecha"));
+							request.setAttribute("tipoTratamiento", tipoTratamiento);
+							advertencia.forward(request, response);
+						}
+					}
+				}
+				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
 				citaTo.setValoracion(true);
 				TratamientoTo tratamiento = new TratamientoTo();
 				tratamiento.setPaciente(paciente);
@@ -197,28 +218,28 @@ public class ServletCita extends HttpServlet{
 				dispatcher.forward(request, response);
 			}
 			else{
+				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
 				if(request.getParameter("flag") != null){
 					TratamientoTo tratamiento = new TratamientoTo();
 					tratamiento = dao.consultarTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
 					//if(!tratamiento.isPendiente()){
-						citaTo.setTratamiento(tratamiento);
-						citaTo.setNumCita(tratamiento.getNumCitaActual());
-						if(dao.crearCita(citaTo))
-							request.setAttribute("respuesta", "1");
-						else{
-							request.setAttribute("respuesta", "2");
-							request.setAttribute("error", "No fue posible crear una nueva cita");
-						}
+					citaTo.setTratamiento(tratamiento);
+					citaTo.setNumCita(tratamiento.getNumCitaActual());
+					if(dao.crearCita(citaTo))
+						request.setAttribute("respuesta", "1");
+					else{
+						request.setAttribute("respuesta", "2");
+						request.setAttribute("error", "No fue posible crear una nueva cita");
+					}
 					//}
 					//else{
 					//	request.setAttribute("respuesta", "2");
 					//	request.setAttribute("error", "Hay un reporte pendiente de revisión en el tratamiento seleccionado");
 					//}
-					
+
 					dispatcher.forward(request, response);
 				}
 				else{
-					ArrayList<TratamientoTo> tratamientos = dao.concultarTratamientosPaciente(paciente.getIdPersona());
 					request.setAttribute("tratamientos", tratamientos);
 					citaTo.setValoracion(false);
 					request.setAttribute("cita", citaTo);
@@ -231,6 +252,7 @@ public class ServletCita extends HttpServlet{
 			e.printStackTrace();
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
@@ -246,13 +268,13 @@ public class ServletCita extends HttpServlet{
 			citaTo.setIdCita(idCita);
 			citaTo = daoCitas.consultarCita(citaTo);
 			TratamientoTo tratamiento = daoCitas.consultarTratamiento(citaTo.getTratamiento().getIdTratamiento());
-			
+
 			int numCitaActual = tratamiento.getNumCitaActual();
 			int numCitaEliminar = citaTo.getNumCita();
-			
+
 			SesionIndividualTo reporte = daoReportes.consultarReporteSesionporCita(idCita);
 			reporteValoracionTo valoracion = daoReportes.consultarValoracionporCita(idCita);
-			
+
 			if(reporte.getIdSesion() != null || valoracion.getIdValoracion() != null){
 				request.setAttribute("mensajeRespuestaReporte", "La cita seleccionada tiene un reporte asociado. No es posible eliminarla");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
@@ -260,7 +282,7 @@ public class ServletCita extends HttpServlet{
 			}
 			else{
 				if(numCitaActual - numCitaEliminar == 1){
-			
+
 					if(daoCitas.eliminarCita(citaTo)){
 						RequestDispatcher dispatcher = request.getRequestDispatcher("./Calendario");
 						dispatcher.forward(request, response);
@@ -279,25 +301,25 @@ public class ServletCita extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void ejecutarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
 		DaoCitas daoCitas = new DaoCitas();
 		CitaTo filtroCita = new CitaTo();
 		CitaTo citaTo = new CitaTo();
-		
+
 		try{
 			Integer idCita = Integer.parseInt(request.getParameter("idCita"));
 			filtroCita.setIdCita(idCita);
 			citaTo = daoCitas.consultarCita(filtroCita);
-			
+
 			if(citaTo.getIdCita() != null){
 				RequestDispatcher dispatcher = null;
 				if(citaTo.isValoracion())
 					dispatcher = request.getRequestDispatcher("./reporteValoracion.jsp");
 				else
 					dispatcher = request.getRequestDispatcher("./reporteCita.jsp");
-				
+
 				request.setAttribute("cita", citaTo);
 				dispatcher.forward(request, response);
 			}
@@ -309,16 +331,6 @@ public class ServletCita extends HttpServlet{
 		}
 	}
 
-	private String parsearFecha(String fecha){
-		if(fecha != null){
-			String[] partes = fecha.split(" ");
-			String retorno = partes[3] + "-" + parsearMes(partes[1]) + "-" + partes[2] + "T" + partes[4];
-			return retorno;
-		}
-
-		return "";
-	}
-	
 	private void cerrarTratamiento(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoCitas dao = new DaoCitas();
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCerrarTratamiento.jsp");
@@ -335,10 +347,20 @@ public class ServletCita extends HttpServlet{
 		}catch(Exception e) {
 			request.setAttribute("mensaje", "Hubo un problema no al cerrar el tratamiento:\n " + e.getMessage());
 		}
-		
+
 		dispatcher.forward(request, response);
 	}
-	
+
+	private String parsearFecha(String fecha){
+		if(fecha != null){
+			String[] partes = fecha.split(" ");
+			String retorno = partes[3] + "-" + parsearMes(partes[1]) + "-" + partes[2] + "T" + partes[4];
+			return retorno;
+		}
+
+		return "";
+	}
+
 	private String parsearMes(String mes){
 		String par = "err";
 

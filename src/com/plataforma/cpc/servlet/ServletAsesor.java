@@ -186,7 +186,7 @@ public class ServletAsesor extends HttpServlet {
 			Integer idPracticante = Integer.parseInt(request.getParameter("idPracticante"));
 			ArrayList<SesionIndividualPreviewTo> valoracionPreview = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
 			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
-			
+
 			request.setCharacterEncoding("UTF-8");
 			request.setAttribute("idPracticante", idPracticante);
 			request.setAttribute("pNom", obtenerParametroCodificado(request, "pNom"));
@@ -240,8 +240,8 @@ public class ServletAsesor extends HttpServlet {
 				}
 			}
 			request.setAttribute("reportesPreview", reportesFiltrados);
-			
-			
+
+
 			// Filtra los reportes de valoracion
 			ArrayList<SesionIndividualPreviewTo> valoracionesFiltrados = new ArrayList<SesionIndividualPreviewTo>();
 			for(int i = 0; i < valoracionPreview.size(); i++){
@@ -254,7 +254,7 @@ public class ServletAsesor extends HttpServlet {
 				}
 			}
 			request.setAttribute("valoracionPreview", valoracionesFiltrados);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verReportesPracticantes.jsp");
 			dispatcher.forward(request, response);
 		}catch(Exception e){
@@ -296,6 +296,7 @@ public class ServletAsesor extends HttpServlet {
 	 * Redirige al mismo reporte previo(verReporteDetallado.jsp)
 	 */
 	private void guardarComentarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 
 		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
 		ComentariosTo comentarios = new ComentariosTo();
@@ -391,7 +392,7 @@ public class ServletAsesor extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	private void aceptarValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
 
@@ -413,7 +414,7 @@ public class ServletAsesor extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
 		String cadena = request.getParameter(valor);
 		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
