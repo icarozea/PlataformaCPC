@@ -51,6 +51,9 @@ public class ServletCita extends HttpServlet{
 		case "ejecutarCita":
 			ejecutarCita(request, response);
 			break;
+		case "cerrarTratamiento":
+			cerrarTratamiento(request, response);
+			break;
 		case "verCita":
 			try{
 				Integer idCita = new Integer(request.getParameter("idCita"));
@@ -155,7 +158,7 @@ public class ServletCita extends HttpServlet{
 	}
 
 	public void guardarCita(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
+		
 		DaoCitas dao = new DaoCitas();
 		CitaTo citaTo = new CitaTo();
 		PersonaTo paciente = new PersonaTo();
@@ -190,6 +193,7 @@ public class ServletCita extends HttpServlet{
 						}
 					}
 				}
+				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
 				citaTo.setValoracion(true);
 				TratamientoTo tratamiento = new TratamientoTo();
 				tratamiento.setPaciente(paciente);
@@ -214,6 +218,7 @@ public class ServletCita extends HttpServlet{
 				dispatcher.forward(request, response);
 			}
 			else{
+				RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
 				if(request.getParameter("flag") != null){
 					TratamientoTo tratamiento = new TratamientoTo();
 					tratamiento = dao.consultarTratamiento(Integer.parseInt(request.getParameter("grupoTratamiento")));
@@ -247,6 +252,7 @@ public class ServletCita extends HttpServlet{
 			e.printStackTrace();
 			request.setAttribute("respuesta", "2");
 			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCrearCita.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
@@ -323,6 +329,26 @@ public class ServletCita extends HttpServlet{
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+
+	private void cerrarTratamiento(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		DaoCitas dao = new DaoCitas();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaCerrarTratamiento.jsp");
+		try {
+			int idTratamiento = Integer.parseInt(request.getParameter("idTratamiento"));
+			int idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
+			request.setAttribute("idPaciente", idPaciente);
+			if(dao.CerrarTratamiento(idTratamiento)) {			
+				request.setAttribute("mensaje", "Tratamiento cerrado exitosamente");		
+			}
+			else {
+				request.setAttribute("mensaje", "Hubo un problema no identificado al cerrar el tratamiento");
+			}
+		}catch(Exception e) {
+			request.setAttribute("mensaje", "Hubo un problema no al cerrar el tratamiento:\n " + e.getMessage());
+		}
+
+		dispatcher.forward(request, response);
 	}
 
 	private String parsearFecha(String fecha){

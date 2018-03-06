@@ -244,6 +244,7 @@ public class ServletReportesPracticante extends HttpServlet {
 		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();	
 
 		try{
+			request.setCharacterEncoding("UTF-8");
 			daoSesionIndividual.actualizarModificacionesReporteSesion(Integer.valueOf(request.getParameter("idReporte")), Integer.valueOf(request.getParameter("numRecibo")),
 					request.getParameter("estadoReporte"), obtenerParametroCodificado(request, "campoObjetivo"),
 					obtenerParametroCodificado(request, "campoDescripcion"), obtenerParametroCodificado(request, "campoTareas"),
@@ -252,7 +253,7 @@ public class ServletReportesPracticante extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaActualizarReporteCita.jsp");
 			dispatcher.forward(request, response);    				
 		}catch(Exception e){
-			e.getLocalizedMessage();
+			e.printStackTrace();
 		}
 	}
 	

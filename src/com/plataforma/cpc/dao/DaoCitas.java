@@ -27,7 +27,7 @@ public class DaoCitas extends ConexionOracle{
 
 		int numeroParametros = 0;
 		String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE,ESTADO,"; 
-				sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE 1=1 ";
+		sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE 1=1 ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -82,7 +82,7 @@ public class DaoCitas extends ConexionOracle{
 		conexionActual = new ConexionOracle();
 		ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
 		String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_TRATAMIENTO,ID_PACIENTE,ESTADO,";
-			sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE  ID_PRACTICANTE=? ";
+		sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE  ID_PRACTICANTE=? ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -132,7 +132,7 @@ public class DaoCitas extends ConexionOracle{
 		conexionActual = new ConexionOracle();
 		CitaTo citaTo = new CitaTo();
 		String sql = "SELECT ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE,ID_TRATAMIENTO,ESTADO,";
-			sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE ID_CITA = ? ";
+		sql+= "ES_VALORACION,NUM_CITA FROM CITA WHERE ID_CITA = ? ";
 
 		try {
 			conexionActual.conectar();
@@ -178,15 +178,15 @@ public class DaoCitas extends ConexionOracle{
 		boolean retorno;
 		conexionActual = new ConexionOracle();
 		String sqlCita = "INSERT INTO CITA (ID_CITA,SALON,FECHA_SOLICITUD,FECHA_CITA,ID_PRACTICANTE,ID_PACIENTE,ID_TRATAMIENTO,ES_VALORACION,NUM_CITA) ";
-			   sqlCita+= "VALUES (CITA_SEQ.NEXTVAL,?,TO_TIMESTAMP(SYSDATE,'DD/MM/RR HH24:MI:SS'), ?,?,?,?,?,?)";
-				
+		sqlCita+= "VALUES (CITA_SEQ.NEXTVAL,?,TO_TIMESTAMP(SYSDATE,'DD/MM/RR HH24:MI:SS'), ?,?,?,?,?,?)";
+
 		String sqlAvance = "UPDATE TRATAMIENTO SET NUM_CITA_ACTUAL = NUM_CITA_ACTUAL + 1 WHERE ID_TRATAMIENTO = ? ";
-		
+
 		String sqlEstado = "UPDATE TRATAMIENTO SET ESTADO = 'abierto' WHERE ID_TRATAMIENTO = ? ";
 		try {
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
-			
+
 			conexionActual.prepararSentencia(sqlCita);	
 			conexionActual.agregarAtributo(1, cita.getSalon()); 
 			conexionActual.agregarAtributo(2, cita.getFechaCita()); 
@@ -197,17 +197,17 @@ public class DaoCitas extends ConexionOracle{
 			conexionActual.agregarAtributo(6, valoracion);
 			conexionActual.agregarAtributo(7, cita.getNumCita());
 			conexionActual.ejecutarActualizacion();
-			
+
 			conexionActual.prepararSentencia(sqlAvance);
 			conexionActual.agregarAtributo(1, cita.getTratamiento().getIdTratamiento());
 			conexionActual.ejecutarActualizacion();
-			
+
 			if(valoracion == 0){
 				conexionActual.prepararSentencia(sqlEstado);
 				conexionActual.agregarAtributo(1, cita.getTratamiento().getIdTratamiento());
 				conexionActual.ejecutarActualizacion();
 			}
-			
+
 			conexionActual.commit();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
@@ -233,7 +233,7 @@ public class DaoCitas extends ConexionOracle{
 		int id = 0;
 		conexionActual = new ConexionOracle();
 		String sql = "INSERT INTO TRATAMIENTO (ID_TRATAMIENTO,ID_PACIENTE,FECHA_INICIO,TIPO) ";
-				sql+= "VALUES (TRATAMIENTO_SEQ.NEXTVAL,?,?,?)";
+		sql+= "VALUES (TRATAMIENTO_SEQ.NEXTVAL,?,?,?)";
 
 		try {
 			conexionActual.conectar();
@@ -243,11 +243,11 @@ public class DaoCitas extends ConexionOracle{
 			conexionActual.agregarAtributo(3, tratamiento.getTipo()); 
 
 			conexionActual.ejecutarActualizacion();
-			
+
 			sql = "SELECT TRATAMIENTO_SEQ.CURRVAL FROM DUAL ";
 			conexionActual.prepararSentencia(sql);	
 			ResultSet rs = conexionActual.ejecutarSentencia();
-			
+
 			if ( rs!=null && rs.next() ) {
 				id = rs.getInt(1);
 				System.out.println(id);
@@ -262,7 +262,7 @@ public class DaoCitas extends ConexionOracle{
 				e.printStackTrace();
 			}
 		}	
-		
+
 		return id;
 	}
 
@@ -297,7 +297,7 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return retorno;
 	}
-	
+
 	public boolean actualizarEstadoCita(Conexion con, Integer id, String estado){
 		boolean retorno;
 		conexionActual = con;
@@ -327,15 +327,15 @@ public class DaoCitas extends ConexionOracle{
 		try {
 			conexionActual.conectar();
 			conexionActual.iniciarTransaccion();
-			
+
 			conexionActual.prepararSentencia(sqlEliminar);
 			conexionActual.agregarAtributo(1, cita.getIdCita()); 
 			conexionActual.ejecutarActualizacion();
-			
+
 			conexionActual.prepararSentencia(sqlRestar);
 			conexionActual.agregarAtributo(1, cita.getTratamiento().getIdTratamiento());
 			conexionActual.ejecutarActualizacion();
-			
+
 			conexionActual.commit();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
@@ -356,7 +356,7 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return retorno;
 	}
-	
+
 	public ArrayList<TratamientoTo> concultarTratamientosPaciente (Integer idPaciente){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
@@ -374,10 +374,10 @@ public class DaoCitas extends ConexionOracle{
 				tratamientoTo.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
 				tratamientoTo.setEstado(rs.getString("ESTADO"));
 				tratamientoTo.setFechaInicio(rs.getTimestamp("FECHA_INICIO").toLocalDateTime());
-				
+
 				if(rs.getTimestamp("FECHA_CIERRE") != null)
 					tratamientoTo.setFechaCierre(rs.getTimestamp("FECHA_CIERRE").toLocalDateTime());
-				
+
 				tratamientoTo.setTipo(rs.getString("TIPO"));
 
 				tratamientos.add(tratamientoTo);
@@ -394,7 +394,7 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return tratamientos;
 	}
-	
+
 	public TratamientoTo consultarTratamiento(Integer idTratamiento){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
@@ -408,19 +408,19 @@ public class DaoCitas extends ConexionOracle{
 			rs = conexionActual.ejecutarSentencia();
 
 			while (rs.next()){
-				
+
 				tratamientoTo.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
-				
+
 				PersonaTo paciente = new PersonaTo();
 				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));				
 				tratamientoTo.setPaciente(paciente);
-				
+
 				tratamientoTo.setEstado(rs.getString("ESTADO"));
 				tratamientoTo.setFechaInicio(rs.getTimestamp("FECHA_INICIO").toLocalDateTime());
-				
+
 				if(rs.getTimestamp("FECHA_CIERRE") != null)
 					tratamientoTo.setFechaCierre(rs.getTimestamp("FECHA_CIERRE").toLocalDateTime());
-				
+
 				tratamientoTo.setTipo(rs.getString("TIPO"));
 				tratamientoTo.setNumCitaActual(rs.getInt("NUM_CITA_ACTUAL"));
 				tratamientoTo.setPendiente(rs.getInt("PENDIENTE") > 0 ? true : false);
@@ -437,19 +437,19 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return tratamientoTo;
 	}
-	
+
 	public ArrayList<CitaTo> consultarCitasPacienteTratamiento(Integer idPaciente, Integer idTratamiento){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
 		ArrayList<CitaTo> citas = new ArrayList<CitaTo>();
 		String sql = "SELECT CITA.ID_CITA, CITA.SALON, CITA.FECHA_SOLICITUD, CITA.FECHA_CITA,CITA.ID_PRACTICANTE, CITA.ID_PACIENTE, ";
-				sql+="CITA.ESTADO, CITA.ID_TRATAMIENTO, CITA.ES_VALORACION, CITA.NUM_CITA ";
-				sql+="FROM PERSONA PER, TRATAMIENTO TRA, CITA CITA ";
-				sql+="WHERE PER.PERFIL_ID_PERFIL  =  4 ";
-				sql+="AND PER.ID_PERSONA = TRA.ID_PACIENTE ";
-				sql+="AND CITA.ID_TRATAMIENTO = TRA.ID_TRATAMIENTO ";
-				sql+="AND PER.ID_PERSONA =NVL(?,PER.ID_PERSONA) ";
-				sql+="AND TRA.ID_TRATAMIENTO = NVL(?,TRA.ID_TRATAMIENTO) ";
+		sql+="CITA.ESTADO, CITA.ID_TRATAMIENTO, CITA.ES_VALORACION, CITA.NUM_CITA ";
+		sql+="FROM PERSONA PER, TRATAMIENTO TRA, CITA CITA ";
+		sql+="WHERE PER.PERFIL_ID_PERFIL  =  4 ";
+		sql+="AND PER.ID_PERSONA = TRA.ID_PACIENTE ";
+		sql+="AND CITA.ID_TRATAMIENTO = TRA.ID_TRATAMIENTO ";
+		sql+="AND PER.ID_PERSONA =NVL(?,PER.ID_PERSONA) ";
+		sql+="AND TRA.ID_TRATAMIENTO = NVL(?,TRA.ID_TRATAMIENTO) ";
 		try {
 			conexionActual.conectar();
 			conexionActual.prepararSentencia(sql);
@@ -472,13 +472,13 @@ public class DaoCitas extends ConexionOracle{
 				PersonaTo paciente = new PersonaTo();
 				paciente.setIdPersona(rs.getInt("ID_PACIENTE"));
 				citaTo.setPaciente(paciente);
-				
+
 				citaTo.setEstado(rs.getString("ESTADO"));
-				
+
 				TratamientoTo tratamiento = new TratamientoTo();
 				tratamiento.setIdTratamiento(rs.getInt("ID_TRATAMIENTO"));
 				citaTo.setTratamiento(tratamiento);
-				
+
 				int valoracion = rs.getInt("ES_VALORACION");
 				boolean b = (valoracion != 0);
 				citaTo.setValoracion(b);
@@ -497,5 +497,26 @@ public class DaoCitas extends ConexionOracle{
 			}
 		}	
 		return citas;
+	}
+
+	public boolean CerrarTratamiento(int idTratamiento) {
+		conexionActual = new ConexionOracle();
+		boolean retorno = Boolean.FALSE;
+
+		String sql = "UPDATE TRATAMIENTO SET ESTADO = 'Cerrado' WHERE ID_TRATAMIENTO = ?";
+
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idTratamiento);
+
+			conexionActual.ejecutarActualizacion();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}	
+
+		return retorno;
 	}
 }

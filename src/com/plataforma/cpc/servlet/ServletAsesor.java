@@ -186,7 +186,7 @@ public class ServletAsesor extends HttpServlet {
 			Integer idPracticante = Integer.parseInt(request.getParameter("idPracticante"));
 			ArrayList<SesionIndividualPreviewTo> valoracionPreview = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
 			ArrayList<SesionIndividualPreviewTo> reportesPreview = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
-			
+
 			request.setCharacterEncoding("UTF-8");
 			request.setAttribute("idPracticante", idPracticante);
 			request.setAttribute("pNom", obtenerParametroCodificado(request, "pNom"));
@@ -240,8 +240,8 @@ public class ServletAsesor extends HttpServlet {
 				}
 			}
 			request.setAttribute("reportesPreview", reportesFiltrados);
-			
-			
+
+
 			// Filtra los reportes de valoracion
 			ArrayList<SesionIndividualPreviewTo> valoracionesFiltrados = new ArrayList<SesionIndividualPreviewTo>();
 			for(int i = 0; i < valoracionPreview.size(); i++){
@@ -254,7 +254,7 @@ public class ServletAsesor extends HttpServlet {
 				}
 			}
 			request.setAttribute("valoracionPreview", valoracionesFiltrados);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verReportesPracticantes.jsp");
 			dispatcher.forward(request, response);
 		}catch(Exception e){
@@ -297,7 +297,7 @@ public class ServletAsesor extends HttpServlet {
 	 */
 	private void guardarComentarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		request.setCharacterEncoding("ISO-8859-1");
+
 		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
 		ComentariosTo comentarios = new ComentariosTo();
 		String accionAsesor = request.getParameter("accionAsesor");
@@ -305,10 +305,11 @@ public class ServletAsesor extends HttpServlet {
 		try{
 
 			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
-			comentarios.setComentariosObjetivo(request.getParameter("campoObjetivo"));
-			comentarios.setComentariosDescripcion(request.getParameter("campoDesc"));
-			comentarios.setComentariosTareas(request.getParameter("campoTareasAsig"));
-			comentarios.setComentariosActividades(request.getParameter("campoActividades"));
+			request.setCharacterEncoding("UTF-8");
+			comentarios.setComentariosObjetivo(obtenerParametroCodificado(request, "campoObjetivo"));			
+			comentarios.setComentariosDescripcion(obtenerParametroCodificado(request, "campoDesc"));		
+			comentarios.setComentariosTareas(obtenerParametroCodificado(request, "campoTareasAsig"));		
+			comentarios.setComentariosActividades(obtenerParametroCodificado(request, "campoActividades"));
 			System.out.println("RESULTADO: " + accionAsesor);
 
 			if(daoSesion.guardarComentarios(idReporte, comentarios, accionAsesor)){
@@ -339,12 +340,13 @@ public class ServletAsesor extends HttpServlet {
 		ComentariosTo comentarios = new ComentariosTo();
 
 		try{
+			request.setCharacterEncoding("UTF-8");
 			Integer idComentarios = Integer.parseInt(request.getParameter("idComentarios"));
 			comentarios.setIdComentarios(idComentarios);
-			comentarios.setComentariosObjetivo(request.getParameter("comObjetivo"));
-			comentarios.setComentariosDescripcion(request.getParameter("comDescripcion"));
-			comentarios.setComentariosTareas(request.getParameter("comTareas"));
-			comentarios.setComentariosActividades(request.getParameter("comActividades"));
+			comentarios.setComentariosObjetivo(obtenerParametroCodificado(request, "comObjetivo"));		
+			comentarios.setComentariosDescripcion(obtenerParametroCodificado(request, "comDescripcion"));		
+			comentarios.setComentariosTareas(obtenerParametroCodificado(request, "comTareas"));	
+			comentarios.setComentariosActividades(obtenerParametroCodificado(request, "comActividades"));
 
 			if(daoSesion.actualizarComentarios(comentarios)){
 				System.out.println("Actualizacion exitosa");
@@ -390,7 +392,7 @@ public class ServletAsesor extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	private void aceptarValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual daoSesion = new DaoSesionIndividual();
 
@@ -412,7 +414,7 @@ public class ServletAsesor extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
 		String cadena = request.getParameter(valor);
 		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
