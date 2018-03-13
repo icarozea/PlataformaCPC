@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.plataforma.cpc.dao.DaoUtilidades;
 import com.plataforma.cpc.modelo.EpsBean;
+import com.plataforma.cpc.modelo.HistoriaClinicaBean;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.modelo.PersonaDetalleBean;
 import com.plataforma.cpc.modelo.UtilBean;
 import com.plataforma.cpc.to.EpsTo;
+import com.plataforma.cpc.to.HistoriaClinicaTo;
 import com.plataforma.cpc.to.PerfilTo;
 import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
@@ -206,11 +208,18 @@ public class ServletPersona extends HttpServlet {
 	private void listarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{		
 			PersonaBean personaBean = new PersonaBean();
+			HistoriaClinicaBean historiaBean = new HistoriaClinicaBean();
 			ArrayList<PersonaTo> listaPacientes = new ArrayList<PersonaTo>();
 
 			PersonaTo practicante = (PersonaTo)request.getSession().getAttribute("personaSession");
 			listaPacientes = personaBean.consultarAsignados(practicante.getIdPersona());
-
+			
+			for(int i = 0; i < listaPacientes.size(); i++) {
+				PersonaTo actual = listaPacientes.get(i);
+				HistoriaClinicaTo hc = historiaBean.consultarHistoriaClinica(actual.getIdPersona());
+				actual.setHistoriaClinica(hc);
+			}
+			
 			request.setAttribute("listaPacientes", listaPacientes);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verPacientes.jsp");
 			dispatcher.forward(request, response);

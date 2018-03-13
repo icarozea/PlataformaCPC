@@ -89,7 +89,14 @@
 		</table>
 		<br>
         <input type="button" onclick="validarTratamiento()" id="btnAceptar" value="Aceptar" class="botones"/>
-        <a href="busquedaPersonas"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>		
+        <c:choose>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+				<a href="busquedaPersonas"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>	
+			</c:when>
+			<c:when test="${sessionScope.personaSession.perfil.idPerfil == 3}">
+				<a href="./ServletPersona?operacion=listarPacientes"><input type="button" id="btnVolver" value="Volver" class="botones"/></a>	
+			</c:when>
+		</c:choose>	
 	</form>
 	
 	<form id="FormCerrar" name="FormCerrar" action="./ServletCita" method="POST">

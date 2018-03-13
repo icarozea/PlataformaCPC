@@ -40,7 +40,8 @@
 				<th>Dirección</th>
 				<th>Teléfono</th>
 				<th>Correo</th>
-				<th>Ver</th>
+				<th>Historia Clinica</th>
+				<th>Detalle</th>
 				<th>Acción</th>
 			</thead>
 			<tbody>
@@ -52,6 +53,7 @@
 					<td>${persona.direccion}</td>
 					<td>${persona.telefono}</td>
 					<td>${persona.correo}</td>
+					<td><a href="./ServletHistoriaClinica?operacion=detalleTratamiento&amp;idPersona=${persona.idPersona}">${persona.historiaClinica.codigo}</a></td>
 					<td><input type="button" name="verPersona" id="verPersona" value="" class="btnVer" onclick="verPaciente(${persona.idPersona})"/></td>
 					<td><input type="submit" name="editarPersona" id="editarPersona" value="" class="btnEditarPersona" onclick="enviarFormulario('crearCita',${sessionScope.personaSession.idPersona},${persona.idPersona})"/></td>
 				</tr>
