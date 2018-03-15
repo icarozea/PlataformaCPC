@@ -74,6 +74,9 @@
         	</div>  
         	
 		<div id="gestionContenido">
+			<div class="fieldgroup">
+        		<label class="cabin">Historia Clinica No: ${requestScope.codigo}</label>
+        	</div>
 			<table id="tablaUsuarios">
 				<thead>
 					<th>Cita número</th>

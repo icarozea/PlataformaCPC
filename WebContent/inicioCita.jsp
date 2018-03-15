@@ -35,12 +35,12 @@
 					<tr>
 						<td>
 							<div>
-								<a href="./ServletCita?operacion=crearCita&idPersona=${sessionScope.personaSession.idPersona}"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
+								<a href="./ServletCita?operacion=crearCita&idPracticante=${sessionScope.personaSession.idPersona}"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<td class="cabin"><a href="./ServletCita?operacion=crearCita&idPersona=${sessionScope.personaSession.idPersona}">CREAR CITA</a><br></td>
+						<td class="cabin"><a href="./ServletCita?operacion=crearCita&idPracticante=${sessionScope.personaSession.idPersona}">CREAR CITA</a><br></td>
 					</tr>
 				</table>	        	
         	</div>

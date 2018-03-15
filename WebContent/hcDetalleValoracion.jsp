@@ -105,7 +105,9 @@
 			<div>
 			<input type="button" id="btnImprimir" value="Imprimir" class="botones" onclick="toPDF(2)">
 			<c:if test="${sessionScope.personaSession.perfil.idPerfil == 2 || sessionScope.personaSession.perfil.idPerfil == 3}">
-				<input type="submit" id="btnGuardar" value="Guardar" class="botones">
+				<c:if test="${requestScope.aceptado == 0}">		
+					<input type="submit" id="btnGuardar" value="Guardar" class="botones">
+				</c:if>
 			</c:if>
 			<c:if test="${sessionScope.personaSession.perfil.idPerfil == 2}">
 				<input type="button" id="btnAprobar" value="Aprobar" class="botones" onClick="aprobar()">

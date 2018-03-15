@@ -106,6 +106,7 @@ public class ServletReportesPracticante extends HttpServlet {
 			String pacienteActual = request.getParameter("pacienteActual");
 			String tratamientoActual = request.getParameter("tratamientoActual");
 			String tipoCambio = request.getParameter("tipoCambio");
+			String numHistoria = "";
 			int filtroPaciente = 0;
 			int filtroTratamiento = 0;			
 			ArrayList<TratamientoTo> tratamientos = new ArrayList<TratamientoTo>();
@@ -113,13 +114,17 @@ public class ServletReportesPracticante extends HttpServlet {
 			// Consigue los datos asociados al paciente actual si existe, o al primero encontrado de lo contrario
 			if(pacienteActual != null){
 				filtroPaciente = Integer.parseInt(pacienteActual);
-				filtroTratamiento = Integer.parseInt(tratamientoActual);
+				if(tratamientoActual != null)
+					filtroTratamiento = Integer.parseInt(tratamientoActual);
 				tratamientos = historiaBean.consultarTratamientosxPaciente(filtroPaciente);
+				numHistoria = historiaBean.consultarHistoriaClinica(Integer.parseInt(pacienteActual)).getCodigo();
 			}
 			else if(listaPacientes.size() > 0){
 				filtroPaciente = listaPacientes.get(0).getIdPersona();
 				tratamientos = historiaBean.consultarTratamientosxPaciente(listaPacientes.get(0).getIdPersona());
-				filtroTratamiento = tratamientos.get(0).getIdTratamiento();
+				if(tratamientos.size() > 0)
+					filtroTratamiento = tratamientos.get(0).getIdTratamiento();
+				numHistoria = historiaBean.consultarHistoriaClinica(listaPacientes.get(0).getIdPersona()).getCodigo();
 				tipoCambio = "vacio";
 			}
 			else {
@@ -129,11 +134,13 @@ public class ServletReportesPracticante extends HttpServlet {
 			request.setAttribute("listaTratamientos", tratamientos);
 			request.setAttribute("pacienteActual", pacienteActual);
 			request.setAttribute("tratamientoActual", tratamientoActual);
+			request.setAttribute("codigo", numHistoria);
 
 			// Se filtran los reportes dependiendo del tipo de cambio (paciente o tratamiento)
 
 			if(tipoCambio.equals("paciente")){
-				filtroTratamiento = tratamientos.get(0).getIdTratamiento();
+				if(tratamientos.size() > 0)
+					filtroTratamiento = tratamientos.get(0).getIdTratamiento();
 			}
 
 			// Filtra los reportes de sesion
@@ -222,6 +229,10 @@ public class ServletReportesPracticante extends HttpServlet {
 			citaTo.setIdCita(idCita);
 			citaTo = daoCitas.consultarCita(citaTo);
 			request.setAttribute("cita", citaTo);
+			if(citaTo.getEstado().equals("Aceptado"))
+				request.setAttribute("aceptado", 1);
+			else
+				request.setAttribute("aceptado", 0);
 			reporteValoracionTo valoracion = historiaClinica.consultarReportesValoracion(idCita);
 			if(valoracion != null)
 				request.setAttribute("valoracion", valoracion);
