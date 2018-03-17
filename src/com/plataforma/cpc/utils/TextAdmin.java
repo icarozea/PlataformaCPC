@@ -2,6 +2,7 @@ package com.plataforma.cpc.utils;
 
 import java.io.BufferedReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.sql.Clob;
 import static java.nio.charset.StandardCharsets.*;
 import org.jasypt.util.text.StrongTextEncryptor;
@@ -84,11 +85,12 @@ public class TextAdmin {
 	 * Formatea una cadena de texto a UTF-8 para su correcta visualización
 	 * @param text Cadena de texto original
 	 * @return Cadena de texto formateada a UTF-8
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String parseUTF(String text) {
+	public static String parseUTF(String text) throws UnsupportedEncodingException{
 		if(!(text == null)) {
 			if(!text.equals("")) {
-				byte[] ptext = text.getBytes(UTF_8); 
+				byte[] ptext = text.getBytes("ISO8859_1"); 
 				String returnText = new String(ptext, UTF_8); 
 				return returnText;
 			}
