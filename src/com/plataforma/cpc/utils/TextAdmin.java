@@ -90,7 +90,7 @@ public class TextAdmin {
 	public static String parseUTF(String text) throws UnsupportedEncodingException{
 		if(!(text == null)) {
 			if(!text.equals("")) {
-				byte[] ptext = text.getBytes("ISO8859_1"); 
+				byte[] ptext = text.getBytes("Windows-1252"); 
 				String returnText = new String(ptext, UTF_8); 
 				return returnText;
 			}
