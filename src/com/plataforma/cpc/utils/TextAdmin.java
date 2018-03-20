@@ -91,7 +91,7 @@ public class TextAdmin {
 	public static String parseUTF(String text) throws UnsupportedEncodingException{
 		if(!(text == null)) {
 			if(!text.equals("")) {
-				byte[] ptext = text.getBytes("Windows-1252"); 
+				byte[] ptext = text.getBytes(UTF_8); 
 				String returnText = new String(ptext, UTF_8); 
 				return returnText;
 			}
@@ -103,7 +103,7 @@ public class TextAdmin {
 		if(!(text == null)) {
 			if(!text.equals("")) {
 				byte[] ptext = text.getBytes(UTF_8); 
-				String returnText = new String(ptext, "Windows-1252"); 
+				String returnText = new String(ptext, UTF_8); 
 				return returnText;
 			}
 		}

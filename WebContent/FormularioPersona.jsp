@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="estilo.css"></link>
 <script type="text/javascript" src="js/ValidarPassword.js"></script>
 <script type="text/javascript" src="js/util.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta  charset="UTF-8">
 <title>Agregar Persona</title>
 </head>
 		<%
@@ -39,7 +39,7 @@
 				<h1 id="titleForm" class="cabin">Nueva Persona</h1>
 			</c:otherwise>
 		</c:choose>
-		<form id="register-form" action="./ServletPersona" method="post" accept-charset="UTF-8">
+		<form id="register-form" action="./ServletPersona" method="post" accept-charset="UTF-8 ISO-8859-1">
 			<input type="hidden" name="operacion" id="operacion" />
 			<input type="hidden" name="superior" id="superior" value="${requestScope.sup}" />
 			<input type="hidden" name="id" id="id" value="${requestScope.idPersona}" />

@@ -25,7 +25,7 @@
 <link rel="stylesheet" type="text/css" href="js/datepick/css/jquery.datepick.css"> 
 <script type="text/javascript" src="js/datepick/js/jquery.plugin.js"></script> 
 <script type="text/javascript" src="js/datepick/js/jquery.datepick.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <script>
   $( function() {
     $( "#fecha_nacimiento" ).datepick({dateFormat: 'yyyy-mm-dd'});
