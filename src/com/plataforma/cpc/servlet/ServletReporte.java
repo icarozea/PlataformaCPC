@@ -84,7 +84,6 @@ public class ServletReporte extends HttpServlet {
 		String month = fechaRaw.getMonthValue() > 10 ? fechaRaw.getMonthValue() + "" : "0" + fechaRaw.getMonthValue();
 		String year = (fechaRaw.getYear() - 2000) + "";
 		String fechaInicio = "01/" + month + "/" + year + " 01:00:00,000000000";
-		System.out.println("fecha inicio: " + fechaInicio);
 		month = (fechaRaw.getMonthValue() + 1) > 10 ? (fechaRaw.getMonthValue() + 1) + "" : "0" + (fechaRaw.getMonthValue() + 1);
 		String fechaFin = "01/" + month + "/" + year + " 01:00:00,000000000";
 		parametros.put("ID_PRACTICANTE",personaSesion.getIdPersona());

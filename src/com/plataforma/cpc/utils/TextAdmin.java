@@ -39,7 +39,8 @@ public class TextAdmin {
 			Clob clob = conexion.crearClob();
 			StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
 			textEncryptor.setPassword(ENC_KEY);
-			String myEncryptedText = textEncryptor.encrypt(texto);
+			String encodedText = parseWIN(texto);
+			String myEncryptedText = textEncryptor.encrypt(encodedText);
 			clob.setString(1, myEncryptedText);
 			return clob;
 		}
@@ -92,6 +93,17 @@ public class TextAdmin {
 			if(!text.equals("")) {
 				byte[] ptext = text.getBytes("Windows-1252"); 
 				String returnText = new String(ptext, UTF_8); 
+				return returnText;
+			}
+		}
+		return "";
+	}
+	
+	public static String parseWIN(String text) throws UnsupportedEncodingException{
+		if(!(text == null)) {
+			if(!text.equals("")) {
+				byte[] ptext = text.getBytes(UTF_8); 
+				String returnText = new String(ptext, "Windows-1252"); 
 				return returnText;
 			}
 		}
