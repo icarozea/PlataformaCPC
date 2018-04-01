@@ -1,5 +1,7 @@
 package com.plataforma.cpc.modelo;
 
+import java.util.ArrayList;
+
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import com.plataforma.cpc.dao.DaoPersona;
@@ -14,7 +16,7 @@ public class UsuarioBean {
 	//-------------------------------------------------------------------------------------------
 	// Funciones
 	//-------------------------------------------------------------------------------------------
-
+	
 	/**
 	 * Valida un usuario dado el numero de documento y la clave capturadas en el formulario del index
 	 * @param nombreUsuario Numero de documento del usuario
@@ -23,19 +25,18 @@ public class UsuarioBean {
 	 * de documento específico si la clave no pudo ser validada o una persona con los campos nulos si no
 	 * se encontro en la base de datos. 
 	 */
-	public PersonaTo validarUsuario(String nombreUsuario, String contrasenia){
+	public ArrayList<PersonaTo> validarUsuario(String nombreUsuario, String contrasenia){
 		DaoPersona daoPersona= new DaoPersona();
-		PersonaTo persona = new PersonaTo();
-		persona = daoPersona.consultarPersonaUsuario(nombreUsuario);
-		String encryptedPass = persona.getPassword();
-
-		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-
-		if(!passwordEncryptor.checkPassword(contrasenia, encryptedPass))
-			persona.setNumeroDocumento("000");
-
-
-		persona.setPassword("");
-		return persona;
+		ArrayList<PersonaTo> perfiles = new ArrayList<PersonaTo>();
+		perfiles = daoPersona.consultarPersonaUsuario(nombreUsuario);
+		if(perfiles.size() > 0){
+			String encryptedPass = perfiles.get(0).getPassword();
+			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+			
+			if(!passwordEncryptor.checkPassword(contrasenia, encryptedPass))
+				perfiles.get(0).setNumeroDocumento("000");
+		}
+		
+		return perfiles;
 	}
 }

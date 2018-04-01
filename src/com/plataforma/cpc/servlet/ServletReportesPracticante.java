@@ -270,7 +270,7 @@ public class ServletReportesPracticante extends HttpServlet {
 	
 	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
 		String cadena = request.getParameter(valor);
-		cadena = new String(cadena.getBytes(), request.getCharacterEncoding());
+		cadena = new String(cadena.getBytes("ISO-8859-1"), request.getCharacterEncoding());
 		return cadena;
 	}
 }

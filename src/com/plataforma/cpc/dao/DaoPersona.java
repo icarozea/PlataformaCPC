@@ -299,11 +299,11 @@ public class DaoPersona {
 		return personaTo;
 	}
 
-	public PersonaTo consultarPersonaUsuario (String numeroDocumento){
+	public ArrayList<PersonaTo> consultarPersonaUsuario (String numeroDocumento){
 
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();
-		PersonaTo personaTo = new PersonaTo();
+		ArrayList<PersonaTo> resultados = new ArrayList<PersonaTo>();
 		String sql = "SELECT ID_PERSONA,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,NUMERO_DOCUMENTO,DIRECCION,TELEFONO,CORREO,TIPO_DOCUMENTO_ID_DOCUMENTO, EPS_ID_EPS,PERFIL_ID_PERFIL, PERSONA_ID_SUPERIOR, OTRO_TEL, CODIGO, JORNADA, PASS FROM PERSONA WHERE NUMERO_DOCUMENTO = ?";
 
 		try {
@@ -315,6 +315,7 @@ public class DaoPersona {
 			rs = conexionActual.ejecutarSentencia();
 
 			while (rs.next()){
+				PersonaTo personaTo = new PersonaTo();
 				TipoDocumentoTo tipoDocumentoTo = new TipoDocumentoTo();
 				EpsTo epsTo = new EpsTo();
 				PerfilTo perfilTo = new PerfilTo();
@@ -345,6 +346,7 @@ public class DaoPersona {
 				personaTo.setCodigoEstudiante(rs.getInt("CODIGO"));
 				personaTo.setJornada(rs.getString("JORNADA"));
 				personaTo.setPassword(rs.getString("PASS"));
+				resultados.add(personaTo);
 			}
 		} catch (Exception e) {
 			System.out.println("Error en la consulta de usuarios");
@@ -357,7 +359,7 @@ public class DaoPersona {
 				e.printStackTrace();
 			}
 		}	
-		return personaTo;
+		return resultados;
 	}
 
 	public int crearPersona(PersonaTo persona){
@@ -606,14 +608,14 @@ public class DaoPersona {
 			conexionActual.prepararSentencia(sql);
 			conexionActual.agregarAtributo(1, persona.getSexo()); 	
 			conexionActual.agregarAtributo(2, persona.getEdad()); 
-			conexionActual.agregarAtributo(4, TextAdmin.parseWIN(persona.getAcudiente())); 
-			conexionActual.agregarAtributo(5, TextAdmin.parseWIN(persona.getProceso())); 
+			conexionActual.agregarAtributo(3, TextAdmin.parseWIN(persona.getAcudiente())); 
+			conexionActual.agregarAtributo(4, TextAdmin.parseWIN(persona.getProceso())); 
 			conexionActual.agregarAtributo(5, persona.getPerteneceU());
-			conexionActual.agregarAtributo(7,TextAdmin.parseWIN(persona.getFacultad()));
+			conexionActual.agregarAtributo(6,TextAdmin.parseWIN(persona.getFacultad()));
 			conexionActual.agregarAtributo(7, persona.getSemestre());
-			conexionActual.agregarAtributo(9, TextAdmin.parseWIN(persona.getProblematica()));
-			conexionActual.agregarAtributo(10, TextAdmin.parseWIN(persona.getObservación()));
-			conexionActual.agregarAtributo(11, TextAdmin.parseWIN(persona.getNombreModifica()));
+			conexionActual.agregarAtributo(8, TextAdmin.parseWIN(persona.getProblematica()));
+			conexionActual.agregarAtributo(9, TextAdmin.parseWIN(persona.getObservación()));
+			conexionActual.agregarAtributo(10, TextAdmin.parseWIN(persona.getNombreModifica()));
 			conexionActual.agregarAtributo(11, persona.getEstadoCivil());
 			conexionActual.agregarAtributo(12, persona.getFechaNacimiento());
 			conexionActual.agregarAtributo(13, persona.getLugarNacimiento());
