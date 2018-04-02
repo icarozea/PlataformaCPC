@@ -632,6 +632,8 @@ public class DaoSesionIndividual extends ConexionOracle{
 				String actividades = TextAdmin.getTexto(rs.getClob("ACTIVIDADES_PROX_SESION"));
 				sesionComentada.setActividadesProximaSesion(actividades);
 				
+				sesionComentada.setNumRecibo(rs.getInt("RECIBO"));
+				
 				String com_objetivo = TextAdmin.getTexto(rs.getClob("COM_OBJETIVO"));
 				comentario.setComentariosObjetivo(com_objetivo);
 				
@@ -644,7 +646,6 @@ public class DaoSesionIndividual extends ConexionOracle{
 				String com_actividades = TextAdmin.getTexto(rs.getClob("COM_ACTIVIDADES"));
 				comentario.setComentariosActividades(com_actividades);
 				
-				sesionComentada.setNumRecibo(rs.getInt("RECIBO"));
 				sesionComentada.setComentarios(comentario);
 				boolean fallo;
 				if (rs.getInt("ES_FALLO")==1) {

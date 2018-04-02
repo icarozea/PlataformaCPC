@@ -19,13 +19,13 @@ public class TextAdmin {
 	//-------------------------------------------------------------------------------------------------------------------------
 	// Constantes
 	//-------------------------------------------------------------------------------------------------------------------------
-	
+
 	private final static String ENC_KEY = "76aa35"; // Clave de encriptación del texto. Puede guardarse en un properties para mayor seguridad en el futuro
-	
+
 	//-------------------------------------------------------------------------------------------------------------------------
 	// Funciones
 	//-------------------------------------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Genera un objeto Clob para almacenamiento en la base de datos a partir del texto que recibe por parámetro
 	 * El texto que se guarda se cifra y es necesario desencriptarlo para procesarlo
@@ -49,7 +49,7 @@ public class TextAdmin {
 			throw new Exception("Error al convertir el texto");
 		}
 	}
-	
+
 	/**
 	 * Lee un objeto tipo Clob y desencripta el texto que contiene. 
 	 * El texto debe haber sido encriptado con la llave que posee esta implementación
@@ -60,28 +60,30 @@ public class TextAdmin {
 	public static String getTexto(Clob clob) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		String returnText = "";
-	    try {
-	    	Reader reader = clob.getCharacterStream();
-	        BufferedReader br = new BufferedReader(reader);
-	        int b;
-	        while(-1 != (b = br.read()))
-	        {
-	            sb.append((char)b);
-	        }
-	        br.close();
-	        
-	        String encText = sb.toString();
-	        StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
-			textEncryptor.setPassword(ENC_KEY);
-			String plainText = textEncryptor.decrypt(encText);
-			returnText = parseUTF(plainText);
-	        
-	    } catch (Exception e) {
-	        throw new Exception("Error al convertir los datos recuperados de la BD");
-	    }
-	    return returnText;
+		try {
+			if(clob != null){
+				Reader reader = clob.getCharacterStream();
+				BufferedReader br = new BufferedReader(reader);
+				int b;
+				while(-1 != (b = br.read()))
+				{
+					sb.append((char)b);
+				}
+				br.close();
+
+				String encText = sb.toString();
+				StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+				textEncryptor.setPassword(ENC_KEY);
+				String plainText = textEncryptor.decrypt(encText);
+				returnText = parseUTF(plainText);
+			}
+
+		} catch (Exception e) {
+			throw new Exception("Error al convertir los datos recuperados de la BD");
+		}
+		return returnText;
 	}
-	
+
 	/**
 	 * Formatea una cadena de texto a UTF-8 para su correcta visualización
 	 * @param text Cadena de texto original
@@ -98,7 +100,7 @@ public class TextAdmin {
 		}
 		return "";
 	}
-	
+
 	public static String parseWIN(String text) throws UnsupportedEncodingException{
 		if(!(text == null)) {
 			if(!text.equals("")) {
