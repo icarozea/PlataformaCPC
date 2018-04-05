@@ -366,4 +366,60 @@ public class DaoUtilidades {
 		}
     	return retorno;
     }
+    
+    public int consultarPrecioActual() throws Exception{
+    	int precio = 0;
+    	conexionActual = new ConexionOracle();
+    	ResultSet rs = null;
+    	String sql = "SELECT PRECIO FROM COSTO ";
+    	
+    	try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			rs = conexionActual.ejecutarSentencia();
+			
+			while (rs.next()){
+				precio = rs.getInt("PRECIO");
+			}
+    	}
+    	catch (SQLException e) {
+			throw new Exception("Error al tratar de cargar el precio actual");
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (SQLException e) {
+				throw new Exception("Error en la conexión con la base de datos");
+			}
+		}
+    	return precio;
+    }
+    
+    public boolean actualizarPrecioActual(int precio) throws Exception{
+    	boolean retorno = false;
+    	conexionActual = new ConexionOracle();
+    	String sql = "UPDATE COSTO SET PRECIO = ? ";
+    	
+    	try {
+    		conexionActual.conectar();
+    		
+    		conexionActual.prepararSentencia(sql);
+    		conexionActual.agregarAtributo(1, precio);
+
+    		conexionActual.ejecutarActualizacion();
+    		
+    		retorno = Boolean.TRUE;
+    	}
+    	catch (Exception e) {
+    		retorno = Boolean.FALSE;
+    		e.printStackTrace();
+		}finally{	
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	return retorno;
+    }
 }

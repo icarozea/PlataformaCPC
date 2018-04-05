@@ -196,6 +196,15 @@
 	NUM_CITA_ACTUAL NUMBER DEFAULT 0, 
 	PENDIENTE NUMBER DEFAULT 0
    );
+   
+--------------------------------------------------------
+--  DDL for Table COSTO
+--------------------------------------------------------
+
+  CREATE TABLE COSTO 
+   (	PRECIO NUMBER DEFAULT 2000
+   );
+   
 --------------------------------------------------------
 --  DDL for Sequence CITA_SEQ
 --------------------------------------------------------
@@ -298,6 +307,9 @@ Insert into TIPO_DOCUMENTO (ID_DOCUMENTO,SIGLA,NOMBRE_DOCUMENTO) values ('3','CE
 Insert into TIPO_DOCUMENTO (ID_DOCUMENTO,SIGLA,NOMBRE_DOCUMENTO) values ('4','RC','Registro Civill');
 REM INSERTING into TRATAMIENTO
 SET DEFINE OFF;
+REM INSERTING into COSTO
+SET DEFINE OFF;
+Insert into COSTO (PRECIO) values ('2000');
 --------------------------------------------------------
 --  DDL for Index REPORTE_VALORACION_PK
 --------------------------------------------------------

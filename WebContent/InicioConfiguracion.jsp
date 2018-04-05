@@ -27,11 +27,17 @@
 						<div>
 							<a href="./Consecutivo?operacion=cargar"><button class="btn-xlarge"><i class="fa fa-file-text fa-4x" ></i></button></a>
 						</div>
+					</td>
+					<td>
+						<div>
+							<a href="./ServletCosto?operacion=Cargar"><button class="btn-xlarge"><i class="fa fa-plus fa-4x" ></i></button></a>
+						</div>
 					</td>	
          		</tr>
          			<td class="cabin"><a href="FormularioEPS.jsp">EPS</a></td>
 					<td class="cabin"><a href="./ServletCupos?operacion=Cargar">Cupos</a><br></td>
 					<td class="cabin"><a href="./Consecutivo?operacion=cargar">Cosecutivos HC</a><br></td>
+					<td class="cabin"><a href="./ServletCosto?operacion=Cargar">Costo Consulta</a><br></td>
          		<tr>
          			
          		</tr>
