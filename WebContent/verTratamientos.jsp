@@ -57,7 +57,7 @@
 					<td></td>
 					<td></td>
 					<td><input type="button" onclick="{document.FormTratamiento.submit();}" id="btnAceptar" value="Aceptar" class="botones"></td>
-					<td><a href="./ServletCita?operacion=crearCita&idPersona=${requestScope.cita.practicante.idPersona}"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a></td>
+					<td><a href="./ServletCita?operacion=crearCita&idPracticante=${requestScope.cita.practicante.idPersona}"><input type="button" id="btnCancelar" value="Cancelar" class="botones"></a></td>
 					<td></td>
 				</tr>
 			</table>

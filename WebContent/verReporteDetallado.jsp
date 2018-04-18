@@ -72,28 +72,28 @@
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Objetivo de la sesión:</b></label><br>
         				<textarea id="txtObjetivo" name="txtObjetivo" class="marginTextArea sizeTextArea" disabled>${requestScope.objetivoSesion}</textarea>
-						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea"></textarea>
+						<textarea id="campoObjetivo" name="campoObjetivo" class="marginTextArea sizeTextArea">${requestScope.comentarioReportePracticante.comentariosObjetivo}</textarea>
         			</div>
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Descripción de la sesión:</b></label><br>
         				<textarea id="txtDescripcion" name="txtDescripcion" class="marginTextArea sizeTextArea" disabled>${requestScope.descripcionSesion}</textarea>
-        				<textarea id="campoDesc" name="campoDesc" class="marginTextArea sizeTextArea"></textarea>
+        				<textarea id="campoDesc" name="campoDesc" class="marginTextArea sizeTextArea">${requestScope.comentarioReportePracticante.comentariosDescripcion}</textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Tareas asignadas:</b></label><br>
         				<textarea id="txtTareas" name="txtTareas" class="marginTextArea sizeTextArea" disabled>${requestScope.tareasAsignadasSesion}</textarea>
-        				<textarea id="campoTareasAsig" name="campoTareasAsig" class="marginTextArea sizeTextArea"></textarea>
+        				<textarea id="campoTareasAsig" name="campoTareasAsig" class="marginTextArea sizeTextArea">${requestScope.comentarioReportePracticante.comentariosTareas}</textarea>
         			</div>        		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Actividades para la próxima sesión:</b></label><br>
         				<textarea id="txtActividades" name="txtActividades" class="marginTextArea sizeTextArea" disabled>${requestScope.actividadesProxSesion}</textarea>
-        				<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea"></textarea>
+        				<textarea id="campoActividades" name="campoActividades" class="marginTextArea sizeTextArea">${requestScope.comentarioReportePracticante.comentariosActividades}</textarea>
         			</div>
         		</fieldset>	
         		<fieldset>	

@@ -356,7 +356,34 @@ public class DaoCitas extends ConexionOracle{
 		}	
 		return retorno;
 	}
+	
+	public boolean eliminarTratamiento(TratamientoTo tratamiento){
 
+		boolean retorno;
+		conexionActual = new ConexionOracle();
+		String sqlEliminar = "DELETE FROM TRATAMIENTO WHERE ID_TRATAMIENTO = ?";
+
+		try {
+			conexionActual.conectar();
+
+			conexionActual.prepararSentencia(sqlEliminar);
+			conexionActual.agregarAtributo(1, tratamiento.getIdTratamiento()); 
+			conexionActual.ejecutarActualizacion();
+			
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = Boolean.FALSE;
+		}finally{
+			try {
+				conexionActual.cerrar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return retorno;
+	}
+	
 	public ArrayList<TratamientoTo> concultarTratamientosPaciente (Integer idPaciente){
 		ResultSet rs =null;
 		conexionActual = new ConexionOracle();

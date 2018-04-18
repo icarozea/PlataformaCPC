@@ -60,13 +60,24 @@ public class ServletSesionIndividual extends HttpServlet {
 		SesionIndividualTo sesion = new SesionIndividualTo();
 		request.setCharacterEncoding("UTF-8");
 		sesion.setFecha(request.getParameter("fecha") +" "+ request.getParameter("hora"));
-		sesion.setNombreProfesional(obtenerParametroCodificado(request, "profesional"));	
-		sesion.setObjetivo(obtenerParametroCodificado(request, "objetivoSesion"));	
-		sesion.setDescripcion(obtenerParametroCodificado(request, "descripcionSesion"));	
-		sesion.setTareasAsignadas(obtenerParametroCodificado(request, "tareasSesion"));	
-		sesion.setActividadesProximaSesion(obtenerParametroCodificado(request, "actividadesProxSesion"));
+		sesion.setNombreProfesional(obtenerParametroCodificado(request, "profesional"));
 		String fallo = request.getParameter("fallo");
-		sesion.setFallo(fallo != null?true:false);
+		
+		if(fallo != null) {
+			sesion.setFallo(true);	
+			sesion.setObjetivo("");		
+			sesion.setTareasAsignadas("");	
+			sesion.setActividadesProximaSesion("");
+		}
+		else {
+			sesion.setFallo(false);
+			sesion.setNombreProfesional(obtenerParametroCodificado(request, "profesional"));	
+			sesion.setObjetivo(obtenerParametroCodificado(request, "objetivoSesion"));		
+			sesion.setTareasAsignadas(obtenerParametroCodificado(request, "tareasSesion"));	
+			sesion.setActividadesProximaSesion(obtenerParametroCodificado(request, "actividadesProxSesion"));
+		}
+		
+		sesion.setDescripcion(obtenerParametroCodificado(request, "descripcionSesion"));
 		sesion.setNumRecibo(Integer.parseInt(request.getParameter("numeroRecibo")));
 		Integer idTratamiento = Integer.parseInt(request.getParameter("idTratamiento"));
 		Integer idCita = Integer.parseInt(request.getParameter("idCita"));

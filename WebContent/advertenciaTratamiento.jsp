@@ -28,7 +28,10 @@
              
         <div id="marcoRespuesta" class="caja">
             <br>
-            <h2>El paciente ya tiene un tratamiento activo de este tipo</h2>
+            <h2>El paciente ya tiene un tratamiento de este tipo con valoración</h2>
+            <br>
+            <h2>Se va a crear un nuevo tratamiento</h2>
+            <br>
             <h3>¿Desea continuar con la creación de la cita?</h3>
             <form id="FormDatos" name="FormDatos" action="./ServletCita" method="POST">
             	<input type="hidden" name="operacion" id="operacion" value="guardarCita"/>

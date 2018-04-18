@@ -284,6 +284,12 @@ public class ServletCita extends HttpServlet{
 				if(numCitaActual - numCitaEliminar == 1){
 
 					if(daoCitas.eliminarCita(citaTo)){
+						tratamiento = daoCitas.consultarTratamiento(citaTo.getTratamiento().getIdTratamiento());
+						if(tratamiento.getNumCitaActual() <= 0) {
+							if(!daoCitas.eliminarTratamiento(tratamiento)) {
+								throw new Exception("No fue posible eliminar el tratamineto. Un tratamiento ha quedado vacio");
+							}
+						}
 						RequestDispatcher dispatcher = request.getRequestDispatcher("./Calendario");
 						dispatcher.forward(request, response);
 					}

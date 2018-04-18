@@ -122,6 +122,8 @@ public class ServletAsesor extends HttpServlet {
 		try{
 			Integer idReporte = Integer.parseInt(request.getParameter("idReporte"));
 			SesionIndividualTo sesionIndividual = daoSesionIndividual.consultarDetalleSesionPorId(idReporte);
+			SesionIndividualTo sesionComentarios = daoSesionIndividual.consultarDetalleComentariosSesionPorIdCita(sesionIndividual.getIdCita());
+			ComentariosTo comentarioReportePracticante = sesionComentarios.getComentarios();
 			request.setAttribute("idReporte", idReporte);
 			request.setAttribute("idCita", sesionIndividual.getIdCita());
 			request.setAttribute("fechaCita", sesionIndividual.getFecha());
@@ -132,6 +134,7 @@ public class ServletAsesor extends HttpServlet {
 			request.setAttribute("descripcionSesion", sesionIndividual.getDescripcion());
 			request.setAttribute("tareasAsignadasSesion",sesionIndividual.getTareasAsignadas());
 			request.setAttribute("actividadesProxSesion",sesionIndividual.getActividadesProximaSesion());
+			request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verReporteDetallado.jsp");
 			dispatcher.forward(request, response);
 

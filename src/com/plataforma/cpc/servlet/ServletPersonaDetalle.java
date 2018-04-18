@@ -92,7 +92,7 @@ public class ServletPersonaDetalle extends HttpServlet {
 			personaTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
 			personaTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
 			personaTo.setEscolaridad(request.getParameter("escolaridad"));
-			personaTo.setOcupacion(request.getParameter("ocupacion"));
+			personaTo.setOcupacion(obtenerParametroCodificado(request, "ocupacion"));
 			personaTo.setLocalidad(request.getParameter("localidad"));	
 			personaTo.setBarrio(obtenerParametroCodificado(request, "barrio"));
 			personaTo.setEstrato(request.getParameter("estrato"));	
@@ -150,7 +150,7 @@ public class ServletPersonaDetalle extends HttpServlet {
 			personaTo.setFechaNacimiento(request.getParameter("fecha_nacimiento"));
 			personaTo.setLugarNacimiento(request.getParameter("lugar_nacimiento"));
 			personaTo.setEscolaridad(request.getParameter("escolaridad"));
-			personaTo.setOcupacion(request.getParameter("ocupacion"));
+			personaTo.setOcupacion(obtenerParametroCodificado(request, "ocupacion"));
 			personaTo.setLocalidad(request.getParameter("localidad"));	
 			personaTo.setBarrio(obtenerParametroCodificado(request, "barrio"));
 			personaTo.setEstrato(request.getParameter("estrato"));	

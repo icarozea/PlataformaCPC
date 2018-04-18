@@ -72,13 +72,19 @@ public class ServletCalendario extends HttpServlet {
 			CitaTo actual = citas.get(i);
 			LocalDateTime fecha = actual.getFechaCita();
 			PersonaTo personaTo = new PersonaTo();
-			personaTo.setIdPersona(actual.getPaciente().getIdPersona());
-			PersonaTo pacienteTo = personaBean.consultarPersona(personaTo);
-			String paciente = pacienteTo.getPrimerNombre() + " " + pacienteTo.getPrimerApellido() + " " + pacienteTo.getSegundoApellido();
-			String mes = fecha.getMonthValue() > 9? fecha.getMonthValue() + "" : "0" + fecha.getMonthValue();
-			String dia = fecha.getDayOfMonth() > 9? fecha.getDayOfMonth() + "" : "0" + fecha.getDayOfMonth();
-			String hora = fecha.getHour() > 9? fecha.getHour() + "" : "0" + fecha.getHour();
+			String paciente = "";
+			String mes = "";
+			String dia = "";
+			String hora = "";
 			String horaFin = "";
+			if(actual.getPaciente().getIdPersona() != null) {
+				personaTo.setIdPersona(actual.getPaciente().getIdPersona());
+				PersonaTo pacienteTo = personaBean.consultarPersona(personaTo);
+				paciente = pacienteTo.getPrimerNombre() + " " + pacienteTo.getPrimerApellido() + " " + pacienteTo.getSegundoApellido();
+				mes = fecha.getMonthValue() > 9? fecha.getMonthValue() + "" : "0" + fecha.getMonthValue();
+				dia = fecha.getDayOfMonth() > 9? fecha.getDayOfMonth() + "" : "0" + fecha.getDayOfMonth();
+				hora = fecha.getHour() > 9? fecha.getHour() + "" : "0" + fecha.getHour();			
+			}
 			
 			if(actual.isValoracion()){
 				if(fecha.getMinute() > 0){

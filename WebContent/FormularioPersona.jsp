@@ -344,19 +344,26 @@
 						<c:when test="${requestScope.perfil == 4 || requestScope.perfil == 3}">		
 				            <div class="fieldgroup" id="campoJornada">
 				                <label class="cabin">Jornada</label>
-				                <select id="jornada" name="jornada" required>
-					                <c:choose>
-										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Mañana L-V</option></c:when>
-										<c:otherwise><option value="manana">Mañana L-V</option></c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>
-										<c:otherwise><option value="tarde">Tarde L-V</option></c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test="${requestScope.jornada == 'noche'}"><option value="noche" selected>Noche L-S</option></c:when> 
-										<c:otherwise><option value="noche">Noche L-S</option></c:otherwise>
-									</c:choose>
+				                <c:choose>
+									<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+				                		<select id="jornada" name="jornada" required>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<select id="jornada" name="jornada" required disabled>
+				                	</c:otherwise>
+				                </c:choose>
+					            <c:choose>
+								 	<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Mañana L-V</option></c:when>
+									<c:otherwise><option value="manana">Mañana L-V</option></c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${requestScope.jornada == 'tarde'}"><option value="tarde" selected>Tarde L-V</option></c:when>
+									<c:otherwise><option value="tarde">Tarde L-V</option></c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${requestScope.jornada == 'noche'}"><option value="noche" selected>Noche L-S</option></c:when> 
+									<c:otherwise><option value="noche">Noche L-S</option></c:otherwise>
+								</c:choose>
 				                </select>
 				            </div>
 				            <div class="fieldgroup" id="campoOculto">
@@ -365,7 +372,14 @@
 				        <c:otherwise>
 				            <div class="fieldgroup" id="campoJornada" style="display: none">
 				                <label class="cabin">Jornada</label>
-				                <select id="jornada" name="jornada">
+				                 <c:choose>
+									<c:when test="${sessionScope.personaSession.perfil.idPerfil == 1}">
+				                		<select id="jornada" name="jornada" required>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<select id="jornada" name="jornada" required disabled>
+				                	</c:otherwise>
+				                </c:choose>
 					                <c:choose>
 										<c:when test="${requestScope.jornada == 'manana'}"><option value="manana" selected>Mañana L-V</option></c:when>
 										<c:otherwise><option value="manana">Mañana L-V</option></c:otherwise>
