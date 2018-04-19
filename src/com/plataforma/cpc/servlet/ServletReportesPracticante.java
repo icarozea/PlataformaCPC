@@ -234,10 +234,15 @@ public class ServletReportesPracticante extends HttpServlet {
 			else
 				request.setAttribute("aceptado", 0);
 			reporteValoracionTo valoracion = historiaClinica.consultarReportesValoracion(idCita);
-			if(valoracion != null)
+			if(valoracion != null){
 				request.setAttribute("valoracion", valoracion);
-			else
-				request.setAttribute("valoracion", null); 
+				TratamientoTo tratamiento = daoCitas.consultarTratamiento(citaTo.getTratamiento().getIdTratamiento());
+				request.setAttribute("diagnostico", tratamiento.getDiagnostico());
+			}
+			else{
+				request.setAttribute("valoracion", null);
+				request.setAttribute("diagnostico", "");
+			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleValoracion.jsp");
 			dispatcher.forward(request, response);	

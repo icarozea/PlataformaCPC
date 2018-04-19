@@ -97,9 +97,17 @@
 			<br><br>
 			<div>
 				<label id="remitido_label" class="droidSans">Servicio remitido</label>
+				
 			</div>
 			<div>
 				<input id="remitido" name="remitido" type="text" class="field text fn" size="8" tabindex="1" value="${requestScope.valoracion.servicioRemitido}">
+			</div>
+			<br><br>
+			<div>
+				<label id="diagnostico_label" class="droidSans">Código del diagnóstico</label>
+			</div>
+			<div>
+				<input id="diagnostico" name="diagnostico" type="text" class="field text fn" size="8" tabindex="2" value="${requestScope.diagnostico}">
 			</div>
 			<br><br>
 			<div>

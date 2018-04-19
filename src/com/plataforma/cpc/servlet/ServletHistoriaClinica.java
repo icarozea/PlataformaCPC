@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.modelo.EpsBean;
 import com.plataforma.cpc.modelo.HistoriaClinicaBean;
 import com.plataforma.cpc.modelo.PersonaBean;
@@ -145,10 +146,16 @@ public class ServletHistoriaClinica extends HttpServlet {
 			request.setAttribute("cita", cita);
 			if(cita.isValoracion()){
 				reporteValoracionTo valoracion = historiaClinica.consultarReportesValoracion(idCita);
-				if(valoracion != null)
+				if(valoracion != null){
 					request.setAttribute("valoracion", valoracion);
-				else
-					request.setAttribute("valoracion", null); 
+					DaoCitas daoCitas = new DaoCitas();
+					TratamientoTo tratamiento = daoCitas.consultarTratamiento(cita.getTratamiento().getIdTratamiento());
+					request.setAttribute("diagnostico", tratamiento.getDiagnostico());
+				}
+				else{
+					request.setAttribute("valoracion", null);
+					request.setAttribute("diagnostico", "");
+				}
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleValoracion.jsp");
 				dispatcher.forward(request, response);		

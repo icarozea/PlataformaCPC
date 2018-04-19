@@ -18,6 +18,7 @@ public class TratamientoTo {
 	private LocalDateTime 	fechaCierre;
 	private String			tipo;
 	private Integer			numCitaActual;
+	private	String			diagnostico;
 	private boolean			pendiente;
 	
 	//---------------------------------------------------------------------------------------------------------
@@ -78,6 +79,14 @@ public class TratamientoTo {
 
 	public void setNumCitaActual(Integer numCitaActual) {
 		this.numCitaActual = numCitaActual;
+	}
+	
+	public String getDiagnostico() {
+		return diagnostico;
+	}
+
+	public void setDiagnostico(String diagnostico) {
+		this.diagnostico = diagnostico;
 	}
 
 	public boolean isPendiente() {

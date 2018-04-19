@@ -10,11 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.plataforma.cpc.dao.DaoCitas;
 import com.plataforma.cpc.dao.DaoSesionIndividual;
 import com.plataforma.cpc.dao.DaoUtilidades;
 import com.plataforma.cpc.modelo.HistoriaClinicaBean;
 import com.plataforma.cpc.modelo.PersonaBean;
 import com.plataforma.cpc.modelo.PersonaDetalleBean;
+import com.plataforma.cpc.to.CitaTo;
 import com.plataforma.cpc.to.EpsTo;
 import com.plataforma.cpc.to.HistoriaClinicaTo;
 import com.plataforma.cpc.to.PerfilTo;
@@ -22,6 +25,7 @@ import com.plataforma.cpc.to.PersonaDetalleTo;
 import com.plataforma.cpc.to.PersonaTo;
 import com.plataforma.cpc.to.SesionIndividualTo;
 import com.plataforma.cpc.to.TipoDocumentoTo;
+import com.plataforma.cpc.to.TratamientoTo;
 import com.plataforma.cpc.to.reporteValoracionTo;
 
 /**
@@ -29,7 +33,7 @@ import com.plataforma.cpc.to.reporteValoracionTo;
  */
 @WebServlet("/ServletSesionIndividual")
 public class ServletSesionIndividual extends HttpServlet {
-	
+
 	public void ResponderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("text/html;charset=UTF-8");
 
@@ -54,7 +58,7 @@ public class ServletSesionIndividual extends HttpServlet {
 			break;
 		}
 	}
-       
+
 	public void crearReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		SesionIndividualTo sesion = new SesionIndividualTo();
@@ -62,7 +66,7 @@ public class ServletSesionIndividual extends HttpServlet {
 		sesion.setFecha(request.getParameter("fecha") +" "+ request.getParameter("hora"));
 		sesion.setNombreProfesional(obtenerParametroCodificado(request, "profesional"));
 		String fallo = request.getParameter("fallo");
-		
+
 		if(fallo != null) {
 			sesion.setFallo(true);	
 			sesion.setObjetivo("");		
@@ -76,7 +80,7 @@ public class ServletSesionIndividual extends HttpServlet {
 			sesion.setTareasAsignadas(obtenerParametroCodificado(request, "tareasSesion"));	
 			sesion.setActividadesProximaSesion(obtenerParametroCodificado(request, "actividadesProxSesion"));
 		}
-		
+
 		sesion.setDescripcion(obtenerParametroCodificado(request, "descripcionSesion"));
 		sesion.setNumRecibo(Integer.parseInt(request.getParameter("numeroRecibo")));
 		Integer idTratamiento = Integer.parseInt(request.getParameter("idTratamiento"));
@@ -87,11 +91,11 @@ public class ServletSesionIndividual extends HttpServlet {
 			request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
 		else
 			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la creación del reporte.");
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		dispatcher.forward(request, response);
 	}
-	
+
 	public void actualizarReporte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		SesionIndividualTo sesion = new SesionIndividualTo();
@@ -106,11 +110,11 @@ public class ServletSesionIndividual extends HttpServlet {
 			request.setAttribute("mensajeRespuestaReporte", "Se ha actualizado exitosamente el reporte de la sesión.");
 		else
 			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la actualizacion del reporte.");
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		dispatcher.forward(request, response);
 	}
-	
+
 	public void actualizarValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		reporteValoracionTo valoracionTo = new reporteValoracionTo();
@@ -122,27 +126,36 @@ public class ServletSesionIndividual extends HttpServlet {
 		valoracionTo.setComportamiento(obtenerParametroCodificado(request, "aspectos"));
 		valoracionTo.setHipotesis(obtenerParametroCodificado(request, "hipotesis"));
 		valoracionTo.setServicioRemitido(obtenerParametroCodificado(request, "remitido"));
-		
+
 		boolean resultado = dao.actualizarReporteValoracion(valoracionTo);
-		if (resultado) 	
-			request.setAttribute("mensajeRespuestaReporte", "Se ha actualizado exitosamente el reporte.");
+		if (resultado){
+			DaoCitas daoCita = new DaoCitas();
+			valoracionTo = dao.consultarValoracion(Integer.parseInt(request.getParameter("id")));
+			CitaTo cita = new CitaTo();
+			cita.setIdCita(valoracionTo.getIdCita());
+			cita = daoCita.consultarCita(cita);
+			if(daoCita.actualizarDiagnostico(cita.getTratamiento().getIdTratamiento(), obtenerParametroCodificado(request, "diagnostico")))
+				request.setAttribute("mensajeRespuestaReporte", "Se ha actualizado exitosamente el reporte.");
+			else
+				request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error actualizando el diagnostico.");
+		}
 		else
 			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la actualizacion del reporte.");
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
 		dispatcher.forward(request, response);
 	}
-	
+
 	public void reporteValoracion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaReporteCita.jsp");
-		
+
 		PersonaBean personaBean = new PersonaBean();
 		PersonaDetalleBean detalleBean = new PersonaDetalleBean();
 		DaoSesionIndividual dao = new DaoSesionIndividual();
 		PersonaTo personaTo = new PersonaTo();
 		PersonaDetalleTo detalleTo = new PersonaDetalleTo();
 		reporteValoracionTo valoracionTo = new reporteValoracionTo();
-		
+
 		try{
 			// Actualizacion datos persona
 			DaoUtilidades daoUtilidades = new DaoUtilidades();
@@ -171,7 +184,7 @@ public class ServletSesionIndividual extends HttpServlet {
 				personaTo.setEps(epsTo);
 			else
 				throw new Exception("La EPS no es válida o no se encontró");
-			
+
 			if(personaBean.modificarPersona(personaTo)){
 				// Actualiza datos detalle
 				detalleTo.setPersonaId(idPaciente);
@@ -193,7 +206,7 @@ public class ServletSesionIndividual extends HttpServlet {
 				detalleTo.setAcudiente(obtenerParametroCodificado(request, "acudiente"));
 				detalleTo.setParentescoAcudiente(obtenerParametroCodificado(request, "parentesco_acudiente"));
 				detalleTo.setTelefonoAcudiente(request.getParameter("telefonos_acudiente"));
-				
+
 				if(detalleBean.modificarPersonaDetalle(detalleTo)){
 					//Verificacion de la historia clinica. La crea si no existe
 					HistoriaClinicaBean bean = new HistoriaClinicaBean();
@@ -211,20 +224,26 @@ public class ServletSesionIndividual extends HttpServlet {
 						else
 							throw new Exception("Hubo un error asignar una nueva Historia Clinica");				
 					}
-				
+
 					//Creacion del reporte
 					valoracionTo.setIdCita(Integer.parseInt(request.getParameter("idCita")));		
 					valoracionTo.setMotivo(obtenerParametroCodificado(request, "motivo_consulta"));
 					valoracionTo.setPersonaReporta(request.getParameter("persona_reporta"));
 					valoracionTo.setComportamiento(obtenerParametroCodificado(request, "aspectos"));		
 					valoracionTo.setHipotesis(obtenerParametroCodificado(request, "hipotesis"));
-					
+
 					valoracionTo.setServicioRemitido(obtenerParametroCodificado(request, "remitido"));
 					valoracionTo.setEncuestador(obtenerParametroCodificado(request, "entrevistador"));
-					
+
 					if(dao.crearReporteValoracion(valoracionTo, Integer.parseInt(request.getParameter("idTratamiento")), "pendiente")){
-						request.setAttribute("mensajeRespuestaReporte", "Reporte guardado exitosamente");
-						dispatcher.forward(request, response);
+						DaoCitas actualizacion = new DaoCitas();
+						if(actualizacion.actualizarDiagnostico(Integer.parseInt(request.getParameter("idTratamiento")), request.getParameter("diagnostico"))){
+							request.setAttribute("mensajeRespuestaReporte", "Reporte guardado exitosamente");
+							dispatcher.forward(request, response);
+						}
+						else{
+							throw new Exception("Hubo un error al guardar el diagnostico");
+						}
 					}
 					else{
 						throw new Exception("Hubo un error al intentar guardar el reporte");
@@ -245,7 +264,7 @@ public class ServletSesionIndividual extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	private String obtenerParametroCodificado(HttpServletRequest request, String valor) throws UnsupportedEncodingException {
 		String cadena = request.getParameter(valor);
 		cadena = new String(cadena.getBytes("ISO-8859-1"), request.getCharacterEncoding());

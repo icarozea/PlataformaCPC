@@ -341,6 +341,7 @@
 		
 		<div class="seccionReportePar">
 			<label id="remitido_label" class="droidSans"><strong>En caso de ser remitido el servicio que requiere es:</strong></label><input id="remitido" name="remitido" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="diagnostico_label" class="droidSans"><strong>Código del diagnóstico:</strong></label><input id="diagnostico" name="diagnostico" type="text" class="field text fn" value="" size="8" tabindex="2">
 		</div>
 		
 		<div>

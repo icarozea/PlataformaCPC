@@ -418,7 +418,53 @@ public class DaoSesionIndividual extends ConexionOracle{
 		}	
 		return valoracion;
 	}
+	
+	public reporteValoracionTo consultarValoracion(Integer idValoracion){
+		ResultSet rs =null;
+		conexionActual = new ConexionOracle();
+		reporteValoracionTo valoracion = new reporteValoracionTo();
+		String sql = "SELECT RV.MOTIVO, RV.REPORTA, RV.COMPORTAMIENTO, RV.HIPOTESIS, ";
+		sql+= "RV.SERVICIO_REMITIDO, RV.ENCUESTADOR, RV.ID_CITA ";
+		sql+= "FROM REPORTE_VALORACION RV ";
+		sql+= "WHERE RV.ID_VALORACION = ? ";
+		try {
+			conexionActual.conectar();
+			conexionActual.prepararSentencia(sql);
+			conexionActual.agregarAtributo(1, idValoracion);
 
+			rs = conexionActual.ejecutarSentencia();
+
+			while (rs.next()){			
+				valoracion.setIdValoracion(idValoracion);
+				
+				String motivo = TextAdmin.getTexto(rs.getClob("MOTIVO"));
+				valoracion.setMotivo(motivo);
+				
+				valoracion.setPersonaReporta(rs.getString("REPORTA"));
+				
+				String comportamiento = TextAdmin.getTexto(rs.getClob("COMPORTAMIENTO"));
+				valoracion.setComportamiento(comportamiento);
+
+				String hipotesis = TextAdmin.getTexto(rs.getClob("HIPOTESIS"));
+				valoracion.setHipotesis(hipotesis);
+
+				valoracion.setServicioRemitido(rs.getString("SERVICIO_REMITIDO"));
+				valoracion.setEncuestador(rs.getString("ENCUESTADOR"));
+				valoracion.setIdCita(rs.getInt("ID_CITA"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				conexionActual.cerrar();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return valoracion;
+	}
+	
 	/**
 	 * Consulta todos los reportes de sesión asociados a un practicante en particular
 	 * @param idPracticante Practicante a consultar
