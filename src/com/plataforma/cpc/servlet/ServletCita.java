@@ -323,8 +323,11 @@ public class ServletCita extends HttpServlet{
 				RequestDispatcher dispatcher = null;
 				if(citaTo.isValoracion())
 					dispatcher = request.getRequestDispatcher("./reporteValoracion.jsp");
-				else
+				else {
+					TratamientoTo tratamiento = daoCitas.consultarTratamiento(citaTo.getTratamiento().getIdTratamiento());
+					request.setAttribute("diagnostico", tratamiento.getDiagnostico());
 					dispatcher = request.getRequestDispatcher("./reporteCita.jsp");
+				}
 
 				request.setAttribute("cita", citaTo);
 				dispatcher.forward(request, response);

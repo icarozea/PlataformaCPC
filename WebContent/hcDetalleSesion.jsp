@@ -58,6 +58,10 @@
 				<p class="droidSans"><b id="h_Profesional">${requestScope.sesion.nombreProfesional}</b></p>
 			</div>
 			<br><br>
+			<div>
+				<label id="diagnostico_label" class="droidSans">Código del diagnóstico:</label><input id="diagnostico" name="diagnostico" type="text" class="field text fn" size="8" tabindex="2" value="${requestScope.diagnostico}" disabled>
+			</div>
+			<br><br>
 			<c:choose>
 				<c:when test="${requestScope.sesion.fallo == true}">
 					<div><p class="droidSans"><h2><b>Sesión reportada como falla</b></h2></p></div>

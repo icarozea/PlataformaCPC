@@ -71,6 +71,9 @@
 			<label id="profesional_label" class="droidSans">Profesional en formación del área clínica:</label>
 			<input id="profesional" name="profesional" type="text" class="field text fn" value="<%=practicante.getPrimerNombre()+" "+(practicante.getSegundoNombre()==null?"":practicante.getSegundoNombre())+" "+practicante.getPrimerApellido()+" "+practicante.getSegundoApellido()%>" size="8" tabindex="1" readonly>
 		</div>
+		<div>
+			<label id="diagnostico_label" class="droidSans">Código del diagnóstico:</label><input id="diagnostico" name="diagnostico" type="text" class="field text fn" size="8" tabindex="2" value="${requestScope.diagnostico}">
+		</div>
 		
 		<div>
 			<label id="fallo_label" class="droidSans">¿Reportar la cita como una falla?</label><input id="fallo" name="fallo" type="checkbox" class="field text fn" value="fallo" size="8" tabindex="1" onChange="modCamposTexto()">
@@ -90,8 +93,7 @@
 		
 		<div>
 			<label id="actividades_label" class="droidSans">Actividades para la próxima sesión:</label><br><br><textarea id="actividadesProxSesion" name="actividadesProxSesion" rows="10" cols="90" style=" resize: none;"></textarea>
-		</div>
-				
+		</div>			
 	</div>
 
 		</form>

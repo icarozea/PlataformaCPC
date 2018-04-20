@@ -87,8 +87,14 @@ public class ServletSesionIndividual extends HttpServlet {
 		Integer idCita = Integer.parseInt(request.getParameter("idCita"));
 		String estado = sesion.isFallo()? "cancelada" : "pendiente";
 		boolean resultado = dao.crearReporteSesionIndividual(sesion, idTratamiento, idCita, estado, sesion.isFallo());
-		if (resultado) 	
-			request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
+		if (resultado) {
+			DaoCitas actualizacion = new DaoCitas();
+			if(actualizacion.actualizarDiagnostico(idTratamiento, request.getParameter("diagnostico"))){
+				request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
+			}
+			else
+				request.setAttribute("mensajeRespuestaReporte", "Hubo un error al guardar el diagnostico");			
+		}
 		else
 			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la creación del reporte.");
 

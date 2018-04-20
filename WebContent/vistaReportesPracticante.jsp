@@ -71,6 +71,7 @@
 				    </select>
         		</div>
         	</form>
+        	<a href="./ReportesPracticante?operacion=historicoReportes&filtro=valoracion&idPracticante=${sessionScope.personaSession.idPersona}"><button>Ver</button></a>
         	</div>  
         	
 		<div id="gestionContenido">

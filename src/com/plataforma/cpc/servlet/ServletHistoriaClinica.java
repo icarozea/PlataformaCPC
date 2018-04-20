@@ -162,10 +162,16 @@ public class ServletHistoriaClinica extends HttpServlet {
 			}
 			else{
 				SesionIndividualTo sesion = historiaClinica.consultarReportesSesion(idCita);
-				if (sesion != null)
+				if (sesion != null) {
 					request.setAttribute("sesion", sesion);
-				else 
+					DaoCitas daoCitas = new DaoCitas();
+					TratamientoTo tratamiento = daoCitas.consultarTratamiento(cita.getTratamiento().getIdTratamiento());
+					request.setAttribute("diagnostico", tratamiento.getDiagnostico());
+				}
+				else { 
 					request.setAttribute("sesion", null);
+					request.setAttribute("diagnostico", "");
+				}
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher("hcDetalleSesion.jsp");
 				dispatcher.forward(request, response);	

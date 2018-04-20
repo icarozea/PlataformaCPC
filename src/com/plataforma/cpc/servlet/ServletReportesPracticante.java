@@ -71,7 +71,10 @@ public class ServletReportesPracticante extends HttpServlet {
 			break;
 		case "guardarMoficiacionesReporteSesion":
 			guardarMoficiacionesReporteSesion(request, response);
-			break;				
+			break;
+		case "historicoReportes":
+			verHistoricoReportes(request, response);
+			break;
 		default:
 			System.out.println("Opción no existe");
 			break;
@@ -268,6 +271,32 @@ public class ServletReportesPracticante extends HttpServlet {
 			request.setAttribute("mensajeRespuestaActualizacionReporte", "Se ha actualizado la información del reporte correctamente");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("respuestaActualizarReporteCita.jsp");
 			dispatcher.forward(request, response);    				
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void verHistoricoReportes(HttpServletRequest request, HttpServletResponse response){
+
+		DaoSesionIndividual daoSesionIndividual = new DaoSesionIndividual();	
+
+		try{
+			request.setCharacterEncoding("UTF-8");
+			Integer idPracticante = Integer.parseInt(request.getParameter("idPracticante"));
+			ArrayList<SesionIndividualPreviewTo> datos = new ArrayList<SesionIndividualPreviewTo>();
+			
+			if(request.getParameter("filtro").equals("valoracion")) {
+				datos = daoSesionIndividual.consultarListaValoracionesPorPracticante(idPracticante);
+				request.setAttribute("tipo", 0);
+			}
+			else {
+				datos = daoSesionIndividual.consultarListaReportesSesionesPorPracticante(idPracticante);
+				request.setAttribute("tipo", 1);
+			}
+			
+			request.setAttribute("datos", datos);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("historicoReportesPracticante.jsp");
+			dispatcher.forward(request, response);  
 		}catch(Exception e){
 			e.printStackTrace();
 		}
