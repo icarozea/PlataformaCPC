@@ -795,3 +795,10 @@ fieldset{
 	padding-left:5%;
 	word-break: break-all;
 }
+
+.historico{
+	height: 76px;
+	background:#47a3da;
+	float: right;
+	margin-right: 5%;
+}
