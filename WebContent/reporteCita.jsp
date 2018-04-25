@@ -65,6 +65,7 @@
 		<div>
 			<label id="nombrePaciente_label" class="droidSans">Nombre del paciente:</label><p class="droidSans"><b><%=paciente.getPrimerNombre()+" "+(paciente.getSegundoNombre()==null?"":paciente.getSegundoNombre())+" "+paciente.getPrimerApellido()+" "+paciente.getSegundoApellido()%></b></p>
 			<label id="numeroRecibo_label" class="droidSans">Recibo No:</label><input id="numeroRecibo" name="numeroRecibo" type="text" class="field text fn" value="" size="8" tabindex="1">
+			<label id="precio_label" class="droidSans">Valor de la cita:</label><input id="precio" name="precio" type="text" class="field text fn" value="${requestScope.cita.precio}" size="8" tabindex="1">
 		</div>
 		
 		<div>

@@ -22,6 +22,7 @@ public class CitaTo {
 	private TratamientoTo 		tratamiento;
 	private boolean				valoracion;
 	private Integer				numCita;
+	private Integer				precio;
 	
 	//-------------------------------------------------------------------------------------
 	// Getters y Setters
@@ -105,5 +106,13 @@ public class CitaTo {
 
 	public void setNumCita(Integer numCita) {
 		this.numCita = numCita;
+	}
+	
+	public Integer getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Integer precio) {
+		this.precio = precio;
 	}	
 }

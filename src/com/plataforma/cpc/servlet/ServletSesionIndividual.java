@@ -90,10 +90,15 @@ public class ServletSesionIndividual extends HttpServlet {
 		if (resultado) {
 			DaoCitas actualizacion = new DaoCitas();
 			if(actualizacion.actualizarDiagnostico(idTratamiento, request.getParameter("diagnostico"))){
-				request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
+				String precio = request.getParameter("precio");
+				if(actualizacion.actualizarPrecioCita(idCita, Integer.parseInt(precio != null? precio:"0"))) {
+					request.setAttribute("mensajeRespuestaReporte", "Se ha creado exitosamente el reporte de la sesión.");
+				}
+				else
+					request.setAttribute("mensajeRespuestaReporte", "Hubo un error al guardar el valor de la cita");
 			}
 			else
-				request.setAttribute("mensajeRespuestaReporte", "Hubo un error al guardar el diagnostico");			
+				request.setAttribute("mensajeRespuestaReporte", "Hubo un error al guardar el diagnostico");		
 		}
 		else
 			request.setAttribute("mensajeRespuestaReporte", "Ha ocurrido un error durante la creación del reporte.");
