@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -118,7 +119,15 @@
         			<div class="fieldgroupTextArea">
         				<label class="cabin"><b>Estado del reporte:</b></label>
         				<label class="cabin">${requestScope.cita.estado}</label>
-        			</div>     		
+        			</div>
+        			<div><c:choose>
+        				<c:when test="${requestScope.fallo}">
+        					<label class="cabin"><b>Cita reportada como falla: Si</b></label>
+        				</c:when>
+        				<c:otherwise>
+        					<label class="cabin"><b>Cita reportada como falla: No</b></label>
+        				</c:otherwise>
+        			</c:choose></div>     		
         		</fieldset>
         		<fieldset>
         			<div class="fieldgroupTextArea">

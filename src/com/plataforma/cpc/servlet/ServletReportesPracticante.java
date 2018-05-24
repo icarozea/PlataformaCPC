@@ -209,6 +209,7 @@ public class ServletReportesPracticante extends HttpServlet {
 			request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
 			request.setAttribute("paciente", paciente);
 			request.setAttribute("cita", citaTo);
+			request.setAttribute("fallo", citaSesionReportePracticante.isFallo());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verComentariosReporteDetallado.jsp");
 			dispatcher.forward(request, response);
 		}catch(Exception e){

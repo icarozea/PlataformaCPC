@@ -135,6 +135,7 @@ public class ServletAsesor extends HttpServlet {
 			request.setAttribute("tareasAsignadasSesion",sesionIndividual.getTareasAsignadas());
 			request.setAttribute("actividadesProxSesion",sesionIndividual.getActividadesProximaSesion());
 			request.setAttribute("comentarioReportePracticante", comentarioReportePracticante);
+			request.setAttribute("fallo", sesionIndividual.isFallo());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("verReporteDetallado.jsp");
 			dispatcher.forward(request, response);
 
