@@ -43,7 +43,7 @@ public class ServletAsesor extends HttpServlet {
 	}
 
 	public void ResponderPeticion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		response.setContentType("text/html;charset=ISO-8859-1");
+		response.setContentType("text/html;charset=UTF-8");
 
 		String operacion = request.getParameter("operacion");
 
@@ -193,9 +193,9 @@ public class ServletAsesor extends HttpServlet {
 
 			request.setCharacterEncoding("UTF-8");
 			request.setAttribute("idPracticante", idPracticante);
-			request.setAttribute("pNom", obtenerParametroCodificado(request, "pNom"));
-			request.setAttribute("sNom", obtenerParametroCodificado(request, "sNom"));		
-			request.setAttribute("pApe", obtenerParametroCodificado(request, "pApe"));		
+			request.setAttribute("pNom", obtenerParametroCodificado(request,"pNom"));
+			request.setAttribute("sNom", obtenerParametroCodificado(request,"sNom"));		
+			request.setAttribute("pApe", obtenerParametroCodificado(request,"pApe"));		
 			request.setAttribute("sApe", obtenerParametroCodificado(request, "sApe"));
 
 			//Consigue los pacientes asignados al practicante
@@ -212,7 +212,8 @@ public class ServletAsesor extends HttpServlet {
 			// Consigue los datos asociados al paciente actual si existe, o al primero encontrado de lo contrario
 			if(pacienteActual != null){
 				filtroPaciente = Integer.parseInt(pacienteActual);
-				filtroTratamiento = Integer.parseInt(tratamientoActual);
+				if(tratamientoActual != null)
+					filtroTratamiento = Integer.parseInt(tratamientoActual);
 				tratamientos = historiaBean.consultarTratamientosxPaciente(filtroPaciente);
 			}
 			else{
@@ -229,7 +230,8 @@ public class ServletAsesor extends HttpServlet {
 			// Se filtran los reportes dependiendo del tipo de cambio (paciente o tratamiento)
 
 			if(tipoCambio.equals("paciente")){
-				filtroTratamiento = tratamientos.get(0).getIdTratamiento();
+				if(tratamientos.size() > 0)
+					filtroTratamiento = tratamientos.get(0).getIdTratamiento();
 			}
 
 			// Filtra los reportes de sesion
